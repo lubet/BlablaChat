@@ -12,7 +12,7 @@ final class LoginViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
 
-    func signUp(image: UIImage?) {
+    func signUp(image: UIImage?) async throws {
         
         guard !email.isEmpty, !password.isEmpty else {
             print("Pas d'email ni de password")
@@ -32,19 +32,15 @@ final class LoginViewModel: ObservableObject {
         // Pas d'image je sors
         guard let image else { return }
         
-        // Mise à jour de l'image dans le firestore du user xistant
-        // FirestoreManager.shared.updateProfileImage(userId: uid, image: image)
+        let (path, nameImage) = try await StorageManager.shared.saveImage(image: image, userId: uid)
 
+        print("path: \(path)")
+        print("nameImage: \(nameImage)")
         
-        
-//        // Sauvegarde de l'image dans Storage
-//        StorageManager.shared.persistImageToStorage(userId: uid, image: image)
-//
-//        // Sauvegarde de l'image dans le profil existant de Firestore
-        
+                
     }
     
-    func signIn() {
+    func signIn() async throws {
         guard !email.isEmpty, !password.isEmpty else {
             print("Pas d'email ni de password")
             return
@@ -102,10 +98,24 @@ struct LoginView: View {
                     .background(Color.gray.opacity(0.2))
                     
                     Button {
-                        viewModel.signUp(image: image) // Création si il n'existe pas déjà)
+                        Task {
+                            do {
+                                // let mimage: UIImage = image ?? UIImage(named: "MaPhoto")!
+                                try await viewModel.signUp(image: image) // Création ou non (si il existe déjà)
+                                return
+                            } catch {
+                                print(error)
+                            }
+                        }
                         
-                        viewModel.signIn() // Dans tous les cas le user existe (vient d'être créer ou existait déjà)
-                    } label: {
+                        Task {
+                            do {
+                                try await viewModel.signIn() // Dans tous les cas le user existe (vient d'être créer ou existait déjà)
+                               return
+                            } catch {
+                                print(error)
+                            }
+                        }                    } label: {
                         Text("Sign In/Up")
                             .font(.headline)
                             .foregroundColor(.white)

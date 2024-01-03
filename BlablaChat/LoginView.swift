@@ -27,13 +27,13 @@ final class LoginViewModel: ObservableObject {
         guard let uid = authUser?.uid else { return }
         
         // Sauvegard dans Firestore de uid et de l'email
-        FirestoreManager.shared.createUserProfile(userId: uid, email: email)
+        // FirestoreManager.shared.createUserProfile(userId: uid, email: email)
         
         // Pas d'image je sors
         guard let image else { return }
         
         // Mise à jour de l'image dans le firestore du user xistant
-        FirestoreManager.shared.updateProfileImage(userId: uid, image: image)
+        // FirestoreManager.shared.updateProfileImage(userId: uid, image: image)
 
         
         

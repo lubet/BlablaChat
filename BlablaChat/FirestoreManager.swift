@@ -32,7 +32,7 @@ final class FirestoreManager {
     // functions -----------------------------------------------
     
     func createUserProfile(userId: String, email: String) {
-        let userData = ["uid": userId, "email": email]
+        let userData: [String:Any] = ["uid": userId, "email": email]
         userDocument(userId: userId).setData(userData)
     }
     

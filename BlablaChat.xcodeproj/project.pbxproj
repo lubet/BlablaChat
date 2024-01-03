@@ -18,6 +18,7 @@
 		C047E9DB2B45652000C6D48F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C047E9DA2B45652000C6D48F /* FirebaseStorage */; };
 		C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9DD2B45668800C6D48F /* ImagePicker.swift */; };
 		C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9DF2B45767B00C6D48F /* AuthManager.swift */; };
+		C047E9E22B45880400C6D48F /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9E12B45880400C6D48F /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		C047E9D12B45646A00C6D48F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C047E9DD2B45668800C6D48F /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		C047E9DF2B45767B00C6D48F /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		C047E9E12B45880400C6D48F /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
 				C047E9DC2B45665300C6D48F /* Utilities */,
 				C047E9DF2B45767B00C6D48F /* AuthManager.swift */,
+				C047E9E12B45880400C6D48F /* StorageManager.swift */,
 				C047E9C52B45625C00C6D48F /* LoginView.swift */,
 				C047E9C72B45625D00C6D48F /* Assets.xcassets */,
 				C047E9D12B45646A00C6D48F /* GoogleService-Info.plist */,
@@ -174,6 +177,7 @@
 			files = (
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,
+				C047E9E22B45880400C6D48F /* StorageManager.swift in Sources */,
 				C047E9C62B45625C00C6D48F /* LoginView.swift in Sources */,
 				C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */,
 			);

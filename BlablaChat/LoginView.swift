@@ -18,6 +18,15 @@ final class LoginViewModel: ObservableObject {
             return
         }
         AuthManager.shared.createUser(email: email, password: password)
+        
+        let authUser = try? AuthManager.shared.getCurrentUser()
+        
+        guard let uid = authUser?.uid else { return }
+
+        guard let image else { return }
+        
+        StorageManager.shared.persistImageToStorage(image: image, userId: uid)
+        
     }
     
     func signIn() {
@@ -27,6 +36,7 @@ final class LoginViewModel: ObservableObject {
         }
         AuthManager.shared.signInUser(email: email, password: password)
     }
+    
 }
 
 struct LoginView: View {

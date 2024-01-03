@@ -13,19 +13,34 @@ final class LoginViewModel: ObservableObject {
     @Published var password: String = ""
 
     func signUp(image: UIImage?) {
+        
         guard !email.isEmpty, !password.isEmpty else {
             print("Pas d'email ni de password")
             return
         }
+        
+        // Création nouveau user authentifié
         AuthManager.shared.createUser(email: email, password: password)
         
-        let authUser = try? AuthManager.shared.getCurrentUser()
-        
+        // Obtenir son uid
+        let authUser = try? AuthManager.shared.getCurrentUser() // uid email
         guard let uid = authUser?.uid else { return }
-
+        
+        // Sauvegard dans Firestore de uid et de l'email
+        FirestoreManager.shared.createUserProfile(userId: uid, email: email)
+        
+        // Pas d'image je sors
         guard let image else { return }
         
-        StorageManager.shared.persistImageToStorage(image: image, userId: uid)
+        // Mise à jour de l'image dans le firestore du user xistant
+        FirestoreManager.shared.updateProfileImage(userId: uid, image: image)
+
+        
+        
+//        // Sauvegarde de l'image dans Storage
+//        StorageManager.shared.persistImageToStorage(userId: uid, image: image)
+//
+//        // Sauvegarde de l'image dans le profil existant de Firestore
         
     }
     

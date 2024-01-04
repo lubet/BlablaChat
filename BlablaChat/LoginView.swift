@@ -35,21 +35,6 @@ final class LoginViewModel: ObservableObject {
         print("name: \(name)")
         
         try await FirestoreManager.shared.updateImagePath(userId: user.userId, name: name) // Firestore
-
-        
-        // Sauvegarde de l'uid et de l'email dans Firestore
-//        FirestoreManager.shared.createUserProfile(userId: uid, email: email)
-//
-//        // Pas d'image je sors
-//        guard let image else { return }
-//
-//        // Sauvegarde de l'image dans Storage
-//        let (path, nameImage) = try await StorageManager.shared.saveImage(image: image, userId: uid)
-//
-//        print("path: \(path)")
-//        print("nameImage: \(nameImage)")
-//
-//        // FirestoreManager.shared.updateProfileImage(userId: uid, image: image)
                 
     }
     

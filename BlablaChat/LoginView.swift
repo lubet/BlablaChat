@@ -34,9 +34,8 @@ final class LoginViewModel: ObservableObject {
         print("path: \(path)")
         print("name: \(name)")
         
-        try await FirestoreManager.shared.updateImagePath(userId: user.userId, name: name) // Firestore
-                
-    }
+        try await FirestoreManager.shared.updateImagePath(userId: user.userId, name: name) // Firestore avec l'image
+     }
     
     func signIn() async throws {
         guard !email.isEmpty, !password.isEmpty else {
@@ -45,9 +44,9 @@ final class LoginViewModel: ObservableObject {
         }
         AuthManager.shared.signInUser(email: email, password: password)
     }
-    
 }
 
+// -----------------------------------------------------
 struct LoginView: View {
     
     @StateObject private var viewModel = LoginViewModel()

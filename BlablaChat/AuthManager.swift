@@ -31,14 +31,11 @@ final class AuthManager {
         return AuthUser(user: user)
     }
     
-    func createUser(email: String, password: String) {
-        Auth.auth().createUser(withEmail: email, password: password) { result, err in
-            if let err = err {
-                print("Failed to create user:", err)
-                return
-            }
-            print("Successfully created user: \(result?.user.uid ?? "")")
-        }
+    @discardableResult
+    func createUser(email:String, password:String) async throws -> AuthUser {
+        // Création de l'authentification
+        let AuthDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
+        return AuthUser(user: AuthDataResult.user)
     }
     
     func signInUser(email:String, password:String) {

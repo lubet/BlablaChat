@@ -24,7 +24,7 @@ final class AuthManager {
     
     init() {}
 
-    func getCurrentUser() throws -> AuthUser{
+    func getAuthenticatedUser() throws -> AuthUser{
         guard let user = Auth.auth().currentUser else {
             throw URLError(.badServerResponse)
         }

@@ -22,18 +22,6 @@ struct DBUser: Codable {
         self.dateCreated = Date()
         self.imageLink = nil
     }
-
-    init(
-        userId: String,
-        email : String? = nil,
-        dateCreated: Date? = nil,
-        imageLink: String? = nil
-    ) {
-        self.userId = userId
-        self.email = email
-        self.dateCreated = dateCreated
-        self.imageLink = imageLink
-    }
     
     enum CodingKeys: String, CodingKey {
         case userId

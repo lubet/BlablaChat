@@ -29,7 +29,7 @@ final class StorageManager {
 
     // functions ------------------------------------
     
-    // Obtenir l'image
+    // Obtenir l'image - path = nom de l'image
     func getData(userId: String, path: String) async throws -> Data {
         try await userReference(userId: userId).child(path).data(maxSize: 3 * 1024 * 1024)
     }

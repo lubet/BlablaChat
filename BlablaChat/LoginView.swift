@@ -21,20 +21,20 @@ final class LoginViewModel: ObservableObject {
         
         // Création nouveau user authentifié
         let authUser = try await AuthManager.shared.createUser(email: email, password: password) // Authentification
-        let user = DBUser(auth: authUser)
-        try await FirestoreManager.shared.createDbUser(user: user) // Firesstore sans l'image
         
-        // stoker l'image dans Storage
-        // Mettre à jour Firestore avec l'image
+        let user = DBUser(auth: authUser) // Création d'un DBUser avec l'uid et l'email de authUser, la date qui est auto
+        
+        try await FirestoreManager.shared.createDbUser(user: user) // Firesstore sans l'image
         
         guard let image else { return }
         
-        let (path, name) = try await StorageManager.shared.saveImage(image: image, userId: user.userId) // Storage
+        let (path, name) = try await StorageManager.shared.saveImage(image: image, userId: user.userId) // save Storage
         
         print("path: \(path)")
         print("name: \(name)")
         
-        try await FirestoreManager.shared.updateImagePath(userId: user.userId, name: name) // Firestore avec l'image
+        try await FirestoreManager.shared.updateImagePath(userId: user.userId, path: name) // save DBuser et Firestore
+                
      }
     
     func signIn() async throws {

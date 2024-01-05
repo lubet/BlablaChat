@@ -69,33 +69,11 @@ final class FirestoreManager {
     func createDbUser(user: DBUser) async throws {
         try userDocument(userId: user.userId).setData(from: user, merge: false)
     }
-    
-    func createUserProfile(userId: String, email: String) {
-        let userData: [String:Any] = ["uid": userId, "email": email]
-        userDocument(userId: userId).setData(userData)
-    }
-    
+        
     func updateImagePath(userId: String, path: String) async throws { // maj image DBuser et FireStore
         let data: [String:Any] = [
             DBUser.CodingKeys.imageLink.rawValue : path
         ]
         try await userDocument(userId: userId).updateData(data)
     }
-    
-//    func updateProfileImage(userId: String, image: UIImage) {
-//        let data: [String:Any] = [
-//            "imagelien" : image
-//        ]
-//        print("name update: \(image)") // Ok
-//        userDocument(userId: userId).updateData(data)
-//    }
-    
-//    func updateImagePath(userId: String, name: String) async throws { // maj image dans Firestore
-//        let data: [String:Any] = [
-//            "imagelink" : name
-//        ]
-//        print("name update: \(name)") // Ok
-//        try await userDocument(userId: userId).updateData(data)
-//    }
-    
 }

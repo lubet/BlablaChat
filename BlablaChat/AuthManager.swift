@@ -12,7 +12,7 @@ struct AuthUser {
     let uid: String
     let email: String?
     
-    init(user: User) { // User est un type FireBase
+    init(user: User) { // User est un type FireAuth
         self.uid = user.uid
         self.email = user.email
     }

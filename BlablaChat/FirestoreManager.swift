@@ -23,11 +23,16 @@ struct DBUser: Codable {
         self.imageLink = nil
     }
     
-    enum CodingKeys: String, CodingKey {
-        case userId
-        case email
-        case dateCreated
-        case imageLink
+    init(
+        userId: String,
+        email : String? = nil,
+        dateCreated: Date? = nil,
+        imageLink: String? = nil
+    ) {
+        self.userId = userId
+        self.email = email
+        self.dateCreated = dateCreated
+        self.imageLink = imageLink
     }
 }
 
@@ -51,17 +56,45 @@ final class FirestoreManager {
         return userCollection
     }
     
-    // functions -----------------------------------------------
+    // codage -----------------------------------------------
     
-    // Création d'un document user dans la BDD
+    // encodage JSON pour créer l'utilisateur dans la base - createNewUser
+    private let encoder: Firestore.Encoder = {
+        let encoder = Firestore.Encoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        return encoder
+    }()
+    
+    // decodage du JSON pour downloader le user à partir de la database - getUser
+    private let decoder: Firestore.Decoder = {
+        let decoder = Firestore.Decoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }()
+
+    // fonctions ----------------------------------------------
+    
     func createDbUser(user: DBUser) async throws {
-        try userDocument(userId: user.userId).setData(from: user, merge: false)
+        try userDocument(userId: user.userId).setData(from: user, merge: false, encoder: encoder)
     }
+    
+    // Téléchargement du profile d'un user de la base  avec decodage JSON vers local - Meilleure méthode
+    func getUser(userId: String) async throws -> DBUser {
+        let dbUser = try await userDocument(userId: userId).getDocument(as: DBUser.self, decoder: decoder)
+        print("imageLink: \(dbUser.imageLink ?? "")")
+        return dbUser
+    }
+
+    
+//    // Création d'un document user dans la BDD
+//    func createDbUser(user: DBUser) async throws {
+//        try userDocument(userId: user.userId).setData(from: user, merge: false)
+//    }
         
-    func updateImagePath(userId: String, path: String) async throws { // maj image DBuser et FireStore
-        let data: [String:Any] = [
-            DBUser.CodingKeys.imageLink.rawValue : path
-        ]
-        try await userDocument(userId: userId).updateData(data)
-    }
+//    func updateImagePath(userId: String, path: String) async throws { // maj image DBuser et FireStore
+//        let data: [String:Any] = [
+//            DBUser.CodingKeys.imageLink.rawValue : path
+//        ]
+//        try await userDocument(userId: userId).updateData(data)
+//    }
 }

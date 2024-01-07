@@ -34,7 +34,16 @@ struct DBUser: Codable {
         self.dateCreated = dateCreated
         self.imageLink = imageLink
     }
+    
+    enum CodingKeys: String, CodingKey {
+        case userId
+        case email
+        case dateCreated
+        case imageLink
+    }
+    
 }
+
 
 final class FirestoreManager {
     
@@ -78,7 +87,6 @@ final class FirestoreManager {
         try userDocument(userId: user.userId).setData(from: user, merge: false, encoder: encoder)
     }
     
-    // Téléchargement du profile d'un user de la base  avec decodage JSON vers local - Meilleure méthode
     func getUser(userId: String) async throws -> DBUser {
         let dbUser = try await userDocument(userId: userId).getDocument(as: DBUser.self, decoder: decoder)
         print("imageLink: \(dbUser.imageLink ?? "")")
@@ -91,10 +99,10 @@ final class FirestoreManager {
 //        try userDocument(userId: user.userId).setData(from: user, merge: false)
 //    }
         
-//    func updateImagePath(userId: String, path: String) async throws { // maj image DBuser et FireStore
-//        let data: [String:Any] = [
-//            DBUser.CodingKeys.imageLink.rawValue : path
-//        ]
-//        try await userDocument(userId: userId).updateData(data)
-//    }
+    func updateImagePath(userId: String, path: String) async throws { // maj image DBuser et FireStore
+        let data: [String:Any] = [
+            DBUser.CodingKeys.imageLink.rawValue : path
+        ]
+        try await userDocument(userId: userId).updateData(data)
+    }
 }

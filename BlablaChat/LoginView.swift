@@ -33,7 +33,7 @@ final class LoginViewModel: ObservableObject {
         print("path: \(path)")
         print("name: \(name)")
         
-        try await FirestoreManager.shared.updateImagePath(userId: user.userId, path: name) // save DBuser et Firestore
+        try await FirestoreManager.shared.updateImagePath(userId: user.userId, path: name) // save DBuser et maj Firestore
                 
      }
     

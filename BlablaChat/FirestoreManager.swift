@@ -92,12 +92,6 @@ final class FirestoreManager {
         print("imageLink: \(dbUser.imageLink ?? "")")
         return dbUser
     }
-
-    
-//    // Création d'un document user dans la BDD
-//    func createDbUser(user: DBUser) async throws {
-//        try userDocument(userId: user.userId).setData(from: user, merge: false)
-//    }
         
     func updateImagePath(userId: String, path: String) async throws { // maj image DBuser et FireStore
         let data: [String:Any] = [

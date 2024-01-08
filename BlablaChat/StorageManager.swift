@@ -30,10 +30,10 @@ final class StorageManager {
     // functions ------------------------------------
     
     // URL
-    func getUrlForImage(path: String) async throws -> URL {
-        print("getUrlForImage:\(path)")
-        return try await Storage.storage().reference(withPath: path).downloadURL()
-    }
+//    func getUrlForImage(path: String) async throws -> URL {
+//        print("getUrlForImage:\(path)")
+//        return try await Storage.storage().reference(withPath: path).downloadURL()
+//    }
     
     // Obtenir l'image - path = nom de l'image
     func getData(userId: String, path: String) async throws -> Data {

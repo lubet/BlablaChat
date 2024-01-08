@@ -89,11 +89,10 @@ final class FirestoreManager {
         return try await userDocument(userId: userId).getDocument(as: DBUser.self, decoder: decoder)
      }
         
-    func updateImagePath(userId: String, path: URL) async throws { // maj image DBuser et FireStore
+    func updateImagePath(userId: String, path: String) async throws { // maj image DBuser et FireStore
         let data: [String:Any] = [
             DBUser.CodingKeys.imageLink.rawValue : path
         ]
-        print("FirestoreManager: \(path)")
         try await userDocument(userId: userId).updateData(data)
     }
 }

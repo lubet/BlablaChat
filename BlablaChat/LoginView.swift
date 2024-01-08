@@ -30,13 +30,13 @@ final class LoginViewModel: ObservableObject {
         
         let (path, name) = try await StorageManager.shared.saveImage(image: image, userId: user.userId) // save Storage
         
-        print("image path: \(path)") // chemin complet + nom du jpeg
-        print("Image name: \(name)") // nom du jpeg
+//        print("image path: \(path)") // chemin complet + nom du jpeg
+//        print("Image name: \(name)") // nom du jpeg
         
         try await FirestoreManager.shared.updateImagePath(userId: user.userId, path: path) // save DBuser et maj Firestore
         
-        
-                
+        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
+        print("image url: \(lurl)")
      }
     
     func signIn() async throws {

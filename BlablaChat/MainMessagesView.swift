@@ -15,7 +15,6 @@ final class MainMessagesViewModel : ObservableObject {
     func loadCurrentUser() async throws {
         let authResult = try AuthManager.shared.getAuthenticatedUser()
         self.user = try await FirestoreManager.shared.getUser(userId: authResult.uid)
-        
     }
 }
 
@@ -25,17 +24,26 @@ struct MainMessagesView: View {
     @ObservedObject private var viewModel = MainMessagesViewModel()
     
     @State var LogOutSheet = false
-    
+    @State private var url: URL? = nil
+    @State private var image: UIImage? = nil
+    @State private var email: String = ""
     
     // Navbar ---------------------------
     private var customNavBar: some View {
         HStack(spacing: 16) {
-            
-            Image(systemName: "person.fill")
-                .font(.system(size: 34, weight: .heavy))
-            
+            if let url {
+                AsyncImage(url: url) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 50, height: 50)
+                        .clipShape(Circle())
+                } placeholder: {
+                    ProgressView()
+                }
+            }
             VStack(alignment: .leading, spacing: 4) {
-                Text("USERNAME")
+                Text("\(email)")
                     .font(.system(size: 24, weight: .bold))
                 
                 HStack {
@@ -60,6 +68,17 @@ struct MainMessagesView: View {
         .onAppear { // Nick a mis Task à la place de onAppear (.task)
             Task {
                 try? await viewModel.loadCurrentUser()
+                
+                guard let user = viewModel.user else { return }
+                
+                if let path = user.imageLink {
+                    let url = try? await StorageManager.shared.getUrlForImage(path: path)
+                    self.url = url
+                }
+                
+                if let email = user.email {
+                    self.email = email
+                }
             }
         }
 

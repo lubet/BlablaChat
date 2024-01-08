@@ -41,9 +41,7 @@ struct DBUser: Codable {
         case dateCreated
         case imageLink
     }
-    
 }
-
 
 final class FirestoreManager {
     
@@ -88,15 +86,14 @@ final class FirestoreManager {
     }
     
     func getUser(userId: String) async throws -> DBUser {
-        let dbUser = try await userDocument(userId: userId).getDocument(as: DBUser.self, decoder: decoder)
-        print("imageLink: \(dbUser.imageLink ?? "")")
-        return dbUser
-    }
+        return try await userDocument(userId: userId).getDocument(as: DBUser.self, decoder: decoder)
+     }
         
-    func updateImagePath(userId: String, path: String) async throws { // maj image DBuser et FireStore
+    func updateImagePath(userId: String, path: URL) async throws { // maj image DBuser et FireStore
         let data: [String:Any] = [
             DBUser.CodingKeys.imageLink.rawValue : path
         ]
+        print("FirestoreManager: \(path)")
         try await userDocument(userId: userId).updateData(data)
     }
 }

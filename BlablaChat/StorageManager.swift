@@ -29,7 +29,9 @@ final class StorageManager {
 
     // functions ------------------------------------
     
+    // URL
     func getUrlForImage(path: String) async throws -> URL {
+        print("getUrlForImage:\(path)")
         return try await Storage.storage().reference(withPath: path).downloadURL()
     }
     
@@ -51,13 +53,12 @@ final class StorageManager {
         let meta = StorageMetadata()
         meta.contentType = "image/jpeg"
                 
-        let path = "\(UUID().uuidString).jpeg"
-        let returnMetaData = try await userReference(userId: userId).child(path).putDataAsync(data, metadata: meta)
+        let name = "\(UUID().uuidString).jpeg"
+        let returnMetaData = try await userReference(userId: userId).child(name).putDataAsync(data, metadata: meta)
                 
         guard let path = returnMetaData.path, let name = returnMetaData.name else {
             throw URLError(.badServerResponse)
         }
-         
         return(path, name)
     }
     

@@ -22,7 +22,7 @@ final class LoginViewModel: ObservableObject {
         // Création nouveau user authentifié
         let authUser = try await AuthManager.shared.createUser(email: email, password: password) // Authentification
         
-        let user = DBUser(auth: authUser)
+        let user = DBUser(auth: authUser) // Instanciation
         
         try await FirestoreManager.shared.createDbUser(user: user) // Firesstore sans l'image
         
@@ -30,10 +30,16 @@ final class LoginViewModel: ObservableObject {
         
         let (path, name) = try await StorageManager.shared.saveImage(image: image, userId: user.userId) // save Storage
         
-        print("path: \(path)")
-        print("name: \(name)")
+        print("image path: \(path)") // chemin complet + nom du jpeg
+        print("Image name: \(name)") // nom du jpeg
         
-        try await FirestoreManager.shared.updateImagePath(userId: user.userId, path: name) // save DBuser et maj Firestore
+        let url = try await StorageManager.shared.getUrlForImage(path: path)
+        
+        print("URL image: \(url)")
+        
+        try await FirestoreManager.shared.updateImagePath(userId: user.userId, path: url) // save DBuser et maj Firestore
+        
+        
                 
      }
     

@@ -40,6 +40,7 @@ struct MainMessagesView: View {
                         .clipShape(Circle())
                 } placeholder: {
                     ProgressView()
+                        .frame(width: 50, height: 50)
                 }
             }
             VStack(alignment: .leading, spacing: 4) {

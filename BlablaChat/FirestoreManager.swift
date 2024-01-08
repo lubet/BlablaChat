@@ -95,4 +95,5 @@ final class FirestoreManager {
         ]
         try await userDocument(userId: userId).updateData(data)
     }
+
 }

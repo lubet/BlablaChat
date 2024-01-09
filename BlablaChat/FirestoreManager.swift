@@ -9,11 +9,15 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct DBUser: Codable {
+struct DBUser: Codable, Identifiable {
     let userId: String
     let email : String?
     let dateCreated: Date?
     let imageLink: String?
+    
+    var id: String {
+        userId
+    }
     
     // Init du document à partir des données de l'authentification auxquelles on ajoute la date de création et le champ premium
     init(auth: AuthUser) {

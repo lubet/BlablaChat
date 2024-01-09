@@ -22,7 +22,7 @@ final class LoginViewModel: ObservableObject {
         // Création nouveau user authentifié
         let authUser = try await AuthManager.shared.createUser(email: email, password: password) // Authentification
         
-        let user = DBUser(auth: authUser) // Instanciation
+        let user = DBUser(auth: authUser) // Instanciation userId email...
         
         try await FirestoreManager.shared.createDbUser(user: user) // Firesstore sans l'image
         
@@ -32,11 +32,12 @@ final class LoginViewModel: ObservableObject {
         
 //        print("image path: \(path)") // chemin complet + nom du jpeg
 //        print("Image name: \(name)") // nom du jpeg
-        
-        try await FirestoreManager.shared.updateImagePath(userId: user.userId, path: path) // save DBuser et maj Firestore
-        
+
         let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
         print("image url: \(lurl)")
+
+        try await FirestoreManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // save DBuser et maj Firestore
+        
      }
     
     func signIn() async throws {
@@ -84,7 +85,6 @@ struct LoginView: View {
                     .padding(40)
                     
                     Group {
-                        
                         TextField("Email", text: $viewModel.email)
                             .cornerRadius(10)
                             .autocapitalization(.none)
@@ -93,7 +93,7 @@ struct LoginView: View {
                         SecureField("Mot de passe", text: $viewModel.password)
                             .cornerRadius(10)
                     }
-                    .padding(12)
+                    .padding(15)
                     .background(Color.gray.opacity(0.2))
                     
                     Button {

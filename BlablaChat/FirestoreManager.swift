@@ -88,7 +88,8 @@ final class FirestoreManager {
     func getUser(userId: String) async throws -> DBUser {
         return try await userDocument(userId: userId).getDocument(as: DBUser.self, decoder: decoder)
      }
-        
+    
+    // path = URL
     func updateImagePath(userId: String, path: String) async throws { // maj image DBuser et FireStore
         let data: [String:Any] = [
             DBUser.CodingKeys.imageLink.rawValue : path

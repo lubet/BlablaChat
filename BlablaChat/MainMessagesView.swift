@@ -73,8 +73,7 @@ struct MainMessagesView: View {
                 guard let user = viewModel.user else { return }
                 
                 if let path = user.imageLink {
-                    let url = try? await StorageManager.shared.getUrlForImage(path: path)
-                    self.url = url
+                    self.url = URL(string: path)
                 }
                 
                 if let email = user.email {

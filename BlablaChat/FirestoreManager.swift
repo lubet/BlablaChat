@@ -40,10 +40,27 @@ struct DBUser: Codable, Identifiable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case userId
-        case email
-        case dateCreated
-        case imageLink
+        case userId = "user_id"
+        case email = "email"
+        case dateCreated = "date_created"
+        case imageLink = "image_link"
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.userId, forKey: .userId)
+        try container.encodeIfPresent(self.email, forKey: .email)
+        try container.encodeIfPresent(self.dateCreated, forKey: .dateCreated)
+        try container.encodeIfPresent(self.imageLink, forKey: .imageLink)
+    }
+    
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.userId = try container.decode(String.self, forKey: .userId)
+        self.email = try container.decodeIfPresent(String.self, forKey: .email)
+        self.dateCreated = try container.decodeIfPresent(Date.self, forKey: .dateCreated)
+        self.imageLink = try container.decodeIfPresent(String.self, forKey: .imageLink)
     }
 }
 
@@ -52,17 +69,14 @@ final class FirestoreManager {
     static let shared = FirestoreManager()
     init() { }
     
-    /// References --------------------------------------------------------------------------------------------
-    
-    // Reference la collection "users"
     private let userCollection: CollectionReference = Firestore.firestore().collection("users")
     
-    // Reference un user
+    // user
     private func userDocument(userId: String) -> DocumentReference {
         return userCollection.document(userId)
     }
     
-    // Reference tous les users
+    // users
     private func usersCollection() -> CollectionReference {
         return userCollection
     }
@@ -70,35 +84,54 @@ final class FirestoreManager {
     // codage -----------------------------------------------
     
     // encodage JSON pour créer l'utilisateur dans la base - createNewUser
-    private let encoder: Firestore.Encoder = {
-        let encoder = Firestore.Encoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
-        return encoder
-    }()
+//    private let encoder: Firestore.Encoder = {
+//        let encoder = Firestore.Encoder()
+//        encoder.keyEncodingStrategy = .convertToSnakeCase
+//        return encoder
+//    }()
+//
+//    // decodage du JSON pour downloader le user à partir de la database - getUser
+//    private let decoder: Firestore.Decoder = {
+//        let decoder = Firestore.Decoder()
+//        decoder.keyDecodingStrategy = .convertFromSnakeCase
+//        return decoder
+//    }()
     
-    // decodage du JSON pour downloader le user à partir de la database - getUser
-    private let decoder: Firestore.Decoder = {
-        let decoder = Firestore.Decoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return decoder
-    }()
-
-    // fonctions ----------------------------------------------
-    
+    //
     func createDbUser(user: DBUser) async throws {
-        try userDocument(userId: user.userId).setData(from: user, merge: false, encoder: encoder)
+        try userDocument(userId: user.userId).setData(from: user, merge: false)
     }
     
     func getUser(userId: String) async throws -> DBUser {
-        return try await userDocument(userId: userId).getDocument(as: DBUser.self, decoder: decoder)
-     }
-    
-    // path = URL
-    func updateImagePath(userId: String, path: String) async throws { // maj image DBuser et FireStore
-        let data: [String:Any] = [
-            DBUser.CodingKeys.imageLink.rawValue : path
-        ]
-        try await userDocument(userId: userId).updateData(data)
+        return try await userDocument(userId: userId).getDocument(as: DBUser.self)
     }
-
+    
+    // ----
+    func getAllUsers() async throws -> [DBUser] {
+        let snapshot = try await Firestore.firestore().collection("users").getDocuments()
+        
+        var dbUsers = [DBUser]()
+        
+        for document in snapshot.documents {
+            let user = try document.data(as: DBUser.self)
+            print("user2")
+            dbUsers.append(user)
+        }
+        return dbUsers
+    }
+    
+    //        userCollection.getDocuments {
+    //            DocumentSnapshot, error in
+    //            if let error = error {
+    //                print("failed to fetch all users")
+    //                return
+    //            }
+    //            DocumentSnapshot?.documents.forEach({ snapshot in
+    //                guard let data = snapshot.data() else { return }
+    //                dbUsers.append((data: data))
+    //            }
+    //            )
+    //
+    //        }
+    
 }

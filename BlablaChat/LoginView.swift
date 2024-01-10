@@ -28,15 +28,15 @@ final class LoginViewModel: ObservableObject {
         
         guard let image else { return }
         
-        let (path, name) = try await StorageManager.shared.saveImage(image: image, userId: user.userId) // save Storage
+        // let (path, name) = try await StorageManager.shared.saveImage(image: image, userId: user.userId) // save Storage
         
 //        print("image path: \(path)") // chemin complet + nom du jpeg
 //        print("Image name: \(name)") // nom du jpeg
 
-        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-        print("image url: \(lurl)")
+//        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
+//        print("image url: \(lurl)")
 
-        try await FirestoreManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // save DBuser et maj Firestore
+//        try await FirestoreManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // save DBuser et maj Firestore
         
      }
     

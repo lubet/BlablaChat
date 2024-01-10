@@ -177,7 +177,7 @@ extension MessagesView {
             .shadow(radius: 15)
         }
         .fullScreenCover(isPresented: $newMessage) {
-            Text("New message page")
+            NewMessageView()
         }
     }
 }

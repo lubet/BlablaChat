@@ -8,8 +8,27 @@
 import SwiftUI
 
 struct NewMessageView: View {
+    
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            ScrollView {
+                ForEach(1..<10) { index in
+                    Text("Essai\(index)")
+                }
+            }
+            .navigationTitle("New Message")
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Cancel")
+                    }
+                }
+            }
+        }
     }
 }
 

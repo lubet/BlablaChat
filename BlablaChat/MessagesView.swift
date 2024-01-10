@@ -16,9 +16,9 @@ final class MessagesViewModel: ObservableObject {
         let authResult = try AuthManager.shared.getAuthenticatedUser()
         self.user = try await FirestoreManager.shared.getUser(userId: authResult.uid)
     }
-
 }
 
+// ------------------------------------------------------------
 struct MessagesView: View {
     
     @ObservedObject private var viewModel = MessagesViewModel()
@@ -27,6 +27,7 @@ struct MessagesView: View {
     @State private var url: URL? = nil
     @State private var image: UIImage? = nil
     @State private var email: String = ""
+    @State private var newMessage: Bool = false
     
     var body: some View {
         NavigationView {
@@ -47,10 +48,11 @@ struct MessagesView_Previews: PreviewProvider {
     }
 }
 
-// Header -----------------------------------
+// -----------------------------------
 extension MessagesView {
     
     private var header: some View {
+        
         HStack(spacing: 16) {
             if let url {
                 AsyncImage(url: url) { image in
@@ -115,10 +117,11 @@ extension MessagesView {
     }
 }
 
-// Messages  --------------------------------------------
+// --------------------------------------------
 extension MessagesView {
 
     private var messages: some View {
+        
         ScrollView {
             ForEach(0..<10, id: \.self) { num in
                 VStack {
@@ -151,12 +154,13 @@ extension MessagesView {
     }
 }
 
-// Bouton  --------------------------------------------
+// --------------------------------------------
 extension MessagesView {
     
     private var newMessageButton: some View {
+        
         Button {
-            
+            newMessage.toggle()
         } label: {
             HStack {
                 Spacer()
@@ -172,6 +176,8 @@ extension MessagesView {
             .padding(.vertical)
             .shadow(radius: 15)
         }
-
+        .fullScreenCover(isPresented: $newMessage) {
+            Text("New message page")
+        }
     }
 }

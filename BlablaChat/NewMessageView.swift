@@ -36,6 +36,9 @@ struct NewMessageView: View {
                                     .scaledToFill()
                                     .frame(width: 40, height: 40)
                                     .clipShape(Circle())
+                                    .overlay(RoundedRectangle(cornerRadius: 50)
+                                        .stroke(Color(.label), lineWidth: 1)
+                                    )
                             } placeholder: {
                                 ProgressView()
                                     .frame(width: 40, height: 40)
@@ -50,6 +53,7 @@ struct NewMessageView: View {
                         Spacer()
                     } .padding(.horizontal)
                     Divider()
+                        .padding(.vertical, 8)
                 }
             }
             .navigationTitle("New Message")

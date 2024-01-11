@@ -11,18 +11,9 @@ import SwiftUI
 final class NewMessageViewModel: ObservableObject {
     
     @Published var users: [DBUser] = []
-//
-//    init() {
-//        Task {
-//            print("2")
-//            try await getUsers()
-//        }
-//    }
-//
+
     func getUsers() async throws {
-        print("3")
         self.users = try await FirestoreManager.shared.getAllUsers()
-        print("ICI")
     }
 }
 
@@ -30,15 +21,34 @@ final class NewMessageViewModel: ObservableObject {
 struct NewMessageView: View {
     
     @StateObject private var viewModel = NewMessageViewModel()
-    
+        
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         NavigationView {
             ScrollView {
                 ForEach(viewModel.users) { user in
-                    Text(user.email ?? "")
-                    // Text("Zut")
+                    if let url = user.imageLink {
+                        AsyncImage(url: URL(string: url)) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 50, height: 50)
+                                .clipShape(Circle())
+                        } placeholder: {
+                            ProgressView()
+                                .frame(width: 50, height: 50)
+                        }
+                    } else {
+                        Image(systemName: "person.fill")
+                            .font(.system(size: 70))
+                            .padding()
+                            .foregroundColor(Color(.label))
+                    }
+                            
+                    HStack(spacing: 16) {
+                        Text(user.email ?? "")
+                    }
                 }
             }
             .navigationTitle("New Message")
@@ -55,6 +65,7 @@ struct NewMessageView: View {
         .onAppear {
            Task {
                try await viewModel.getUsers()
+               
             }
         }
     }

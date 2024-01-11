@@ -32,7 +32,7 @@ final class LoginViewModel: ObservableObject {
 //        print("Image name: \(name)") // nom du jpeg
 
         let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-        print("image url: \(lurl)")
+        // print("image url: \(lurl)")
 
         try await FirestoreManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
         

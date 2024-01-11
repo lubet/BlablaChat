@@ -109,7 +109,7 @@ final class FirestoreManager {
         
         for document in snapshot.documents {
             let user = try document.data(as: DBUser.self)
-            print("user: \(user)")
+            // print("user: \(user)")
             dbUsers.append(user)
         }
         return dbUsers

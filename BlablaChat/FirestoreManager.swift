@@ -19,7 +19,7 @@ struct DBUser: Codable, Identifiable {
         userId
     }
     
-    // Init du document à partir des données de l'authentification auxquelles on ajoute la date de création et le champ premium
+    // Init du document à partir des données de l'authentification auxquelles on ajoute la date de création et le lien de l'image
     init(auth: AuthUser) {
         self.userId = auth.uid
         self.email = auth.email
@@ -81,31 +81,18 @@ final class FirestoreManager {
         return userCollection
     }
     
-    // codage -----------------------------------------------
-    
-    // encodage JSON pour créer l'utilisateur dans la base - createNewUser
-//    private let encoder: Firestore.Encoder = {
-//        let encoder = Firestore.Encoder()
-//        encoder.keyEncodingStrategy = .convertToSnakeCase
-//        return encoder
-//    }()
-//
-//    // decodage du JSON pour downloader le user à partir de la database - getUser
-//    private let decoder: Firestore.Decoder = {
-//        let decoder = Firestore.Decoder()
-//        decoder.keyDecodingStrategy = .convertFromSnakeCase
-//        return decoder
-//    }()
     
     //
     func createDbUser(user: DBUser) async throws {
         try userDocument(userId: user.userId).setData(from: user, merge: false)
     }
     
+    //
     func getUser(userId: String) async throws -> DBUser {
         return try await userDocument(userId: userId).getDocument(as: DBUser.self)
     }
     
+    //
     func updateImagePath(userId: String, path: String) async throws {
         let data: [String:Any] = [
             DBUser.CodingKeys.imageLink.rawValue : path,
@@ -114,8 +101,7 @@ final class FirestoreManager {
         try await userDocument(userId: userId).updateData(data)
     }
     
-    
-    // ----
+    //
     func getAllUsers() async throws -> [DBUser] {
         let snapshot = try await Firestore.firestore().collection("users").getDocuments()
         
@@ -123,24 +109,10 @@ final class FirestoreManager {
         
         for document in snapshot.documents {
             let user = try document.data(as: DBUser.self)
-            print("user2")
+            print("user: \(user)")
             dbUsers.append(user)
         }
         return dbUsers
     }
-    
-    //        userCollection.getDocuments {
-    //            DocumentSnapshot, error in
-    //            if let error = error {
-    //                print("failed to fetch all users")
-    //                return
-    //            }
-    //            DocumentSnapshot?.documents.forEach({ snapshot in
-    //                guard let data = snapshot.data() else { return }
-    //                dbUsers.append((data: data))
-    //            }
-    //            )
-    //
-    //        }
     
 }

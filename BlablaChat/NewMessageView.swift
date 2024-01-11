@@ -11,14 +11,14 @@ import SwiftUI
 final class NewMessageViewModel: ObservableObject {
     
     @Published var users: [DBUser] = []
-    
-    init() {
-        Task {
-            print("2")
-            try await getUsers()
-        }
-    }
-    
+//
+//    init() {
+//        Task {
+//            print("2")
+//            try await getUsers()
+//        }
+//    }
+//
     func getUsers() async throws {
         print("3")
         self.users = try await FirestoreManager.shared.getAllUsers()
@@ -37,8 +37,8 @@ struct NewMessageView: View {
         NavigationView {
             ScrollView {
                 ForEach(viewModel.users) { user in
-                    // Text(user.email ?? "")
-                    Text("Zut")
+                    Text(user.email ?? "")
+                    // Text("Zut")
                 }
             }
             .navigationTitle("New Message")
@@ -52,11 +52,11 @@ struct NewMessageView: View {
                 }
             }
         }
-//        .onAppear {
-//           Task {
-//                try await viewModel.getAllUsers()
-//            }
-//        }
+        .onAppear {
+           Task {
+               try await viewModel.getUsers()
+            }
+        }
     }
 }
 

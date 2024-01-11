@@ -106,6 +106,15 @@ final class FirestoreManager {
         return try await userDocument(userId: userId).getDocument(as: DBUser.self)
     }
     
+    func updateImagePath(userId: String, path: String) async throws {
+        let data: [String:Any] = [
+            DBUser.CodingKeys.imageLink.rawValue : path,
+        ]
+        
+        try await userDocument(userId: userId).updateData(data)
+    }
+    
+    
     // ----
     func getAllUsers() async throws -> [DBUser] {
         let snapshot = try await Firestore.firestore().collection("users").getDocuments()

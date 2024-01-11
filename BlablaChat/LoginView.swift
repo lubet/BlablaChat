@@ -19,24 +19,22 @@ final class LoginViewModel: ObservableObject {
             return
         }
         
-        // Création nouveau user authentifié
-        let authUser = try await AuthManager.shared.createUser(email: email, password: password) // Authentification
+        let authUser = try await AuthManager.shared.createUser(email: email, password: password)
         
-        let user = DBUser(auth: authUser) // Instanciation userId email...
+        let user = DBUser(auth: authUser) // Instanciation userId email
         
-        try await FirestoreManager.shared.createDbUser(user: user) // Firesstore sans l'image
+        try await FirestoreManager.shared.createDbUser(user: user) // Save in Firestore sans l'image
         
         guard let image else { return }
         
-        // let (path, name) = try await StorageManager.shared.saveImage(image: image, userId: user.userId) // save Storage
-        
+        let (path, name) = try await StorageManager.shared.saveImage(image: image, userId: user.userId)
 //        print("image path: \(path)") // chemin complet + nom du jpeg
 //        print("Image name: \(name)") // nom du jpeg
 
-//        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-//        print("image url: \(lurl)")
+        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
+        print("image url: \(lurl)")
 
-//        try await FirestoreManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // save DBuser et maj Firestore
+        try await FirestoreManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
         
      }
     

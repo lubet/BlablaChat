@@ -28,30 +28,32 @@ struct NewMessageView: View {
         NavigationView {
             ScrollView {
                 ForEach(viewModel.users) { user in
-                    if let url = user.imageLink {
-                        AsyncImage(url: URL(string: url)) { image in
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
-                        } placeholder: {
-                            ProgressView()
-                                .frame(width: 50, height: 50)
+                    HStack(spacing: 20) {
+                        if let url = user.imageLink {
+                            AsyncImage(url: URL(string: url)) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 40, height: 40)
+                                    .clipShape(Circle())
+                            } placeholder: {
+                                ProgressView()
+                                    .frame(width: 40, height: 40)
+                            }
+                        } else {
+                            Image(systemName: "person.fill")
+                                .font(.system(size: 70))
+                                .padding()
+                                .foregroundColor(Color(.label))
                         }
-                    } else {
-                        Image(systemName: "person.fill")
-                            .font(.system(size: 70))
-                            .padding()
-                            .foregroundColor(Color(.label))
-                    }
-                            
-                    HStack(spacing: 16) {
                         Text(user.email ?? "")
-                    }
+                        Spacer()
+                    } .padding(.horizontal)
+                    Divider()
                 }
             }
             .navigationTitle("New Message")
+            .padding(.vertical)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
                     Button {
@@ -65,7 +67,6 @@ struct NewMessageView: View {
         .onAppear {
            Task {
                try await viewModel.getUsers()
-               
             }
         }
     }

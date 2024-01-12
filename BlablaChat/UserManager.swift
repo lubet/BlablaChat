@@ -161,6 +161,15 @@ final class UserManager {
     }
     
     func addUserMessage(userId: String, message: String, received: Bool) {
+        let document = userMessagesCollection(userId: userId).document()
+        let documentId = document.documentID
         
+        let data : [String:Any] = [
+            "messageId" = documentId,
+            "message" = message,
+            "received" = received
+        ]
+        
+        try await document.setData(data, merge: false)
     }
 }

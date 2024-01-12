@@ -172,4 +172,8 @@ final class UserManager {
         
         try await document.setData(data, merge: false)
     }
+    
+    func removeUserMessage(userId: String, messageId: String) {
+        try await userMessageDocument(userId: userId, messageId: messageId).delete()
+    }
 }

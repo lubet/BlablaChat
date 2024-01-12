@@ -117,6 +117,14 @@ final class UserManager {
     
     // Messages -----------------------------------------------------------------------
     
+    private func userMessagesCollection(userId: String) -> CollectionReference {
+        userDocument(userId: userId).collection("messages")
+    }
+    
+    private func userMessageDocument(userId: String, messageId: String) -> DocumentReference {
+        userMessagesCollection(userId: userId).document(messageId)
+    }
+    
     struct UserMessage: Codable, Identifiable {
         let messageId: String
         let message: String
@@ -152,5 +160,7 @@ final class UserManager {
         
     }
     
-    // func addUserMessage(userId: String, )
+    func addUserMessage(userId: String, message: String, received: Bool) {
+        
+    }
 }

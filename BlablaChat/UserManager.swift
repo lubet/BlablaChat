@@ -160,20 +160,20 @@ final class UserManager {
         
     }
     
-    func addUserMessage(userId: String, message: String, received: Bool) {
+    func addUserMessage(userId: String, message: String, received: Bool) async throws {
         let document = userMessagesCollection(userId: userId).document()
         let documentId = document.documentID
         
-        let data : [String:Any] = [
-            "messageId" = documentId,
-            "message" = message,
-            "received" = received
+        let data: [String:Any] = [
+            "messageId" : documentId,
+            "message" : message,
+            "received" : received
         ]
         
         try await document.setData(data, merge: false)
     }
     
-    func removeUserMessage(userId: String, messageId: String) {
+    func removeUserMessage(userId: String, messageId: String) async throws {
         try await userMessageDocument(userId: userId, messageId: messageId).delete()
     }
 }

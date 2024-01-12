@@ -115,4 +115,38 @@ final class UserManager {
         return dbUsers
     }
     
+    // Messages -----------------------------------------------------------------------
+    
+    struct UserMessage: Codable, Identifiable {
+        let messageId: String
+        let message: String
+        let dateCreated: Date
+        
+        var id: String {
+            messageId
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case messageId = "message_id"
+            case message = "message"
+            case dateCreated = "date_created"
+        }
+        
+        func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: UserManager.UserMessage.CodingKeys.self)
+            try container.encode(self.messageId, forKey: UserManager.UserMessage.CodingKeys.messageId)
+            try container.encode(self.message, forKey: UserManager.UserMessage.CodingKeys.message)
+            try container.encode(self.dateCreated, forKey: UserManager.UserMessage.CodingKeys.dateCreated)
+        }
+        
+        init(from decoder: Decoder) throws {
+            let container: KeyedDecodingContainer<UserManager.UserMessage.CodingKeys> = try decoder.container(keyedBy: UserManager.UserMessage.CodingKeys.self)
+            self.messageId = try container.decode(String.self, forKey: UserManager.UserMessage.CodingKeys.messageId)
+            self.message = try container.decode(String.self, forKey: UserManager.UserMessage.CodingKeys.message)
+            self.dateCreated = try container.decode(Date.self, forKey: UserManager.UserMessage.CodingKeys.dateCreated)
+        }
+        
+    }
+    
+    // func addUserMessage(userId: String, )
 }

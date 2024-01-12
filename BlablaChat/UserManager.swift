@@ -64,9 +64,9 @@ struct DBUser: Codable, Identifiable {
     }
 }
 
-final class FirestoreManager {
+final class UserManager {
     
-    static let shared = FirestoreManager()
+    static let shared = UserManager()
     init() { }
     
     private let userCollection: CollectionReference = Firestore.firestore().collection("users")

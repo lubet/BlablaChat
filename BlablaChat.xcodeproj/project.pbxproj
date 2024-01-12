@@ -21,7 +21,7 @@
 		C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9DD2B45668800C6D48F /* ImagePicker.swift */; };
 		C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9DF2B45767B00C6D48F /* AuthManager.swift */; };
 		C047E9E22B45880400C6D48F /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9E12B45880400C6D48F /* StorageManager.swift */; };
-		C047E9E42B45A8FB00C6D48F /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9E32B45A8FB00C6D48F /* FirestoreManager.swift */; };
+		C047E9E42B45A8FB00C6D48F /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9E32B45A8FB00C6D48F /* UserManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +36,7 @@
 		C047E9DD2B45668800C6D48F /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		C047E9DF2B45767B00C6D48F /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		C047E9E12B45880400C6D48F /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
-		C047E9E32B45A8FB00C6D48F /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
+		C047E9E32B45A8FB00C6D48F /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +76,7 @@
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
 				C047E9DC2B45665300C6D48F /* Utilities */,
 				C047E9DF2B45767B00C6D48F /* AuthManager.swift */,
-				C047E9E32B45A8FB00C6D48F /* FirestoreManager.swift */,
+				C047E9E32B45A8FB00C6D48F /* UserManager.swift */,
 				C047E9E12B45880400C6D48F /* StorageManager.swift */,
 				C047E9C52B45625C00C6D48F /* LoginView.swift */,
 				C03B37E22B4DAE5D006627EF /* MessagesView.swift */,
@@ -186,7 +186,7 @@
 			files = (
 				C03B37E32B4DAE5D006627EF /* MessagesView.swift in Sources */,
 				C035C0822B4E829200C09EA3 /* NewMessageView.swift in Sources */,
-				C047E9E42B45A8FB00C6D48F /* FirestoreManager.swift in Sources */,
+				C047E9E42B45A8FB00C6D48F /* UserManager.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,
 				C047E9E22B45880400C6D48F /* StorageManager.swift in Sources */,

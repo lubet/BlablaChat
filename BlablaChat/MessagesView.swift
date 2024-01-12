@@ -14,7 +14,7 @@ final class MessagesViewModel: ObservableObject {
     
     func loadCurrentUser() async throws {
         let authResult = try AuthManager.shared.getAuthenticatedUser()
-        self.user = try await FirestoreManager.shared.getUser(userId: authResult.uid)
+        self.user = try await UserManager.shared.getUser(userId: authResult.uid)
     }
 }
 

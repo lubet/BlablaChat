@@ -14,7 +14,7 @@ final class NewMessageViewModel: ObservableObject {
     @Published var authId: String = ""
 
     func getUsers() async throws {
-        self.users = try await FirestoreManager.shared.getAllUsers()
+        self.users = try await UserManager.shared.getAllUsers()
     }
     
     // TODO ne pas prendre le user qui est connecté dans la liste

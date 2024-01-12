@@ -120,6 +120,7 @@ final class UserManager {
     struct UserMessage: Codable, Identifiable {
         let messageId: String
         let message: String
+        let received: Bool
         let dateCreated: Date
         
         var id: String {
@@ -129,6 +130,7 @@ final class UserManager {
         enum CodingKeys: String, CodingKey {
             case messageId = "message_id"
             case message = "message"
+            case received = "received"
             case dateCreated = "date_created"
         }
         
@@ -136,6 +138,7 @@ final class UserManager {
             var container = encoder.container(keyedBy: UserManager.UserMessage.CodingKeys.self)
             try container.encode(self.messageId, forKey: UserManager.UserMessage.CodingKeys.messageId)
             try container.encode(self.message, forKey: UserManager.UserMessage.CodingKeys.message)
+            try container.encode(self.received, forKey: UserManager.UserMessage.CodingKeys.received)
             try container.encode(self.dateCreated, forKey: UserManager.UserMessage.CodingKeys.dateCreated)
         }
         
@@ -143,6 +146,7 @@ final class UserManager {
             let container: KeyedDecodingContainer<UserManager.UserMessage.CodingKeys> = try decoder.container(keyedBy: UserManager.UserMessage.CodingKeys.self)
             self.messageId = try container.decode(String.self, forKey: UserManager.UserMessage.CodingKeys.messageId)
             self.message = try container.decode(String.self, forKey: UserManager.UserMessage.CodingKeys.message)
+            self.received = try container.decode(Bool.self, forKey: UserManager.UserMessage.CodingKeys.received)
             self.dateCreated = try container.decode(Date.self, forKey: UserManager.UserMessage.CodingKeys.dateCreated)
         }
         

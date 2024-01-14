@@ -18,10 +18,10 @@ final class NewMessageViewModel: ObservableObject {
     }
     
     // TODO ne pas prendre le user qui est connecté dans la liste
-    func authUser() {
-        let authResult = try? AuthManager.shared.getAuthenticatedUser()
-        guard let authId = authResult?.uid else { return }
-    }
+//    func authUser() {
+//        let authResult = try? AuthManager.shared.getAuthenticatedUser()
+//        guard let authId = authResult?.uid else { return }
+//    }
     
 }
 
@@ -82,7 +82,7 @@ struct NewMessageView: View {
             }
             
             // TODO ne pas prendre le user qui est connecté dans la liste
-            viewModel.authUser()
+            //viewModel.authUser()
         }
     }
 }

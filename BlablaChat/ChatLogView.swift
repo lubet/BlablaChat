@@ -27,17 +27,19 @@ struct ChatLogView: View {
     @StateObject var viewModel = ChatLogViewModel()
     
     var body: some View {
-        ZStack {
-            ScrollView {
-                List {
-                    
-                }
-                .onAppear {
-                    // viewModel.getUserChatLog(userId: <#T##String#>)
+        NavigationView {
+            ZStack {
+                ScrollView {
+                    List {
+                        
+                    }
+                    .onAppear {
+                        // viewModel.getUserChatLog(userId: <#T##String#>)
+                    }
                 }
             }
             .navigationTitle("Chat log")
-         }
+        }
     }
 }
 

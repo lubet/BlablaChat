@@ -152,11 +152,11 @@ struct UserMessage: Codable, Identifiable {
     let dateCreated: Date
     
     enum CodingKeys: String, CodingKey {
-        case id
-        case from
-        case to
-        case texte
-        case dateCreated
+        case id = "id"
+        case from = "from"
+        case to = "to"
+        case texte = "texte"
+        case dateCreated = "date_created"
     }
 
     init(from decoder: Decoder) throws {

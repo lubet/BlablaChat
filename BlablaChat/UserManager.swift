@@ -126,48 +126,49 @@ final class UserManager {
     }
     
     struct UserMessage: Codable, Identifiable {
-        let messageId: String
-        let message: String
-        let received: Bool
+        let id: String
+        let from: String
+        let to: String
+        let texte: String
         let dateCreated: Date
-        
-        var id: String {
-            messageId
+
+        enum CodingKeys: CodingKey {
+            case id
+            case from
+            case to
+            case texte
+            case dateCreated
         }
 
-        enum CodingKeys: String, CodingKey {
-            case messageId = "message_id"
-            case message = "message"
-            case received = "received"
-            case dateCreated = "date_created"
+        init(from decoder: Decoder) throws {
+            let container: KeyedDecodingContainer<UserManager.UserMessage.CodingKeys> = try decoder.container(keyedBy: UserManager.UserMessage.CodingKeys.self)
+            self.id = try container.decode(String.self, forKey: UserManager.UserMessage.CodingKeys.id)
+            self.from = try container.decode(String.self, forKey: UserManager.UserMessage.CodingKeys.from)
+            self.to = try container.decode(String.self, forKey: UserManager.UserMessage.CodingKeys.to)
+            self.texte = try container.decode(String.self, forKey: UserManager.UserMessage.CodingKeys.texte)
+            self.dateCreated = try container.decode(Date.self, forKey: UserManager.UserMessage.CodingKeys.dateCreated)
         }
         
         func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: UserManager.UserMessage.CodingKeys.self)
-            try container.encode(self.messageId, forKey: UserManager.UserMessage.CodingKeys.messageId)
-            try container.encode(self.message, forKey: UserManager.UserMessage.CodingKeys.message)
-            try container.encode(self.received, forKey: UserManager.UserMessage.CodingKeys.received)
+            try container.encode(self.id, forKey: UserManager.UserMessage.CodingKeys.id)
+            try container.encode(self.from, forKey: UserManager.UserMessage.CodingKeys.from)
+            try container.encode(self.to, forKey: UserManager.UserMessage.CodingKeys.to)
+            try container.encode(self.texte, forKey: UserManager.UserMessage.CodingKeys.texte)
             try container.encode(self.dateCreated, forKey: UserManager.UserMessage.CodingKeys.dateCreated)
         }
-        
-        init(from decoder: Decoder) throws {
-            let container: KeyedDecodingContainer<UserManager.UserMessage.CodingKeys> = try decoder.container(keyedBy: UserManager.UserMessage.CodingKeys.self)
-            self.messageId = try container.decode(String.self, forKey: UserManager.UserMessage.CodingKeys.messageId)
-            self.message = try container.decode(String.self, forKey: UserManager.UserMessage.CodingKeys.message)
-            self.received = try container.decode(Bool.self, forKey: UserManager.UserMessage.CodingKeys.received)
-            self.dateCreated = try container.decode(Date.self, forKey: UserManager.UserMessage.CodingKeys.dateCreated)
-        }
-        
     }
     
-    func addUserMessage(userId: String, message: String, received: Bool) async throws {
+    func addUserMessage(userId: String, from: String, to: String, texte: String) async throws {
         let document = userMessagesCollection(userId: userId).document()
         let documentId = document.documentID
         
         let data: [String:Any] = [
-            "messageId" : documentId,
-            "message" : message,
-            "received" : received
+            "id" : documentId,
+            "from": from,
+            "to": to,
+            "texte" : texte,
+            "dateCreated" : Timestamp()
         ]
         
         try await document.setData(data, merge: false)

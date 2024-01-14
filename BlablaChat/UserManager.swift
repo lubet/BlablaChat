@@ -125,56 +125,57 @@ final class UserManager {
         userMessagesCollection(userId: userId).document(messageId)
     }
     
-    struct UserMessage: Codable, Identifiable {
-        let id: String
-        let from: String
-        let to: String
-        let texte: String
-        let dateCreated: Date
-
-        enum CodingKeys: CodingKey {
-            case id
-            case from
-            case to
-            case texte
-            case dateCreated
-        }
-
-        init(from decoder: Decoder) throws {
-            let container: KeyedDecodingContainer<UserManager.UserMessage.CodingKeys> = try decoder.container(keyedBy: UserManager.UserMessage.CodingKeys.self)
-            self.id = try container.decode(String.self, forKey: UserManager.UserMessage.CodingKeys.id)
-            self.from = try container.decode(String.self, forKey: UserManager.UserMessage.CodingKeys.from)
-            self.to = try container.decode(String.self, forKey: UserManager.UserMessage.CodingKeys.to)
-            self.texte = try container.decode(String.self, forKey: UserManager.UserMessage.CodingKeys.texte)
-            self.dateCreated = try container.decode(Date.self, forKey: UserManager.UserMessage.CodingKeys.dateCreated)
-        }
-        
-        func encode(to encoder: Encoder) throws {
-            var container = encoder.container(keyedBy: UserManager.UserMessage.CodingKeys.self)
-            try container.encode(self.id, forKey: UserManager.UserMessage.CodingKeys.id)
-            try container.encode(self.from, forKey: UserManager.UserMessage.CodingKeys.from)
-            try container.encode(self.to, forKey: UserManager.UserMessage.CodingKeys.to)
-            try container.encode(self.texte, forKey: UserManager.UserMessage.CodingKeys.texte)
-            try container.encode(self.dateCreated, forKey: UserManager.UserMessage.CodingKeys.dateCreated)
-        }
-    }
-    
     func addUserMessage(userId: String, from: String, to: String, texte: String) async throws {
         let document = userMessagesCollection(userId: userId).document()
         let documentId = document.documentID
-        
+                
         let data: [String:Any] = [
-            "id" : documentId,
-            "from": from,
-            "to": to,
-            "texte" : texte,
-            "dateCreated" : Timestamp()
+            UserMessage.CodingKeys.id.rawValue : documentId,
+            UserMessage.CodingKeys.id.rawValue : from,
+            UserMessage.CodingKeys.id.rawValue : to,
+            UserMessage.CodingKeys.id.rawValue : texte,
+            UserMessage.CodingKeys.id.rawValue : Timestamp()
         ]
-        
         try await document.setData(data, merge: false)
     }
     
     func removeUserMessage(userId: String, messageId: String) async throws {
         try await userMessageDocument(userId: userId, messageId: messageId).delete()
     }
+}
+
+struct UserMessage: Codable, Identifiable {
+    let id: String
+    let from: String
+    let to: String
+    let texte: String
+    let dateCreated: Date
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case from
+        case to
+        case texte
+        case dateCreated
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(String.self, forKey: .id)
+        self.from = try container.decode(String.self, forKey: .from)
+        self.to = try container.decode(String.self, forKey: .to)
+        self.texte = try container.decode(String.self, forKey: .texte)
+        self.dateCreated = try container.decode(Date.self, forKey: .dateCreated)
+    }
+    
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.id, forKey: .id)
+        try container.encode(self.from, forKey: .from)
+        try container.encode(self.to, forKey: .to)
+        try container.encode(self.texte, forKey: .texte)
+        try container.encode(self.dateCreated, forKey: .dateCreated)
+    }
+    
 }

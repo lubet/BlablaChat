@@ -36,16 +36,17 @@ struct NewMessageView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 20) {
+                VStack(spacing: 40) {
                     ForEach(viewModel.users) { user in
-                        NavigationLink(value: user.email) {
+                        NavigationLink(value: user.userId) {
                             NewMessageCellView(user: user)
                         }
                     }
                 }
             }
             .navigationDestination(for: String.self) { value in
-                Text("Autre page")
+                // Text("Autre page\(value)")
+                //ChatLogView(userId: value)
             }
             .navigationTitle("New Message")
             .padding(.vertical)

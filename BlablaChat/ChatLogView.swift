@@ -4,6 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 14/01/2024.
 //
+// View vide avec en base un saise de message et une photo
 
 import SwiftUI
 
@@ -17,29 +18,27 @@ final class ChatLogViewModel: ObservableObject {
         let authResult = try? AuthManager.shared.getAuthenticatedUser()
         guard let authId = authResult?.uid else { return }
         print("\(authId)")
-        
-    }
-    
+     }
 }
 
 struct ChatLogView: View {
     
+    // let userId: String
+    
+    @State var textMessageField: String = ""
+    
     @StateObject var viewModel = ChatLogViewModel()
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                ScrollView {
-                    List {
-                        
-                    }
-                    .onAppear {
-                        // viewModel.getUserChatLog(userId: <#T##String#>)
-                    }
+        VStack(spacing: 30) {
+            ScrollView {
+                ForEach(1..<10) { num in
+                    Text("Essai")
                 }
             }
-            .navigationTitle("Chat log")
         }
+        TextField("Message:", text: $textMessageField)
+            .background(Color.gray.opacity(0.3))
     }
 }
 

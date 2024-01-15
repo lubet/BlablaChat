@@ -34,11 +34,18 @@ struct NewMessageView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
-                ForEach(viewModel.users) { user in
-                    NewMessageCellView(user: user)
+                VStack(spacing: 20) {
+                    ForEach(viewModel.users) { user in
+                        NavigationLink(value: user.email) {
+                            NewMessageCellView(user: user)
+                        }
+                    }
                 }
+            }
+            .navigationDestination(for: String.self) { value in
+                Text("Autre page")
             }
             .navigationTitle("New Message")
             .padding(.vertical)

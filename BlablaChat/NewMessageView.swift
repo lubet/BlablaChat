@@ -4,6 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 10/01/2024.
 //
+// Choisir un user dans la liste pour céer un nouveau message qui lui est destiné
 
 import SwiftUI
 
@@ -36,32 +37,7 @@ struct NewMessageView: View {
         NavigationView {
             ScrollView {
                 ForEach(viewModel.users) { user in
-                    HStack(spacing: 20) {
-                        if let url = user.imageLink {
-                            AsyncImage(url: URL(string: url)) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 40, height: 40)
-                                    .clipShape(Circle())
-                                    .overlay(RoundedRectangle(cornerRadius: 50)
-                                        .stroke(Color(.label), lineWidth: 1)
-                                    )
-                            } placeholder: {
-                                ProgressView()
-                                    .frame(width: 40, height: 40)
-                            }
-                        } else {
-                            Image(systemName: "person.fill")
-                                .font(.system(size: 70))
-                                .padding()
-                                .foregroundColor(Color(.label))
-                        }
-                        Text(user.email ?? "")
-                        Spacer()
-                    } .padding(.horizontal)
-                    Divider()
-                        .padding(.vertical, 8)
+                    NewMessageCellView(user: user)
                 }
             }
             .navigationTitle("New Message")

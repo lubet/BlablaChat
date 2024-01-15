@@ -25,6 +25,7 @@
 		C04C43F52B53FEEE00E01E13 /* ChatLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04C43F42B53FEEE00E01E13 /* ChatLogView.swift */; };
 		C07046EF2B5482B400E19E6E /* EssaiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07046EE2B5482B400E19E6E /* EssaiView.swift */; };
 		C07046F12B54852700E19E6E /* Essai2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07046F02B54852700E19E6E /* Essai2View.swift */; };
+		C0FB12A12B5536030068C633 /* NewMessageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FB12A02B5536030068C633 /* NewMessageCellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		C04C43F42B53FEEE00E01E13 /* ChatLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogView.swift; sourceTree = "<group>"; };
 		C07046EE2B5482B400E19E6E /* EssaiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssaiView.swift; sourceTree = "<group>"; };
 		C07046F02B54852700E19E6E /* Essai2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Essai2View.swift; sourceTree = "<group>"; };
+		C0FB12A02B5536030068C633 /* NewMessageCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				C047E9C52B45625C00C6D48F /* LoginView.swift */,
 				C03B37E22B4DAE5D006627EF /* MessagesView.swift */,
 				C035C0812B4E829200C09EA3 /* NewMessageView.swift */,
+				C0FB12A02B5536030068C633 /* NewMessageCellView.swift */,
 				C04C43F42B53FEEE00E01E13 /* ChatLogView.swift */,
 				C047E9C72B45625D00C6D48F /* Assets.xcassets */,
 				C047E9D12B45646A00C6D48F /* GoogleService-Info.plist */,
@@ -198,6 +201,7 @@
 				C07046EF2B5482B400E19E6E /* EssaiView.swift in Sources */,
 				C04C43F52B53FEEE00E01E13 /* ChatLogView.swift in Sources */,
 				C07046F12B54852700E19E6E /* Essai2View.swift in Sources */,
+				C0FB12A12B5536030068C633 /* NewMessageCellView.swift in Sources */,
 				C047E9E42B45A8FB00C6D48F /* UserManager.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,

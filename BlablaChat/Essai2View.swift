@@ -9,8 +9,8 @@ import SwiftUI
 
 class Essai2ViewModel: ObservableObject {
     
-    func essai(userId: String) {
-        print("func \(userId)")
+    func essai(userId: String) async throws {
+        let authy = try AuthManager.shared.getAuthenticatedUser()
     }
     
 }
@@ -25,8 +25,9 @@ struct Essai2View: View {
         List{
             Text("Text: (\(userId)")
         }
-        .onAppear(){
-            vm.essai(userId: userId)
+        .navigationTitle("Essai")
+        .task {
+            try? await vm.essai(userId: userId)
         }
     }
 }

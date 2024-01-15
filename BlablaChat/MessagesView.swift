@@ -48,7 +48,7 @@ struct MessagesView_Previews: PreviewProvider {
     }
 }
 
-// -----------------------------------
+// header -----------------------------------
 extension MessagesView {
     
     private var header: some View {
@@ -117,7 +117,7 @@ extension MessagesView {
     }
 }
 
-// --------------------------------------------
+// Messages Users list--------------------------------------------
 extension MessagesView {
 
     private var messages: some View {
@@ -154,7 +154,7 @@ extension MessagesView {
     }
 }
 
-// --------------------------------------------
+// Button new message --------------------------------------------
 extension MessagesView {
     
     private var newMessageButton: some View {

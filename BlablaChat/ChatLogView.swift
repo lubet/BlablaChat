@@ -16,14 +16,14 @@ final class ChatLogViewModel: ObservableObject {
     // Fetch les messages qui me sont destinés de la part du user selectioné dans la liste
     func getUserChatLog(userId: String) {
         let authResult = try? AuthManager.shared.getAuthenticatedUser()
-        guard let authId = authResult?.uid else { return }
-        print("\(authId)")
+        guard let monUserId = authResult?.uid else { return } // mon userID
+        print("\(monUserId)")
      }
 }
 
 struct ChatLogView: View {
     
-    let userId: String // From NewMessageView
+    let newMessageUserId: String // From NewMessageView
     
     @State var textMessageField: String = ""
     
@@ -32,8 +32,8 @@ struct ChatLogView: View {
     var body: some View {
         VStack(spacing: 30) {
             ScrollView {
-                ForEach(1..<10) { num in
-                    BubbleMessageView(item: num, userId: userId)
+                ForEach(1..<10) { message in
+                    BubbleMessageView(message: message)
                 }
             }
         }
@@ -42,6 +42,6 @@ struct ChatLogView: View {
 
 struct ChatLogView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatLogView(userId: "123456")
+        ChatLogView(newMessageUserId: "123456")
     }
 }

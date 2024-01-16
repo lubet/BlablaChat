@@ -40,7 +40,7 @@ struct ChatLogView: View {
                 .font(.title)
                 .fontWeight(.semibold)
             ScrollView {
-                ForEach(1..<60) { message in
+                ForEach(1..<15) { message in
                     // un message où je suis présent from ou to
                     BubbleMessageView(message: message, monUserId: viewModel.monUserId)
                 }
@@ -54,6 +54,7 @@ struct ChatLogView: View {
 //                .background(Color.gray.opacity(0.3).cornerRadius(10))
 //            Spacer()
         }
+        .navigationBarHidden(true)
     }
 }
 

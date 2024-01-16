@@ -14,7 +14,18 @@ struct BubbleMessageView: View {
     let monUserId: String
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Spacer()
+            HStack {
+                Text("Ceci est un essai")
+                    .foregroundColor(.white)
+            }
+            .padding()
+            .background(Color.blue)
+            .cornerRadius(8)
+        }
+        .padding(.horizontal)
+        .padding(.top,8)
     }
 }
 

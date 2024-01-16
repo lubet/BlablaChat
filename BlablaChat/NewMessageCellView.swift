@@ -32,6 +32,8 @@ struct NewMessageCellView: View {
                         .font(.system(size: 70))
                         .padding()
                         .foregroundColor(Color(.label))
+                        .clipShape(Circle())
+
                 }
                 Text(user.email ?? "")
                 Spacer()

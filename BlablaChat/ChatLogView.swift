@@ -23,7 +23,7 @@ final class ChatLogViewModel: ObservableObject {
 
 struct ChatLogView: View {
     
-    // let userId: String
+    let userId: String // From NewMessageView
     
     @State var textMessageField: String = ""
     
@@ -33,17 +33,15 @@ struct ChatLogView: View {
         VStack(spacing: 30) {
             ScrollView {
                 ForEach(1..<10) { num in
-                    Text("Essai")
+                    BubbleMessageView(item: num, userId: userId)
                 }
             }
         }
-        TextField("Message:", text: $textMessageField)
-            .background(Color.gray.opacity(0.3))
     }
 }
 
 struct ChatLogView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatLogView()
+        ChatLogView(userId: "123456")
     }
 }

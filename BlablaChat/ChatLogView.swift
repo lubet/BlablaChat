@@ -12,7 +12,7 @@ import SwiftUI
 
 final class ChatLogViewModel: ObservableObject {
     
-    @Published var userChatLog : [UserMessage] = [] // Tout les messages pour un user selectionné
+    @Published var userChatLog : [UserMessage] = [] // Tout les messages me concernant
     @Published var monUserId: String = ""
     
     func getUserChatLog(selectedUserID: String) {
@@ -28,33 +28,35 @@ final class ChatLogViewModel: ObservableObject {
 
 struct ChatLogView: View {
     
-    let selectedUserId: String // From NewMessageView
+    let selectedUserId: String // <-From NewMessageView
     
     @State var textMessageField: String = "" // Saisie d'un nouveau message
     
     @StateObject var viewModel = ChatLogViewModel()
     
     var body: some View {
-        VStack(spacing: 30) {
-            Text("Email")
-                .font(.title)
-                .fontWeight(.semibold)
             ScrollView {
                 ForEach(1..<15) { message in
-                    // un message où je suis présent from ou to
-                    BubbleMessageView(message: message, monUserId: viewModel.monUserId)
+                    HStack {
+                        //Spacer()
+                        Text("Ceci est un essai")
+                            .foregroundColor(.white)
+                    }
+                    .padding()
+                    .background(Color.blue)
+                    .cornerRadius(8)
                 }
+                
+                HStack{ Spacer() }
             }
-            .background(Color(.init(white: 0.95, alpha: 1)))
+            .navigationBarHidden(true)
+            .navigationTitle("email")
+            .navigationBarTitleDisplayMode(.inline)
+            .background(Color(.lightGray))
+            Text("Ici my chat bar")
             .onAppear() {
                 viewModel.getUserChatLog(selectedUserID: selectedUserId)
             }
-//            TextField("Saisie", text: $textMessageField)
-//                .padding(20)
-//                .background(Color.gray.opacity(0.3).cornerRadius(10))
-//            Spacer()
-        }
-        .navigationBarHidden(true)
     }
 }
 

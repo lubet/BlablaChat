@@ -12,20 +12,11 @@ import SwiftUI
 final class NewMessageViewModel: ObservableObject {
     
     @Published var users: [DBUser] = []
-    @Published var authId: String = ""
 
     func getUsers() async throws {
         self.users = try await UserManager.shared.getAllUsers()
     }
-    
-    // TODO ne pas prendre le user qui est connecté dans la liste
-//    func authUser() {
-//        let authResult = try? AuthManager.shared.getAuthenticatedUser()
-//        guard let authId = authResult?.uid else { return }
-//    }
-    
 }
-
 
 struct NewMessageView: View {
     
@@ -45,7 +36,7 @@ struct NewMessageView: View {
                 }
             }
             .navigationDestination(for: String.self) { value in
-                ChatLogView(selectedUserId: value) // TO
+                ChatLogView(selectedUserId: value) // TO->
             }
             .navigationTitle("New Message")
             .padding(.vertical)
@@ -63,9 +54,6 @@ struct NewMessageView: View {
            Task {
                try await viewModel.getUsers()
             }
-            
-            // TODO ne pas prendre le user qui est connecté dans la liste
-            //viewModel.authUser()
         }
     }
 }

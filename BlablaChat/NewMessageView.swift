@@ -45,7 +45,7 @@ struct NewMessageView: View {
                 }
             }
             .navigationDestination(for: String.self) { value in
-                ChatLogView(userId: value) // TO
+                ChatLogView(newMessageUserId: value) // TO
             }
             .navigationTitle("New Message")
             .padding(.vertical)

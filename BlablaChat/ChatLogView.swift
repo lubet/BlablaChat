@@ -4,28 +4,33 @@
 //
 //  Created by Lubet-Moncla Xavier on 14/01/2024.
 //
-// View vide avec en base un saise de message et une photo
+// Tout les messages envoyés à ou reçus d'un contact selectioné
+// permettant de créer un nouveau message
 
 import SwiftUI
 
 
 final class ChatLogViewModel: ObservableObject {
     
-    @Published var userChatLog : [UserMessage] = []
+    @Published var userChatLog : [UserMessage] = [] // Tout les messages pour un user selectionné
     
-    // Fetch les messages qui me sont destinés de la part du user selectioné dans la liste
-    func getUserChatLog(userId: String) {
+    func getUserChatLog(newMessageUserId: String) {
+        
+        // Mon userId
         let authResult = try? AuthManager.shared.getAuthenticatedUser()
-        guard let monUserId = authResult?.uid else { return } // mon userID
+        guard let monUserId = authResult?.uid else { return }
         print("\(monUserId)")
+        
+        // Fetch de tous les messages me concernant et concernant le user selectionné
+        
      }
 }
 
 struct ChatLogView: View {
     
-    let newMessageUserId: String // From NewMessageView
+    let newMessageUserId: String // User selectionné dans NewMessageView
     
-    @State var textMessageField: String = ""
+    @State var textMessageField: String = "" // Saisie d'un nouveau message
     
     @StateObject var viewModel = ChatLogViewModel()
     

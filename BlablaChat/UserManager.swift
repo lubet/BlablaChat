@@ -142,6 +142,8 @@ final class UserManager {
     func removeUserMessage(userId: String, messageId: String) async throws {
         try await userMessageDocument(userId: userId, messageId: messageId).delete()
     }
+    
+    
 }
 
 struct UserMessage: Codable, Identifiable {

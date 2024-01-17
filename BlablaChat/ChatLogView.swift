@@ -62,6 +62,9 @@ struct ChatLogView: View {
                     viewModel.getUserChatLog(selectedUserID: selectedUserId)
                 }
             }
+            HStack {
+                Spacer().frame(height: 20)
+            }
         }
     }
 }

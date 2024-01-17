@@ -16,7 +16,7 @@ struct MessageBubbleView: View {
         HStack {
             Spacer()
             HStack {
-                Text("Ceci est un essai")
+                Text(message.texte)
                     .foregroundColor(.white)
             }
             .padding()

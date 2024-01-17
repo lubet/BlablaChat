@@ -34,34 +34,35 @@ struct ChatLogView: View {
     
     @StateObject var viewModel = ChatLogViewModel()
 
-    var UserMessages = [
-        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
-        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
-        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
-        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
-        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
-        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
-        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
-        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
-        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
-        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
-        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
-        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date())
+    var userMessages: [UserMessage] = [
+        UserMessage(id: "123", from: "123", to: "123", texte: "Salut les amis*", dateCreated: Date()),
+        UserMessage(id: "1234", from: "123", to: "123", texte: "Salut la compagnie", dateCreated: Date()),
+        UserMessage(id: "1235", from: "123", to: "123", texte: "Salut tout", dateCreated: Date()),
+        UserMessage(id: "1236", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "1237", from: "123", to: "123", texte: "Bonjour*******", dateCreated: Date()),
+        UserMessage(id: "1238", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "1239", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "12310", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "12311", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "12312", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "12313", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "12314", from: "123", to: "123", texte: "Salu", dateCreated: Date())
     ]
     
     var body: some View {
+        VStack {
+            Text("Email")
             ScrollView {
-                ForEach(UserMessages) { message in
-                    // BubbleMessageView(message: 5, monUserId: "123")
+                ForEach(userMessages) { message in
                     MessageBubbleView(message: message)
                 }
-                HStack{ Spacer() }
+                .navigationBarHidden(true)
+                .navigationTitle("email")
+                .onAppear() {
+                    viewModel.getUserChatLog(selectedUserID: selectedUserId)
+                }
             }
-            .navigationBarHidden(true)
-            .navigationTitle("email")
-            .onAppear() {
-                viewModel.getUserChatLog(selectedUserID: selectedUserId)
-            }
+        }
     }
 }
 

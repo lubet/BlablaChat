@@ -33,27 +33,32 @@ struct ChatLogView: View {
     @State var textMessageField: String = "" // Saisie d'un nouveau message
     
     @StateObject var viewModel = ChatLogViewModel()
+
+    var UserMessages = [
+        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date()),
+        UserMessage(id: "123", from: "123", to: "123", texte: "Salu", dateCreated: Date())
+    ]
     
     var body: some View {
             ScrollView {
-                ForEach(1..<15) { message in
-                    HStack {
-                        //Spacer()
-                        Text("Ceci est un essai")
-                            .foregroundColor(.white)
-                    }
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(8)
+                ForEach(UserMessages) { message in
+                    // BubbleMessageView(message: 5, monUserId: "123")
+                    MessageBubbleView(message: message)
                 }
-                
                 HStack{ Spacer() }
             }
             .navigationBarHidden(true)
             .navigationTitle("email")
-            .navigationBarTitleDisplayMode(.inline)
-            .background(Color(.lightGray))
-            Text("Ici my chat bar")
             .onAppear() {
                 viewModel.getUserChatLog(selectedUserID: selectedUserId)
             }

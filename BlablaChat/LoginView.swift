@@ -27,7 +27,7 @@ final class LoginViewModel: ObservableObject {
         
         guard let image else { return }
         
-        let (path, name) = try await StorageManager.shared.saveImage(image: image, userId: user.userId)
+        let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: user.userId)
 //        print("image path: \(path)") // chemin complet + nom du jpeg
 //        print("Image name: \(name)") // nom du jpeg
 

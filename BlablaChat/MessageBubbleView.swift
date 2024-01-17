@@ -8,11 +8,10 @@
 
 import SwiftUI
 
-struct BubbleMessageView: View {
+struct MessageBubbleView: View {
     
-    let message: Int
-    let monUserId: String
-    
+    var message: UserMessage
+     
     var body: some View {
         HStack {
             Spacer()
@@ -29,8 +28,8 @@ struct BubbleMessageView: View {
     }
 }
 
-struct BubbleMessageView_Previews: PreviewProvider {
+struct MessageBubbleView_Previews: PreviewProvider {
     static var previews: some View {
-        BubbleMessageView(message:123, monUserId: "456")
+        MessageBubbleView(message: UserMessage(id: "123", from: "456", to: "987", texte: "Salut les copains", dateCreated: Date()))
     }
 }

@@ -153,6 +153,20 @@ struct UserMessage: Codable, Identifiable {
     let texte: String
     let dateCreated: Date
     
+    init(
+        id: String,
+        from : String,
+        to: String,
+        texte: String,
+        dateCreated: Date
+    ) {
+        self.id = id
+        self.from = from
+        self.to = to
+        self.texte = texte
+        self.dateCreated = dateCreated
+    }
+    
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case from = "from"

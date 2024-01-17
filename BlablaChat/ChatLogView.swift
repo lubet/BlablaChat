@@ -62,8 +62,10 @@ struct ChatLogView: View {
                     viewModel.getUserChatLog(selectedUserID: selectedUserId)
                 }
             }
+            .background(Color("GrisClair"))
             HStack {
                 Spacer().frame(height: 20)
+
             }
         }
     }

@@ -9,9 +9,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-// Conversations -------------------------------------------------------------------------
-private let chats_collection: CollectionReference = Firestore.firestore().collection("chats")
-
+// chats ( Conversations) -----------
 struct chats: Identifiable, Codable {
     var chat_id: String // = document_id unique
     var title: String
@@ -22,17 +20,7 @@ struct chats: Identifiable, Codable {
     }
 }
 
-func newChat(chat_id: String, title: String, last_message: String, date_created: Timestamp) {
-    // Create chat
-    
-    // Create members
-    
-    // Create message
-}
-
-// Chat membres ---------------------------------------------------------------------------------
-private let chat_members_collection: CollectionReference = Firestore.firestore().collection("chat_members")
-
+// chat_members ----------------------------
 struct chat_members: Identifiable, Codable {
     var chat_id: String // = chats/chat_id unique
     var members: [member] = []
@@ -40,14 +28,12 @@ struct chat_members: Identifiable, Codable {
         chat_id
     }
 }
-        struct member: Identifiable, Codable {
-            var id: String
-            var user_id: String
-        }
+struct member: Identifiable, Codable {
+    var id: String
+    var user_id: String
+}
 
-// Chat messages ---------------------------------------------------------------------------------
-private let chats_messages_collection: CollectionReference = Firestore.firestore().collection("chat_messages")
-
+// chat_messages ----------------------------
 struct chat_messages: Identifiable, Codable {
     var chat_id: String // = chats/chat_id unique
     var messages: [message] = []
@@ -55,12 +41,20 @@ struct chat_messages: Identifiable, Codable {
         chat_id
     }
 }
-        struct message: Identifiable, Codable {
-            var id: String
-            var created_user_id: String
-            var texte: String
-            var date: Timestamp
-        }
+struct message: Identifiable, Codable {
+    var id: String
+    var created_user_id: String
+    var texte: String
+    var date: Timestamp
+}
 
-
-
+// ---------------------------------------------------------------------------------------------
+final class ChatManager {
+    
+    private let chats_collection: CollectionReference = Firestore.firestore().collection("chats")
+    
+    private let chat_members_collection: CollectionReference = Firestore.firestore().collection("chat_members")
+    
+    private let chats_messages_collection: CollectionReference = Firestore.firestore().collection("chat_messages")
+    
+}

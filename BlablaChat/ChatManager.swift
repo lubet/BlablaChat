@@ -51,16 +51,16 @@ struct message: Identifiable, Codable {
 // ---------------------------------------------------------------------------------------------
 final class ChatManager {
     
-    private let chats: CollectionReference = Firestore.firestore().collection("chats")
+    private let chatsRef: CollectionReference = Firestore.firestore().collection("chats")
     
-    private let chat_members: CollectionReference = Firestore.firestore().collection("chat_members")
+    private let chat_members_ref: CollectionReference = Firestore.firestore().collection("chat_members")
     
-    private let chats_messages: CollectionReference = Firestore.firestore().collection("chat_messages")
+    private let chats_messages_ref: CollectionReference = Firestore.firestore().collection("chat_messages")
     
-    // Ajout d'une chat (-> création d'un messsage
+    // func création d'un nouveau chat -> création d'un chat + création d'un membre + création du premier message de ce membre
     
-    // Ajout d'un membre
+    // Ajout d'un nouveau membre à un chat existant
     
-    // Ajout d'un message
+    // Ajout d'un nouveau message à un chat existant
     
 }

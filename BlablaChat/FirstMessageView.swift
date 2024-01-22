@@ -6,9 +6,6 @@
 //
 
 import SwiftUI
-import FirebaseFirestore
-import FirebaseFirestoreSwift
-
 
 final class FirstMessageViewModel: ObservableObject {
     

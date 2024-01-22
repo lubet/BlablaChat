@@ -12,7 +12,7 @@ final class FirstMessageViewModel: ObservableObject {
     @Published var chatText: String = ""
     
     func handleSend() {
-        print("message: \(chatText)")
+        print("\(chatText)")
     }
 }
 

@@ -42,12 +42,4 @@ final class ChatManager {
     
     private let chatsCollection: CollectionReference = Firestore.firestore().collection("chats")
     
-    // Création d'un chat - 1) sans l'Id 2) récupérer l'id 3) mettre à jour l'id du chat
-    func addChat(title: String, last_message: String) {
-        let document = chatsCollection.addDocument(data: [
-            title : title,
-            last_message: last_message
-        ])
-    }
-
 }

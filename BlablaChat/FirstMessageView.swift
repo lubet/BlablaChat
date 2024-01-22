@@ -10,37 +10,33 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 
-@MainActor
 final class FirstMessageViewModel: ObservableObject {
     
-    @Published var first_message: String = ""
-
-    func firstMessage(message: String) {
-        ChatManager.shared.addChat(title: "Un titre", last_message: "Hello")
+    @Published var chatText: String = ""
+    
+    func handleSend() {
+        print("message: \(chatText)")
     }
 }
 
 struct FirstMessageView: View {
     
-//    let sender : String = "1234"
-//    let receiver: String = "5678"
+    let chatUser: DBUser?
     
     @StateObject private var vm = FirstMessageViewModel()
-    @State var message: String
     
     var body: some View {
         NavigationView {
             VStack {
                 Spacer()
                 HStack {
-                    TextField("Nouveau message", text: $message)
+                    TextEditor(text: $vm.chatText)
                         .frame(height: 60)
                          .foregroundColor(.black)
                          .cornerRadius(20)
                          .background(Color.white)
                     Button {
-                        print("message:\(message)")
-                        vm.firstMessage(message: message)
+                        vm.handleSend()
                     } label: {
                         Image(systemName: "paperplane")
                             .foregroundColor(.blue)
@@ -56,6 +52,6 @@ struct FirstMessageView: View {
 
 struct FirstMessageView_Previews: PreviewProvider {
     static var previews: some View {
-        FirstMessageView(message: "Hello les amis")
+        FirstMessageView(chatUser: DBUser(userId: "123", email: "tyty@test.com", dateCreated: Date(), imageLink: "htts/"))
     }
 }

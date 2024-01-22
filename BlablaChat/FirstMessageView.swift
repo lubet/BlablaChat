@@ -18,7 +18,7 @@ final class FirstMessageViewModel: ObservableObject {
 
 struct FirstMessageView: View {
     
-    let chatUser: DBUser?
+    // let chatUser: DBUser?
     
     @StateObject private var vm = FirstMessageViewModel()
     
@@ -49,6 +49,6 @@ struct FirstMessageView: View {
 
 struct FirstMessageView_Previews: PreviewProvider {
     static var previews: some View {
-        FirstMessageView(chatUser: DBUser(userId: "123", email: "tyty@test.com", dateCreated: Date(), imageLink: "htts/"))
+        FirstMessageView()
     }
 }

@@ -28,6 +28,7 @@
 		C068BDBD2B56F38800418DAB /* Essai4View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C068BDBC2B56F38800418DAB /* Essai4View.swift */; };
 		C07046EF2B5482B400E19E6E /* EssaiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07046EE2B5482B400E19E6E /* EssaiView.swift */; };
 		C07046F12B54852700E19E6E /* Essai2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07046F02B54852700E19E6E /* Essai2View.swift */; };
+		C0B9DC822B5E872B006C2B46 /* FirstMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9DC812B5E872B006C2B46 /* FirstMessageView.swift */; };
 		C0FB12A12B5536030068C633 /* NewMessageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FB12A02B5536030068C633 /* NewMessageCellView.swift */; };
 		C0FB12A32B55829B0068C633 /* Essai3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FB12A22B55829B0068C633 /* Essai3View.swift */; };
 /* End PBXBuildFile section */
@@ -51,6 +52,7 @@
 		C068BDBC2B56F38800418DAB /* Essai4View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Essai4View.swift; sourceTree = "<group>"; };
 		C07046EE2B5482B400E19E6E /* EssaiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssaiView.swift; sourceTree = "<group>"; };
 		C07046F02B54852700E19E6E /* Essai2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Essai2View.swift; sourceTree = "<group>"; };
+		C0B9DC812B5E872B006C2B46 /* FirstMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstMessageView.swift; sourceTree = "<group>"; };
 		C0FB12A02B5536030068C633 /* NewMessageCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageCellView.swift; sourceTree = "<group>"; };
 		C0FB12A22B55829B0068C633 /* Essai3View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Essai3View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,7 +95,6 @@
 				C047E9DF2B45767B00C6D48F /* AuthManager.swift */,
 				C047E9E32B45A8FB00C6D48F /* UserManager.swift */,
 				C047E9E12B45880400C6D48F /* StorageManager.swift */,
-				C0686A862B5AA3E800284172 /* ChatManager.swift */,
 				C047E9C52B45625C00C6D48F /* LoginView.swift */,
 				C047E9DC2B45665300C6D48F /* Utilities */,
 				C0686A852B5A94E900284172 /* OldViews */,
@@ -104,6 +105,7 @@
 				C07046F02B54852700E19E6E /* Essai2View.swift */,
 				C0FB12A22B55829B0068C633 /* Essai3View.swift */,
 				C068BDBC2B56F38800418DAB /* Essai4View.swift */,
+				C0B9DC812B5E872B006C2B46 /* FirstMessageView.swift */,
 			);
 			path = BlablaChat;
 			sourceTree = "<group>";
@@ -127,6 +129,7 @@
 		C0686A852B5A94E900284172 /* OldViews */ = {
 			isa = PBXGroup;
 			children = (
+				C0686A862B5AA3E800284172 /* ChatManager.swift */,
 				C03B37E22B4DAE5D006627EF /* MessagesView.swift */,
 				C035C0812B4E829200C09EA3 /* NewMessageView.swift */,
 				C0FB12A02B5536030068C633 /* NewMessageCellView.swift */,
@@ -218,6 +221,7 @@
 			files = (
 				C03B37E32B4DAE5D006627EF /* MessagesView.swift in Sources */,
 				C035C0822B4E829200C09EA3 /* NewMessageView.swift in Sources */,
+				C0B9DC822B5E872B006C2B46 /* FirstMessageView.swift in Sources */,
 				C07046EF2B5482B400E19E6E /* EssaiView.swift in Sources */,
 				C04C43F52B53FEEE00E01E13 /* ChatLogView.swift in Sources */,
 				C0FB12A32B55829B0068C633 /* Essai3View.swift in Sources */,

@@ -75,7 +75,7 @@ final class ChatManager {
             "user_id" : Timestamp()
         ]
         // Création du message
-        document.setData(data, merge: false)
+        db.collection("chats/messages").document().setData(data, merge: false)
     }
     
 }

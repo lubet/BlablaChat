@@ -65,7 +65,7 @@ final class ChatManager {
     
     
     // Ajout des messages par la suite cad après la création du premier
-    func addMessage(chat_id: String, texte: String, date_created: Date, user_id: String) -> String {
+    func addMessage(chat_id: String, texte: String, date_created: Date, user_id: String) {
         // Création d'un objet message vide pour récupérer l'ID du message
 
         let data: [String:Any] = [
@@ -76,8 +76,6 @@ final class ChatManager {
         ]
         // Création du message
         document.setData(data, merge: false)
-        
-        return documentId
     }
     
 }

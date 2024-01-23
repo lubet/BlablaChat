@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class handleSendViewModel: ObservableObject {
+final class HandleSendViewModel: ObservableObject {
     
     @Published var chatText: String = ""
     
@@ -16,11 +16,11 @@ final class handleSendViewModel: ObservableObject {
     }
 }
 
-struct handleSendView: View {
+struct HandleSendView: View {
     
     let chatUser: DBUser?
     
-    @StateObject private var vm = handleSendViewModel()
+    @StateObject private var vm = HandleSendViewModel()
     
     var body: some View {
         NavigationView {
@@ -47,8 +47,8 @@ struct handleSendView: View {
     }
 }
 
-struct FirstMessageView_Previews: PreviewProvider {
+struct HandleSendView_Previews: PreviewProvider {
     static var previews: some View {
-        handleSendView(chatUser: DBUser(userId: "123456", email: "toto@test.com", dateCreated: Date(), imageLink: "https://"))
+        HandleSendView(chatUser: DBUser(userId: "123456", email: "toto@test.com", dateCreated: Date(), imageLink: "https://"))
     }
 }

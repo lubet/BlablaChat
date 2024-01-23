@@ -4,6 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 22/01/2024.
 //
+// Nouveau message -> Création d'un chat et de ce message
 
 import SwiftUI
 
@@ -15,9 +16,10 @@ final class HandleSendViewModel: ObservableObject {
     
     
     func handleSend(from_user: DBUser, to_user: DBUser) {
-        
-        let newMessage = ChatManager.shared.addMessage(texte: chatText, date_created: Date(), user_id: from_user.userId)
-
+        // Création du chat
+        let chat_id  = ChatManager.shared.addChat(date_created: Date(), last_message: chatText, title: chatText)
+        // Création du message
+        let newMessage = ChatManager.shared.addMessage(chat_id: chat_id, texte: chatText, date_created: Date(), user_id: from_user.userId)
     }
 }
 

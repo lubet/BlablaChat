@@ -44,7 +44,7 @@ final class ChatManager {
     let db = Firestore.firestore()
     
     // A la création de la discussion cad 1er message
-    func handleSend(date_created: Date, last_message: String, title: String) {
+    func addChat(date_created: Date, last_message: String, title: String) -> String{
         // new chat
         let document = db.collection("chats").document()
         let chat_id = document.documentID
@@ -59,13 +59,13 @@ final class ChatManager {
         // Création du chat
         document.setData(data, merge: false)
         
-        // Création du premier message avec comme message_id le chat id
+       return chat_id
         
     }
     
     
     // Ajout des messages par la suite cad après la création du premier
-    func addMessage(texte: String, date_created: Date, user_id: String) -> String {
+    func addMessage(chat_id: String, texte: String, date_created: Date, user_id: String) -> String {
         // Création d'un objet message vide pour récupérer l'ID du message
         let document = db.collection("chats/messages").document()
         let documentId = document.documentID

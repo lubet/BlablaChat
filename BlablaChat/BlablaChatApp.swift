@@ -15,7 +15,7 @@ struct BlablaChatApp: App {
     
     var body: some Scene {
         WindowGroup {
-            FirstMessageView()
+            handleSendView(chatUser: DBUser(userId: "123456", email: "toto@test.com", dateCreated: Date(), imageLink: "https://"))
         }
     }
 }

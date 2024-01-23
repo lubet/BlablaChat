@@ -1,13 +1,13 @@
 //
-//  FirstMessageView.swift
+//  EssaiView.swift
 //  BlablaChat
 //
-//  Created by Lubet-Moncla Xavier on 22/01/2024.
+//  Created by Lubet-Moncla Xavier on 23/01/2024.
 //
 
 import SwiftUI
 
-final class FirstMessageViewModel: ObservableObject {
+final class EssaiViewViewModel: ObservableObject {
     
     @Published var chatText: String = ""
     
@@ -16,11 +16,9 @@ final class FirstMessageViewModel: ObservableObject {
     }
 }
 
-struct FirstMessageView: View {
+struct EssaiView: View {
     
-    // let chatUser: DBUser?
-    
-    @StateObject private var vm = FirstMessageViewModel()
+    @StateObject private var vm = EssaiViewViewModel()
     
     var body: some View {
         NavigationView {
@@ -47,8 +45,8 @@ struct FirstMessageView: View {
     }
 }
 
-struct FirstMessageView_Previews: PreviewProvider {
+struct EssaiView_Previews: PreviewProvider {
     static var previews: some View {
-        FirstMessageView()
+        EssaiView()
     }
 }

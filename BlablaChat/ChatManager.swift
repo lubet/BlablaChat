@@ -19,6 +19,7 @@ struct chat: Identifiable, Codable {
         chat_id
     }
 }
+
 // chat_messages ----------------------------
 struct chat_messages: Identifiable, Codable {
     var id: String // unique
@@ -40,6 +41,44 @@ final class ChatManager {
     static let shared = ChatManager()
     init() { }
     
-    private let chatsCollection: CollectionReference = Firestore.firestore().collection("chats")
+    let db = Firestore.firestore()
+    
+    // A la création de la discussion cad 1er message
+    func handleSend(date_created: Date, last_message: String, title: String) {
+        // new chat
+        let document = db.collection("chats").document()
+        let chat_id = document.documentID
+
+        let data: [String:Any] = [
+            "chat_id" : chat_id,
+            "title": title,
+            "last_message" : last_message,
+            "date_created" : Date()
+        ]
+        
+        // Création du chat
+        document.setData(data, merge: false)
+        
+        // Création du premier message avec comme message_id le chat id
+        
+    }
+    
+    
+    // Ajout des messages par la suite cad après la création du premier
+    func addMessage(texte: String, date_created: Date, user_id: String) -> String {
+        // Création d'un objet message vide pour récupérer l'ID du message
+        let document = db.collection("chats/messages").document()
+        let documentId = document.documentID
+
+        let data: [String:Any] = [
+            "id" : documentId,
+            "texte" : texte,
+            "date_created" : Timestamp(),
+            "user_id" : Timestamp()
+        ]
+        document.setData(data, merge: false)
+        
+        return documentId
+    }
     
 }

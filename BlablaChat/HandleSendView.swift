@@ -10,15 +10,21 @@ import SwiftUI
 final class HandleSendViewModel: ObservableObject {
     
     @Published var chatText: String = ""
+    @Published var from_user: DBUser?
+    @Published var to_user: DBUser?
     
-    func handleSend() {
-        print("\(chatText)")
+    
+    func handleSend(from_user: DBUser, to_user: DBUser) {
+        
+        let newMessage = ChatManager.shared.addMessage(texte: chatText, date_created: Date(), user_id: from_user.userId)
+
     }
 }
 
 struct HandleSendView: View {
     
-    let chatUser: DBUser?
+    let to_user: DBUser? // destinaire
+    let from_user: DBUser? // expediteur
     
     @StateObject private var vm = HandleSendViewModel()
     
@@ -33,7 +39,11 @@ struct HandleSendView: View {
                          .cornerRadius(20)
                          .background(Color.white)
                     Button {
-                        vm.handleSend()
+                        guard let from_user = from_user, let to_user = to_user else {
+                            print("empty from_user ou to_user")
+                            return
+                        }
+                        vm.handleSend(from_user: from_user, to_user: to_user)
                     } label: {
                         Image(systemName: "paperplane")
                             .foregroundColor(.blue)
@@ -49,6 +59,6 @@ struct HandleSendView: View {
 
 struct HandleSendView_Previews: PreviewProvider {
     static var previews: some View {
-        HandleSendView(chatUser: DBUser(userId: "123456", email: "toto@test.com", dateCreated: Date(), imageLink: "https://"))
+        HandleSendView(to_user: DBUser(userId: "123456", email: "toto@test.com", dateCreated: Date(), imageLink: "https://"), from_user: DBUser(userId: "789012", email: "toto@test.com", dateCreated: Date(), imageLink: "https://"))
     }
 }

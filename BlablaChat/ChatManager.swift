@@ -67,15 +67,14 @@ final class ChatManager {
     // Ajout des messages par la suite cad après la création du premier
     func addMessage(chat_id: String, texte: String, date_created: Date, user_id: String) -> String {
         // Création d'un objet message vide pour récupérer l'ID du message
-        let document = db.collection("chats/messages").document()
-        let documentId = document.documentID
 
         let data: [String:Any] = [
-            "id" : documentId,
+            "id" : chat_id,
             "texte" : texte,
             "date_created" : Timestamp(),
             "user_id" : Timestamp()
         ]
+        // Création du message
         document.setData(data, merge: false)
         
         return documentId

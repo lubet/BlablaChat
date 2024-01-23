@@ -4,7 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 22/01/2024.
 //
-// Nouveau message -> Création d'un chat et de ce message
+// View Nouveau message -> Création d'un chat et de ce message
 
 import SwiftUI
 

@@ -16,6 +16,7 @@ final class HandleSendViewModel: ObservableObject {
     
     
     func handleSend(from_user: DBUser, to_user: DBUser) {
+        print("Zut")
         // _ = ChatManager.shared.addChat(title: chatText, last_message: chatText)
         // print("chat_id: \(chat_id)")
         // ChatManager.shared.addMessage(chat_id: chat_id, texte: chatText, from_user_id: from_user.userId)
@@ -45,7 +46,7 @@ struct HandleSendView: View {
                             print("empty from_user ou to_user")
                             return
                         }
-                            // vm.handleSend(from_user: from_user, to_user: to_user)
+                            vm.handleSend(from_user: from_user, to_user: to_user)
                     } label: {
                         Image(systemName: "paperplane")
                             .foregroundColor(.blue)

@@ -10,26 +10,31 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 // chats ( Conversations) -----------
-struct chat: Identifiable, Codable {
-    var chat_id: String // = document_id unique
+struct Chat: Identifiable, Codable {
+    var chat_id: String // = document_id unique auto
     var title: String
     var last_message: String // texte du dernier message
     var date_created: Date
+    
     var id: String {
         chat_id
     }
 }
 
 // chat_messages ----------------------------
-struct chat_messages: Identifiable, Codable {
-    var id: String // unique
+struct Chat_message: Identifiable, Codable {
+    var message_id: String // unique
     var texte: String
     var date_created: Date
     var user_id: String // Créateur du premier message (sender) -> users
+    
+    var id: String {
+        message_id
+    }
 }
 
 // chat_members ----------------------------
-struct chat_members: Identifiable, Codable {
+struct Chat_member: Identifiable, Codable {
     var id: String      // unique
     var chat_id: String // = chats/chat_id unique
     var user_id: String // -> users
@@ -43,8 +48,8 @@ final class ChatManager {
     
     let db = Firestore.firestore()
     
-    // A la création de la discussion cad 1er message
-    func addChat(date_created: Date, last_message: String, title: String) -> String{
+     // A la création de la discussion cad 1er message
+    func addChat(title: String, last_message: String) -> String {
         // new chat
         let document = db.collection("chats").document()
         let chat_id = document.documentID
@@ -53,29 +58,29 @@ final class ChatManager {
             "chat_id" : chat_id,
             "title": title,
             "last_message" : last_message,
-            "date_created" : Date()
+            "date_created" : Timestamp(),
         ]
-        
+
         // Création du chat
         document.setData(data, merge: false)
-        
+
        return chat_id
-        
     }
     
-    
-    // Ajout des messages par la suite cad après la création du premier
-    func addMessage(chat_id: String, texte: String, date_created: Date, user_id: String) {
-        // Création d'un objet message vide pour récupérer l'ID du message
+    func addMessage(texte: String, from_user_id: String) {
+        // new message avec id auto
+        let document = db.collection("chats/messages").document()
+        let message_id = document.documentID
 
         let data: [String:Any] = [
-            "id" : chat_id,
-            "texte" : texte,
+            "message_id" : message_id,
+            "texte": texte,
+            "from_user_id" : from_user_id,
             "date_created" : Timestamp(),
-            "user_id" : Timestamp()
         ]
+
         // Création du message
-        db.collection("chats/messages").document().setData(data, merge: false)
+        document.setData(data, merge: false)
+  
     }
-    
 }

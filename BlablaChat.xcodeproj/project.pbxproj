@@ -23,6 +23,7 @@
 		C047E9E42B45A8FB00C6D48F /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9E32B45A8FB00C6D48F /* UserManager.swift */; };
 		C0686A872B5AA3E800284172 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0686A862B5AA3E800284172 /* ChatManager.swift */; };
 		C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */; };
+		C0F5C9FF2B612491009EC2A6 /* Essai2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F5C9FE2B612491009EC2A6 /* Essai2View.swift */; };
 		C0FB12A12B5536030068C633 /* NewMessageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FB12A02B5536030068C633 /* NewMessageCellView.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +41,7 @@
 		C047E9E32B45A8FB00C6D48F /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		C0686A862B5AA3E800284172 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
 		C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleSendView.swift; sourceTree = "<group>"; };
+		C0F5C9FE2B612491009EC2A6 /* Essai2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Essai2View.swift; sourceTree = "<group>"; };
 		C0FB12A02B5536030068C633 /* NewMessageCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -83,13 +85,14 @@
 				C047E9E32B45A8FB00C6D48F /* UserManager.swift */,
 				C047E9E12B45880400C6D48F /* StorageManager.swift */,
 				C047E9C52B45625C00C6D48F /* LoginView.swift */,
-				C0686A862B5AA3E800284172 /* ChatManager.swift */,
 				C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */,
+				C0686A862B5AA3E800284172 /* ChatManager.swift */,
 				C0686A852B5A94E900284172 /* OldViews */,
 				C047E9C72B45625D00C6D48F /* Assets.xcassets */,
 				C047E9D12B45646A00C6D48F /* GoogleService-Info.plist */,
 				C047E9C92B45625D00C6D48F /* Preview Content */,
 				C03B72D02B5FA2BB0050C524 /* EssaiView.swift */,
+				C0F5C9FE2B612491009EC2A6 /* Essai2View.swift */,
 			);
 			path = BlablaChat;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 				C0686A872B5AA3E800284172 /* ChatManager.swift in Sources */,
 				C03B72D12B5FA2BB0050C524 /* EssaiView.swift in Sources */,
 				C0FB12A12B5536030068C633 /* NewMessageCellView.swift in Sources */,
+				C0F5C9FF2B612491009EC2A6 /* Essai2View.swift in Sources */,
 				C047E9E42B45A8FB00C6D48F /* UserManager.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,

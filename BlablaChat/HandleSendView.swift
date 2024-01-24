@@ -16,6 +16,8 @@ final class HandleSendViewModel: ObservableObject {
     func handleSend(from_user_id: String, to_user_id: String) {
         
         let chatId = ChatManager.shared.addChat(title: chatText, last_message: "Salut les amis")
+        
+        ChatManager.shared.addMessage(chat_id: chatId, texte: chatText, from_user_id: from_user_id)
 
     }
 }

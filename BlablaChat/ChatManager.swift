@@ -47,46 +47,38 @@ final class ChatManager {
     static let shared = ChatManager()
     private init() { }
     
-    private let chatCollection = Firestore.firestore().collection("chats")
+    private let chatsCollection = Firestore.firestore().collection("chats")
+    
+    private func chatDocument(chat_id: String) -> DocumentReference {
+        chatsCollection.document(chat_id)
+    }
     
     func addChat(title: String, last_message: String) -> String {
         // new chat
-        let chatRef = chatCollection.document()
+        let chatRef = chatsCollection.document()
         let chat_id = chatRef.documentID
-
+        
         let data: [String:Any] = [
             "chat_id" : chat_id,
             "title": title,
             "last_message" : last_message,
             "date_created" : Timestamp()
         ]
-
-        // Création du chat
         chatRef.setData(data, merge: false)
-        
         return chat_id
     }
-    
-//    func addMessage(chat_id: String, texte: String, from_user_id: String) {
-//        // new message avec id auto
-//        
-//        print("ici")
-//
-//        let document = messageCollection.document()
-//        let message_id = document.documentID
-//
-//        print("docid: \(message_id)")
-//        
-//        let data: [String:Any] = [
-//            "message_id" : message_id,
-//            "chat_id" : chat_id,
-//            "texte": texte,
-//            "from_user_id" : from_user_id,
-//            "date_created" : Timestamp(),
-//        ]
-//
-//        // Création du message
-//        document.setData(data, merge: false)
-//  
-//    }
+
+    func addMessage(chat_id: String, texte: String, from_user_id: String) {
+        let messageRef = chatDocument(chat_id: chat_id).collection("messages").document()
+        let message_id = messageRef.documentID
+        
+        let datamsg: [String:Any] = [
+            "message_id" : message_id,
+            "chat_id" : chat_id,
+            "texte" : "Bonjour",
+            "date_created" : Timestamp(),
+            "from_user_id" : "Moi"
+        ]
+        messageRef.setData(datamsg, merge: false)
+    }
 }

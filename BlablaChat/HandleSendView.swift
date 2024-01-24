@@ -8,45 +8,37 @@
 
 import SwiftUI
 
+@MainActor
 final class HandleSendViewModel: ObservableObject {
     
     @Published var chatText: String = ""
-    @Published var from_user: DBUser?
-    @Published var to_user: DBUser?
     
-    
-    func handleSend(from_user: DBUser, to_user: DBUser) {
-        print("Zut")
-        // _ = ChatManager.shared.addChat(title: chatText, last_message: chatText)
-        // print("chat_id: \(chat_id)")
-        // ChatManager.shared.addMessage(chat_id: chat_id, texte: chatText, from_user_id: from_user.userId)
-        // print("2")
+    func handleSend(from_user_id: String, to_user_id: String) {
+        
+        let chatId = ChatManager.shared.addChat(title: chatText, last_message: "Salut les amis")
+
     }
 }
 
 struct HandleSendView: View {
     
-    let to_user: DBUser? // destinaire
-    let from_user: DBUser? // expediteur
-    
-    @StateObject private var vm = HandleSendViewModel()
-    
+    @StateObject private var viewModel = HandleSendViewModel()
+
+    let from_user_id: String = "12" // expediteur
+    let to_user_id: String = "11" // destinaire
+
     var body: some View {
         NavigationView {
             VStack {
                 Spacer()
                 HStack {
-                    TextEditor(text: $vm.chatText)
+                    TextEditor(text: $viewModel.chatText)
                         .frame(height: 60)
                          .foregroundColor(.black)
                          .cornerRadius(20)
                          .background(Color.white)
                     Button {
-                        guard let from_user = from_user, let to_user = to_user else {
-                            print("empty from_user ou to_user")
-                            return
-                        }
-                            vm.handleSend(from_user: from_user, to_user: to_user)
+                        viewModel.handleSend(from_user_id: from_user_id, to_user_id: to_user_id)
                     } label: {
                         Image(systemName: "paperplane")
                             .foregroundColor(.blue)
@@ -62,6 +54,7 @@ struct HandleSendView: View {
 
 struct HandleSendView_Previews: PreviewProvider {
     static var previews: some View {
-        HandleSendView(to_user: DBUser(userId: "123456", email: "toto@test.com", dateCreated: Date(), imageLink: "https://"), from_user: DBUser(userId: "789012", email: "toto@test.com", dateCreated: Date(), imageLink: "https://"))
+        HandleSendView()
+        // HandleSendView(to_user: DBUser(userId: "123456", email: "toto@test.com", dateCreated: Date(), imageLink: "https://"), from_user: DBUser(userId: "789012", email: "toto@test.com", dateCreated: Date(), imageLink: "https://"))
     }
 }

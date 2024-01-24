@@ -45,14 +45,13 @@ struct Chat_member: Identifiable, Codable {
 final class ChatManager {
     
     static let shared = ChatManager()
-    init() { }
+    private init() { }
     
-    private let db = Firestore.firestore()
+    private let chatCollection = Firestore.firestore().collection("chats")
     
-     // A la création de la discussion cad 1er message
     func addChat(title: String, last_message: String) -> String {
         // new chat
-        let chatRef = db.collection("chats").document()
+        let chatRef = chatCollection.document()
         let chat_id = chatRef.documentID
 
         let data: [String:Any] = [

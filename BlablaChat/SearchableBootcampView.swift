@@ -30,6 +30,7 @@ final class ContactManager {
 final class NewMessageViewModel: ObservableObject {
     
     @Published private(set) var allContacts: [Contact] = []
+    @Published var searchText: String = ""
     
     let manager = ContactManager()
     
@@ -53,7 +54,10 @@ struct NewMessageView: View {
                     contactRow(contact: contact)
                 }
             }
+            .padding()
         }
+        .searchable(text: $viewModel.searchText, placement: .automatic, prompt: Text("Recherche d'un contact"))
+        .navigationTitle("Contacts")
         .task {
             await viewModel.loadContacts()
         }

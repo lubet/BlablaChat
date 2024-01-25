@@ -24,6 +24,7 @@
 		C0686A872B5AA3E800284172 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0686A862B5AA3E800284172 /* ChatManager.swift */; };
 		C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */; };
 		C0EE66AC2B62654A002F13EB /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE66AB2B62654A002F13EB /* SearchBarView.swift */; };
+		C0EE66AE2B627DA8002F13EB /* NewMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE66AD2B627DA8002F13EB /* NewMessageView.swift */; };
 		C0F5C9FF2B612491009EC2A6 /* Essai2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F5C9FE2B612491009EC2A6 /* Essai2View.swift */; };
 		C0FB12A12B5536030068C633 /* NewMessageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FB12A02B5536030068C633 /* NewMessageCellView.swift */; };
 /* End PBXBuildFile section */
@@ -43,6 +44,7 @@
 		C0686A862B5AA3E800284172 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
 		C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleSendView.swift; sourceTree = "<group>"; };
 		C0EE66AB2B62654A002F13EB /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		C0EE66AD2B627DA8002F13EB /* NewMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageView.swift; sourceTree = "<group>"; };
 		C0F5C9FE2B612491009EC2A6 /* Essai2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Essai2View.swift; sourceTree = "<group>"; };
 		C0FB12A02B5536030068C633 /* NewMessageCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,6 +91,7 @@
 				C047E9C52B45625C00C6D48F /* LoginView.swift */,
 				C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */,
 				C0686A862B5AA3E800284172 /* ChatManager.swift */,
+				C0EE66AD2B627DA8002F13EB /* NewMessageView.swift */,
 				C0686A852B5A94E900284172 /* OldViews */,
 				C047E9C72B45625D00C6D48F /* Assets.xcassets */,
 				C047E9D12B45646A00C6D48F /* GoogleService-Info.plist */,
@@ -210,6 +213,7 @@
 				C0FB12A12B5536030068C633 /* NewMessageCellView.swift in Sources */,
 				C0EE66AC2B62654A002F13EB /* SearchBarView.swift in Sources */,
 				C0F5C9FF2B612491009EC2A6 /* Essai2View.swift in Sources */,
+				C0EE66AE2B627DA8002F13EB /* NewMessageView.swift in Sources */,
 				C047E9E42B45A8FB00C6D48F /* UserManager.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,
@@ -347,11 +351,12 @@
 				DEVELOPMENT_TEAM = Z2D42B65AU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = BlablaChat;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -376,11 +381,12 @@
 				DEVELOPMENT_TEAM = Z2D42B65AU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = BlablaChat;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

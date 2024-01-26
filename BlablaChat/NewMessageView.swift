@@ -47,13 +47,23 @@ final class NewMessageViewModel: ObservableObject {
         $searchText
             .debounce(for: 0.3, scheduler: DispatchQueue.main)
             .sink { [weak self] searchText in
-                self?.filterContact(searchText: searchText)
+                self?.filterContacts(searchText: searchText)
             }
             .store(in: &cancellables)
     }
 
-    private func filterContact(searchText: String) {
+    private func filterContacts(searchText: String) {
+        guard !searchText.isEmpty else {
+            filteredContacts = []
+            return
+        }
         
+        let search = searchText.lowercased()
+        filteredContacts = allContacts.filter({ contact in
+            let nomContainsSearch = contact.nom.lowercased().contains(search)
+            let prenomContainsSearch = contact.prenom.lowercased().contains(search)
+            return nomContainsSearch || prenomContainsSearch
+        })
     }
     
     

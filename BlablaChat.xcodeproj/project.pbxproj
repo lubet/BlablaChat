@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C03B72D12B5FA2BB0050C524 /* EssaiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03B72D02B5FA2BB0050C524 /* EssaiView.swift */; };
+		C04120722B63F57A0074F661 /* NewMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04120712B63F57A0074F661 /* NewMessageView.swift */; };
 		C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */; };
 		C047E9C62B45625C00C6D48F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C52B45625C00C6D48F /* LoginView.swift */; };
 		C047E9C82B45625D00C6D48F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C047E9C72B45625D00C6D48F /* Assets.xcassets */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		C03B72D02B5FA2BB0050C524 /* EssaiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssaiView.swift; sourceTree = "<group>"; };
+		C04120712B63F57A0074F661 /* NewMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageView.swift; sourceTree = "<group>"; };
 		C047E9C02B45625C00C6D48F /* BlablaChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlablaChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlablaChatApp.swift; sourceTree = "<group>"; };
 		C047E9C52B45625C00C6D48F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				C03B72D02B5FA2BB0050C524 /* EssaiView.swift */,
 				C0F5C9FE2B612491009EC2A6 /* Essai2View.swift */,
 				C0C1A9482B62ACC400646851 /* TempView.swift */,
+				C04120712B63F57A0074F661 /* NewMessageView.swift */,
 			);
 			path = BlablaChat;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 				C0F5C9FF2B612491009EC2A6 /* Essai2View.swift in Sources */,
 				C047E9E42B45A8FB00C6D48F /* UserManager.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
+				C04120722B63F57A0074F661 /* NewMessageView.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,
 				C047E9E22B45880400C6D48F /* StorageManager.swift in Sources */,
 				C047E9C62B45625C00C6D48F /* LoginView.swift in Sources */,

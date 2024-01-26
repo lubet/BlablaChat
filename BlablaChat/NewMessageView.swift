@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct Contact: Identifiable {
     let id: String
@@ -32,8 +33,30 @@ final class ContactManager {
 final class NewMessageViewModel: ObservableObject {
     
     @Published private(set) var allContacts: [Contact] = []
+    @Published private(set) var filteredContacts: [Contact] = []
     @Published var searchText: String = ""
     let manager = ContactManager()
+    private var cancellables = Set<AnyCancellable>()
+    
+    init() {
+        addSubscribers()
+    }
+    
+    private func addSubscribers() {
+        
+        $searchText
+            .debounce(for: 0.3, scheduler: DispatchQueue.main)
+            .sink { [weak self] searchText in
+                self?.filterContact(searchText: searchText)
+            }
+            .store(in: &cancellables)
+    }
+
+    private func filterContact(searchText: String) {
+        
+    }
+    
+    
     
     func loadContacts() async {
         do {
@@ -57,7 +80,9 @@ struct NewMessageView: View {
             }
             .padding()
         }
-        .navigationTitle("Contact")
+        .searchable(text: $viewModel.searchText, placement: .automatic, prompt: Text("Saisir un nom..."))
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Contacts")
         .task {
             await viewModel.loadContacts()
         }
@@ -72,11 +97,17 @@ struct NewMessageView: View {
                 .font(.headline)
                 .foregroundColor(.black)
         }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.black.opacity(0.05))
+        
     }
 }
 
 struct NewMessageView_Previews: PreviewProvider {
     static var previews: some View {
-        NewMessageView()
+        NavigationStack {
+            NewMessageView()
+        }
     }
 }

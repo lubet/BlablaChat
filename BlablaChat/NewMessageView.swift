@@ -38,6 +38,10 @@ final class NewMessageViewModel: ObservableObject {
     let manager = ContactManager()
     private var cancellables = Set<AnyCancellable>()
     
+    var isSearching: Bool {
+        !searchText.isEmpty
+    }
+    
     init() {
         addSubscribers()
     }
@@ -84,7 +88,7 @@ struct NewMessageView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                ForEach(viewModel.allContacts) { contact in
+                ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.allContacts) { contact in
                     contactRow(contact: contact)
                 }
             }

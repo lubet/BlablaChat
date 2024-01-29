@@ -8,34 +8,14 @@
 import SwiftUI
 import Combine
 
-struct Contact: Identifiable {
-    let id: String
-    let nom: String
-    let prenom: String
-    let email: String
-}
-
-final class ContactManager {
-    
-    func getAllContacts() async throws ->
-        [Contact] {
-        [
-            Contact(id: "1", nom: "Dudu", prenom: "Maurice", email: "maurice@test.com"),
-            Contact(id: "2", nom: "Dudu", prenom: "Robert", email: "maurice@test.com"),
-            Contact(id: "3", nom: "Didi", prenom: "Emile", email: "maurice@test.com"),
-            Contact(id: "4", nom: "Toto", prenom: "Gaston", email: "maurice@test.com"),
-            Contact(id: "5", nom: "Tete", prenom: "Gaston", email: "maurice@test.com"),
-        ]
-        }
-}
-
 @MainActor
 final class NewMessageViewModel: ObservableObject {
     
-    @Published private(set) var allContacts: [Contact] = []
-    @Published private(set) var filteredContacts: [Contact] = []
+    @Published private(set) var allContacts: [Contact4] = []
+    @Published private(set) var filteredContacts: [Contact4] = []
     @Published var searchText: String = ""
-    let manager = ContactManager()
+    
+    let manager = Contact4Manager.shared
     private var cancellables = Set<AnyCancellable>()
     
     var isSearching: Bool {

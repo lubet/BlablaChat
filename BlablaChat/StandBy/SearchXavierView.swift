@@ -18,13 +18,13 @@ struct Contact2: Identifiable {
 final class Contact2Manager {
     
     func getAllContacts() async throws ->
-        [Contact] {
+        [Contact2] {
         [
-            Contact(id: "1", nom: "Dudu", prenom: "Maurice", email: "maurice@test.com"),
-            Contact(id: "2", nom: "Dudu", prenom: "Robert", email: "maurice@test.com"),
-            Contact(id: "3", nom: "Didi", prenom: "Emile", email: "maurice@test.com"),
-            Contact(id: "4", nom: "Toto", prenom: "Gaston", email: "maurice@test.com"),
-            Contact(id: "5", nom: "Tete", prenom: "Gaston", email: "maurice@test.com"),
+            Contact2(id: "1", nom: "Dudu", prenom: "Maurice", email: "maurice@test.com"),
+            Contact2(id: "2", nom: "Dudu", prenom: "Robert", email: "maurice@test.com"),
+            Contact2(id: "3", nom: "Didi", prenom: "Emile", email: "maurice@test.com"),
+            Contact2(id: "4", nom: "Toto", prenom: "Gaston", email: "maurice@test.com"),
+            Contact2(id: "5", nom: "Tete", prenom: "Gaston", email: "maurice@test.com"),
         ]
         }
 }
@@ -32,8 +32,8 @@ final class Contact2Manager {
 @MainActor
 final class NewMessage2ViewModel: ObservableObject {
     
-    @Published private(set) var allContacts: [Contact] = []
-    @Published private(set) var filteredContacts: [Contact] = []
+    @Published private(set) var allContacts: [Contact2] = []
+    @Published private(set) var filteredContacts: [Contact2] = []
     @Published var searchText: String = ""
     let manager = Contact2Manager()
     private var cancellables = Set<AnyCancellable>()
@@ -103,7 +103,7 @@ struct SearchXavierView: View {
         }
     }
     
-    private func contact2Row(contact: Contact) -> some View {
+    private func contact2Row(contact: Contact2) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(contact.nom)
                 .font(.headline)

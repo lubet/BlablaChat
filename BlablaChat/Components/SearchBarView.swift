@@ -4,6 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 25/01/2024.
 //
+// A utliser pour saisir un message
 
 import SwiftUI
 

@@ -35,7 +35,7 @@ final class NewMessage2ViewModel: ObservableObject {
     @Published private(set) var allContacts: [Contact] = []
     @Published private(set) var filteredContacts: [Contact] = []
     @Published var searchText: String = ""
-    let manager = ContactXManager()
+    let manager = Contact2Manager()
     private var cancellables = Set<AnyCancellable>()
     
     var isSearching: Bool {

@@ -15,7 +15,7 @@ struct Contact: Identifiable {
     let email: String
 }
 
-final class ContactXManager {
+final class ContactManager {
     
     func getAllContacts() async throws ->
         [Contact] {
@@ -35,7 +35,7 @@ final class NewMessageViewModel: ObservableObject {
     @Published private(set) var allContacts: [Contact] = []
     @Published private(set) var filteredContacts: [Contact] = []
     @Published var searchText: String = ""
-    let manager = ContactXManager()
+    let manager = ContactManager()
     private var cancellables = Set<AnyCancellable>()
     
     var isSearching: Bool {
@@ -89,7 +89,7 @@ struct NewMessageView: View {
         ScrollView {
             VStack(spacing: 20) {
                 ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.allContacts) { contact in
-                    contactRow(contact: contact)
+                    ContactCellView(contact: contact)
                 }
             }
             .padding()
@@ -100,21 +100,6 @@ struct NewMessageView: View {
         .task {
             await viewModel.loadContacts()
         }
-    }
-    
-    private func contactRow(contact: Contact) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text(contact.nom)
-                .font(.headline)
-                .foregroundColor(.black)
-            Text(contact.prenom)
-                .font(.headline)
-                .foregroundColor(.black)
-        }
-        .padding()
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.black.opacity(0.05))
-        
     }
 }
 

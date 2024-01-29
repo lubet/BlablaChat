@@ -4,6 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 29/01/2024.
 //
+// Utilisé par NewMessageView
 
 import Foundation
 
@@ -20,8 +21,7 @@ final class Contact4Manager {
     
     init() { }
     
-    func getAllContacts() async throws ->
-        [Contact4] {
+    func getAllContacts() async throws -> [Contact4] {
             [
                 Contact4(id: "1", nom: "Dudu", prenom: "Maurice", email: "maurice@test.com"),
                 Contact4(id: "2", nom: "Dudu", prenom: "Robert", email: "maurice@test.com"),

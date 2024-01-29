@@ -3,7 +3,7 @@
 //  BlablaChat
 //
 //  Created by Lubet-Moncla Xavier on 26/01/2024.
-//
+//  Voir ContactManager
 
 import SwiftUI
 import Combine
@@ -16,16 +16,19 @@ final class NewMessageViewModel: ObservableObject {
     @Published var searchText: String = ""
     
     let manager = Contact4Manager.shared
+    
     private var cancellables = Set<AnyCancellable>()
     
     var isSearching: Bool {
         !searchText.isEmpty
     }
     
+    //
     init() {
         addSubscribers()
     }
     
+    //
     private func addSubscribers() {
         
         $searchText
@@ -35,7 +38,8 @@ final class NewMessageViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-
+    
+    //
     private func filterContacts(searchText: String) {
         guard !searchText.isEmpty else {
             filteredContacts = []
@@ -50,8 +54,7 @@ final class NewMessageViewModel: ObservableObject {
         })
     }
     
-    
-    
+    // AllContacts -----------------------------------------
     func loadContacts() async {
         do {
             allContacts = try await manager.getAllContacts()

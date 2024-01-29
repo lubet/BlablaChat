@@ -1,21 +1,21 @@
 //
-//  NewMessageView.swift
+//  SearchXavierView.swift
 //  BlablaChat
 //
-//  Created by Lubet-Moncla Xavier on 26/01/2024.
+//  Created by Lubet-Moncla Xavier on 29/01/2024.
 //
 
 import SwiftUI
 import Combine
 
-struct Contact: Identifiable {
+struct Contact2: Identifiable {
     let id: String
     let nom: String
     let prenom: String
     let email: String
 }
 
-final class ContactXManager {
+final class Contact2Manager {
     
     func getAllContacts() async throws ->
         [Contact] {
@@ -30,7 +30,7 @@ final class ContactXManager {
 }
 
 @MainActor
-final class NewMessageViewModel: ObservableObject {
+final class NewMessage2ViewModel: ObservableObject {
     
     @Published private(set) var allContacts: [Contact] = []
     @Published private(set) var filteredContacts: [Contact] = []
@@ -81,15 +81,16 @@ final class NewMessageViewModel: ObservableObject {
     }
 }
 
-struct NewMessageView: View {
+
+struct SearchXavierView: View {
     
-    @StateObject private var viewModel = NewMessageViewModel()
+    @StateObject private var viewModel = NewMessage2ViewModel()
     
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
                 ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.allContacts) { contact in
-                    contactRow(contact: contact)
+                    contact2Row(contact: contact)
                 }
             }
             .padding()
@@ -102,7 +103,7 @@ struct NewMessageView: View {
         }
     }
     
-    private func contactRow(contact: Contact) -> some View {
+    private func contact2Row(contact: Contact) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(contact.nom)
                 .font(.headline)
@@ -116,12 +117,13 @@ struct NewMessageView: View {
         .background(Color.black.opacity(0.05))
         
     }
+
 }
 
-struct NewMessageView_Previews: PreviewProvider {
+struct SearchXavierView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            NewMessageView()
+            SearchXavierView()
         }
     }
 }

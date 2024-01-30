@@ -9,14 +9,14 @@ import SwiftUI
 
 struct ContactCellView: View {
     
-    let contact: Contact
+    let lecontact: Contact
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(contact.nom)
+            Text(lecontact.nom)
                 .font(.headline)
                 .foregroundColor(.black)
-            Text(contact.prenom)
+            Text(lecontact.prenom)
                 .font(.headline)
                 .foregroundColor(.black)
         }
@@ -28,6 +28,6 @@ struct ContactCellView: View {
 
 struct ContactCellView_Previews: PreviewProvider {
     static var previews: some View {
-        ContactCellView(contact: Contact(id: "1", nom: "toto", prenom: "Maurice", email: "maurice@test.com"))
+        ContactCellView(lecontact: Contact(id: "1", nom: "toto", prenom: "Maurice", email: "maurice@test.com"))
     }
 }

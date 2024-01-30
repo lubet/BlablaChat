@@ -11,11 +11,9 @@ import Combine
 @MainActor
 final class NewMessageViewModel: ObservableObject {
     
-    @Published private(set) var allContacts: [Contact] = []
-    @Published private(set) var filteredContacts: [Contact] = []
+    @Published var allContacts: [Contact] = []
+    @Published var filteredContacts: [Contact] = []
     @Published var searchText: String = ""
-    
-    let manager = ContactManager.shared
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -30,7 +28,6 @@ final class NewMessageViewModel: ObservableObject {
     
     //
     private func addSubscribers() {
-        
         $searchText
             .debounce(for: 0.3, scheduler: DispatchQueue.main)
             .sink { [weak self] searchText in
@@ -57,7 +54,7 @@ final class NewMessageViewModel: ObservableObject {
     // AllContacts -----------------------------------------
     func loadContacts() async {
         do {
-            allContacts = try await manager.getAllContacts()
+            allContacts = try await ContactManager.shared.getAllContacts()
         } catch  {
             print(error)
         }
@@ -71,8 +68,8 @@ struct NewMessageView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.allContacts) { contact in
-                    ContactCellView(contact: contact)
+                ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.allContacts) { lecontact in
+                    ContactCellView(lecontact: lecontact)
                 }
             }
             .padding()

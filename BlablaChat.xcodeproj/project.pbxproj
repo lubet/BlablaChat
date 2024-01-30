@@ -28,6 +28,7 @@
 		C0686A872B5AA3E800284172 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0686A862B5AA3E800284172 /* ChatManager.swift */; };
 		C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */; };
 		C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C1A9482B62ACC400646851 /* SearchNick.swift */; };
+		C0CB4BF42B68FD6600DCC6E9 /* ContactEssaiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CB4BF32B68FD6600DCC6E9 /* ContactEssaiView.swift */; };
 		C0EE66AC2B62654A002F13EB /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE66AB2B62654A002F13EB /* SearchBarView.swift */; };
 		C0FB12A12B5536030068C633 /* NewMessageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FB12A02B5536030068C633 /* NewMessageCellView.swift */; };
 /* End PBXBuildFile section */
@@ -51,6 +52,7 @@
 		C0686A862B5AA3E800284172 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
 		C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleSendView.swift; sourceTree = "<group>"; };
 		C0C1A9482B62ACC400646851 /* SearchNick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNick.swift; sourceTree = "<group>"; };
+		C0CB4BF32B68FD6600DCC6E9 /* ContactEssaiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactEssaiView.swift; sourceTree = "<group>"; };
 		C0EE66AB2B62654A002F13EB /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		C0FB12A02B5536030068C633 /* NewMessageCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -114,6 +116,7 @@
 				C047E9D12B45646A00C6D48F /* GoogleService-Info.plist */,
 				C047E9C92B45625D00C6D48F /* Preview Content */,
 				C03B72D02B5FA2BB0050C524 /* EssaiView.swift */,
+				C0CB4BF32B68FD6600DCC6E9 /* ContactEssaiView.swift */,
 			);
 			path = BlablaChat;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0CB4BF42B68FD6600DCC6E9 /* ContactEssaiView.swift in Sources */,
 				C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */,
 				C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */,
 				C0686A872B5AA3E800284172 /* ChatManager.swift in Sources */,
@@ -364,6 +368,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = BlablaChat;
+				INFOPLIST_KEY_NSContactsUsageDescription = "Merci d'autoriser l'accès à vos contacts";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -394,6 +399,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = BlablaChat;
+				INFOPLIST_KEY_NSContactsUsageDescription = "Merci d'autoriser l'accès à vos contacts";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

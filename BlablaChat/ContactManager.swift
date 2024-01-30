@@ -7,27 +7,51 @@
 // Utilisé par NewMessageView
 
 import Foundation
+import Contacts
 
-struct Contact4: Identifiable {
+struct Contact: Identifiable {
     let id: String
-    let nom: String
-    let prenom: String
-    let email: String
+    let nom: String?
+    let prenom: String?
+    let email: String?
+    
+    init (
+        id: String,
+        nom:String,
+        prenom:String,
+        email:String
+    ) {
+        self.id = UUID().uuidString
+        self.nom = nom
+        self.prenom = prenom
+        self.email = email
+    }
+    
 }
 
-final class Contact4Manager {
+final class ContactManager {
     
-    static let shared =  Contact4Manager()
+    static let shared =  ContactManager()
     
     init() { }
     
-    func getAllContacts() async throws -> [Contact4] {
-            [
-                Contact4(id: "1", nom: "Dudu", prenom: "Maurice", email: "maurice@test.com"),
-                Contact4(id: "2", nom: "Dudu", prenom: "Robert", email: "maurice@test.com"),
-                Contact4(id: "3", nom: "Didi", prenom: "Emile", email: "maurice@test.com"),
-                Contact4(id: "4", nom: "Toto", prenom: "Gaston", email: "maurice@test.com"),
-                Contact4(id: "5", nom: "Tete", prenom: "Gaston", email: "maurice@test.com"),
-            ]
+    
+    func fetchAllContacts() {
+        
+        var contacts: [Contact] = []
+        
+        let store = CNContactStore()
+        
+        let keys = [CNContactGivenNameKey, CNContactMiddleNameKey, CNContactEmailAddressesKey] as [CNKeyDescriptor]
+        
+        let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
+        
+        do {
+            try store.enumerateContacts(with: fetchRequest, usingBlock: { contact, result in
+                print(contact.givenName)
+            })
+        } catch {
+            print(error)
         }
+    }
 }

@@ -11,11 +11,11 @@ import Combine
 @MainActor
 final class NewMessageViewModel: ObservableObject {
     
-    @Published private(set) var allContacts: [Contact4] = []
-    @Published private(set) var filteredContacts: [Contact4] = []
+    @Published private(set) var allContacts: [Contact] = []
+    @Published private(set) var filteredContacts: [Contact] = []
     @Published var searchText: String = ""
     
-    let manager = Contact4Manager.shared
+    let manager = ContactManager.shared
     
     private var cancellables = Set<AnyCancellable>()
     

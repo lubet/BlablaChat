@@ -16,7 +16,7 @@ struct ContactCellView: View {
             Text(lecontact.nom)
                 .font(.headline)
                 .foregroundColor(.black)
-            Text(lecontact.prenom)
+            Text(lecontact.email)
                 .font(.headline)
                 .foregroundColor(.black)
         }
@@ -28,6 +28,6 @@ struct ContactCellView: View {
 
 struct ContactCellView_Previews: PreviewProvider {
     static var previews: some View {
-        ContactCellView(lecontact: Contact(id: "1", nom: "toto", prenom: "Maurice", email: "maurice@test.com"))
+        ContactCellView(lecontact: Contact(id: "1", nom: "toto", email: "maurice@test.com"))
     }
 }

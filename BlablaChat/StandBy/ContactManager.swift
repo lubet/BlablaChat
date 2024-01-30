@@ -26,21 +26,17 @@ struct Contact: Identifiable {
     
 }
 
+@MainActor
 final class ContactManager {
     
     static let shared =  ContactManager()
     
     init() { }
     
-    
     func getAllContacts() async -> [Contact] {
-        
         var contacts: [Contact] = []
-        
         let store = CNContactStore()
-        
         let keys = [CNContactGivenNameKey, CNContactEmailAddressesKey] as [CNKeyDescriptor]
-        
         let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
         
         do {
@@ -51,9 +47,8 @@ final class ContactManager {
                 contacts.append(qqun)
             })
         } catch {
-            print(error)
+            return []
         }
-        
         return contacts
     }
 }

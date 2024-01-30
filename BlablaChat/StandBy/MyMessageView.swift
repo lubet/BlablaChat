@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-
+@MainActor
 final class MyMessageViewModel: ObservableObject {
     
     @Published private(set) var mesContacts: [Contact] = []
     
     func getContacts() async {
-        self.mesContacts = await ContactManager.shared.getAllContacts()
+            self.mesContacts = await ContactManager.shared.getAllContacts()
     }
 }
 
@@ -26,7 +26,8 @@ struct MyMessageView: View {
         ScrollView {
             VStack {
                 ForEach(viewModel.mesContacts) { oneContact in
-                    Text(oneContact.nom)
+                    // Text(oneContact.nom)
+                    ContactCellView(lecontact: oneContact)
                 }
             }
         }

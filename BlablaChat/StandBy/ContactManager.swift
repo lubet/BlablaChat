@@ -35,8 +35,6 @@ final class ContactManager {
     
     func getAllContacts() async -> [Contact] {
         
-        print("Ici")
-        
         var contacts: [Contact] = []
         
         let store = CNContactStore()
@@ -51,7 +49,6 @@ final class ContactManager {
                 let email =  uncontact.emailAddresses.description
                 let qqun = Contact(id: UUID().uuidString, nom: nom, email: email)
                 contacts.append(qqun)
-                print("\(nom)")
             })
         } catch {
             print(error)

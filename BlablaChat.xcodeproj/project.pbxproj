@@ -76,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */,
+				C0CB4BF52B6922F200DCC6E9 /* MyMessageView.swift */,
 				C0686A862B5AA3E800284172 /* ChatManager.swift */,
 				C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */,
 				C0C1A9482B62ACC400646851 /* SearchNick.swift */,
@@ -116,7 +117,6 @@
 				C047E9C92B45625D00C6D48F /* Preview Content */,
 				C03B72D02B5FA2BB0050C524 /* EssaiView.swift */,
 				C0CB4BF32B68FD6600DCC6E9 /* ContactEssaiView.swift */,
-				C0CB4BF52B6922F200DCC6E9 /* MyMessageView.swift */,
 			);
 			path = BlablaChat;
 			sourceTree = "<group>";

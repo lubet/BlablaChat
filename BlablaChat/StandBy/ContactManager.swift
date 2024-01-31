@@ -26,7 +26,7 @@ struct Contact: Identifiable {
     
 }
 
-@MainActor
+
 final class ContactManager {
     
     static let shared =  ContactManager()

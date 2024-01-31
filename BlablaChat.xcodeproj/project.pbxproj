@@ -10,6 +10,7 @@
 		C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */; };
 		C01FE5AB2B67F47E0049B9EE /* ContactCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */; };
 		C01FE5AD2B67F7F70049B9EE /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */; };
+		C0326A132B6A2F4C005B8181 /* NavStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0326A122B6A2F4C005B8181 /* NavStackView.swift */; };
 		C03B72D12B5FA2BB0050C524 /* EssaiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03B72D02B5FA2BB0050C524 /* EssaiView.swift */; };
 		C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */; };
 		C047E9C62B45625C00C6D48F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C52B45625C00C6D48F /* LoginView.swift */; };
@@ -37,6 +38,7 @@
 		C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchXavierView.swift; sourceTree = "<group>"; };
 		C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCellView.swift; sourceTree = "<group>"; };
 		C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
+		C0326A122B6A2F4C005B8181 /* NavStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavStackView.swift; sourceTree = "<group>"; };
 		C03B72D02B5FA2BB0050C524 /* EssaiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssaiView.swift; sourceTree = "<group>"; };
 		C047E9C02B45625C00C6D48F /* BlablaChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlablaChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlablaChatApp.swift; sourceTree = "<group>"; };
@@ -86,6 +88,16 @@
 			path = StandBy;
 			sourceTree = "<group>";
 		};
+		C0326A112B6A2E6A005B8181 /* Essais */ = {
+			isa = PBXGroup;
+			children = (
+				C0CB4BF32B68FD6600DCC6E9 /* ContactEssaiView.swift */,
+				C03B72D02B5FA2BB0050C524 /* EssaiView.swift */,
+				C0326A122B6A2F4C005B8181 /* NavStackView.swift */,
+			);
+			path = Essais;
+			sourceTree = "<group>";
+		};
 		C047E9B72B45625C00C6D48F = {
 			isa = PBXGroup;
 			children = (
@@ -115,8 +127,7 @@
 				C047E9C72B45625D00C6D48F /* Assets.xcassets */,
 				C047E9D12B45646A00C6D48F /* GoogleService-Info.plist */,
 				C047E9C92B45625D00C6D48F /* Preview Content */,
-				C03B72D02B5FA2BB0050C524 /* EssaiView.swift */,
-				C0CB4BF32B68FD6600DCC6E9 /* ContactEssaiView.swift */,
+				C0326A112B6A2E6A005B8181 /* Essais */,
 			);
 			path = BlablaChat;
 			sourceTree = "<group>";
@@ -222,6 +233,7 @@
 				C0CB4BF42B68FD6600DCC6E9 /* ContactEssaiView.swift in Sources */,
 				C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */,
 				C0CB4BF62B6922F200DCC6E9 /* MyMessageView.swift in Sources */,
+				C0326A132B6A2F4C005B8181 /* NavStackView.swift in Sources */,
 				C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */,
 				C0686A872B5AA3E800284172 /* ChatManager.swift in Sources */,
 				C03B72D12B5FA2BB0050C524 /* EssaiView.swift in Sources */,

@@ -4,6 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 29/01/2024.
 //
+// CellView d'un contact
 
 import SwiftUI
 
@@ -20,8 +21,8 @@ struct ContactCellView: View {
                 .font(.headline)
                 .foregroundColor(.black)
         }
-        .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
         .background(Color.black.opacity(0.05))
     }
 }

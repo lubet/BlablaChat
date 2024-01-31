@@ -26,6 +26,7 @@ struct NavStackView: View {
             }
             .navigationTitle("Des fruits")
             .navigationBarTitleDisplayMode(.automatic)
+            // .navigationBarHidden(true)
             .navigationDestination(for: String.self) { value in
                 secondView(value: value)
             }
@@ -39,6 +40,7 @@ struct secondView: View {
     
     var body: some View {
         Text("Ma seconde view pour \(value)")
+        // Spacer()
     }
 }
 

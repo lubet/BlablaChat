@@ -23,15 +23,17 @@ struct MyMessageView: View {
     @StateObject var viewModel = MyMessageViewModel()
     
     var body: some View {
-        ScrollView {
-            VStack {
-                ForEach(viewModel.mesContacts) { oneContact in
-                    // Text(oneContact.nom)
-                    ContactCellView(lecontact: oneContact)
+        NavigationStack {
+            ScrollView {
+                VStack {
+                    ForEach(viewModel.mesContacts) { oneContact in
+                        // Text(oneContact.nom)
+                        ContactCellView(lecontact: oneContact)
+                    }
                 }
             }
+            .navigationTitle("Contacts")
         }
-        .navigationTitle("Contacts")
         .task {
             await viewModel.getContacts()
         }

@@ -14,11 +14,7 @@ struct Contact: Identifiable {
     let nom: String
     let email: String
     
-    init (
-        id: String,
-        nom:String,
-        email:String
-    ) {
+    init (id: String = UUID().uuidString, nom:String, email:String) {
         self.id = id
         self.nom = nom
         self.email = email
@@ -43,7 +39,7 @@ final class ContactManager {
             try store.enumerateContacts(with: fetchRequest, usingBlock: { uncontact, result in
                 let nom = uncontact.givenName
                 let email =  uncontact.emailAddresses.description
-                let qqun = Contact(id: UUID().uuidString, nom: nom, email: email)
+                let qqun = Contact(nom: nom, email: email)
                 contacts.append(qqun)
             })
         } catch {

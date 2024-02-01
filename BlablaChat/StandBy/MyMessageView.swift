@@ -15,7 +15,8 @@ final class MyMessageViewModel: ObservableObject {
     @Published private(set) var mesContacts: [Contact] = []
 
     func getContacts() async {
-            self.mesContacts = await ContactManager.shared.getAllContacts()
+            // self.mesContacts = await ContactManager.shared.getAllContacts()
+        self.mesContacts = await ContactManager.shared.mockContacts()
     }
 }
 
@@ -47,6 +48,7 @@ struct MyMessageView: View {
         .searchable(text: $searchText, prompt: "Recherche d'un contact")
     }
 }
+
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {

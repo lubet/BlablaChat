@@ -29,6 +29,21 @@ final class ContactManager {
     
     init() { }
     
+    func mockContacts() async -> [Contact] {
+        var myContact = [
+            Contact(nom: "Dugenou", email: "mdugenoun@test.com"),
+            Contact(nom: "Dugommier", email: "mdugenoun@test.com"),
+            Contact(nom: "Leroy", email: "mdLeroy@test.com"),
+            Contact(nom: "Machin", email: "mdMachin@test.com"),
+            Contact(nom: "Rutou", email: "mRutou@test.com"),
+            Contact(nom: "Maerou", email: "mMaerou@test.com"),
+            Contact(nom: "Furou", email: "mFurou@test.com"),
+            Contact(nom: "Janin", email: "mJanin@test.com"),
+        ]
+        
+        return myContact
+    }
+    
     func getAllContacts() async -> [Contact] {
         var contacts: [Contact] = []
         let store = CNContactStore()

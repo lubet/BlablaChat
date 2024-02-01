@@ -26,10 +26,12 @@ struct EssaiView: View {
                 Spacer()
                 HStack {
                     TextEditor(text: $vm.chatText)
+                        .disabled(false)
                         .frame(height: 60)
                          .foregroundColor(.black)
                          .cornerRadius(20)
                          .background(Color.white)
+                    
                     Button {
                         vm.handleSend()
                     } label: {

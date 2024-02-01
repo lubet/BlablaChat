@@ -27,6 +27,8 @@ struct MyMessageView: View {
     
     @State private var searchText: String = ""
     
+    @State private var chatText: String = ""
+    
     var filteredContacts: [Contact] {
         guard !searchText.isEmpty else { return viewModel.mesContacts}
         return viewModel.mesContacts.filter { $0.nom.localizedCaseInsensitiveContains(searchText)}
@@ -42,7 +44,7 @@ struct MyMessageView: View {
                     }
                 }
             }
-            MessageBarView()
+            bottomMessageBar
             .navigationTitle("Contacts")
         }
         .task { await viewModel.getContacts() }
@@ -54,5 +56,33 @@ struct MyMessageView: View {
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         MyMessageView()
+    }
+}
+
+extension MyMessageView {
+    private var bottomMessageBar: some View {
+        HStack(spacing: 16) {
+            Image(systemName: "photo.on.rectangle")
+                .font(.system(size: 24))
+                .foregroundColor(Color(.darkGray))
+            ZStack {
+                TextEditor(text: $chatText)
+                    .opacity(chatText.isEmpty ? 0.5 : 1)
+            }
+            .frame(height: 40)
+            
+            Button {
+                
+            } label: {
+                Text("Send")
+                    .foregroundColor(.white)
+            }
+            .padding(.horizontal)
+            .padding(.vertical, 8)
+            .background(Color.blue)
+            .cornerRadius(4)
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 8)
     }
 }

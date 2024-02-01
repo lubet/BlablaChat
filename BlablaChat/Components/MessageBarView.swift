@@ -18,7 +18,10 @@ struct MessageBarView: View {
                 .foregroundColor(messageText.isEmpty ?
                                  Color.black: Color.white
                 )
-            TextField("Message", text: $messageText)
+            TextEditor(text: $messageText)
+                .scrollContentBackground(.hidden) // <- Hide it
+                .background(Color(.init("GrisClair"))) // To see this
+                .frame(height: 30)
                 .foregroundColor(Color.black)
                 .overlay (
                     Image(systemName: "xmark.circle.fill")

@@ -30,7 +30,7 @@ final class ContactManager {
     init() { }
     
     func mockContacts() async -> [Contact] {
-        var myContact = [
+        let myContact = [
             Contact(nom: "Dugenou", email: "mdugenoun@test.com"),
             Contact(nom: "Dugommier", email: "mdugenoun@test.com"),
             Contact(nom: "Leroy", email: "mdLeroy@test.com"),

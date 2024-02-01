@@ -8,17 +8,17 @@
 
 import SwiftUI
 
-struct SearchBarView: View {
+struct MessageBarView: View {
     
-    @State var searchText: String = ""
+    @State var messageText: String = ""
     
     var body: some View {
         HStack {
-            Image(systemName: "magnifyingglass")
-                .foregroundColor(searchText.isEmpty ?
+            Image(systemName: "photo.on.rectangle")
+                .foregroundColor(messageText.isEmpty ?
                                  Color.black: Color.white
                 )
-            TextField("Recherche par le nom", text: $searchText)
+            TextField("Message", text: $messageText)
                 .foregroundColor(Color.black)
                 .overlay (
                     Image(systemName: "xmark.circle.fill")
@@ -26,7 +26,7 @@ struct SearchBarView: View {
                         .offset(x:10)
                         .foregroundColor(Color.black)
                         .onTapGesture {
-                            searchText = ""
+                            messageText = ""
                         }
                     ,alignment: .trailing
                 )
@@ -42,8 +42,8 @@ struct SearchBarView: View {
     }
 }
 
-struct SearchBarView_Previews: PreviewProvider {
+struct MessageBarView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBarView()
+        MessageBarView()
     }
 }

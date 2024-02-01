@@ -42,6 +42,7 @@ struct MyMessageView: View {
                     }
                 }
             }
+            MessageBarView()
             .navigationTitle("Contacts")
         }
         .task { await viewModel.getContacts() }

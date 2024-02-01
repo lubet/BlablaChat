@@ -13,22 +13,24 @@ struct ContactCellView: View {
     let lecontact: Contact
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text(lecontact.nom)
-                .font(.headline)
-                .foregroundColor(.black)
-            Text(lecontact.email)
-                .font(.headline)
-                .foregroundColor(.black)
+        VStack(alignment: .leading, spacing: 20) {
+            HStack {
+                Text(lecontact.nom)
+                    .font(.headline)
+                    .foregroundColor(.black)
+                Text(lecontact.email)
+                    .font(.headline)
+                    .foregroundColor(.black)
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding()
+            .background(Color.black.opacity(0.05))
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(Color.black.opacity(0.05))
     }
 }
 
 struct ContactCellView_Previews: PreviewProvider {
     static var previews: some View {
-        ContactCellView(lecontact: Contact(id: "1", nom: "toto", email: "maurice@test.com"))
+        ContactCellView(lecontact: Contact(nom: "toto", email: "maurice@test.com"))
     }
 }

@@ -39,9 +39,9 @@ final class ContactManager {
             Contact(nom: "Maerou", email: "mMaerou@test.com"),
             Contact(nom: "Furou", email: "mFurou@test.com"),
             Contact(nom: "Janin", email: "mJanin@test.com"),
-            Contact(nom: "Dugenou", email: "mdugenoun@test.com"),
-            Contact(nom: "Dugommier", email: "mdugenoun@test.com"),
-            Contact(nom: "Leroy", email: "mdLeroy@test.com"),
+            Contact(nom: "Jenor", email: "mdugenoun@test.com"),
+            Contact(nom: "Gured", email: "mdugenoun@test.com"),
+            Contact(nom: "Noute", email: "mdLeroy@test.com"),
             Contact(nom: "Machin", email: "mdMachin@test.com"),
         ]
         

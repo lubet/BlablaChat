@@ -27,7 +27,7 @@ struct MyMessageView: View {
     
     @State private var searchText: String = ""
     
-    @State private var chatText: String = ""
+    @State private var messageTexte: String = ""
     
     var filteredContacts: [Contact] {
         guard !searchText.isEmpty else { return viewModel.mesContacts}
@@ -59,6 +59,7 @@ struct SwiftUIView_Previews: PreviewProvider {
     }
 }
 
+// SEND
 extension MyMessageView {
     private var bottomMessageBar: some View {
         HStack(spacing: 16) {
@@ -66,13 +67,13 @@ extension MyMessageView {
                 .font(.system(size: 24))
                 .foregroundColor(Color(.darkGray))
             ZStack {
-                TextEditor(text: $chatText)
-                    .opacity(chatText.isEmpty ? 0.5 : 1)
+                TextEditor(text: $messageTexte)
+                    .opacity(messageTexte.isEmpty ? 0.5 : 1)
             }
             .frame(height: 40)
             
             Button {
-                
+                // -> BubblesLog()
             } label: {
                 Text("Send")
                     .foregroundColor(.white)

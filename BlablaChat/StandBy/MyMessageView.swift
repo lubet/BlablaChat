@@ -27,6 +27,8 @@ struct MyMessageView: View {
     
     @State private var searchText: String = ""
     
+    @State private var msgTexte: String = ""
+    
     var filteredContacts: [Contact] {
         guard !searchText.isEmpty else { return viewModel.mesContacts}
         return viewModel.mesContacts.filter { $0.nom.localizedCaseInsensitiveContains(searchText)}
@@ -42,7 +44,7 @@ struct MyMessageView: View {
                     }
                 }
             }
-            MessageBarView()
+            MsgBarView(msgTexte: msgTexte)
             .navigationTitle("Contacts")
         }
         .task { await viewModel.getContacts() }

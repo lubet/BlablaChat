@@ -18,6 +18,11 @@ final class MyMessageViewModel: ObservableObject {
             // self.mesContacts = await ContactManager.shared.getAllContacts()
         self.mesContacts = await ContactManager.shared.mockContacts()
     }
+    
+    func saveMessage(toId: String, textMessage: String) {
+        let authUser = try? AuthManager.shared.getAuthenticatedUser()
+        let fromId = authUser?.uid
+    }
 }
 
 
@@ -65,8 +70,9 @@ struct SwiftUIView_Previews: PreviewProvider {
     }
 }
 
-// Bouton Save
+// Barre de saisie et d'envoie du message
 extension MyMessageView {
+    
     private var bottomMessageBar: some View {
         HStack(spacing: 16) {
             Image(systemName: "photo.on.rectangle")
@@ -95,9 +101,8 @@ extension MyMessageView {
     
     func sendButtonPresses() {
         if textIsCorrect() {
-            // Ok
+            // Sauvegarde du message en base fromId, ToId, Chat
         }
-        
     }
     
     func textIsCorrect() -> Bool {

@@ -29,6 +29,9 @@ struct MyMessageView: View {
     
     @State private var messageTexte: String = ""
     
+    @State var alertTitle: String = ""
+    @State var showAlert: Bool = false
+    
     var filteredContacts: [Contact] {
         guard !searchText.isEmpty else { return viewModel.mesContacts}
         return viewModel.mesContacts.filter { $0.nom.localizedCaseInsensitiveContains(searchText)}
@@ -46,6 +49,9 @@ struct MyMessageView: View {
             }
             bottomMessageBar
             .navigationTitle("Contacts")
+            .alert(isPresented: $showAlert) {
+                getAlert()
+            }
         }
         .task { await viewModel.getContacts() }
         .searchable(text: $searchText, prompt: "Recherche d'un contact")
@@ -59,7 +65,7 @@ struct SwiftUIView_Previews: PreviewProvider {
     }
 }
 
-// SEND
+// Bouton Save
 extension MyMessageView {
     private var bottomMessageBar: some View {
         HStack(spacing: 16) {
@@ -73,7 +79,7 @@ extension MyMessageView {
             .frame(height: 40)
             
             Button {
-                // -> BubblesLog()
+                sendButtonPresses()
             } label: {
                 Text("Send")
                     .foregroundColor(.white)
@@ -85,5 +91,25 @@ extension MyMessageView {
         }
         .padding(.horizontal)
         .padding(.vertical, 8)
+    }
+    
+    func sendButtonPresses() {
+        if textIsCorrect() {
+            // Ok
+        }
+        
+    }
+    
+    func textIsCorrect() -> Bool {
+        if messageTexte.count < 3 {
+            alertTitle = "Saisir un message d'au moins 3 caractères"
+            showAlert.toggle()
+            return false
+        }
+        return true
+    }
+    
+    func getAlert() -> Alert {
+        return Alert(title: Text(alertTitle))
     }
 }

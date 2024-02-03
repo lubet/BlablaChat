@@ -20,8 +20,10 @@ final class MyMessageViewModel: ObservableObject {
     }
     
     func saveMessage(toId: String, textMessage: String) {
-        let authUser = try? AuthManager.shared.getAuthenticatedUser()
-        let fromId = authUser?.uid
+//        let authUser = try? AuthManager.shared.getAuthenticatedUser()
+//        let fromId = authUser?.uid
+        print("\(toId)")
+        print("\(textMessage)")
     }
 }
 
@@ -102,6 +104,10 @@ extension MyMessageView {
     func sendButtonPresses() {
         if textIsCorrect() {
             // Sauvegarde du message en base fromId, ToId, Chat
+            let nbSelectedContact = filteredContacts.count
+            if nbSelectedContact == 1 {
+                viewModel.saveMessage(toId: "123456", textMessage: "Hello")
+            }
         }
     }
     

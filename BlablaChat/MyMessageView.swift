@@ -104,10 +104,6 @@ extension MyMessageView {
     func sendButtonPresses() {
         if textIsCorrect() {
             // Sauvegarde du message en base fromId, ToId, Chat
-            let nbSelectedContact = filteredContacts.count
-            if nbSelectedContact == 1 {
-                viewModel.saveMessage(toId: "123456", textMessage: "Hello")
-            }
         }
     }
     
@@ -116,6 +112,13 @@ extension MyMessageView {
             alertTitle = "Saisir un message d'au moins 3 caractères"
             showAlert.toggle()
             return false
+        }
+        if filteredContacts.count != 1 {
+            alertTitle = "Veuillez selectionner un contact"
+            showAlert.toggle()
+            return false
+        } else {
+            viewModel.saveMessage(toId: "123456", textMessage: "Hello")
         }
         return true
     }

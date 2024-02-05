@@ -13,11 +13,11 @@ final class HandleSendViewModel: ObservableObject {
     
     @Published var chatText: String = ""
     
-    func handleSend(from_user_id: String, to_user_id: String) {
+    func handleSend(from_email: String, to_email: String) {
         
         let chatId = ChatManager.shared.addChat(title: chatText, last_message: "Salut les amis")
         
-        ChatManager.shared.addMessage(chat_id: chatId, texte: chatText, from_user_id: from_user_id)
+        ChatManager.shared.addMessage(chat_id: chatId, texte: chatText, from_email: from_email)
 
     }
 }
@@ -26,8 +26,8 @@ struct HandleSendView: View {
     
     @StateObject private var viewModel = HandleSendViewModel()
 
-    let from_user_id: String = "12" // expediteur
-    let to_user_id: String = "11" // destinaire
+    let from_email: String = "12" // expediteur
+    let to_email: String = "11" // destinaire
 
     var body: some View {
         NavigationView {
@@ -40,7 +40,7 @@ struct HandleSendView: View {
                          .cornerRadius(20)
                          .background(Color.white)
                     Button {
-                        viewModel.handleSend(from_user_id: from_user_id, to_user_id: to_user_id)
+                        viewModel.handleSend(from_email: from_email, to_email: to_email)
                     } label: {
                         Image(systemName: "paperplane")
                             .foregroundColor(.blue)

@@ -27,7 +27,7 @@ struct Chat_message: Identifiable, Codable {
     var chat_id: String    // -> Chat et -> Chat_members
     var texte: String
     var date_created: Date
-    var user_id: String // Créateur du premier message (sender) -> users
+    var from_email: String // Créateur du premier message (sender) -> users
     
     var id: String {
         message_id
@@ -38,10 +38,11 @@ struct Chat_message: Identifiable, Codable {
 struct Chat_member: Identifiable, Codable {
     var id: String      // unique
     var chat_id: String // = chats/chat_id unique
-    var user_id: String // -> users
+    var from_email: String
+    var to_email: String
 }
 
-// ---------------------------------------------------------------------------------------------
+// Ajout d'un chat -------------------------------------------------------
 final class ChatManager {
     
     static let shared = ChatManager()
@@ -68,7 +69,8 @@ final class ChatManager {
         return chat_id
     }
 
-    func addMessage(chat_id: String, texte: String, from_user_id: String) {
+    // Ajout d'un message -----------------------------------------------
+    func addMessage(chat_id: String, texte: String, from_email: String) {
         let messageRef = chatDocument(chat_id: chat_id).collection("messages").document()
         let message_id = messageRef.documentID
         
@@ -77,7 +79,7 @@ final class ChatManager {
             "chat_id" : chat_id,
             "texte" : "Bonjour",
             "date_created" : Timestamp(),
-            "from_user_id" : "Moi"
+            "from_email" : "Moi"
         ]
         messageRef.setData(datamsg, merge: false)
     }

@@ -13,17 +13,18 @@ final class MyMessageViewModel: ObservableObject {
     // init() { }
     
     @Published private(set) var mesContacts: [Contact] = []
+    @Published private(set) var pairMembres: [Member] = []
 
     func getContacts() async {
             // self.mesContacts = await ContactManager.shared.getAllContacts()
         self.mesContacts = await ContactManager.shared.mockContacts()
     }
     
-    func saveMessage(toId: String, textMessage: String) {
+    func saveMessage(to_email: String, textMessage: String) async throws {
+        let to_email = to_email
         let authUser = try? AuthManager.shared.getAuthenticatedUser()
-        let fromId = authUser?.email
-        
-        
+        let from_email = authUser?.email ?? "n/a"
+        self.pairMembres = try await ChatManager.shared.getMembers(from_email: from_email, to_email: to_email)
     }
 }
 
@@ -103,7 +104,7 @@ extension MyMessageView {
     
     func sendButtonPresses() {
         if textIsCorrect() {
-            viewModel.saveMessage(toId: "123456", textMessage: "Hello")
+            viewModel.saveMessage(to_email: filteredContacts[0].email, textMessage: "Hello")
         }
     }
     

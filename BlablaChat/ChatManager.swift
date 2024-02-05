@@ -22,7 +22,7 @@ struct Chat: Identifiable, Codable {
 }
 
 // Chat_messages ----------------------------
-struct Chat_message: Identifiable, Codable {
+struct Message: Identifiable, Codable {
     var message_id: String // unique
     var chat_id: String    // -> Chat et -> Chat_members
     var texte: String
@@ -35,11 +35,11 @@ struct Chat_message: Identifiable, Codable {
 }
 
 // Chat_members ----------------------------
-struct Chat_member: Identifiable, Codable {
-    var id: String      // unique
-    var chat_id: String // = chats/chat_id unique
-    var from_email: String
-    var to_email: String
+struct Member: Identifiable, Codable {
+    let id: String      // unique
+    let chat_id: String // = chats/chat_id unique
+    let from_email: String
+    let to_email: String
 }
 
 // Ajout d'un chat -------------------------------------------------------
@@ -48,10 +48,27 @@ final class ChatManager {
     static let shared = ChatManager()
     private init() { }
     
+    // Chats
     private let chatsCollection = Firestore.firestore().collection("chats")
     
     private func chatDocument(chat_id: String) -> DocumentReference {
         chatsCollection.document(chat_id)
+    }
+    
+    // Membres
+    private let membersCollection = Firestore.firestore().collection("members")
+    
+    // Renvoie les membres du couple envoyeur/destinataire avec le chat_id (doivent en avoir un et un seul)
+    func getMembers(from_email: String, to_email: String) async throws -> [Member] {
+        let snapshot = try await membersCollection.getDocuments()
+        var members: [Member] = []
+        for document in snapshot.documents {
+            let member = try document.data(as: Member.self)
+            if (member.from_email == from_email && member.to_email == to_email) {
+                members.append(member)
+            }
+        }
+        return members
     }
     
     func addChat(title: String, last_message: String) -> String {
@@ -84,3 +101,4 @@ final class ChatManager {
         messageRef.setData(datamsg, merge: false)
     }
 }
+

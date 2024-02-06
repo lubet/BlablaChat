@@ -58,7 +58,7 @@ final class ChatManager {
     // Membres
     private let membersCollection = Firestore.firestore().collection("members")
     
-    // Renvoie les membres du couple envoyeur/destinataire avec le chat_id (doivent en avoir un et un seul)
+    // Renvoie le couple envoyeur/destinataire (si il existe) avec le chat_id (doivent en avoir un et un seul)
     func getMembers(from_email: String, to_email: String) async throws -> [Member] {
         let snapshot = try await membersCollection.getDocuments()
         var members: [Member] = []

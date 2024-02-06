@@ -20,6 +20,7 @@ final class MyMessageViewModel: ObservableObject {
         self.mesContacts = await ContactManager.shared.mockContacts()
     }
     
+    // Rechercher si la paire from_email/to_email existe déjà
     func saveMessage(to_email: String, textMessage: String) async throws {
         let to_email = to_email
         let authUser = try? AuthManager.shared.getAuthenticatedUser()
@@ -102,9 +103,11 @@ extension MyMessageView {
         .padding(.vertical, 8)
     }
     
-    func sendButtonPresses() async {
+    func sendButtonPresses() {
         if textIsCorrect() {
+            Task {
                 try? await viewModel.saveMessage(to_email: filteredContacts[0].email, textMessage: "Hello")
+            }
         }
     }
     

@@ -109,7 +109,6 @@ final class ChatManager {
     
     func addDuoMember(from_email: String, to_email: String, chat_id: String) {
         let memberRef = membersCollection.document()
-        let memberId = memberRef.documentID
         
         let datamember: [String:Any] = [
             "from_email" : from_email,

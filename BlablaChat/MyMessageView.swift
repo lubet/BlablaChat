@@ -13,19 +13,36 @@ final class MyMessageViewModel: ObservableObject {
     // init() { }
     
     @Published private(set) var mesContacts: [Contact] = []
-    @Published private(set) var pairMembres: [Member] = []
+    private(set) var pairMembres: [Member] = []
 
     func getContacts() async {
             // self.mesContacts = await ContactManager.shared.getAllContacts()
         self.mesContacts = await ContactManager.shared.mockContacts()
     }
     
-    // Rechercher si la paire from_email/to_email existe déjà
     func saveMessage(to_email: String, textMessage: String) async throws {
         let to_email = to_email
         let authUser = try? AuthManager.shared.getAuthenticatedUser()
         let from_email = authUser?.email ?? "n/a"
+        // Renvoie un objet Membre avec le duo membre ou vide
         self.pairMembres = try await ChatManager.shared.getMembers(from_email: from_email, to_email: to_email)
+        
+        if pairMembres.isEmpty {
+            print("empty")
+            // le duo membre n'existe pas -> créer le chat, le message et le duo membre
+            let chat_id = ChatManager.shared.addChat(title: "Le titre", last_message: textMessage) // nouveau chat
+            ChatManager.shared.addMessage(chat_id: chat_id, texte: textMessage, from_email: from_email)
+            ChatManager.shared.addDuoMember(from_email: from_email, to_email: to_email, chat_id: chat_id)
+        } else {
+            print("not empty")
+            if pairMembres.count == 1{
+                // le duo membre existe -> céer uniquement le message avec le chat_id existant
+                let chat_id = pairMembres[0].chat_id
+                ChatManager.shared.addMessage(chat_id: chat_id, texte: textMessage, from_email: from_email)
+            } else {
+                print("erreur")
+            }
+        }
     }
 }
 

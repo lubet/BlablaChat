@@ -36,10 +36,13 @@ struct Message: Identifiable, Codable {
 
 // Chat_members ----------------------------
 struct Member: Identifiable, Codable {
-    let id: String      // unique
     let chat_id: String // = chats/chat_id unique
     let from_email: String
     let to_email: String
+    
+    var id: String {
+        chat_id
+    }
 }
 
 // Ajout d'un chat -------------------------------------------------------
@@ -51,6 +54,7 @@ final class ChatManager {
     // Chats
     private let chatsCollection = Firestore.firestore().collection("chats")
     
+    // Messages
     private func chatDocument(chat_id: String) -> DocumentReference {
         chatsCollection.document(chat_id)
     }
@@ -101,6 +105,18 @@ final class ChatManager {
             "from_email" : "Moi"
         ]
         messageRef.setData(datamsg, merge: false)
+    }
+    
+    func addDuoMember(from_email: String, to_email: String, chat_id: String) {
+        let memberRef = membersCollection.document()
+        let memberId = memberRef.documentID
+        
+        let datamember: [String:Any] = [
+            "from_email" : from_email,
+            "to_email" : to_email,
+            "chat_id" : chat_id
+        ]
+        memberRef.setData(datamember, merge: false)
     }
 }
 

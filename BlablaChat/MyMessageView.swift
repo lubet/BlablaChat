@@ -88,7 +88,7 @@ extension MyMessageView {
             .frame(height: 40)
             
             Button {
-                sendButtonPresses()
+                    sendButtonPresses()
             } label: {
                 Text("Send")
                     .foregroundColor(.white)
@@ -102,9 +102,9 @@ extension MyMessageView {
         .padding(.vertical, 8)
     }
     
-    func sendButtonPresses() {
+    func sendButtonPresses() async {
         if textIsCorrect() {
-            viewModel.saveMessage(to_email: filteredContacts[0].email, textMessage: "Hello")
+                try? await viewModel.saveMessage(to_email: filteredContacts[0].email, textMessage: "Hello")
         }
     }
     

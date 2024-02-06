@@ -69,7 +69,7 @@ final class ChatManager {
         for document in snapshot.documents {
             let member = try document.data(as: Member.self)
             let fromemail = member.from_email
-            let toemail = member.from_email
+            let toemail = member.to_email
             if fromemail == from_email && toemail == to_email {
                 members.append(member)
             }

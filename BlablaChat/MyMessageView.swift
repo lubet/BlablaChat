@@ -19,33 +19,23 @@ final class MyMessageViewModel: ObservableObject {
             // self.mesContacts = await ContactManager.shared.getAllContacts()
         self.mesContacts = await ContactManager.shared.mockContacts()
     }
-    
+
     func saveMessage(to_email: String, textMessage: String) async throws {
         let to_email = to_email
         let authUser = try? AuthManager.shared.getAuthenticatedUser()
         let from_email = authUser?.email ?? "n/a"
-        // Renvoie un objet Membre avec le duo membre ou vide
-        self.pairMembres = try await ChatManager.shared.getMembers(from_email: from_email, to_email: to_email)
-        
-        if pairMembres.isEmpty {
-            print("empty")
-            // le duo membre n'existe pas -> créer le chat, le message et le duo membre
-            let chat_id = ChatManager.shared.addChat(title: "Le titre", last_message: textMessage) // nouveau chat
-            ChatManager.shared.addMessage(chat_id: chat_id, texte: textMessage, from_email: from_email)
-            ChatManager.shared.addDuoMember(from_email: from_email, to_email: to_email, chat_id: chat_id)
+        // le duo existe t'il ?
+        if (try await ChatManager.shared.searchDuoMembers(from_email: from_email, to_email: to_email)) {
+            let chat_id = from_email + to_email
+            ChatManager.shared.addMessage(chat_id: chat_id, texte: textMessage, from_email: from_email, to_email: to_email)
         } else {
-            print("not empty")
-            if pairMembres.count == 1{
-                // le duo membre existe -> céer uniquement le message avec le chat_id existant
-                let chat_id = pairMembres[0].chat_id
-                ChatManager.shared.addMessage(chat_id: chat_id, texte: textMessage, from_email: from_email)
-            } else {
-                print("erreur")
-            }
+            // Non
+            let chat_id = ChatManager.shared.addChat(title: "Le titre", last_message: textMessage, from_email: from_email, to_email: to_email)
+            ChatManager.shared.addMessage(chat_id: chat_id, texte: textMessage, from_email: from_email, to_email: to_email)
+            ChatManager.shared.addDuoMember(from_email: from_email, to_email: to_email, chat_id: chat_id)
         }
     }
 }
-
 
 struct MyMessageView: View {
     

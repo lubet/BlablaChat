@@ -63,20 +63,16 @@ final class ChatManager {
     // Membres
     private let membersCollection = Firestore.firestore().collection("members")
     
-    
     // Recherche d'un duo membre avec son chat_id qui est égal à from_email + to_email
     func searchDuoMembers(from_email: String, to_email: String) async throws -> Bool {
         let keyId = from_email + to_email
         let snapshot = membersCollection.whereField("chat_id", isEqualTo: keyId)
         let nbDuo: Int = try await snapshot.getDocuments().count
         if nbDuo == 0 {
-            print("Pas de duo")
             return false
         } else if nbDuo > 1 {
-            print("erreur: plusieurs duo")
             return false
         }
-        print("Un seul duo")
         return true
     }
     
@@ -122,22 +118,5 @@ final class ChatManager {
         ]
         memberRef.setData(datamember, merge: false)
     }
-    
-// --------------------------------------------------------------------------------------
-// Renvoi un duo from_email/to_email
-//    func getDuoMembers(from_email: String, to_email: String) async throws -> [Member] {
-//        let snapshot = try await membersCollection.getDocuments()
-//        var members: [Member] = []
-//        for document in snapshot.documents {
-//            let member = try document.data(as: Member.self)
-//            let fromemail = member.from_email
-//            let toemail = member.to_email
-//            if fromemail == from_email && toemail == to_email {
-//                members.append(member)
-//            }
-//        }
-//        return members
-//    }
-
 }
 

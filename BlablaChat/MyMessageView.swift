@@ -113,7 +113,7 @@ extension MyMessageView {
     func sendButtonPresses() {
         if textIsCorrect() {
             Task {
-                try? await viewModel.saveMessage(to_email: filteredContacts[0].email, textMessage: "Hello")
+                try? await viewModel.saveMessage(to_email: filteredContacts[0].email, textMessage: messageTexte)
             }
         }
     }

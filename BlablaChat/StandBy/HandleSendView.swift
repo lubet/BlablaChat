@@ -15,9 +15,9 @@ final class HandleSendViewModel: ObservableObject {
     
     func handleSend(from_email: String, to_email: String) {
         
-        let chatId = ChatManager.shared.addChat(title: chatText, last_message: "Salut les amis")
-        
-        ChatManager.shared.addMessage(chat_id: chatId, texte: chatText, from_email: from_email)
+//        let chatId = ChatManager.shared.addChat(title: chatText, last_message: "Salut les amis")
+//
+//        ChatManager.shared.addMessage(chat_id: chatId, texte: chatText, from_email: from_email)
 
     }
 }

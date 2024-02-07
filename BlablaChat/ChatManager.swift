@@ -23,6 +23,7 @@ struct Chat: Identifiable, Codable {
 
 // Chat_messages ----------------------------
 struct Message: Identifiable, Codable {
+    var message_id: String
     var chat_id: String    // = from_email+to_email
     var texte: String
     var date_created: Date
@@ -30,7 +31,7 @@ struct Message: Identifiable, Codable {
     var to_email: String
     
     var id: String {
-        chat_id
+        message_id
     }
 }
 
@@ -45,7 +46,7 @@ struct Member: Identifiable, Codable {
     }
 }
 
-// Ajout d'un chat -------------------------------------------------------
+// -------------------------------------------------------
 final class ChatManager {
     
     static let shared = ChatManager()
@@ -54,7 +55,7 @@ final class ChatManager {
     // Chats
     private let chatsCollection = Firestore.firestore().collection("chats")
     
-    // Messages
+    // Messages - Sous-collections de chatsCollection
     private func chatDocument(chat_id: String) -> DocumentReference {
         chatsCollection.document(chat_id)
     }
@@ -72,10 +73,10 @@ final class ChatManager {
             print("Pas de duo")
             return false
         } else if nbDuo > 1 {
-            print("erreur: plus d'un duo")
+            print("erreur: plusieurs duo")
             return false
         }
-        print("Un duo existe")
+        print("Un seul duo")
         return true
     }
     
@@ -95,11 +96,12 @@ final class ChatManager {
         return chat_id
     }
 
-    // Ajout d'un message - chat_id = from_email + to_email ------------------------------
+    // Ajout d'un message - chat_id = from_email + to_email - n messages peuvant avoir le même duo chat_id
     func addMessage(chat_id: String, texte: String, from_email: String, to_email:String) {
         let messageRef = chatDocument(chat_id: chat_id).collection("messages").document()
-        // let message_id = messageRef.documentID
+        let message_id = messageRef.documentID
         let datamsg: [String:Any] = [
+            "message_id" : message_id,
             "chat_id" : chat_id,
             "texte" : texte,
             "date_created" : Timestamp(),
@@ -109,7 +111,7 @@ final class ChatManager {
         messageRef.setData(datamsg, merge: false)
     }
     
-    // Ajout d'un duo membre et de son chat_id
+    // Ajout d'un duo membre et de son chat_id unique
     func addDuoMember(from_email: String, to_email: String, chat_id: String) {
         let memberRef = membersCollection.document()
         

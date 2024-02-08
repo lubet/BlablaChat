@@ -10,10 +10,14 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct Chats: Codable {
+struct Chats: Codable, Identifiable {
     let chat_id: String
     let from_email: String
     let to_email: String
+    
+    var id: String {
+        chat_id
+    }
 }
 
 let db = Firestore.firestore()

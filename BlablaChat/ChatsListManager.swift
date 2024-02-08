@@ -35,9 +35,8 @@ final class ChatsListManager {
     // Collection membres
     private let membersCollection = db.collection("members")
     
-    // Renvoie les chats id dont l'email connecté est présent dans membres
+    // Renvoie les chats id de l'email connecté
     func getChatsId(auth_email: String) async throws -> [Chats] {
-
         var chatsId: [Chats] = []
 
         do {

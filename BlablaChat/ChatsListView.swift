@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MyChatsView: View {
+struct ChatsListView: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
@@ -15,6 +15,6 @@ struct MyChatsView: View {
 
 struct MyChatsView_Previews: PreviewProvider {
     static var previews: some View {
-        MyChatsView()
+        ChatsListView()
     }
 }

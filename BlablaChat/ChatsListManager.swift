@@ -45,7 +45,7 @@ final class ChatsListManager {
 
         do {
             let querySnapshot = try await membersCollection
-                .whereField("from_email", isEqualTo: auth_email)
+                .whereField("from_email", isEqualTo: auth_email) // TODO C'est un OU (OR) !!!
                 .whereField("to_email", isEqualTo: auth_email)
                 .getDocuments()
             
@@ -55,7 +55,7 @@ final class ChatsListManager {
                 chatsId.append(chatId)
             }
         } catch {
-            print("Error getting documents: \(error)")
+            print("Erreur getChatsId: \(error)")
         }
         return chatsId
     }

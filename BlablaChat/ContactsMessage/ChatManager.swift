@@ -52,16 +52,17 @@ final class ChatManager {
     static let shared = ChatManager()
     private init() { }
     
-    // Chats
+    // Collection chats
     private let chatsCollection = Firestore.firestore().collection("chats")
     
-    // Messages - Sous-collections de chatsCollection
+    // Un document de la collection chats
     private func chatDocument(chat_id: String) -> DocumentReference {
         chatsCollection.document(chat_id)
     }
     
-    // Membres
+    // Collection membres
     private let membersCollection = Firestore.firestore().collection("members")
+    
     
     // Recherche d'un duo membre avec son chat_id qui est égal à from_email + to_email
     func searchDuoMembers(from_email: String, to_email: String) async throws -> Bool {

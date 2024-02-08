@@ -13,7 +13,7 @@ final class ChatsListViewModel: ObservableObject {
     
     @Published private(set) var chats: [String] = []
         
-    func loadChats() {
+    func fetchChats() {
 //        chats.append("aaaaa","rrrrr")
 //        chats.append("bbbbbb","gggg")
     }
@@ -31,7 +31,7 @@ struct ChatsListView: View {
             }
         }
         .onAppear() {
-            viewModel.loadChats()
+            viewModel.fetchChats()
         }
     }
 }

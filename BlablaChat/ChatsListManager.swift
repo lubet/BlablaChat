@@ -10,35 +10,50 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-
-struct Chatlist: Codable, Identifiable {
+struct Chats: Codable {
     let chat_id: String
-    let Titre: String
-    let date_created: Timestamp
-    let last_message: String
-    
-    var id: String {
-        chat_id
-    }
+    let from_email: String
+    let to_email: String
 }
+
+let db = Firestore.firestore()
 
 final class ChatsListManager {
     
     static let shared = ChatsListManager()
+    
     init() { }
     
     // Chats
-    private let chatsCollection = Firestore.firestore().collection("chats")
+    private let chatsCollection = db.collection("chats")
     
-    // Messages - Sous-collections de chatsCollection
+    // Un document dans la collection chats
     private func chatDocument(chat_id: String) -> DocumentReference {
         chatsCollection.document(chat_id)
     }
     
+    // Collection membres
+    private let membersCollection = db.collection("members")
     
-    func getChatsList(my_id: String) {
+    // Renvoie les chats id dont l'email connecté est présent dans membres
+    func getChatsId(auth_email: String) async throws -> [Chats] {
 
-        
-        
+        var chatsId: [Chats] = []
+
+        do {
+            let querySnapshot = try await membersCollection
+                .whereField("from_email", isEqualTo: auth_email)
+                .whereField("to_email", isEqualTo: auth_email)
+                .getDocuments()
+            
+            for document in querySnapshot.documents {
+                print("\(document.documentID) => \(document.data())")
+                let chatId = try document.data(as: Chats.self)
+                chatsId.append(chatId)
+            }
+        } catch {
+            print("Error getting documents: \(error)")
+        }
+        return chatsId
     }
 }

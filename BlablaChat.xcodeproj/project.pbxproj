@@ -26,6 +26,7 @@
 		C047E9E22B45880400C6D48F /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9E12B45880400C6D48F /* StorageManager.swift */; };
 		C047E9E42B45A8FB00C6D48F /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9E32B45A8FB00C6D48F /* UserManager.swift */; };
 		C0686A872B5AA3E800284172 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0686A862B5AA3E800284172 /* ChatManager.swift */; };
+		C06B1DDC2B74D0EA0016E8B6 /* MyChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06B1DDB2B74D0EA0016E8B6 /* MyChatsView.swift */; };
 		C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */; };
 		C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C1A9482B62ACC400646851 /* SearchNick.swift */; };
 		C0CB4BF42B68FD6600DCC6E9 /* ContactEssaiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CB4BF32B68FD6600DCC6E9 /* ContactEssaiView.swift */; };
@@ -51,6 +52,7 @@
 		C047E9E12B45880400C6D48F /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		C047E9E32B45A8FB00C6D48F /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		C0686A862B5AA3E800284172 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
+		C06B1DDB2B74D0EA0016E8B6 /* MyChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatsView.swift; sourceTree = "<group>"; };
 		C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleSendView.swift; sourceTree = "<group>"; };
 		C0C1A9482B62ACC400646851 /* SearchNick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNick.swift; sourceTree = "<group>"; };
 		C0CB4BF32B68FD6600DCC6E9 /* ContactEssaiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactEssaiView.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				C0686A862B5AA3E800284172 /* ChatManager.swift */,
 				C047E9C52B45625C00C6D48F /* LoginView.swift */,
 				C0CB4BF52B6922F200DCC6E9 /* MyMessageView.swift */,
+				C06B1DDB2B74D0EA0016E8B6 /* MyChatsView.swift */,
 				C0B9DC842B5EB05B006C2B46 /* Components */,
 				C01FE5A72B67F0610049B9EE /* StandBy */,
 				C047E9C72B45625D00C6D48F /* Assets.xcassets */,
@@ -232,6 +235,7 @@
 			files = (
 				C0CB4BF42B68FD6600DCC6E9 /* ContactEssaiView.swift in Sources */,
 				C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */,
+				C06B1DDC2B74D0EA0016E8B6 /* MyChatsView.swift in Sources */,
 				C0CB4BF62B6922F200DCC6E9 /* MyMessageView.swift in Sources */,
 				C0326A132B6A2F4C005B8181 /* NavStackView.swift in Sources */,
 				C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */,

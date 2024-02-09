@@ -13,9 +13,11 @@ final class ChatsListViewModel: ObservableObject {
     
     @Published private(set) var chats: [String] = []
         
-    func fetchChats() {
-//        chats.append("aaaaa","rrrrr")
-//        chats.append("bbbbbb","gggg")
+    func fetchChats() async throws {
+        let authUser = try? AuthManager.shared.getAuthenticatedUser()
+        let auth_email = authUser?.email ?? "n/a"
+        let chats_id = try await ChatsListManager.shared.getChatsId(auth_email: auth_email)
+        print("chats_id: \(chats_id)")
     }
 }
 
@@ -31,7 +33,9 @@ struct ChatsListView: View {
             }
         }
         .onAppear() {
-            viewModel.fetchChats()
+            Task {
+                try await viewModel.fetchChats()
+            }
         }
     }
 }

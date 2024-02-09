@@ -50,7 +50,6 @@ final class ChatsListManager {
             ])).getDocuments()
             
             for document in querySnapshot.documents {
-                print("\(document.documentID) => \(document.data())")
                 let chatId = try document.data(as: Chats.self)
                 chatsId.append(chatId)
             }

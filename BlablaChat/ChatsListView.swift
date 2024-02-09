@@ -16,7 +16,7 @@ final class ChatsListViewModel: ObservableObject {
     func fetchChats() async throws {
         let authUser = try? AuthManager.shared.getAuthenticatedUser()
         let auth_email = authUser?.email ?? "n/a"
-        let chats_id = try await ChatsListManager.shared.getChatsId(auth_email: auth_email)
+        let chats_id = try await ChatsListManager.shared.getMembre(auth_email: auth_email)
         print("chats_id: \(chats_id)")
     }
 }

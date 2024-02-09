@@ -5,20 +5,11 @@
 //  Created by Lubet-Moncla Xavier on 08/02/2024.
 //
 // Liste des chats Firestore
+// Le modèle "Member" se trouve dans ChatManager
 
 import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-
-struct Chats: Codable, Identifiable {
-    let chat_id: String
-    let from_email: String
-    let to_email: String
-    
-    var id: String {
-        chat_id
-    }
-}
 
 let db = Firestore.firestore()
 
@@ -39,9 +30,9 @@ final class ChatsListManager {
     // Collection membres
     private let membersCollection = db.collection("members")
     
-    // Renvoie les chats id de l'email connecté
-    func getChatsId(auth_email: String) async throws -> [Chats] {
-        var chatsId: [Chats] = []
+    // Renvoie les occurences du membre connecté
+    func getMembre(auth_email: String) async throws -> [Member] {
+        var Membre: [Member] = []
 
         do {
             let querySnapshot = try await membersCollection.whereFilter(Filter.orFilter([
@@ -50,12 +41,16 @@ final class ChatsListManager {
             ])).getDocuments()
             
             for document in querySnapshot.documents {
-                let chatId = try document.data(as: Chats.self)
-                chatsId.append(chatId)
+                let membre = try document.data(as: Member.self)
+                Membre.append(membre)
             }
         } catch {
             print("Erreur getChatsId: \(error)")
         }
-        return chatsId
+        return Membre
     }
+    
+    // Récupere tous les chats dont les chat_id sont égales à ceux du membre connecté ci_dessus pour en retirer le titre
+    // Pour chaque chat récupéré, récupérer tous les messages
+    
 }

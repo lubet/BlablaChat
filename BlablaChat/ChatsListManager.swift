@@ -44,10 +44,10 @@ final class ChatsListManager {
         var chatsId: [Chats] = []
 
         do {
-            let querySnapshot = try await membersCollection
-                .whereField("from_email", isEqualTo: auth_email) // TODO C'est un OU (OR) !!!
-                .whereField("to_email", isEqualTo: auth_email)
-                .getDocuments()
+            let querySnapshot = try await membersCollection.whereFilter(Filter.orFilter([
+                Filter.whereField("from_email", isEqualTo: auth_email),
+                Filter.whereField("to_email", isEqualTo: auth_email)
+            ])).getDocuments()
             
             for document in querySnapshot.documents {
                 print("\(document.documentID) => \(document.data())")

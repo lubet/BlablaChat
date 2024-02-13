@@ -28,6 +28,7 @@
 		C0686A872B5AA3E800284172 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0686A862B5AA3E800284172 /* ChatManager.swift */; };
 		C06B1DDC2B74D0EA0016E8B6 /* ChatsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06B1DDB2B74D0EA0016E8B6 /* ChatsListView.swift */; };
 		C06B1DE12B74D8ED0016E8B6 /* ChatsListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06B1DE02B74D8ED0016E8B6 /* ChatsListManager.swift */; };
+		C070E7A82B7B7FD1002D796C /* ChatRoomsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C070E7A72B7B7FD1002D796C /* ChatRoomsView.swift */; };
 		C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */; };
 		C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C1A9482B62ACC400646851 /* SearchNick.swift */; };
 		C0CB4BF42B68FD6600DCC6E9 /* ContactEssaiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CB4BF32B68FD6600DCC6E9 /* ContactEssaiView.swift */; };
@@ -55,6 +56,7 @@
 		C0686A862B5AA3E800284172 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
 		C06B1DDB2B74D0EA0016E8B6 /* ChatsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsListView.swift; sourceTree = "<group>"; };
 		C06B1DE02B74D8ED0016E8B6 /* ChatsListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsListManager.swift; sourceTree = "<group>"; };
+		C070E7A72B7B7FD1002D796C /* ChatRoomsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsView.swift; sourceTree = "<group>"; };
 		C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleSendView.swift; sourceTree = "<group>"; };
 		C0C1A9482B62ACC400646851 /* SearchNick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNick.swift; sourceTree = "<group>"; };
 		C0CB4BF32B68FD6600DCC6E9 /* ContactEssaiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactEssaiView.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			children = (
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
 				C047E9C52B45625C00C6D48F /* LoginView.swift */,
+				C070E7A72B7B7FD1002D796C /* ChatRoomsView.swift */,
 				C06B1DDF2B74D4330016E8B6 /* ContactsMessage */,
 				C047E9DF2B45767B00C6D48F /* AuthManager.swift */,
 				C047E9E32B45A8FB00C6D48F /* UserManager.swift */,
@@ -257,6 +260,7 @@
 				C06B1DDC2B74D0EA0016E8B6 /* ChatsListView.swift in Sources */,
 				C0CB4BF62B6922F200DCC6E9 /* MyMessageView.swift in Sources */,
 				C0326A132B6A2F4C005B8181 /* NavStackView.swift in Sources */,
+				C070E7A82B7B7FD1002D796C /* ChatRoomsView.swift in Sources */,
 				C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */,
 				C0686A872B5AA3E800284172 /* ChatManager.swift in Sources */,
 				C03B72D12B5FA2BB0050C524 /* EssaiView.swift in Sources */,

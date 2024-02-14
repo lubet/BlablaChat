@@ -18,7 +18,7 @@ final class HomeViewModel: ObservableObject {
     }
 
     @Published var conversations: [Conversation] = [
-        Conversation(titre: "Richard", last_date: Date(), last_message: "Salut Richard"),
+        Conversation(titre: "Richard", last_date: Date(), last_message: "Salut Richard, comment"),
         Conversation(titre: "Jean", last_date: Date(), last_message: "Salut Jean"),
         Conversation(titre: "Paul", last_date: Date(), last_message: "Salut Paul"),
         Conversation(titre: "Pierre", last_date: Date(), last_message: "Salut Pierre"),
@@ -40,21 +40,35 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 40) {
+                VStack(alignment: .leading, spacing: 40) {
                     Spacer()
                     ForEach(viewModel.conversations) { conversation in
                         NavigationLink(value: conversation.titre) {
                             HStack {
                                 Image(systemName: "person.fill")
-                                VStack{
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 40, height: 40)
+                                    .clipShape(Circle())
+                                    .padding(.horizontal, 20)
+                                    .frame(width: 80, alignment: .leading)
+                                
+                                VStack(alignment: .leading){
                                     Text("\(conversation.titre)")
+                                        .font(.headline)
+                                        .frame(width: 150, alignment: .leading)
                                     Text("\(conversation.last_message)")
+                                        .font(.headline)
+                                        .frame(width: 200, alignment: .leading)
                                 }
                                 Text("\(conversation.last_date.displayFormat)")
+                                    .font(.footnote)
+                                    .frame(width: 100, alignment: .trailing)
                             }
+                            .padding(.horizontal)
+                            // .background(Color.blue)
                         }
                     }
-                    .font(.title)
                 }
             }
             .navigationTitle("Conversations")

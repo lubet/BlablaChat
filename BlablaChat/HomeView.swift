@@ -74,6 +74,10 @@ struct HomeView_Previews: PreviewProvider {
 
 extension Date {
     var displayFormat: String {
-        self.formatted(date: .omitted, time: .shortened)
+//                self.formatted(
+//                    .dateTime
+//                        .locale(.init(identifier: "fr"))
+//                )
+        self.formatted(date: .omitted, time: .standard)
     }
 }

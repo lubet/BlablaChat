@@ -33,28 +33,3 @@ struct MainView_Previews: PreviewProvider {
         MainView()
     }
 }
-
-struct HomeView: View {
-
-    let contacts = ["Durand","Dupont","Leroy","Dugenou"]
-    
-    var body: some View {
-
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 40) {
-                    ForEach(contacts, id:\.self) { contact in
-                        NavigationLink(value: contact) {
-                            Text("Click me: \(contact)")
-                        }
-                    }
-                    .font(.title)
-                }
-            }
-            .navigationTitle("Mon email")
-            .navigationDestination(for: String.self) {value in
-                Text("My second screen\(value)")
-            }
-        }
-    }
-}

@@ -13,6 +13,7 @@ struct MainView: View {
                 HomeView()
                 .tabItem {
                     Image(systemName: "house.fill")
+                    Text("Conversations")
                 }
             Text("Ajouter un contact")
                 .tabItem {

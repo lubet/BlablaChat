@@ -1,14 +1,13 @@
 //
-//  ChatRoomsView.swift
+//  MainView.swift
 //  BlablaChat
 //
-//  Created by Lubet-Moncla Xavier on 13/02/2024.
+//  Created by Lubet-Moncla Xavier on 14/02/2024.
 //
-// Liste des derniers échanges en cours par chatroom
 
 import SwiftUI
 
-struct ChatRoomsView: View {
+struct MainView: View {
     var body: some View {
         TabView {
                 HomeView()
@@ -29,9 +28,9 @@ struct ChatRoomsView: View {
     }
 }
 
-struct ChatRoomsView_Previews: PreviewProvider {
+struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatRoomsView()
+        MainView()
     }
 }
 

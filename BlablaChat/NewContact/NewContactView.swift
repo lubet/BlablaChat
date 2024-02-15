@@ -7,7 +7,16 @@
 
 import SwiftUI
 
+@MainActor
+final class NewContactViewModel: ObservableObject {
+    
+}
+
+
 struct NewContactView: View {
+    
+    @StateObject private var newModel = NewContactViewModel()
+    
     var body: some View {
         Text("Nouveau contact")
     }

@@ -31,7 +31,6 @@ struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
     
     var body: some View {
-        TabView {
             NavigationStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
@@ -47,24 +46,9 @@ struct HomeView: View {
                     Text("\(value)")
                 }
             }
-            .tabItem {
-                Image(systemName: "house.fill")
-                Text("Conversations")
-            }
-            
-            Text("Nouveau contact")
-                .tabItem {
-                    Image(systemName: "person.fill")
-                    Text("Nouveau contact")
-                }
-            Text("Nouveau groupe")
-                .tabItem {
-                    Image(systemName: "person.3.fill")
-                    Text("Nouveau groupe")
-                }
         }
     }
-}
+
 
 
 struct HomeView_Previews: PreviewProvider {

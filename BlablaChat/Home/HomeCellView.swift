@@ -30,10 +30,11 @@ struct HomeCellView: View {
                         .background(Color.green)
                     Text("\(conversation.last_message)")
                         .font(.headline)
-                        .frame(width: 200)
+                        .frame(width: 200,alignment: .leading)
                         .foregroundColor(Color.black)
                         .background(Color.gray)
                         .multilineTextAlignment(.leading)
+                        
                 }
                 Text("\(conversation.last_date.displayFormat)")
                     .font(.footnote)
@@ -43,14 +44,12 @@ struct HomeCellView: View {
             .foregroundColor(Color.black)
             .padding(.horizontal)
             .background(Color.blue)
-
-            // .background(Color.blue)
         }
     }
 }
 
 struct HomeCellView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeCellView(conversation: Conversation(titre: "Richard", last_date: Date(), last_message: "Salut comment vas tu et la santé"))
+        HomeCellView(conversation: Conversation(titre: "Richard", last_date: Date(), last_message: "Salut ca va la santé chez toi"))
     }
 }

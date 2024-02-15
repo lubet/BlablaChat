@@ -94,6 +94,24 @@
 			path = StandBy;
 			sourceTree = "<group>";
 		};
+		C02BEDAB2B7E00C100C15D11 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				C0D565F52B7CB30100EE0DA0 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		C02BEDAC2B7E012600C15D11 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				C047E9E12B45880400C6D48F /* StorageManager.swift */,
+				C047E9E32B45A8FB00C6D48F /* UserManager.swift */,
+				C047E9DF2B45767B00C6D48F /* AuthManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		C0326A112B6A2E6A005B8181 /* Essais */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,12 +143,10 @@
 			children = (
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
 				C047E9C52B45625C00C6D48F /* LoginView.swift */,
-				C0D565F52B7CB30100EE0DA0 /* HomeView.swift */,
 				C0D565F32B7CAF8E00EE0DA0 /* MainView.swift */,
+				C02BEDAB2B7E00C100C15D11 /* Home */,
+				C02BEDAC2B7E012600C15D11 /* Managers */,
 				C06B1DDF2B74D4330016E8B6 /* ContactsMessage */,
-				C047E9DF2B45767B00C6D48F /* AuthManager.swift */,
-				C047E9E32B45A8FB00C6D48F /* UserManager.swift */,
-				C047E9E12B45880400C6D48F /* StorageManager.swift */,
 				C070E7A62B7B7D90002D796C /* ChatsList */,
 				C0B9DC842B5EB05B006C2B46 /* Components */,
 				C01FE5A72B67F0610049B9EE /* StandBy */,

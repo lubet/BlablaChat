@@ -31,20 +31,37 @@ struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    Spacer()
-                    ForEach(viewModel.conversations) { conversation in
-                        HomeCellView(conversation: conversation)
-                        Divider()
+        TabView {
+            NavigationStack {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 20) {
+                        Spacer()
+                        ForEach(viewModel.conversations) { conversation in
+                            HomeCellView(conversation: conversation)
+                            Divider()
+                        }
                     }
                 }
+                .navigationTitle("Conversations")
+                .navigationDestination(for: String.self) {value in
+                    Text("\(value)")
+                }
             }
-            .navigationTitle("Conversations")
-            .navigationDestination(for: String.self) {value in
-                Text("\(value)")
+            .tabItem {
+                Image(systemName: "house.fill")
+                Text("Conversations")
             }
+            
+            Text("Nouveau contact")
+                .tabItem {
+                    Image(systemName: "person.fill")
+                    Text("Nouveau contact")
+                }
+            Text("Nouveau groupe")
+                .tabItem {
+                    Image(systemName: "person.3.fill")
+                    Text("Nouveau groupe")
+                }
         }
     }
 }

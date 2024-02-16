@@ -12,7 +12,6 @@
 		C01FE5AD2B67F7F70049B9EE /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */; };
 		C02BEDAE2B7E01A500C15D11 /* HomeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02BEDAD2B7E01A500C15D11 /* HomeCellView.swift */; };
 		C02BEDB02B7E026C00C15D11 /* HomeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02BEDAF2B7E026C00C15D11 /* HomeManager.swift */; };
-		C02BEDB32B7E2D7000C15D11 /* NewContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02BEDB22B7E2D7000C15D11 /* NewContactView.swift */; };
 		C0326A132B6A2F4C005B8181 /* NavStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0326A122B6A2F4C005B8181 /* NavStackView.swift */; };
 		C03B72D12B5FA2BB0050C524 /* EssaiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03B72D02B5FA2BB0050C524 /* EssaiView.swift */; };
 		C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */; };
@@ -47,7 +46,6 @@
 		C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		C02BEDAD2B7E01A500C15D11 /* HomeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellView.swift; sourceTree = "<group>"; };
 		C02BEDAF2B7E026C00C15D11 /* HomeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeManager.swift; sourceTree = "<group>"; };
-		C02BEDB22B7E2D7000C15D11 /* NewContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContactView.swift; sourceTree = "<group>"; };
 		C0326A122B6A2F4C005B8181 /* NavStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavStackView.swift; sourceTree = "<group>"; };
 		C03B72D02B5FA2BB0050C524 /* EssaiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssaiView.swift; sourceTree = "<group>"; };
 		C047E9C02B45625C00C6D48F /* BlablaChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlablaChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,14 +118,6 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
-		C02BEDB12B7E2D1400C15D11 /* NewContact */ = {
-			isa = PBXGroup;
-			children = (
-				C02BEDB22B7E2D7000C15D11 /* NewContactView.swift */,
-			);
-			path = NewContact;
-			sourceTree = "<group>";
-		};
 		C0326A112B6A2E6A005B8181 /* Essais */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,7 +151,6 @@
 				C047E9C52B45625C00C6D48F /* LoginView.swift */,
 				C0D565F32B7CAF8E00EE0DA0 /* MainView.swift */,
 				C02BEDAB2B7E00C100C15D11 /* Home */,
-				C02BEDB12B7E2D1400C15D11 /* NewContact */,
 				C02BEDAC2B7E012600C15D11 /* Managers */,
 				C06B1DDF2B74D4330016E8B6 /* ContactsMessage */,
 				C070E7A62B7B7D90002D796C /* ChatsList */,
@@ -308,7 +297,6 @@
 				C047E9E42B45A8FB00C6D48F /* UserManager.swift in Sources */,
 				C01FE5AB2B67F47E0049B9EE /* ContactCellView.swift in Sources */,
 				C02BEDB02B7E026C00C15D11 /* HomeManager.swift in Sources */,
-				C02BEDB32B7E2D7000C15D11 /* NewContactView.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
 				C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,

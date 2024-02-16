@@ -111,11 +111,12 @@ final class NewContactManager {
     }
     
     // Recherche du duo ayant la même conversation
-    func searchDuo(user_id:String, contact_id:String) async throws -> [group_member] {
+    // 1) Faire une tableau du user_id
+    // 2) Faire un tableau du contact_id
+    // 3) Deux boucles imbriquées pour trouver le user_id et le contact_id de la même conversation
+    func searchDuo(user_id:String, contact_id:String) async throws {
         let tab_user: [group_member]
         let tab_contact: [group_member]
-        
-        
         
         do {
             let querySnapshot = try await groupMemberCollection
@@ -124,12 +125,11 @@ final class NewContactManager {
             
             for document in querySnapshot.documents {
                 let membre = try document.data(as: group_member.self)
-                tab_user.append(membre)
+                tab.append(membre)
             }
         } catch {
             print("Erreur getChatsId: \(error)")
         }
-        return group_member
         
     }
 }

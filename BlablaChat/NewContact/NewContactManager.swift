@@ -10,6 +10,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+private let dbFS = Firestore.firestore()
 
 struct group_member: Identifiable, Codable {
     let id: String
@@ -35,17 +36,20 @@ struct conversation: Identifiable, Codable {
     let conversation_id:String
     let conversation_name:String
     let date_created:Timestamp
+    let last_message:String
     
     init(
         id:String,
         conversation_id:String,
         conversation_name:String,
-        date_created:Timestamp
+        date_created:Timestamp,
+        last_message:String
     ) {
         self.id = id
         self.conversation_id = conversation_id
         self.conversation_name = conversation_name
         self.date_created = Timestamp()
+        self.last_message = last_message
     }
 }
 
@@ -68,5 +72,22 @@ struct message: Identifiable, Codable {
         self.message_text = message_text
         self.date_send = Timestamp()
         self.conversation_id = conversation_id
+    }
+}
+
+final class NewContactManager {
+    
+    static let shared = NewContactManager()
+    
+    init() { }
+    
+    private let DBUserCollection = dbFS.collection("users")
+    
+    private func userDocument(email:String) -> DocumentReference {
+        return DBUserCollection.document(email)
+    }
+    
+    func searchNewContact(email:String) async throws -> DBUser {
+        return try await userDocument(email: email).getDocument(as: DBUser.self)
     }
 }

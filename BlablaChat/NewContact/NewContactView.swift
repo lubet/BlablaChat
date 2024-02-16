@@ -8,7 +8,7 @@
 import SwiftUI
 
 @MainActor
-final class MyMessageViewModel: ObservableObject {
+final class NewContactViewModel: ObservableObject {
     
     // init() { }
     
@@ -37,9 +37,9 @@ final class MyMessageViewModel: ObservableObject {
     }
 }
 
-struct MyMessageView: View {
+struct NewContactView: View {
     
-    @StateObject var viewModel = MyMessageViewModel()
+    @StateObject var viewModel = NewContactViewModel()
     
     @State private var searchText: String = ""
     
@@ -75,14 +75,14 @@ struct MyMessageView: View {
 }
 
 
-struct SwiftUIView_Previews: PreviewProvider {
+struct NewContactView_Previews: PreviewProvider {
     static var previews: some View {
-        MyMessageView()
+        NewContactView()
     }
 }
 
 // Barre de saisie et d'envoie du message
-extension MyMessageView {
+extension NewContactView {
     
     private var bottomMessageBar: some View {
         HStack(spacing: 16) {

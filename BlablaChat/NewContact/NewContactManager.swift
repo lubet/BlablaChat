@@ -4,6 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 16/02/2024.
 //
+// Les contacts c'est "DBUser"
 
 import Foundation
 import FirebaseFirestore
@@ -46,5 +47,26 @@ struct conversation: Identifiable, Codable {
         self.conversation_name = conversation_name
         self.date_created = Timestamp()
     }
+}
+
+struct message: Identifiable, Codable {
+    let id:String
+    let from_id:String
+    let message_text:String
+    let date_send:Timestamp
+    let conversation_id:String
     
+    init(
+        id:String,
+        from_id:String,
+        message_text:String,
+        date_send:Timestamp,
+        conversation_id:String
+    ) {
+        self.id = id
+        self.from_id = from_id
+        self.message_text = message_text
+        self.date_send = Timestamp()
+        self.conversation_id = conversation_id
+    }
 }

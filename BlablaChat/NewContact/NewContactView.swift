@@ -8,12 +8,14 @@
 // 1) Vérifier si le contact choisit est présent dans "users"
 //       si il ne l'est pas -> le creer et prendre son user_id
 //       si il y est -> prendre son user-id
-// 2) Chercher dans "group_member" si il existe les trois clés suivantes
+// 2) Chercher dans "group_member" si il existe les deux user_id
 //      avec le même conversation_id
-//      si oui -> créer le message avec le conversation_id
+//      si oui -> 3)
 //      si non -> créer 2 enregs:
 //          mon_user_id + conversation_id
 //          destinataire_user_id + même conversation_id
+// 3) Créer le message avec le conversation_id
+// -----------------------------------------------------
 
 import SwiftUI
 

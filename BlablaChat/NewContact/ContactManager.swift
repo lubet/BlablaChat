@@ -5,6 +5,7 @@
 //  Created by Lubet-Moncla Xavier on 29/01/2024.
 //
 // Utilisé par NewMessageView
+// Contacts du téléphone
 
 import Foundation
 import Contacts

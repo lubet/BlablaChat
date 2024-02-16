@@ -87,7 +87,49 @@ final class NewContactManager {
         return DBUserCollection.document(email)
     }
     
-    func searchNewContact(email:String) async throws -> DBUser {
+    private let groupMemberCollection = dbFS.collection("group_member")
+    
+    
+    // Recherche du contact dans la base "users"
+    func searchContact(email:String) async throws -> DBUser {
         return try await userDocument(email: email).getDocument(as: DBUser.self)
+    }
+    
+    // Création du contact dans la base "users"
+    func createContact(email:String) async throws -> String {
+        let ContactRef = userDocument(email: email)
+        let Contact_id = ContactRef.documentID
+        
+        let data: [String:Any] = [
+            "user_id" : Contact_id,
+            "email": email,
+            "dateCreated" : Timestamp()
+        ]
+        try await ContactRef.setData(data, merge: false)
+        
+        return Contact_id
+    }
+    
+    // Recherche du duo ayant la même conversation
+    func searchDuo(user_id:String, contact_id:String) async throws -> [group_member] {
+        let tab_user: [group_member]
+        let tab_contact: [group_member]
+        
+        
+        
+        do {
+            let querySnapshot = try await groupMemberCollection
+                .whereField("contact_id", isEqualTo: user_id)
+                .getDocuments()
+            
+            for document in querySnapshot.documents {
+                let membre = try document.data(as: group_member.self)
+                tab_user.append(membre)
+            }
+        } catch {
+            print("Erreur getChatsId: \(error)")
+        }
+        return group_member
+        
     }
 }

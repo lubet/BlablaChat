@@ -33,19 +33,20 @@ final class NewContactViewModel: ObservableObject {
     }
 
     func saveMessage(to_email: String, textMessage: String) async throws {
-        let to_email = to_email
-        let authUser = try? AuthManager.shared.getAuthenticatedUser()
-        let from_email = authUser?.email ?? "n/a"
-        // le duo existe t'il ?
-        if (try await ChatManager.shared.searchDuoMembers(from_email: from_email, to_email: to_email)) {
-            let chat_id = from_email + to_email
-            ChatManager.shared.addMessage(chat_id: chat_id, texte: textMessage, from_email: from_email, to_email: to_email)
+        let dbUser = try await NewContactManager.shared.searchContact(email: to_email)
+        
+        // Le contact existe il dans "users"
+        if let email = dbUser.email { // oui
+            let contact_id = dbUser.userId
         } else {
-            // Non
-            let chat_id = ChatManager.shared.addChat(title: "Le titre", last_message: textMessage, from_email: from_email, to_email: to_email)
-            ChatManager.shared.addMessage(chat_id: chat_id, texte: textMessage, from_email: from_email, to_email: to_email)
-            ChatManager.shared.addDuoMember(from_email: from_email, to_email: to_email, chat_id: chat_id)
+            // non
+            let contact_id = try await NewContactManager.shared.createContact(email: to_email)
         }
+        
+        // Le triptique user_id et contact_id avec le même conversation id existe t'il dans dans "group_member"
+        let 
+        
+        
     }
 }
 

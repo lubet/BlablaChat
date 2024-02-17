@@ -126,7 +126,7 @@ final class NewContactManager {
             set_user.insert(membre.conversation_id)
         }
         if (set_user.count == 0) {
-            return conversation
+            return conversation // pas conversation
         }
         
         // Set des conversation_id's du contact_id
@@ -138,10 +138,10 @@ final class NewContactManager {
             set_contact.insert(membre.conversation_id)
         }
         if (set_contact.count == 0) {
-            return conversation
+            return conversation // pas de conversation
         }
 
-        // intersection des deux sets pour trouver la discussion en commun
+        // intersection des deux sets pour trouver la conversation en commun
         let inter = set_user.intersection(set_contact)
         if (inter.count == 1) {
             print("inter.description:\(inter.description)")

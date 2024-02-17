@@ -33,8 +33,13 @@ final class NewContactViewModel: ObservableObject {
     }
 
     func saveMessage(to_email: String, textMessage: String) async throws {
-        let dbUser = try await NewContactManager.shared.searchContact(email: to_email)
+        // mon user_id
+        let AuthUser = try AuthManager.shared.getAuthenticatedUser()
+        let user_id = AuthUser.uid
+        // Le contact_id
+        let contact_id:String = ""
         
+        let dbUser = try await NewContactManager.shared.searchContact(email: to_email)
         // Le contact existe il dans "users"
         if let email = dbUser.email { // oui
             let contact_id = dbUser.userId
@@ -44,7 +49,13 @@ final class NewContactViewModel: ObservableObject {
         }
         
         // Le triptique user_id et contact_id avec le même conversation id existe t'il dans dans "group_member"
-        let 
+        let conversation = try await NewContactManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+        
+        if (conversation != "") {
+            // Il y a une conversation commune -> créer un message avec la conversation
+        } else {
+            // Il n'y a pas de conversation commune -> créer une nouvelle conversation et céer un massage avec cette conversation
+        }
         
         
     }

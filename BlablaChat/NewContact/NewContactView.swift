@@ -41,7 +41,7 @@ final class NewContactViewModel: ObservableObject {
         
         let dbUser = try await NewContactManager.shared.searchContact(email: to_email)
         // Le contact existe il dans "users"
-        if let email = dbUser.email { // oui
+        if dbUser.email != nil { // oui
             let contact_id = dbUser.userId
         } else {
             // non

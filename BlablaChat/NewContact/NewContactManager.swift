@@ -111,8 +111,8 @@ final class NewContactManager {
     }
     
     // Recherche d'une éventuelle discussion commune à user_id et à contact_id
-    func searchDuo(user_id:String, contact_id:String) async throws -> Bool {
-        let rep: Bool = false
+    func searchDuo(user_id:String, contact_id:String) async throws -> String {
+        let conversation: String = ""
         
         var set_user:Set<String> = []
         var set_contact:Set<String> = []
@@ -126,24 +126,26 @@ final class NewContactManager {
             set_user.insert(membre.conversation_id)
         }
         if (set_user.count == 0) {
-            return rep
+            return conversation
         }
         
         // Set des conversation_id's du contact_id
-        let querySnapshot = try await groupMemberCollection
+        let contactSnapshot = try await groupMemberCollection
             .whereField("contact_id", isEqualTo: contact_id)
             .getDocuments()
-        for document in querySnapshot.documents {
+        for document in contactSnapshot.documents {
             let membre = try document.data(as: group_member.self)
             set_contact.insert(membre.conversation_id)
         }
         if (set_contact.count == 0) {
-            return rep
+            return conversation
         }
 
         // intersection des deux sets pour trouver la discussion en commun
-        
-        
-        
+        let inter = set_user.intersection(set_contact)
+        if (inter.count == 1) {
+            print("inter.description:\(inter.description)")
+            return inter.description
+        }
     }
 }

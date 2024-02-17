@@ -146,6 +146,8 @@ final class NewContactManager {
         if (inter.count == 1) {
             print("inter.description:\(inter.description)")
             return inter.description
+        } else {
+            return conversation
         }
     }
 }

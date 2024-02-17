@@ -25,7 +25,7 @@ final class NewContactViewModel: ObservableObject {
     // init() { }
     
     @Published private(set) var mesContacts: [Contact] = []
-    private(set) var pairMembres: [Member] = []
+    // private(set) var pairMembres: [Member] = []
 
     func getContacts() async {
             // self.mesContacts = await ContactManager.shared.getAllContacts()
@@ -48,16 +48,14 @@ final class NewContactViewModel: ObservableObject {
             let contact_id = try await NewContactManager.shared.createContact(email: to_email)
         }
         
-        // Le triptique user_id et contact_id avec le même conversation id existe t'il dans dans "group_member"
-        let conversation = try await NewContactManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+        // Le triptique user_id et contact_id avec le même conversation_id existe t'il dans dans "group_member"
+        let conversation_id = try await NewContactManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
         
-        if (conversation != "") {
+        if (conversation_id != "") {
             // Il y a une conversation commune -> créer un message avec la conversation
         } else {
             // Il n'y a pas de conversation commune -> créer une nouvelle conversation et céer un massage avec cette conversation
         }
-        
-        
     }
 }
 

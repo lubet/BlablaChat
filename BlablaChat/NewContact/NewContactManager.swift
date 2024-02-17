@@ -110,26 +110,40 @@ final class NewContactManager {
         return Contact_id
     }
     
-    // Recherche du duo ayant la même conversation
-    // 1) Faire une tableau du user_id
-    // 2) Faire un tableau du contact_id
-    // 3) Deux boucles imbriquées pour trouver le user_id et le contact_id de la même conversation
-    func searchDuo(user_id:String, contact_id:String) async throws {
-        let tab_user: [group_member]
-        let tab_contact: [group_member]
+    // Recherche d'une éventuelle discussion commune à user_id et à contact_id
+    func searchDuo(user_id:String, contact_id:String) async throws -> Bool {
+        let rep: Bool = false
         
-        do {
-            let querySnapshot = try await groupMemberCollection
-                .whereField("contact_id", isEqualTo: user_id)
-                .getDocuments()
-            
-            for document in querySnapshot.documents {
-                let membre = try document.data(as: group_member.self)
-                tab.append(membre)
-            }
-        } catch {
-            print("Erreur getChatsId: \(error)")
+        var set_user:Set<String> = []
+        var set_contact:Set<String> = []
+
+        // Set des conversation_id's du user_id
+        let querySnapshot = try await groupMemberCollection
+            .whereField("contact_id", isEqualTo: user_id)
+            .getDocuments()
+        for document in querySnapshot.documents {
+            let membre = try document.data(as: group_member.self)
+            set_user.insert(membre.conversation_id)
         }
+        if (set_user.count == 0) {
+            return rep
+        }
+        
+        // Set des conversation_id's du contact_id
+        let querySnapshot = try await groupMemberCollection
+            .whereField("contact_id", isEqualTo: contact_id)
+            .getDocuments()
+        for document in querySnapshot.documents {
+            let membre = try document.data(as: group_member.self)
+            set_contact.insert(membre.conversation_id)
+        }
+        if (set_contact.count == 0) {
+            return rep
+        }
+
+        // intersection des deux sets pour trouver la discussion en commun
+        
+        
         
     }
 }

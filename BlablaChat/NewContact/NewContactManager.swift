@@ -126,6 +126,7 @@ final class NewContactManager {
             set_user.insert(membre.conversation_id)
         }
         if (set_user.count == 0) {
+            print("Pas de conversation pour set_user")
             return conversation // pas conversation
         }
         
@@ -138,15 +139,17 @@ final class NewContactManager {
             set_contact.insert(membre.conversation_id)
         }
         if (set_contact.count == 0) {
+            print("Pas de conversation pour set_contact")
             return conversation // pas de conversation
         }
 
         // intersection des deux sets pour trouver la conversation en commun
         let inter = set_user.intersection(set_contact)
         if (inter.count == 1) {
-            print("inter.description:\(inter.description)")
+            print("Une conversation commune a été trouvée:\(inter.description)")
             return inter.description
         } else {
+            print("Pas de conversation commune trouvée")
             return conversation
         }
     }

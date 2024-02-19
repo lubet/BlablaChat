@@ -188,14 +188,14 @@ final class NewContactManager {
     func createGroupMembers(conversation_id: String, user_id:String, contact_id:String) async throws {
         
         for x in 0..<2 {
-            var memberRef = groupMemberCollection.document()
-            var member_id = memberRef.documentID
+            let memberRef = groupMemberCollection.document()
+            let member_id = memberRef.documentID
             var user:String = ""
             
             if x == 0 {
-                let user = user_id
+                user = user_id
             } else {
-                let user = contact_id
+                user = contact_id
             }
             let data: [String:Any] = [
                 "id": member_id,

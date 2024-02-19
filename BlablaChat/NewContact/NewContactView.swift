@@ -51,18 +51,14 @@ final class NewContactViewModel: ObservableObject {
             print("createContact retour:\(contact_id)")
         }
         
-        // Si Duo pas présent dans membres -> créer le duo dans membres
+        // user_id, contact_id avec la même conversation ?
         let conversation = try await NewContactManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
-        
-        // Si présent dasn membre mais pas conversation creer laconversation
-        
-        
         if (conversation == "") {
-            // Si pas de conversation commune à user_id et à contact_id
-            // -> créer une conversation
+            // Non -> créer une conversation
             let conversation_id = try await NewContactManager.shared.createConversation(name: "Moi et un contact")
-            // + deux enregs dans member avec la conversation
+            // plus deux membres avec leur conversation
             try await NewContactManager.shared.createGroupMembers(conversation_id: conversation_id, user_id: user_id, contact_id: contact_id)
+            // Créer un message avec la conversation
         } else {
             // Si une conversation commune -> créer le message avec la conversation
         }

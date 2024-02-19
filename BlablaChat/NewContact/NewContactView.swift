@@ -57,10 +57,14 @@ final class NewContactViewModel: ObservableObject {
         // Si présent dasn membre mais pas conversation creer laconversation
         
         
-        if (conversation != "") {
-            // Il y a une conversation commune -> créer un message avec la conversation
+        if (conversation == "") {
+            // Si pas de conversation commune à user_id et à contact_id
+            // -> créer une conversation
+            let conversation_id = try await NewContactManager.shared.createConversation(name: "Moi et un contact")
+            // + deux enregs dans member avec la conversation
+            try await NewContactManager.shared.createGroupMembers(conversation_id: conversation_id, user_id: user_id, contact_id: contact_id)
         } else {
-            // Il n'y a pas de conversation commune -> créer une nouvelle conversation et céer un massage avec cette conversation
+            // Si une conversation commune -> créer le message avec la conversation
         }
     }
 }

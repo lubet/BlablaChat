@@ -89,6 +89,8 @@ final class NewContactManager {
     
     private let groupMemberCollection = dbFS.collection("group_member")
     
+    private let conversationCollection = dbFS.collection("conversation")
+    
     //-----------------------------------------------------------------
     
     // Recherche du contact dans la base "users"
@@ -158,12 +160,51 @@ final class NewContactManager {
 
         // intersection des deux sets pour trouver la conversation en commun
         let inter = set_user.intersection(set_contact)
-        if (inter.count == 2) { // conversation de user_id et la même conversation mais de contact_id
+        if (inter.count == 2) { // 2 valeurs: conversation_id de user_id et la même conversation_id mais de contact_id
             print("Une conversation commune a été trouvée:\(inter.description)")
             return inter.description
         } else {
-            print("Pas deux conversations commune trouvée")
+            print("Pas un conversation commune trouvée") // -> Créer deux enregs un: user_id conversation_id l'autre: contact_id conversation_id
             return conversation
+        }
+    }
+    
+    func createConversation(name: String) async throws -> String {
+        let conversationRef = conversationCollection.document()
+        let conversation_id = conversationRef.documentID
+        
+        let data: [String:Any] = [
+            "conversation_id" : conversation_id,
+            "conversation_name": name,
+            "dateCreated" : Timestamp(),
+            "last_message" : ""
+        ]
+        try await conversationRef.setData(data, merge: false)
+        
+        print("createConversation:\(conversation_id)")
+        return conversation_id
+    }
+    
+    func createGroupMembers(conversation_id: String, user_id:String, contact_id:String) async throws {
+        
+        for x in 0..<2 {
+            var memberRef = groupMemberCollection.document()
+            var member_id = memberRef.documentID
+            var user:String = ""
+            
+            if x == 0 {
+                let user = user_id
+            } else {
+                let user = contact_id
+            }
+            let data: [String:Any] = [
+                "id": member_id,
+                "contact_id" : user,
+                "conversation_id": conversation_id,
+                "dateCreated" : Timestamp(),
+                "last_message" : ""
+            ]
+            try await memberRef.setData(data, merge: false)
         }
     }
 }

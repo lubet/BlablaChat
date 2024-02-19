@@ -89,29 +89,43 @@ final class NewContactManager {
     
     private let groupMemberCollection = dbFS.collection("group_member")
     
+    //-----------------------------------------------------------------
     
     // Recherche du contact dans la base "users"
-    func searchContact(email:String) async throws -> DBUser {
-        return try await userDocument(email: email).getDocument(as: DBUser.self)
+    func searchContact(email:String) async throws -> String {
+        let document = try await userDocument(email: email).getDocument()
+        if document.exists {
+            let user = try document.data(as: DBUser.self)
+            print("contact_id:\(user.userId)")
+            return user.userId
+        } else {
+            print("email non existant:\(email)")
+            return ""
+        }
     }
     
     // Création du contact dans la base "users"
-    func createContact(email:String) async throws -> String {
-        let ContactRef = userDocument(email: email)
-        let Contact_id = ContactRef.documentID
-        
+    func createUser(email:String) async throws -> String {
+        let userRef = DBUserCollection.document()
+        let user_id = userRef.documentID
+        print("createUser user_id:\(user_id)")
+
         let data: [String:Any] = [
-            "user_id" : Contact_id,
+            "user_id" : user_id,
             "email": email,
             "dateCreated" : Timestamp()
         ]
-        try await ContactRef.setData(data, merge: false)
+        try await userRef.setData(data, merge: false)
         
-        return Contact_id
+        print("createUser user_id:\(user_id)")
+        return user_id
     }
     
     // Recherche d'une éventuelle discussion commune à user_id et à contact_id
     func searchDuo(user_id:String, contact_id:String) async throws -> String {
+        
+        print("searchDuo:\(user_id)-contact_id:\(contact_id)")
+        
         let conversation: String = ""
         
         var set_user:Set<String> = []
@@ -145,11 +159,11 @@ final class NewContactManager {
 
         // intersection des deux sets pour trouver la conversation en commun
         let inter = set_user.intersection(set_contact)
-        if (inter.count == 1) {
+        if (inter.count == 2) { // conversation de user_id et la même conversation mais de contact_id
             print("Une conversation commune a été trouvée:\(inter.description)")
             return inter.description
         } else {
-            print("Pas de conversation commune trouvée")
+            print("Pas deux conversations commune trouvée")
             return conversation
         }
     }

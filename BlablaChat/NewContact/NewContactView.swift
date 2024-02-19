@@ -36,16 +36,19 @@ final class NewContactViewModel: ObservableObject {
         // mon user_id
         let AuthUser = try AuthManager.shared.getAuthenticatedUser()
         let user_id = AuthUser.uid
-        // Le contact_id
-        let contact_id:String = ""
+
+        var contact_id: String = ""
         
-        let dbUser = try await NewContactManager.shared.searchContact(email: to_email)
-        // Le contact existe il dans "users"
-        if dbUser.email != nil { // oui
-            let contact_id = dbUser.userId
+         let contactId = try await NewContactManager.shared.searchContact(email: to_email)
+        
+        print("contactId:\(contactId)")
+        
+        if contactId != "" {
+            contact_id = contactId
+            print("createContact trouvé:\(contactId)")
         } else {
-            // non
-            let contact_id = try await NewContactManager.shared.createContact(email: to_email)
+            contact_id = try await NewContactManager.shared.createUser(email: to_email)
+            print("createContact retour:\(contactId)")
         }
         
         // Le triptique user_id et contact_id avec le même conversation_id existe t'il dans dans "group_member"

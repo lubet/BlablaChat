@@ -48,13 +48,16 @@ final class NewContactViewModel: ObservableObject {
             print("createContact trouvé:\(contactId)")
         } else {
             contact_id = try await NewContactManager.shared.createUser(email: to_email)
-            print("createContact retour:\(contactId)")
+            print("createContact retour:\(contact_id)")
         }
         
-        // Le triptique user_id et contact_id avec le même conversation_id existe t'il dans dans "group_member"
-        let conversation_id = try await NewContactManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+        // Si Duo pas présent dans membres -> créer le duo dans membres
+        let conversation = try await NewContactManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
         
-        if (conversation_id != "") {
+        // Si présent dasn membre mais pas conversation creer laconversation
+        
+        
+        if (conversation != "") {
             // Il y a une conversation commune -> créer un message avec la conversation
         } else {
             // Il n'y a pas de conversation commune -> créer une nouvelle conversation et céer un massage avec cette conversation

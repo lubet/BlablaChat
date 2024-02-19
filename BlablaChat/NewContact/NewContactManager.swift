@@ -108,7 +108,6 @@ final class NewContactManager {
     func createUser(email:String) async throws -> String {
         let userRef = DBUserCollection.document()
         let user_id = userRef.documentID
-        print("createUser user_id:\(user_id)")
 
         let data: [String:Any] = [
             "user_id" : user_id,
@@ -121,7 +120,7 @@ final class NewContactManager {
         return user_id
     }
     
-    // Recherche d'une éventuelle discussion commune à user_id et à contact_id
+    // Recherche d'une éventuelle conversation_id commune à user_id et à contact_id
     func searchDuo(user_id:String, contact_id:String) async throws -> String {
         
         print("searchDuo:\(user_id)-contact_id:\(contact_id)")

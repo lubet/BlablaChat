@@ -104,8 +104,6 @@ final class NewContactManager {
             if (user.email == email) {
                 print("searchContact trouvé:\(email)")
                 return user.userId
-            } else {
-                continue
             }
         }
         print("searchContact non trouvé")

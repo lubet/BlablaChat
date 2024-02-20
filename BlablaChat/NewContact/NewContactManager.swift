@@ -91,6 +91,8 @@ final class NewContactManager {
     
     private let conversationCollection = dbFS.collection("conversation")
     
+    private let messageCollection = dbFS.collection("message")
+    
     //-----------------------------------------------------------------
     
     // Recherche du contact dans la base "users"
@@ -210,5 +212,19 @@ final class NewContactManager {
             ]
             try await memberRef.setData(data, merge: false)
         }
+    }
+    
+    func createMessage(from_id: String, message_text: String, date_send:Timestamp) async throws {
+        let messageRef = messageCollection.document()
+        let message_id = messageRef.documentID
+        
+        let data: [String:Any] = [
+            "id": message_id,
+            "from_id": from_id,
+            "message_text": message_text,
+            "date_send": Timestamp()
+        ]
+        
+        try await messageRef.setData(data, merge: false)
     }
 }

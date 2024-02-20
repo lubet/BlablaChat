@@ -94,16 +94,22 @@ final class NewContactManager {
     //-----------------------------------------------------------------
     
     // Recherche du contact dans la base "users"
-    func searchContact(email:String) async throws -> String {
-        let document = try await userDocument(email: email).getDocument()
-        if document.exists {
+    func searchContact(email: String) async throws -> String {
+        let querySnapshot = try await DBUserCollection
+            .whereField("email", isEqualTo: email)
+            .getDocuments()
+        
+        for document in querySnapshot.documents {
             let user = try document.data(as: DBUser.self)
-            print("contact_id:\(user.userId)")
-            return user.userId
-        } else {
-            print("email non existant:\(email)")
-            return ""
+            if (user.email == email) {
+                print("searchContact trouvé:\(email)")
+                return user.userId
+            } else {
+                continue
+            }
         }
+        print("searchContact non trouvé")
+        return ""
     }
     
     // Création du contact dans la base "users"
@@ -125,7 +131,7 @@ final class NewContactManager {
     // Recherche d'une éventuelle conversation_id commune à user_id et à contact_id
     func searchDuo(user_id:String, contact_id:String) async throws -> String {
         
-        print("searchDuo:\(user_id)-contact_id:\(contact_id)")
+        print("searchDuo: user_id:\(user_id)-contact_id:\(contact_id)")
         
         let conversation: String = ""
         
@@ -141,7 +147,7 @@ final class NewContactManager {
             set_user.insert(membre.conversation_id)
         }
         if (set_user.count == 0) {
-            print("Pas de conversation pour set_user")
+            print("Pas de conversation dans member pour set_user")
             return conversation // pas conversation
         }
         
@@ -154,7 +160,7 @@ final class NewContactManager {
             set_contact.insert(membre.conversation_id)
         }
         if (set_contact.count == 0) {
-            print("Pas de conversation pour set_contact")
+            print("Pas de conversation dans member pour set_contact")
             return conversation // pas de conversation
         }
 

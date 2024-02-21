@@ -97,16 +97,20 @@ final class NewContactManager {
     
     // Recherche du contact dans la base "users"
     func searchContact(email: String) async throws -> String {
-        let querySnapshot = try await DBUserCollection
-            .whereField("email", isEqualTo: email)
-            .getDocuments()
-        
-        for document in querySnapshot.documents {
-            let user = try document.data(as: DBUser.self)
-            if (user.email == email) {
-                print("searchContact trouvé:\(email)")
-                return user.userId
+        do {
+            let querySnapshot = try await DBUserCollection
+                .whereField("email", isEqualTo: email)
+                .getDocuments()
+            
+            for document in querySnapshot.documents {
+                let user = try document.data(as: DBUser.self)
+                if (user.email == email) {
+                    print("searchContact trouvé:\(email)")
+                    return user.userId
+                }
             }
+        } catch {
+            print("Error getting documents: \(error.localizedDescription)")
         }
         print("searchContact non trouvé")
         return ""
@@ -131,7 +135,7 @@ final class NewContactManager {
     // Recherche d'une éventuelle conversation_id commune à user_id et à contact_id
     func searchDuo(user_id:String, contact_id:String) async throws -> String {
         
-        print("searchDuo: user_id:\(user_id)-contact_id:\(contact_id)")
+        print("searchDuo1: user_id:\(user_id)-contact_id:\(contact_id)")
         
         let conversation: String = ""
         
@@ -139,18 +143,22 @@ final class NewContactManager {
         var set_contact:Set<String> = []
 
         // Set des conversation_id's du user_id
-        let querySnapshot = try await groupMemberCollection
-            .whereField("contact_id", isEqualTo: user_id)
-            .getDocuments()
-        for document in querySnapshot.documents {
-            let membre = try document.data(as: group_member.self)
-            set_user.insert(membre.conversation_id)
+        do {
+            let querySnapshot = try await groupMemberCollection.whereField("contact_id", isEqualTo: user_id).getDocuments()
+            for document in querySnapshot.documents {
+                let membre = try document.data(as: group_member.self)
+                set_user.insert(membre.conversation_id)
+            }
+            if (set_user.count == 0) {
+                print("Pas de conversation dans member pour set_user")
+                return conversation // pas conversation
+            }
+        } catch {
+            print("Error getting documents: \(error.localizedDescription)")
         }
-        if (set_user.count == 0) {
-            print("Pas de conversation dans member pour set_user")
-            return conversation // pas conversation
-        }
-        
+
+        print("searchDuo2 set_user:\(set_user)-set_contact:\(set_contact)")
+
         // Set des conversation_id's du contact_id
         let contactSnapshot = try await groupMemberCollection
             .whereField("contact_id", isEqualTo: contact_id)
@@ -164,6 +172,8 @@ final class NewContactManager {
             return conversation // pas de conversation
         }
 
+        print("searchDuo3 set_user:\(set_user)-set_contact:\(set_contact)")
+        
         // intersection des deux sets pour trouver la conversation en commun
         let inter = set_user.intersection(set_contact)
         if (inter.count == 2) { // 2 valeurs: conversation_id de user_id et la même conversation_id mais de contact_id
@@ -214,7 +224,7 @@ final class NewContactManager {
         }
     }
     
-    func createMessage(from_id: String, message_text: String, date_send:Timestamp) async throws {
+    func createMessage(from_id: String, message_text: String, conversation_id: String) async throws {
         let messageRef = messageCollection.document()
         let message_id = messageRef.documentID
         

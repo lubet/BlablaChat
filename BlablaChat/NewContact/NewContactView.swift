@@ -52,7 +52,7 @@ final class NewContactViewModel: ObservableObject {
             contact_id = try await NewContactManager.shared.createUser(email: to_email) // Création du contact dans "users"
             print("createContact retour:\(contact_id)")
         }
-        
+        //------ NOK
         // user_id, contact_id avec la même conversation ?
         let conversation = try await NewContactManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
         if (conversation == "") {
@@ -61,8 +61,10 @@ final class NewContactViewModel: ObservableObject {
             // + deux membres avec leur conversation
             try await NewContactManager.shared.createGroupMembers(conversation_id: conversation_id, user_id: user_id, contact_id: contact_id)
             // Créer un message avec la conversation
+            try await NewContactManager.shared.createMessage(from_id: user_id, message_text: "Salut", conversation_id: conversation_id)
         } else {
             // Si une conversation commune -> créer le message avec la conversation existante
+            try await NewContactManager.shared.createMessage(from_id: user_id, message_text: "Salut", conversation_id: conversation)
         }
     }
 }

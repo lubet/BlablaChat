@@ -124,7 +124,7 @@ final class NewContactManager {
         let data: [String:Any] = [
             "user_id" : user_id,
             "email": email,
-            "dateCreated" : Timestamp()
+            "date_created" : Timestamp()
         ]
         try await userRef.setData(data, merge: false)
         
@@ -146,8 +146,8 @@ final class NewContactManager {
         do {
             let querySnapshot = try await dbFS.collection("group_member").whereField("contact_id", isEqualTo: user_id).getDocuments()
             for document in querySnapshot.documents {
-                let membre = try document.data(as: group_member.self)
-                set_user.insert(membre.conversation_id)
+                let membre_user = try document.data(as: group_member.self)
+                set_user.insert(membre_user.conversation_id)
             }
             if (set_user.count == 0) {
                 print("Pas de conversation dans member pour set_user")
@@ -155,7 +155,6 @@ final class NewContactManager {
             }
         } catch {
             print("Error getting documents user_id: \(error)")
-            
         }
 
         // Set des conversation_id's du contact_id
@@ -164,8 +163,8 @@ final class NewContactManager {
                 .whereField("contact_id", isEqualTo: contact_id)
                 .getDocuments()
             for document in contactSnapshot.documents {
-                let membre = try document.data(as: group_member.self)
-                set_contact.insert(membre.conversation_id)
+                let membre_contact = try document.data(as: group_member.self)
+                set_contact.insert(membre_contact.conversation_id)
             }
             if (set_contact.count == 0) {
                 print("Pas de conversation dans member pour set_contact")
@@ -179,12 +178,14 @@ final class NewContactManager {
         
         // intersection des deux sets pour trouver la conversation en commun
         let inter = set_user.intersection(set_contact)
-        if (inter.count == 2) { // 2 valeurs: conversation_id de user_id et la même conversation_id mais de contact_id
-            print("Une conversation commune a été trouvée:\(inter.description)")
-            return inter.description
-        } else {
+        print("inter:\(inter)")
+        
+        if (inter.count != 1) { // Pas une conversation_id commune aux conversation_id de user_id et de contact_id
             print("Pas un conversation commune trouvée") // -> Créer deux enregs un: user_id conversation_id l'autre: contact_id conversation_id
             return conversation
+        } else {
+            print("Une conversation commune a été trouvée:\(inter.description)")
+            return inter.description
         }
     }
     
@@ -195,7 +196,7 @@ final class NewContactManager {
         let data: [String:Any] = [
             "conversation_id" : conversation_id,
             "conversation_name": name,
-            "dateCreated" : Timestamp(),
+            "date_created" : Timestamp(),
             "last_message" : ""
         ]
         try await conversationRef.setData(data, merge: false)
@@ -220,7 +221,7 @@ final class NewContactManager {
                 "id": member_id,
                 "contact_id" : user,
                 "conversation_id": conversation_id,
-                "dateCreated" : Timestamp(),
+                "date_created" : Timestamp(),
                 "last_message" : ""
             ]
             try await memberRef.setData(data, merge: false)

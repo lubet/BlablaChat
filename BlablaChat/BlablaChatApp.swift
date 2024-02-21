@@ -16,6 +16,7 @@ struct BlablaChatApp: App {
     var body: some Scene {
         WindowGroup {
             NewContactView()
+            // LoginView()
         }
     }
 }

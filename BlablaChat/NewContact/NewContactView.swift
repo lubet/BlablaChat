@@ -52,8 +52,9 @@ final class NewContactViewModel: ObservableObject {
             contact_id = try await NewContactManager.shared.createUser(email: to_email) // Création du contact dans "users"
             print("createContact retour:\(contact_id)")
         }
+        
         //------ NOK
-        // user_id, contact_id avec la même conversation ?
+        // Search Duo dans membre
         let conversation = try await NewContactManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
         if (conversation == "") {
             // Non -> créer une conversation

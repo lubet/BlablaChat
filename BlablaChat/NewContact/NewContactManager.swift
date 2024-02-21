@@ -144,7 +144,7 @@ final class NewContactManager {
 
         // Set des conversation_id's du user_id
         do {
-            let querySnapshot = try await groupMemberCollection.whereField("user_id", isEqualTo: user_id).getDocuments()
+            let querySnapshot = try await dbFS.collection("group_member").whereField("contact_id", isEqualTo: user_id).getDocuments()
             for document in querySnapshot.documents {
                 let membre = try document.data(as: group_member.self)
                 set_user.insert(membre.conversation_id)
@@ -154,7 +154,8 @@ final class NewContactManager {
                 return conversation // pas conversation
             }
         } catch {
-            print("Error getting documents user_id: \(error.localizedDescription)")
+            print("Error getting documents user_id: \(error)")
+            
         }
 
         // Set des conversation_id's du contact_id
@@ -234,9 +235,9 @@ final class NewContactManager {
             "id": message_id,
             "from_id": from_id,
             "message_text": message_text,
-            "date_send": Timestamp()
+            "date_send": Timestamp(),
+            "conversation_id": conversation_id
         ]
-        
         try await messageRef.setData(data, merge: false)
     }
 }

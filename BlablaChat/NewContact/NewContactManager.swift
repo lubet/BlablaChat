@@ -144,7 +144,7 @@ final class NewContactManager {
 
         // Set des conversation_id's du user_id
         do {
-            let querySnapshot = try await groupMemberCollection.whereField("contact_id", isEqualTo: user_id).getDocuments()
+            let querySnapshot = try await groupMemberCollection.whereField("user_id", isEqualTo: user_id).getDocuments()
             for document in querySnapshot.documents {
                 let membre = try document.data(as: group_member.self)
                 set_user.insert(membre.conversation_id)
@@ -154,22 +154,24 @@ final class NewContactManager {
                 return conversation // pas conversation
             }
         } catch {
-            print("Error getting documents: \(error.localizedDescription)")
+            print("Error getting documents user_id: \(error.localizedDescription)")
         }
-
-        print("searchDuo2 set_user:\(set_user)-set_contact:\(set_contact)")
 
         // Set des conversation_id's du contact_id
-        let contactSnapshot = try await groupMemberCollection
-            .whereField("contact_id", isEqualTo: contact_id)
-            .getDocuments()
-        for document in contactSnapshot.documents {
-            let membre = try document.data(as: group_member.self)
-            set_contact.insert(membre.conversation_id)
-        }
-        if (set_contact.count == 0) {
-            print("Pas de conversation dans member pour set_contact")
-            return conversation // pas de conversation
+        do {
+            let contactSnapshot = try await groupMemberCollection
+                .whereField("contact_id", isEqualTo: contact_id)
+                .getDocuments()
+            for document in contactSnapshot.documents {
+                let membre = try document.data(as: group_member.self)
+                set_contact.insert(membre.conversation_id)
+            }
+            if (set_contact.count == 0) {
+                print("Pas de conversation dans member pour set_contact")
+                return conversation // pas de conversation
+            }
+        } catch {
+            print("Error getting documents contact_id: \(error.localizedDescription)")
         }
 
         print("searchDuo3 set_user:\(set_user)-set_contact:\(set_contact)")

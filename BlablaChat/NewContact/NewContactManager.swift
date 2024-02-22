@@ -184,8 +184,8 @@ final class NewContactManager {
             print("Pas un conversation commune trouvée") // -> Créer deux enregs un: user_id conversation_id l'autre: contact_id conversation_id
             return conversation
         } else {
-            print("Une conversation commune a été trouvée:\(inter.description)")
-            return inter.description
+            print("Une conversation commune a été trouvée:\(inter.first ?? "")")
+            return inter.first ?? ""
         }
     }
     

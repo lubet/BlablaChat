@@ -9,22 +9,38 @@ import SwiftUI
 
 @MainActor
 final class HomeViewModel: ObservableObject {
+    
+    // @Published private(set) var lastMessage: [LastMessage] = []
+    
+    
+    init() {
+        Task {
+            try await getLastMessages()
+        }
+    }
+    
+    func getLastMessages() async throws {
+        // mon user_id:
+        // let AuthUser = try AuthManager.shared.getAuthenticatedUser()
+        
+        // extraire tous les messages dont le from_id = user_id
+        // pour chaque message prendre le conversation_id
+            // boucle extraire tous les messages avec ce conversation_id
+        //
+        
+        // ou
+        
+        // extraire tous les messages M1
+        // filtrer form_id = user_id, conversation_id -> M2
+        // selectionner dans M1 tous les message dont le convesation_id = conversation_id de M2
+        
+        try await HomeManager.shared.lastMessages()
+        
+        
+    }
+    
 
-    @Published var conversations: [Conversation] = [
-        Conversation(titre: "Richard", last_date: Date(), last_message: "Salut Richard, comment vas tu ?"),
-        Conversation(titre: "Jean", last_date: Date(), last_message: "Salut Jean"),
-        Conversation(titre: "Paul", last_date: Date(), last_message: "Salut Paul"),
-        Conversation(titre: "Pierre", last_date: Date(), last_message: "Salut Pierre"),
-        Conversation(titre: "Richard", last_date: Date(), last_message: "Salut Richard"),
-        Conversation(titre: "Jean", last_date: Date(), last_message: "Salut Jean"),
-        Conversation(titre: "Paul", last_date: Date(), last_message: "Salut Paul"),
-        Conversation(titre: "Pierre", last_date: Date(), last_message: "Salut Pierre"),
-        Conversation(titre: "Richard", last_date: Date(), last_message: "Salut Richard"),
-        Conversation(titre: "Jean", last_date: Date(), last_message: "Salut Jean"),
-        Conversation(titre: "Paul", last_date: Date(), last_message: "Salut Paul"),
-        Conversation(titre: "Pierre", last_date: Date(), last_message: "Salut Pierre")
-    ]
-}
+ }
 
 struct HomeView: View {
     
@@ -35,10 +51,10 @@ struct HomeView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
                         Spacer()
-                        ForEach(viewModel.conversations) { conversation in
-                            HomeCellView(conversation: conversation)
-                            Divider()
-                        }
+//                        ForEach(viewModel.conversations) { conversation in
+//                            HomeCellView(conversation: conversation)
+//                            Divider()
+//                        }
                     }
                 }
                 .navigationTitle("Conversations")

@@ -22,7 +22,7 @@ struct Chat: Identifiable, Codable {
 }
 
 // Chat_messages -----------------------------
-struct Message: Identifiable, Codable {
+struct Message2: Identifiable, Codable {
     var message_id: String
     var chat_id: String    // = from_email+to_email
     var texte: String

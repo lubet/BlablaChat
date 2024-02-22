@@ -11,12 +11,6 @@ import FirebaseFirestoreSwift
 
 private let db = Firestore.firestore()
 
-struct LastMessage: Identifiable {
-    let id: String = UUID().uuidString
-    let to_id: String
-    let texte: String
-    let date_message: Timestamp
-}
 
 final class HomeManager {
     
@@ -39,30 +33,20 @@ final class HomeManager {
     //-----------------------------------------------------------------
 
     
-    func lastMessages(user_id: String) {
-        // Récupere mes messages
-        let snapshot = try await Firestore.firestore().collection("message")
-            .whereField("from_id", isEqualTo: user_id)
-            .getDocuments()
-
+    func lastMessages() async throws {
         
-        
-        
-        
-        
-        // Récupérer le dernier message de chaque destinataire de message
-        
-        // Récupérer le denier message de chaque contact avec un message
-        //
-        for each contact dans messages
-                récuprer le dernier message de c contact
-                
-
-        
-        
-        
-        
+        do {
+            let querySnapshot = try await messageCollection.getDocuments()
+            
+            var msg = [Message]()
+            
+            for document in querySnapshot.documents {
+                let mes = try document.data(as: Message.self)
+                msg.append(mes)
+                print("\(msg)")
+            }
+        } catch {
+            print("Error getting documents: \(error)")
+        }
     }
-    
-    
 }

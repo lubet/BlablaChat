@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 
 private let dbFS = Firestore.firestore()
 
-struct group_member: Identifiable, Codable {
+struct Group_member: Identifiable, Codable {
     let id: String
     let contact_id: String
     let conversation_id: String
@@ -31,7 +31,7 @@ struct group_member: Identifiable, Codable {
     }
 }
 
-struct conversation: Identifiable, Codable {
+struct Conversation: Identifiable, Codable {
     let id:String
     let conversation_id:String
     let conversation_name:String
@@ -53,12 +53,20 @@ struct conversation: Identifiable, Codable {
     }
 }
 
-struct message: Identifiable, Codable {
+struct Message: Identifiable, Codable {
     let id:String
     let from_id:String
     let message_text:String
     let date_send:Timestamp
     let conversation_id:String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case from_id = "from_id"
+        case message_text = "message_text"
+        case date_send = "date_send"
+        case conversation_id = "conversation_id"
+    }
     
     init(
         id:String,
@@ -146,7 +154,7 @@ final class NewContactManager {
         do {
             let querySnapshot = try await dbFS.collection("group_member").whereField("contact_id", isEqualTo: user_id).getDocuments()
             for document in querySnapshot.documents {
-                let membre_user = try document.data(as: group_member.self)
+                let membre_user = try document.data(as: Group_member.self)
                 set_user.insert(membre_user.conversation_id)
             }
             if (set_user.count == 0) {
@@ -163,7 +171,7 @@ final class NewContactManager {
                 .whereField("contact_id", isEqualTo: contact_id)
                 .getDocuments()
             for document in contactSnapshot.documents {
-                let membre_contact = try document.data(as: group_member.self)
+                let membre_contact = try document.data(as: Group_member.self)
                 set_contact.insert(membre_contact.conversation_id)
             }
             if (set_contact.count == 0) {

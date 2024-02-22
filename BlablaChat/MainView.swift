@@ -10,19 +10,20 @@ import SwiftUI
 struct MainView: View {
     var body: some View {
         TabView {
-            HomeView() // NavigationStack/NavigationLink
+            HomeView() // Liste des conversations
                 .tabItem {
                     Image(systemName: "house.fill")
                     Text("Conversations")
                 }
             
-            NewContactView()
+            NewContactView() // Nouveau contact
                 .tabItem {
                     Image(systemName: "person.fill")
                     Text("Contact")
                         .foregroundColor(.black)
                 }
             
+            //
             Text("Créer un groupe de contact")
                 .tabItem {
                     Image(systemName: "person.3")

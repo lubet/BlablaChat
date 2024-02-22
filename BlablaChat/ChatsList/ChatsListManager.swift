@@ -11,7 +11,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-let db = Firestore.firestore()
+private let db = Firestore.firestore()
 
 final class ChatsListManager {
     

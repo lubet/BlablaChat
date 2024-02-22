@@ -33,20 +33,20 @@ final class HomeManager {
     //-----------------------------------------------------------------
 
     
-    func lastMessages() async throws {
+    func lastMessages(from_to: String) async throws {
         
-        do {
-            let querySnapshot = try await messageCollection.getDocuments()
-            
-            var msg = [Message]()
-            
-            for document in querySnapshot.documents {
-                let mes = try document.data(as: Message.self)
-                msg.append(mes)
-                print("\(msg)")
-            }
-        } catch {
-            print("Error getting documents: \(error)")
+        var messages = [Message]()
+
+        // Messages envoyés par moi
+        let querySnapShot = try await messageCollection
+            .whereField("from_id", isEqualTo: from_to)
+            .getDocuments()
+        for document in querySnapShot.documents {
+            let mes = try document.data(as: Message.self)
+            messages.append(mes)
+            print("\(messages)")
         }
+        
+        // Recher dans membre tous les conversations_id égaux aus miens -> les contact_id concernés
     }
 }

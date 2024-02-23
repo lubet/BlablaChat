@@ -109,7 +109,6 @@ final class NewContactManager {
     private func conversationDocument(conversation_id: String) -> DocumentReference {
         return conversationCollection.document(conversation_id)
     }
-    
                 
     private let messageCollection = dbFS.collection("message")
     
@@ -249,7 +248,7 @@ final class NewContactManager {
     }
     
     func createMessage(from_id: String, to_id: String, message_text: String, conversation_id: String) async throws {
-        let messageRef = conversationDocument(conversation_id: conversation_id).collection("message").document()
+        let messageRef = conversationDocument(conversation_id: conversation_id).collection("message)").document()
         let message_id = messageRef.documentID
         
         let data: [String:Any] = [

@@ -40,6 +40,7 @@ final class HomeManager {
         // Messages envoyés par moi
         let querySnapShot = try await messageCollection
             .whereField("from_id", isEqualTo: from_to)
+            .order(by: "date_send", descending: true)
             .getDocuments()
         for document in querySnapShot.documents {
             let mes = try document.data(as: Message.self)

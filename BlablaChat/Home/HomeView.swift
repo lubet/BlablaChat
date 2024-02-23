@@ -34,7 +34,7 @@ final class HomeViewModel: ObservableObject {
         // filtrer form_id = user_id, conversation_id -> M2
         // selectionner dans M1 tous les message dont le convesation_id = conversation_id de M2
         
-        try await HomeManager.shared.lastMessages()
+        try await HomeManager.shared.lastMessages(from_to: "123")
         
         
     }

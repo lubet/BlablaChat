@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 // Chats ( Conversations) -----------
-struct Chat: Identifiable, Codable {
+struct ChatSave: Identifiable, Codable {
     var chat_id: String // = from_email+to_email
     var title: String
     var last_message: String // texte du dernier message

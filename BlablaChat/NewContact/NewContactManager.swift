@@ -248,22 +248,18 @@ final class NewContactManager {
         }
     }
     
-    func createMessage(from_id: String, to_id: String, message_text: String, conversation_id: String) {
+    func createMessage(from_id: String, to_id: String, message_text: String, conversation_id: String) async throws {
         let messageRef = conversationDocument(conversation_id: conversation_id).collection("message").document()
+        let message_id = messageRef.documentID
+        
+        let data: [String:Any] = [
+            "id": message_id,
+            "from_id": from_id,
+            "to_id": to_id,
+            "message_text": message_text,
+            "date_send": Timestamp(),
+            "conversation_id": conversation_id
+        ]
+        try await messageRef.setData(data, merge: false)
     }
-    
-//    func createMessage(from_id: String, to_id: String, message_text: String, conversation_id: String) async throws {
-//        let messageRef = messageCollection.document()
-//        let message_id = messageRef.documentID
-//
-//        let data: [String:Any] = [
-//            "id": message_id,
-//            "from_id": from_id,
-//            "to_id": to_id,
-//            "message_text": message_text,
-//            "date_send": Timestamp(),
-//            "conversation_id": conversation_id
-//        ]
-//        try await messageRef.setData(data, merge: false)
-//    }
 }

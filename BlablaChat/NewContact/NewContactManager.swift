@@ -93,15 +93,17 @@ final class NewContactManager {
     
     init() { }
     
+    // ---------------------------------------------------
     private let DBUserCollection = dbFS.collection("users")
     
     private func userDocument(email:String) -> DocumentReference {
         return DBUserCollection.document(email)
     }
     
+    // ---------------------------------------------------------------
     private let groupMemberCollection = dbFS.collection("group_member")
     
-    
+    // -----------------------------------------------------------------
     private let conversationCollection = dbFS.collection("conversation")
     
     private func conversationDocument(conversation_id: String) -> DocumentReference {
@@ -247,7 +249,7 @@ final class NewContactManager {
     }
     
     func createMessage(from_id: String, to_id: String, message_text: String, conversation_id: String) {
-        let messageRef = conversationDocument(conversation_id: conversation_id).collection("message")
+        let messageRef = conversationDocument(conversation_id: conversation_id).collection("message").document()
     }
     
 //    func createMessage(from_id: String, to_id: String, message_text: String, conversation_id: String) async throws {

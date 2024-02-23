@@ -56,6 +56,7 @@ struct Conversation: Identifiable, Codable {
 struct Message: Identifiable, Codable {
     let id:String
     let from_id:String
+    let to_id: String
     let message_text:String
     let date_send:Timestamp
     let conversation_id:String
@@ -63,20 +64,23 @@ struct Message: Identifiable, Codable {
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case from_id = "from_id"
+        case to_id = "to_id"
         case message_text = "message_text"
         case date_send = "date_send"
         case conversation_id = "conversation_id"
     }
     
     init(
-        id:String,
-        from_id:String,
-        message_text:String,
-        date_send:Timestamp,
-        conversation_id:String
+        id: String,
+        from_id: String,
+        to_id: String,
+        message_text: String,
+        date_send: Timestamp,
+        conversation_id: String
     ) {
         self.id = id
         self.from_id = from_id
+        self.to_id = to_id
         self.message_text = message_text
         self.date_send = Timestamp()
         self.conversation_id = conversation_id
@@ -236,13 +240,14 @@ final class NewContactManager {
         }
     }
     
-    func createMessage(from_id: String, message_text: String, conversation_id: String) async throws {
+    func createMessage(from_id: String, to_id: String, message_text: String, conversation_id: String) async throws {
         let messageRef = messageCollection.document()
         let message_id = messageRef.documentID
         
         let data: [String:Any] = [
             "id": message_id,
             "from_id": from_id,
+            "to_id": to_id,
             "message_text": message_text,
             "date_send": Timestamp(),
             "conversation_id": conversation_id

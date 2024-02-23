@@ -101,8 +101,14 @@ final class NewContactManager {
     
     private let groupMemberCollection = dbFS.collection("group_member")
     
+    
     private let conversationCollection = dbFS.collection("conversation")
     
+    private func conversationDocument(conversation_id: String) -> DocumentReference {
+        return conversationCollection.document(conversation_id)
+    }
+    
+                
     private let messageCollection = dbFS.collection("message")
     
     //-----------------------------------------------------------------
@@ -240,18 +246,22 @@ final class NewContactManager {
         }
     }
     
-    func createMessage(from_id: String, to_id: String, message_text: String, conversation_id: String) async throws {
-        let messageRef = messageCollection.document()
-        let message_id = messageRef.documentID
-        
-        let data: [String:Any] = [
-            "id": message_id,
-            "from_id": from_id,
-            "to_id": to_id,
-            "message_text": message_text,
-            "date_send": Timestamp(),
-            "conversation_id": conversation_id
-        ]
-        try await messageRef.setData(data, merge: false)
+    func createMessage(from_id: String, to_id: String, message_text: String, conversation_id: String) {
+        let messageRef = conversationDocument(conversation_id: conversation_id).collection("message")
     }
+    
+//    func createMessage(from_id: String, to_id: String, message_text: String, conversation_id: String) async throws {
+//        let messageRef = messageCollection.document()
+//        let message_id = messageRef.documentID
+//
+//        let data: [String:Any] = [
+//            "id": message_id,
+//            "from_id": from_id,
+//            "to_id": to_id,
+//            "message_text": message_text,
+//            "date_send": Timestamp(),
+//            "conversation_id": conversation_id
+//        ]
+//        try await messageRef.setData(data, merge: false)
+//    }
 }

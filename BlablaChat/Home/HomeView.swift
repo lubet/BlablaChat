@@ -10,12 +10,12 @@ import SwiftUI
 @MainActor
 final class HomeViewModel: ObservableObject {
     
-    @Published private(set) var lastMessage: [Message] = []
+    @Published private(set) var MesMessage: [Message] = []
     
-    func getAllMessages() {
+    func getMesMessages() {
         Task {
             let authDataResult = try AuthManager.shared.getAuthenticatedUser()
-            let messsages = try await HomeManager.shared.getMyMessages(user_id: authDataResult.uid)
+            let myMessages = try await HomeManager.shared.getMyMessages(user_id: authDataResult.uid)
 
         }
     }

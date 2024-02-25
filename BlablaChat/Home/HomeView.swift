@@ -10,13 +10,21 @@ import SwiftUI
 @MainActor
 final class HomeViewModel: ObservableObject {
     
-    @Published private(set) var MesMessage: [Message] = []
+    @Published private(set) var MesMessages: [(conversation: Conversation, messag: Message)] = []
     
     func getMesMessages() {
         Task {
             let authDataResult = try AuthManager.shared.getAuthenticatedUser()
             let myMessages = try await HomeManager.shared.getMyMessages(user_id: authDataResult.uid)
-
+            
+            var localArray: [(conversation: Conversation, messag: Message)] = []
+            
+            for myMessage in myMessages {
+                if let chat = try? await HomeManager.shared.getConversation(chatRoom_id: myMessage.conversation_id) {
+                    localArray.append((chat, myMessage))
+                }
+            }
+            self.MesMessages = localArray
         }
     }
  }

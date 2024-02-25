@@ -60,6 +60,22 @@ final class HomeManager {
         return myMessage
     }
     
+    func getConversation(chatRoom_id: String) async throws -> [Conversation] {
+        
+        var chatRooms = [Conversation]()
+        
+        let chatRoomSnap = try await conversationCollection
+            .whereField("conversation_id",isEqualTo: chatRoom_id)
+            .getDocuments()
+        
+        for document in chatRoomSnap.documents {
+            let chat = try document.data(as: Conversation.self)
+            chatRooms.append(chat)
+        }
+        return chatRooms
+        
+    }
+    
     // Dernier message de chaque discussion
 //    func lastMessages(from_to: String) async throws {
 //        let querySnapShot = try await conversationCollection.getDocuments()

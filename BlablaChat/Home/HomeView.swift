@@ -30,6 +30,7 @@ final class HomeViewModel: ObservableObject {
                                                     date_send: myMessage.date_send
                         ))
                      }
+                    print("Mes messages: \(MesMessages)")
                 }
             }
         }
@@ -52,7 +53,7 @@ struct HomeView: View {
 //                        }
                     }
                 }
-                .navigationTitle("Conversations")
+                .navigationTitle("HomeView")
                 .onAppear() {
                         viewModel.getMesMessages()
                 }

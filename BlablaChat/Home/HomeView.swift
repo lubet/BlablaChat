@@ -6,9 +6,6 @@
 //
 
 import SwiftUI
-import FirebaseFirestore
-import FirebaseFirestoreSwift
-
 
 @MainActor
 final class HomeViewModel: ObservableObject {
@@ -21,6 +18,7 @@ final class HomeViewModel: ObservableObject {
             let authDataResult = try AuthManager.shared.getAuthenticatedUser()
             let myMessages = try await HomeManager.shared.getMyMessages(user_id: authDataResult.uid)
             
+            // Mettre ce bloc dans manager ?
             for myMessage in myMessages {
                 if let conversations = try? await HomeManager.shared.getConversation(chatRoom_id: myMessage.id) {
                     for conversation in conversations {
@@ -29,7 +27,7 @@ final class HomeViewModel: ObservableObject {
                                                     from_id: myMessage.from_id,
                                                     to_id: myMessage.to_id,
                                                     message_text: myMessage.message_text,
-                                                    date_send: Timestamp()
+                                                    date_send: myMessage.date_send
                         ))
                      }
                 }

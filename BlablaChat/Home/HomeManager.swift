@@ -95,18 +95,27 @@ final class HomeManager {
     }
     
     // Renvoie le nom de la conversaion correspondant au message
-    func getConversation(chatRoom_id: String) async throws -> [Conversation] {
+    func getConversation(conversation_id: String) async throws -> [Conversation] {
+        
+        print("getConversation \(conversation_id)")
         
         var chatRooms = [Conversation]()
         
-        let chatRoomSnap = try await conversationCollection
-            .whereField("conversation_id",isEqualTo: chatRoom_id)
-            .getDocuments()
-        
-        for document in chatRoomSnap.documents {
-            let chat = try document.data(as: Conversation.self)
-            chatRooms.append(chat)
+        do {
+            let querySnapshot = try await conversationCollection
+                .whereField("conversation_id",isEqualTo: conversation_id)
+                .getDocuments()
+            
+            for document in querySnapshot.documents {
+                let chat = try document.data(as: Conversation.self)
+                chatRooms.append(chat)
+            }
+        } catch {
+            print("Error \(error.localizedDescription)")
         }
+            
+        print("chatRooms: \(chatRooms)")
+        
         return chatRooms
         
     }

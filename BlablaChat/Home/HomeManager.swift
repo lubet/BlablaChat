@@ -13,6 +13,34 @@ import FirebaseFirestoreSwift
 
 private let db = Firestore.firestore()
 
+struct ChatItem: Identifiable, Codable {
+    let conversation_id: String
+    let conversation_name: String
+    let from_id: String
+    let to_id: String
+    let message_text: String
+    let date_send: Timestamp
+    
+    var id: String {
+        conversation_id
+    }
+    
+    init(
+        conversation_id: String,
+        conversation_name: String,
+        from_id: String,
+        to_id: String,
+        message_text: String,
+        date_send: Timestamp
+    ) {
+        self.conversation_id = conversation_id
+        self.conversation_name = conversation_name
+        self.from_id = from_id
+        self.to_id = to_id
+        self.message_text = message_text
+        self.date_send = Timestamp()
+    }
+}
 
 final class HomeManager {
     
@@ -60,6 +88,7 @@ final class HomeManager {
         return myMessage
     }
     
+    // Renvoie le nom de la conversaion correspondant au message
     func getConversation(chatRoom_id: String) async throws -> [Conversation] {
         
         var chatRooms = [Conversation]()

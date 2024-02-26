@@ -6,25 +6,34 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+
 
 @MainActor
 final class HomeViewModel: ObservableObject {
     
-    @Published private(set) var MesMessages: [(conversation: Conversation, messag: Message)] = []
+    @Published private(set) var MesMessages: [ChatItem] = [] // nok car pas la même structure
     
+    // TODO faire plutot une structure avec l'id et le nom de la conversation et les infos du message
     func getMesMessages() {
         Task {
             let authDataResult = try AuthManager.shared.getAuthenticatedUser()
             let myMessages = try await HomeManager.shared.getMyMessages(user_id: authDataResult.uid)
             
-            var localArray: [(conversation: Conversation, messag: Message)] = []
-            
             for myMessage in myMessages {
-                if let chat = try? await HomeManager.shared.getConversation(chatRoom_id: myMessage.conversation_id) {
-                    localArray.append((chat, myMessage))
+                if let conversations = try? await HomeManager.shared.getConversation(chatRoom_id: myMessage.id) {
+                    for conversation in conversations {
+                        MesMessages.append(ChatItem(conversation_id: conversation.conversation_id,
+                                                    conversation_name: conversation.conversation_name,
+                                                    from_id: myMessage.from_id,
+                                                    to_id: myMessage.to_id,
+                                                    message_text: myMessage.message_text,
+                                                    date_send: Timestamp()
+                        ))
+                     }
                 }
             }
-            self.MesMessages = localArray
         }
     }
  }
@@ -38,15 +47,16 @@ struct HomeView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
                         Spacer()
-//                        ForEach(viewModel.conversations) { conversation in
-//                            HomeCellView(conversation: conversation)
-//                            Divider()
+//                        List {
+//                                ForEach (viewModel.getMesMessages()) { msg in
+//                                    print("\(msg)")
+//                                }
 //                        }
                     }
                 }
                 .navigationTitle("Conversations")
-                .navigationDestination(for: String.self) {value in
-                    Text("\(value)")
+                .onAppear() {
+                        viewModel.getMesMessages()
                 }
             }
         }

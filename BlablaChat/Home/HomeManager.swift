@@ -72,19 +72,25 @@ final class HomeManager {
     //===============================================
     
     
+    // Sous-collections de conversation
     func getMyMessages(user_id: String) async throws -> [Message]{
         
         var myMessage = [Message]()
         
         let messageSnap  = try await messageCollection
-            .whereField("from_id", isEqualTo: user_id)
-            .whereField("to_id", isEqualTo: user_id)
+            .whereFilter(Filter.orFilter([
+            Filter.whereField("from_id", isEqualTo: user_id),
+            Filter.whereField("to_id", isEqualTo: user_id)
+            ]))
             .getDocuments()
 
+        print("** \(messageSnap.documents)")
+        
         for document in messageSnap.documents {
             let message = try document.data(as: Message.self)
             myMessage.append(message)
         }
+        print("return myMessage \(myMessage)")
         return myMessage
     }
     

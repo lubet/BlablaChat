@@ -14,9 +14,14 @@ final class HomeViewModel: ObservableObject {
     
     // TODO faire plutot une structure avec l'id et le nom de la conversation et les infos du message
     func getMesMessages() {
+        
         Task {
             let authDataResult = try AuthManager.shared.getAuthenticatedUser()
+            
+            print("user_id \(authDataResult.uid)")
+            
             let myMessages = try await HomeManager.shared.getMyMessages(user_id: authDataResult.uid)
+            print("MyMessages \(myMessages)")
             
             // Mettre ce bloc dans manager ?
             for myMessage in myMessages {
@@ -30,7 +35,6 @@ final class HomeViewModel: ObservableObject {
                                                     date_send: myMessage.date_send
                         ))
                      }
-                    print("Mes messages: \(MesMessages)")
                 }
             }
         }

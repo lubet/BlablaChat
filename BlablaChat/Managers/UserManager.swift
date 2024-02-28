@@ -88,9 +88,9 @@ final class UserManager {
     }
     
     //
-    func getUser(userId: String) async throws -> DBUser {
-        return try await userDocument(userId: userId).getDocument(as: DBUser.self)
-    }
+    //    func getUser(userId: String) async throws -> DBUser {
+    //        return try await userDocument(userId: userId).getDocument(as: DBUser.self)
+    //    }
     
     //
     func updateImagePath(userId: String, path: String) async throws {

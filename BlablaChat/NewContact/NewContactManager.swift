@@ -32,20 +32,21 @@ struct Group_member: Identifiable, Codable {
 }
 
 struct Conversation: Identifiable, Codable {
-    let id:String
     let conversation_id:String
     let conversation_name:String
     let date_created:Timestamp
     let last_message:String
     
+    var id: String {
+        conversation_id
+    }
+    
     init(
-        id:String,
         conversation_id:String,
         conversation_name:String,
         date_created:Timestamp,
         last_message:String
     ) {
-        self.id = id
         self.conversation_id = conversation_id
         self.conversation_name = conversation_name
         self.date_created = Timestamp()

@@ -10,11 +10,10 @@ import SwiftUI
 @MainActor
 final class HomeViewModel: ObservableObject {
     
-    @Published private(set) var MesMessages: [ChatItem] = [] // nok car pas la même structure
+    @Published private(set) var chatList: [ChatItem] = [] // nok car pas la même structure
     
     // TODO faire plutot une structure avec l'id et le nom de la conversation et les infos du message
     func getMesMessages() {
-        
         Task {
             let authDataResult = try AuthManager.shared.getAuthenticatedUser()
             
@@ -24,7 +23,7 @@ final class HomeViewModel: ObservableObject {
             for myMessage in myMessages {
                 if let conversations = try? await HomeManager.shared.getConversation(conversation_id: myMessage.conversation_id) {
                     for conversation in conversations {
-                        MesMessages.append(ChatItem(conversation_id: conversation.conversation_id,
+                        chatList.append(ChatItem(conversation_id: conversation.conversation_id,
                                                     conversation_name: conversation.conversation_name,
                                                     from_id: myMessage.from_id,
                                                     to_id: myMessage.to_id,
@@ -34,7 +33,7 @@ final class HomeViewModel: ObservableObject {
                      }
                 }
             }
-            print("MesMessages \(MesMessages)")
+            print("MesMessages \(chatList)")
         }
     }
  }
@@ -48,11 +47,12 @@ struct HomeView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
                         Spacer()
-//                        List {
-//                                ForEach (viewModel.getMesMessages()) { msg in
-//                                    print("\(msg)")
-//                                }
-//                        }
+                        List {
+                                ForEach (viewModel.chatList) { chat in
+                                    // print("\(msg)")
+                                    HomeCellView(chat: chat)
+                                }
+                        }
                     }
                 }
                 .navigationTitle("HomeView")

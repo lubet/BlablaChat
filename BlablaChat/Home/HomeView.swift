@@ -50,7 +50,7 @@ struct HomeView: View {
                         List {
                                 ForEach (viewModel.chatList) { chat in
                                     // print("\(msg)")
-                                    HomeCellView(chat: chat)
+                                    HomeCellView(chatItem: chat)
                                 }
                         }
                     }

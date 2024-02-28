@@ -12,10 +12,10 @@ import FirebaseFirestoreSwift
 
 struct HomeCellView: View {
     
-    let chat: ChatItem
+    let chatItem: ChatItem
     
     var body: some View {
-        NavigationLink(value: chat.conversation_name) {
+        NavigationLink(value: chatItem.conversation_name) {
             HStack {
                 Image(systemName: "person.fill")
                     .resizable()
@@ -27,11 +27,11 @@ struct HomeCellView: View {
                     .background(Color.green)
 
                 VStack(alignment: .leading){
-                    Text("\(chat.conversation_name)")
+                    Text("\(chatItem.conversation_name)")
                         .font(.headline)
                         .frame(width: 200, alignment: .leading)
                         .background(Color.green)
-                    Text("\(chat.message_text)")
+                    Text("\(chatItem.message_text)")
                         .font(.headline)
                         .frame(width: 200,alignment: .leading)
                         .foregroundColor(Color.black)
@@ -39,7 +39,7 @@ struct HomeCellView: View {
                         .multilineTextAlignment(.leading)
                         
                 }
-                Text("\(chat.date_send)")
+                Text("\(chatItem.date_send)")
                     .font(.footnote)
                     .frame(width: 100,height: 50 ,alignment: .topTrailing)
                     .background(Color.green)
@@ -53,6 +53,6 @@ struct HomeCellView: View {
 
 struct HomeCellView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeCellView(chat: ChatItem(conversation_id: "1", conversation_name: "Une conversation", from_id: "2", to_id: "3", message_text: "Salut", date_send: Timestamp()))
+        HomeCellView(chatItem: ChatItem(conversation_id: "1", conversation_name: "Une conversation", from_id: "2", to_id: "3", message_text: "Salut", date_send: Timestamp()))
     }
 }

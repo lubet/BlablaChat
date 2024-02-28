@@ -21,10 +21,6 @@ final class HomeViewModel: ObservableObject {
             print("user_id \(authDataResult.uid)")
             
             let myMessages = try await HomeManager.shared.getMyMessages(user_id: authDataResult.uid)
-            
-            print("MyMessages \(myMessages)")
-            
-            // Mettre ce bloc dans manager ?
             for myMessage in myMessages {
                 if let conversations = try? await HomeManager.shared.getConversation(conversation_id: myMessage.conversation_id) {
                     for conversation in conversations {

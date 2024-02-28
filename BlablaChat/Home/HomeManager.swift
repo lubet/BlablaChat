@@ -119,31 +119,4 @@ final class HomeManager {
         return chatRooms
         
     }
-    
-    // Dernier message de chaque discussion
-//    func lastMessages(from_to: String) async throws {
-//        let querySnapShot = try await conversationCollection.getDocuments()
-//        for document in querySnapShot.documents {
-//            let document_id = document.documentID
-//            let messageSnapShot = try await messageCollection
-//                .order(by: "date_send", descending: <#T##Bool#>)
-//        }
-//
-//    }
-        
-//        var messages = [Message]()
-//
-//        // Messages envoyés par moi
-//        let querySnapShot = try await messageCollection
-//            .whereField("from_id", isEqualTo: from_to)
-//            .order(by: "date_send", descending: true)
-//            .getDocuments()
-//        for document in querySnapShot.documents {
-//            let mes = try document.data(as: Message.self)
-//            messages.append(mes)
-//            print("\(messages)")
-//        }
-        
-        // Recher dans membre tous les conversations_id égaux aus miens -> les contact_id concernés
-}
-
+ }

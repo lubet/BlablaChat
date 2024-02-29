@@ -97,26 +97,16 @@ final class HomeManager {
     // Renvoie le nom de la room correspondant au message
     func getRoom(room_id: String) async throws -> [Room] {
         
-        print("geRoom \(room_id)")
+        let snapshot = try await Firestore.firestore().collection("room")
+            .whereField("room_id", isEqualTo: room_id)
+            .getDocuments()
         
         var chatRooms = [Room]()
         
-        do {
-            let querySnapshot = try await roomCollection
-                .whereField("room_id", isEqualTo: room_id)
-                .getDocuments()
-            
-            for document in querySnapshot.documents {
-                let chat = try document.data(as: Room.self)
-                chatRooms.append(chat)
-            }
-        } catch {
-            print("Error \(error.localizedDescription)")
+        for document in snapshot.documents {
+            let user = try document.data(as: Room.self)
+            chatRooms.append(user)
         }
-            
-        print("chatRooms: \(chatRooms)")
-        
         return chatRooms
-        
     }
  }

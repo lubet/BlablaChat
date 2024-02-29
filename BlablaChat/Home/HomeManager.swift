@@ -4,7 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 15/02/2024.
 //
-// Liste du dernier message reçu ou envoyé par conversation
+// Liste du dernier message reçu ou envoyé par room
 // --------------------------------------------------------
 
 import Foundation
@@ -14,27 +14,27 @@ import FirebaseFirestoreSwift
 private let db = Firestore.firestore()
 
 struct ChatItem: Identifiable, Codable {
-    let conversation_id: String
-    let conversation_name: String
+    let room_id: String
+    let room_name: String
     let from_id: String
     let to_id: String
     let message_text: String
     let date_send: Timestamp
     
     var id: String {
-        conversation_id
+       room_id
     }
     
     init(
-        conversation_id: String,
-        conversation_name: String,
+        room_id: String,
+        room_name: String,
         from_id: String,
         to_id: String,
         message_text: String,
         date_send: Timestamp
     ) {
-        self.conversation_id = conversation_id
-        self.conversation_name = conversation_name
+        self.room_id = room_id
+        self.room_name = room_name
         self.from_id = from_id
         self.to_id = to_id
         self.message_text = message_text
@@ -59,10 +59,10 @@ final class HomeManager {
     private let groupMemberCollection = db.collection("group_member")
     
     // -------------------------------------------------
-    private let conversationCollection = db.collection("conversation")
+    private let roomCollection = db.collection("Room")
 
-    private func conversationDocument(conversation_id: String) -> DocumentReference {
-        return conversationCollection.document(conversation_id)
+    private func roomDocument(room_id: String) -> DocumentReference {
+        return roomCollection.document(room_id)
     }
     // -------------------------------------------------
 
@@ -72,7 +72,7 @@ final class HomeManager {
     //===============================================
     
     
-    // Sous-collections de conversation
+    // Sous-collections de room
     func getMyMessages(user_id: String) async throws -> [Message]{
         
         var myMessage = [Message]()
@@ -94,20 +94,20 @@ final class HomeManager {
         return myMessage
     }
     
-    // Renvoie le nom de la conversaion correspondant au message
-    func getConversation(conversation_id: String) async throws -> [Conversation] {
+    // Renvoie le nom de la room correspondant au message
+    func getRoom(room_id: String) async throws -> [Room] {
         
-        print("getConversation \(conversation_id)")
+        print("geRoom \(room_id)")
         
-        var chatRooms = [Conversation]()
+        var chatRooms = [Room]()
         
         do {
-            let querySnapshot = try await conversationCollection
-                .whereField("conversation_id",isEqualTo: conversation_id)
+            let querySnapshot = try await roomCollection
+                .whereField("room_id", isEqualTo: room_id)
                 .getDocuments()
             
             for document in querySnapshot.documents {
-                let chat = try document.data(as: Conversation.self)
+                let chat = try document.data(as: Room.self)
                 chatRooms.append(chat)
             }
         } catch {

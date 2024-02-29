@@ -15,7 +15,7 @@ struct HomeCellView: View {
     let chatItem: ChatItem
     
     var body: some View {
-        NavigationLink(value: chatItem.conversation_name) {
+        NavigationLink(value: chatItem.room_name) {
             HStack {
                 Image(systemName: "person.fill")
                     .resizable()
@@ -27,7 +27,7 @@ struct HomeCellView: View {
                     .background(Color.green)
 
                 VStack(alignment: .leading){
-                    Text("\(chatItem.conversation_name)")
+                    Text("\(chatItem.room_name)")
                         .font(.headline)
                         .frame(width: 200, alignment: .leading)
                         .background(Color.green)
@@ -53,6 +53,6 @@ struct HomeCellView: View {
 
 struct HomeCellView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeCellView(chatItem: ChatItem(conversation_id: "1", conversation_name: "Une conversation", from_id: "2", to_id: "3", message_text: "Salut", date_send: Timestamp()))
+        HomeCellView(chatItem: ChatItem(room_id: "1", room_name: "Nom du room", from_id: "2", to_id: "3", message_text: "Salut", date_send: Timestamp()))
     }
 }

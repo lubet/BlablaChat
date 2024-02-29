@@ -55,17 +55,17 @@ final class NewContactViewModel: ObservableObject {
         
         //------ NOK
         // Search Duo dans membre
-        let conversation = try await NewContactManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
-        if (conversation == "") {
-            // Non -> créer une conversation
-            let conversation_id = try await NewContactManager.shared.createConversation(name: "Moi et un contact")
-            // + deux membres avec leur conversation
-            try await NewContactManager.shared.createGroupMembers(conversation_id: conversation_id, user_id: user_id, contact_id: contact_id)
-            // Créer un message avec la conversation
-            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: "Salut", conversation_id: conversation_id)
+        let room = try await NewContactManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+        if (room == "") {
+            // Non -> créer un room
+            let room_id = try await NewContactManager.shared.createRoom(name: "Moi et un contact")
+            // + deux membres avec leur room
+            try await NewContactManager.shared.createGroupMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
+            // Créer un message avec le rrrom
+            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: "Salut", room_id: room_id)
         } else {
-            // Si une conversation commune -> créer le message avec la conversation existante
-            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: "Salut", conversation_id: conversation)
+            // Si un room commun -> créer le message avec le room existant
+            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: "Salut", room_id: room)
         }
     }
 }

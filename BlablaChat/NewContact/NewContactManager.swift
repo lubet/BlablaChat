@@ -15,41 +15,48 @@ private let dbFS = Firestore.firestore()
 struct Group_member: Identifiable, Codable {
     let id: String
     let contact_id: String
-    let conversation_id: String
+    let room_id: String
     let date_created: Timestamp
     
     init(
         id:String,
         contact_id:String,
-        conversation_id:String,
+        room_id:String,
         date_created:Timestamp
     ) {
         self.id = id
         self.contact_id = contact_id
-        self.conversation_id = conversation_id
+        self.room_id = room_id
         self.date_created = Timestamp()
     }
 }
 
-struct Conversation: Identifiable, Codable {
-    let conversation_id:String
-    let conversation_name:String
-    let date_created:Timestamp
-    let last_message:String
+struct Room: Identifiable, Codable {
+    let room_id: String
+    let room_name: String
+    let dateCreated: Timestamp
+    let last_message: String
     
     var id: String {
-        conversation_id
+        room_id
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case room_id
+        case room_name
+        case dateCreated = "date_created"
+        case last_message
     }
     
     init(
-        conversation_id:String,
-        conversation_name:String,
-        date_created:Timestamp,
+        room_id:String,
+        room_name:String,
+        dateCeated:Timestamp,
         last_message:String
     ) {
-        self.conversation_id = conversation_id
-        self.conversation_name = conversation_name
-        self.date_created = Timestamp()
+        self.room_id = room_id
+        self.room_name = room_name
+        self.dateCreated = Timestamp()
         self.last_message = last_message
     }
 }
@@ -60,7 +67,7 @@ struct Message: Identifiable, Codable {
     let to_id: String
     let message_text:String
     let date_send:Timestamp
-    let conversation_id:String
+    let room_id:String
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -68,7 +75,7 @@ struct Message: Identifiable, Codable {
         case to_id = "to_id"
         case message_text = "message_text"
         case date_send = "date_send"
-        case conversation_id = "conversation_id"
+        case room_id = "room_id"
     }
     
     init(
@@ -77,14 +84,14 @@ struct Message: Identifiable, Codable {
         to_id: String,
         message_text: String,
         date_send: Timestamp,
-        conversation_id: String
+        room_id: String
     ) {
         self.id = id
         self.from_id = from_id
         self.to_id = to_id
         self.message_text = message_text
         self.date_send = Timestamp()
-        self.conversation_id = conversation_id
+        self.room_id = room_id
     }
 }
 
@@ -105,10 +112,10 @@ final class NewContactManager {
     private let groupMemberCollection = dbFS.collection("group_member")
     
     // -----------------------------------------------------------------
-    private let conversationCollection = dbFS.collection("conversation")
+    private let roomCollection = dbFS.collection("room")
     
-    private func conversationDocument(conversation_id: String) -> DocumentReference {
-        return conversationCollection.document(conversation_id)
+    private func roomDocument(room_id: String) -> DocumentReference {
+        return roomCollection.document(room_id)
     }
                 
     private let messageCollection = dbFS.collection("message")
@@ -157,38 +164,38 @@ final class NewContactManager {
         
         print("searchDuo1: user_id:\(user_id)-contact_id:\(contact_id)")
         
-        let conversation: String = ""
+        let room: String = ""
         
         var set_user:Set<String> = []
         var set_contact:Set<String> = []
 
-        // Set des conversation_id's du user_id
+        // Set des room_id's du user_id
         do {
             let querySnapshot = try await dbFS.collection("group_member").whereField("contact_id", isEqualTo: user_id).getDocuments()
             for document in querySnapshot.documents {
                 let membre_user = try document.data(as: Group_member.self)
-                set_user.insert(membre_user.conversation_id)
+                set_user.insert(membre_user.room_id)
             }
             if (set_user.count == 0) {
-                print("Pas de conversation dans member pour set_user")
-                return conversation // pas conversation
+                print("Pas de room dans member pour set_user")
+                return room // pas de room
             }
         } catch {
             print("Error getting documents user_id: \(error)")
         }
 
-        // Set des conversation_id's du contact_id
+        // Set des room_id's du contact_id
         do {
             let contactSnapshot = try await groupMemberCollection
                 .whereField("contact_id", isEqualTo: contact_id)
                 .getDocuments()
             for document in contactSnapshot.documents {
                 let membre_contact = try document.data(as: Group_member.self)
-                set_contact.insert(membre_contact.conversation_id)
+                set_contact.insert(membre_contact.room_id)
             }
             if (set_contact.count == 0) {
-                print("Pas de conversation dans member pour set_contact")
-                return conversation // pas de conversation
+                print("Pas de room dans member pour set_contact")
+                return room // pas de room
             }
         } catch {
             print("Error getting documents contact_id: \(error.localizedDescription)")
@@ -196,36 +203,36 @@ final class NewContactManager {
 
         print("searchDuo3 set_user:\(set_user)-set_contact:\(set_contact)")
         
-        // intersection des deux sets pour trouver la conversation en commun
+        // intersection des deux sets pour trouver le room en commun
         let inter = set_user.intersection(set_contact)
         print("inter:\(inter)")
         
-        if (inter.count != 1) { // Pas une conversation_id commune aux conversation_id de user_id et de contact_id
-            print("Pas un conversation commune trouvée") // -> Créer deux enregs un: user_id conversation_id l'autre: contact_id conversation_id
-            return conversation
+        if (inter.count != 1) { // Pas une room_id commune aux croom_id de user_id et de contact_id
+            print("Pas un room commun trouvée") // -> Créer deux enregs un: user_id room_id l'autre: contact_id room_id
+            return room
         } else {
-            print("Une conversation commune a été trouvée:\(inter.first ?? "")")
+            print("Un room commun a été trouvée:\(inter.first ?? "")")
             return inter.first ?? ""
         }
     }
     
-    func createConversation(name: String) async throws -> String {
-        let conversationRef = conversationCollection.document()
-        let conversation_id = conversationRef.documentID
+    func createRoom(name: String) async throws -> String {
+        let roomRef = roomCollection.document()
+        let room_id = roomRef.documentID
         
         let data: [String:Any] = [
-            "conversation_id" : conversation_id,
-            "conversation_name": name,
+            "room_id" : room_id,
+            "room_name": name,
             "date_created" : Timestamp(),
             "last_message" : ""
         ]
-        try await conversationRef.setData(data, merge: false)
+        try await roomRef.setData(data, merge: false)
         
-        print("createConversation:\(conversation_id)")
-        return conversation_id
+        print("createRoom:\(room_id)")
+        return room_id
     }
     
-    func createGroupMembers(conversation_id: String, user_id:String, contact_id:String) async throws {
+    func createGroupMembers(room_id: String, user_id:String, contact_id:String) async throws {
         
         for x in 0..<2 {
             let memberRef = groupMemberCollection.document()
@@ -240,7 +247,7 @@ final class NewContactManager {
             let data: [String:Any] = [
                 "id": member_id,
                 "contact_id" : user,
-                "conversation_id": conversation_id,
+                "room_id": room_id,
                 "date_created" : Timestamp(),
                 "last_message" : ""
             ]
@@ -248,7 +255,7 @@ final class NewContactManager {
         }
     }
     
-    func createMessage(from_id: String, to_id: String, message_text: String, conversation_id: String) async throws {
+    func createMessage(from_id: String, to_id: String, message_text: String, room_id: String) async throws {
         let messageRef = messageCollection.document()
         let message_id = messageRef.documentID
         
@@ -258,7 +265,7 @@ final class NewContactManager {
             "to_id": to_id,
             "message_text": message_text,
             "date_send": Timestamp(),
-            "conversation_id": conversation_id
+            "room_id": room_id
         ]
         try await messageRef.setData(data, merge: false)
     }

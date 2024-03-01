@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 
 private let dbFS = Firestore.firestore()
 
-struct Group_member: Identifiable, Codable {
+struct Member: Identifiable, Codable {
     let id: String
     let contact_id: String
     let room_id: String
@@ -109,16 +109,16 @@ final class NewContactManager {
     }
     
     // ---------------------------------------------------------------
-    private let groupMemberCollection = dbFS.collection("group_member")
+    private let MemberCollection = dbFS.collection("members")
     
     // -----------------------------------------------------------------
-    private let roomCollection = dbFS.collection("room")
+    private let roomCollection = dbFS.collection("rooms")
     
     private func roomDocument(room_id: String) -> DocumentReference {
         return roomCollection.document(room_id)
     }
                 
-    private let messageCollection = dbFS.collection("message")
+    private let messageCollection = dbFS.collection("messages")
     
     //-----------------------------------------------------------------
     
@@ -159,7 +159,7 @@ final class NewContactManager {
         return user_id
     }
     
-    // Recherche d'une éventuelle conversation_id commune à user_id et à contact_id
+    // TODO ? Recherche si (user_id et contact_id) ou (contact_id et user_id) sont déjà membre du même room
     func searchDuo(user_id:String, contact_id:String) async throws -> String {
         
         print("searchDuo1: user_id:\(user_id)-contact_id:\(contact_id)")
@@ -171,9 +171,9 @@ final class NewContactManager {
 
         // Set des room_id's du user_id
         do {
-            let querySnapshot = try await dbFS.collection("group_member").whereField("contact_id", isEqualTo: user_id).getDocuments()
+            let querySnapshot = try await MemberCollection.whereField("contact_id", isEqualTo: user_id).getDocuments()
             for document in querySnapshot.documents {
-                let membre_user = try document.data(as: Group_member.self)
+                let membre_user = try document.data(as: Member.self)
                 set_user.insert(membre_user.room_id)
             }
             if (set_user.count == 0) {
@@ -186,11 +186,11 @@ final class NewContactManager {
 
         // Set des room_id's du contact_id
         do {
-            let contactSnapshot = try await groupMemberCollection
+            let contactSnapshot = try await MemberCollection
                 .whereField("contact_id", isEqualTo: contact_id)
                 .getDocuments()
             for document in contactSnapshot.documents {
-                let membre_contact = try document.data(as: Group_member.self)
+                let membre_contact = try document.data(as: Member.self)
                 set_contact.insert(membre_contact.room_id)
             }
             if (set_contact.count == 0) {
@@ -232,10 +232,10 @@ final class NewContactManager {
         return room_id
     }
     
-    func createGroupMembers(room_id: String, user_id:String, contact_id:String) async throws {
+    func createMembers(room_id: String, user_id:String, contact_id:String) async throws {
         
         for x in 0..<2 {
-            let memberRef = groupMemberCollection.document()
+            let memberRef = MemberCollection.document()
             let member_id = memberRef.documentID
             var user:String = ""
             

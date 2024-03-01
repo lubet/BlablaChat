@@ -60,7 +60,7 @@ final class NewContactViewModel: ObservableObject {
             // Non -> créer un room
             let room_id = try await NewContactManager.shared.createRoom(name: "Moi et un contact")
             // + deux membres avec leur room
-            try await NewContactManager.shared.createGroupMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
+            try await NewContactManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
             // Créer un message avec le rrrom
             try await NewContactManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: "Salut", room_id: room_id)
         } else {

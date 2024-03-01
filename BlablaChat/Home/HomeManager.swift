@@ -56,17 +56,17 @@ final class HomeManager {
     }
     
     // -------------------------------------------------
-    private let groupMemberCollection = db.collection("group_member")
+    private let groupMemberCollection = db.collection("members")
     
     // -------------------------------------------------
-    private let roomCollection = db.collection("Room")
+    private let roomCollection = db.collection("rooms")
 
     private func roomDocument(room_id: String) -> DocumentReference {
         return roomCollection.document(room_id)
     }
     // -------------------------------------------------
 
-    private let messageCollection = db.collection("message")
+    private let messageCollection = db.collection("messages")
 
     
     //===============================================
@@ -97,7 +97,7 @@ final class HomeManager {
     // Renvoie le nom de la room correspondant au message
     func getRoom(room_id: String) async throws -> [Room] {
         
-        let snapshot = try await Firestore.firestore().collection("room")
+        let snapshot = try await roomCollection
             .whereField("room_id", isEqualTo: room_id)
             .getDocuments()
         

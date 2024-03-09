@@ -120,6 +120,10 @@ final class NewContactManager {
                 
     private let messageCollection = dbFS.collection("messages")
     
+    private func messageDocument(message_id: String) -> DocumentReference {
+        return messageCollection.document(message_id)
+    }
+    
     //-----------------------------------------------------------------
     
     // Recherche du contact dans la base "users"
@@ -159,60 +163,20 @@ final class NewContactManager {
         return user_id
     }
     
-    // TODO ? Recherche si (user_id et contact_id) ou (contact_id et user_id) sont déjà membre du même room
-    func searchDuo(user_id:String, contact_id:String) async throws -> String {
+    // Recherche from/to ou to/from dans les messages
+    func searchDuo(user_id:String, contact_id:String) async throws -> Bool{
         
-        print("searchDuo1: user_id:\(user_id)-contact_id:\(contact_id)")
-        
-        let room: String = ""
-        
-        var set_user:Set<String> = []
-        var set_contact:Set<String> = []
-
-        // Set des room_id's du user_id
-        do {
-            let querySnapshot = try await MemberCollection.whereField("contact_id", isEqualTo: user_id).getDocuments()
-            for document in querySnapshot.documents {
-                let membre_user = try document.data(as: Member.self)
-                set_user.insert(membre_user.room_id)
+        dbFS.collectionGroup("messages")
+            .whereField("from", isEqualTo: user_id)
+            .getDocuments { (snapshot, error) in {
+                if let e = error {
+                    print("erreur")
+                } else {
+                    if let dorms = snapshot?.documents {
+                        return true
+                    }
+                }
             }
-            if (set_user.count == 0) {
-                print("Pas de room dans member pour set_user")
-                return room // pas de room
-            }
-        } catch {
-            print("Error getting documents user_id: \(error)")
-        }
-
-        // Set des room_id's du contact_id
-        do {
-            let contactSnapshot = try await MemberCollection
-                .whereField("contact_id", isEqualTo: contact_id)
-                .getDocuments()
-            for document in contactSnapshot.documents {
-                let membre_contact = try document.data(as: Member.self)
-                set_contact.insert(membre_contact.room_id)
-            }
-            if (set_contact.count == 0) {
-                print("Pas de room dans member pour set_contact")
-                return room // pas de room
-            }
-        } catch {
-            print("Error getting documents contact_id: \(error.localizedDescription)")
-        }
-
-        print("searchDuo3 set_user:\(set_user)-set_contact:\(set_contact)")
-        
-        // intersection des deux sets pour trouver le room en commun
-        let inter = set_user.intersection(set_contact)
-        print("inter:\(inter)")
-        
-        if (inter.count != 1) { // Pas une room_id commune aux croom_id de user_id et de contact_id
-            print("Pas un room commun trouvée") // -> Créer deux enregs un: user_id room_id l'autre: contact_id room_id
-            return room
-        } else {
-            print("Un room commun a été trouvée:\(inter.first ?? "")")
-            return inter.first ?? ""
         }
     }
     
@@ -233,7 +197,6 @@ final class NewContactManager {
     }
     
     func createMembers(room_id: String, user_id:String, contact_id:String) async throws {
-        
         for x in 0..<2 {
             let memberRef = MemberCollection.document()
             let member_id = memberRef.documentID
@@ -256,7 +219,7 @@ final class NewContactManager {
     }
     
     func createMessage(from_id: String, to_id: String, message_text: String, room_id: String) async throws {
-        let messageRef = messageCollection.document()
+        let messageRef = roomDocument(room_id: room_id).collection("messages").document()
         let message_id = messageRef.documentID
         
         let data: [String:Any] = [

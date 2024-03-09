@@ -67,6 +67,11 @@ final class HomeManager {
     // -------------------------------------------------
 
     private let messageCollection = db.collection("messages")
+    
+    private func messageDocument(message_id: String) -> DocumentReference {
+        return messageCollection.document(message_id)
+    }
+
 
     
     //===============================================

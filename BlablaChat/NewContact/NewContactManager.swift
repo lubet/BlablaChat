@@ -118,10 +118,12 @@ final class NewContactManager {
         return roomCollection.document(room_id)
     }
                 
-    private let messageCollection = dbFS.collection("messages")
+    private func messageCollection(room_id: String) -> CollectionReference {
+        roomDocument(room_id: room_id).collection("messages")
+    }
     
-    private func messageDocument(message_id: String) -> DocumentReference {
-        return messageCollection.document(message_id)
+    private func messageDocument(room_id:String, message_id: String) -> DocumentReference {
+        messageCollection(room_id:room_id).document(message_id)
     }
     
     //-----------------------------------------------------------------

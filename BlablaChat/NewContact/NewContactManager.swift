@@ -168,7 +168,7 @@ final class NewContactManager {
         return user_id
     }
     
-    // Renvoie le room_id du duo from/to ou to/fom si existant
+    // Renvoie le room_id du duo from/to ou to/fom si existant dans members
     func searchDuo(user_id:String, contact_id:String) async throws -> String {
 
         do {
@@ -187,13 +187,13 @@ final class NewContactManager {
             for duo in memberSnapshot.documents {
                 let duo = try duo.data(as: Member.self)
                 let roomId = duo.room_id
-                print("room_id: \(roomId)")
+                print("searchDuo - room_id: \(roomId)")
                 return roomId
             }
         } catch {
-            print("Error getting documents from members: \(error.localizedDescription)")
+            print("searchDuo - Error getting documents from members: \(error.localizedDescription)")
         }
-        print("La paire n'existe pas dans members")
+        print("searchDuo - La paire n'existe pas dans members")
         return ""
     }
     

@@ -53,15 +53,14 @@ final class NewContactViewModel: ObservableObject {
             print("createContact retour:\(contact_id)")
         }
         
-        //------ NOK
-        // Search Duo dans membre
+        // Renvoie le room_id du couple from/to ou to/from présent ou non dans membre
         let room = try await NewContactManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
         if (room == "") {
             // Non -> créer un room
             let room_id = try await NewContactManager.shared.createRoom(name: "Moi et un contact")
-            // + deux membres avec leur room
+            // création d'un document membre
             try await NewContactManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
-            // Créer un message avec le rrrom
+            // Créer un message avec le room
             try await NewContactManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: "Salut", room_id: room_id)
         } else {
             // Si un room commun -> créer le message avec le room existant

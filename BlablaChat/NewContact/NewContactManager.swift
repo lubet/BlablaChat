@@ -14,18 +14,21 @@ private let dbFS = Firestore.firestore()
 
 struct Member: Identifiable, Codable {
     let id: String
-    let contact_id: String
+    let from_id: String
+    let to_id: String
     let room_id: String
     let date_created: Timestamp
     
     init(
-        id:String,
-        contact_id:String,
-        room_id:String,
+        id: String,
+        from_id: String,
+        to_id: String,
+        room_id: String,
         date_created:Timestamp
     ) {
         self.id = id
-        self.contact_id = contact_id
+        self.from_id = from_id
+        self.to_id = to_id
         self.room_id = room_id
         self.date_created = Timestamp()
     }
@@ -165,23 +168,36 @@ final class NewContactManager {
         return user_id
     }
     
-    // Recherche from/to ou to/from dans les messages
-    func searchDuo(user_id:String, contact_id:String) async throws -> Bool{
-        
-        dbFS.collectionGroup("messages")
-            .whereField("from", isEqualTo: user_id)
-            .getDocuments { (snapshot, error) in {
-                if let e = error {
-                    print("erreur")
-                } else {
-                    if let dorms = snapshot?.documents {
-                        return true
-                    }
-                }
+    // Renvoie le room_id du duo from/to ou to/fom si existant
+    func searchDuo(user_id:String, contact_id:String) async throws -> String {
+
+        do {
+            let memberSnapshot = try await MemberCollection.whereFilter(Filter.orFilter([
+                Filter.andFilter([
+                    Filter.whereField("from_id", isEqualTo: user_id),
+                    Filter.whereField("to_id", isEqualTo: contact_id)
+                ]),
+                Filter.andFilter([
+                    Filter.whereField("from_id", isEqualTo: contact_id),
+                    Filter.whereField("to_id", isEqualTo: user_id)
+                ])
+            ])
+            ).getDocuments()
+            
+            for duo in memberSnapshot.documents {
+                let duo = try duo.data(as: Member.self)
+                let roomId = duo.room_id
+                print("room_id: \(roomId)")
+                return roomId
             }
+        } catch {
+            print("Error getting documents from members: \(error.localizedDescription)")
         }
+        print("La paire n'existe pas dans members")
+        return ""
     }
     
+    // New Room
     func createRoom(name: String) async throws -> String {
         let roomRef = roomCollection.document()
         let room_id = roomRef.documentID
@@ -199,25 +215,18 @@ final class NewContactManager {
     }
     
     func createMembers(room_id: String, user_id:String, contact_id:String) async throws {
-        for x in 0..<2 {
             let memberRef = MemberCollection.document()
             let member_id = memberRef.documentID
-            var user:String = ""
-            
-            if x == 0 {
-                user = user_id
-            } else {
-                user = contact_id
-            }
-            let data: [String:Any] = [
+
+        let data: [String:Any] = [
                 "id": member_id,
-                "contact_id" : user,
+                "from_id": user_id,
+                "to_id": contact_id,
                 "room_id": room_id,
                 "date_created" : Timestamp(),
                 "last_message" : ""
             ]
             try await memberRef.setData(data, merge: false)
-        }
     }
     
     func createMessage(from_id: String, to_id: String, message_text: String, room_id: String) async throws {

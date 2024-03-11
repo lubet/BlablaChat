@@ -85,6 +85,7 @@
 		C01FE5A72B67F0610049B9EE /* StandBy */ = {
 			isa = PBXGroup;
 			children = (
+				C02BEDAB2B7E00C100C15D11 /* Home */,
 				C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */,
 				C0C1A9482B62ACC400646851 /* SearchNick.swift */,
 				C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */,
@@ -146,7 +147,6 @@
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
 				C047E9C52B45625C00C6D48F /* LoginView.swift */,
 				C0D565F32B7CAF8E00EE0DA0 /* MainView.swift */,
-				C02BEDAB2B7E00C100C15D11 /* Home */,
 				C02BEDAC2B7E012600C15D11 /* Managers */,
 				C06B1DDF2B74D4330016E8B6 /* NewContact */,
 				C0B9DC842B5EB05B006C2B46 /* Components */,

@@ -120,13 +120,15 @@ final class NewContactManager {
     private func roomDocument(room_id: String) -> DocumentReference {
         return roomCollection.document(room_id)
     }
-                
+           
+    // Collection messages - sous collection de rooms
     private func messageCollection(room_id: String) -> CollectionReference {
         roomDocument(room_id: room_id).collection("messages")
     }
     
-    private func messageDocument(room_id:String, message_id: String) -> DocumentReference {
-        messageCollection(room_id:room_id).document(message_id)
+    // Document message
+    private func messageDocument(room_id: String, message_id: String) -> DocumentReference {
+        messageCollection(room_id: room_id).document(message_id)
     }
     
     //-----------------------------------------------------------------
@@ -169,7 +171,7 @@ final class NewContactManager {
     }
     
     // Renvoie le room_id du duo from/to ou to/fom si existant dans members
-    func searchDuo(user_id:String, contact_id:String) async throws -> String {
+    func searchDuo(user_id: String, contact_id: String) async throws -> String {
 
         do {
             let memberSnapshot = try await MemberCollection.whereFilter(Filter.orFilter([

@@ -22,6 +22,8 @@ final class MessagesManager {
     // LastMessages
     func getLastMessages(user_id: String) async throws -> [Message] {
         
+        print("getLastMessages user_id \(user_id)")
+        
         var myMessage = [Message]()
  
         do {
@@ -35,15 +37,21 @@ final class MessagesManager {
                 .order(by: "date_send")
                 .limit(to: 1)
                 .getDocuments()
-            
+
+            print("before le for")
+
+            print("count \(messagesSnap.documents.count)")
+
             for document in messagesSnap.documents {
                 let message = try document.data(as: Message.self)
                 myMessage.append(message)
+                print("getLastMessages from_id \(message.from_id)")
             }
         } catch {
             print("Error getting documents: \(error.localizedDescription)")
         }
         return myMessage
+        
     }
 
     //

@@ -17,8 +17,8 @@ struct BlablaChatApp: App {
         WindowGroup {
             // NewContactView()
             // LoginView()
-            MainView()
-            // HomeView()
+            // MainView()
+            MessagesView()
         }
     }
 }

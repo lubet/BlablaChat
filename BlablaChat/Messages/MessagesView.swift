@@ -15,6 +15,9 @@ final class MessagesViewModel: ObservableObject {
     @Published private(set) var messages: [Message] = []
     
     func fetchLastMessages() async {
+        
+        print("fetchLastMessages")
+        
         Task {
             
             let authDataResult = try AuthManager.shared.getAuthenticatedUser()
@@ -47,6 +50,6 @@ struct MessagesView: View {
 
 struct MessagesView_Previews: PreviewProvider {
     static var previews: some View {
-        MessageCellView(messageItem: Message(room_id: "1", room_name: "Nom du room", from_id: "2", to_id: "3", message_text: "Salut", date_send: Timestamp()))
+        MessagesView()
     }
 }

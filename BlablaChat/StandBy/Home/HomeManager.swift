@@ -77,7 +77,7 @@ final class HomeManager {
     //===============================================
     
     
-    // Sous-collections de room
+    // mes messages
     func getMyMessages(user_id: String) async throws -> [Message]{
         
         var myMessage = [Message]()

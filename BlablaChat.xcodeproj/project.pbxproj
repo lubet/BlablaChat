@@ -34,6 +34,7 @@
 		C0CB4BF62B6922F200DCC6E9 /* NewContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CB4BF52B6922F200DCC6E9 /* NewContactView.swift */; };
 		C0CDBDF32B9F35B700B2A154 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CDBDF22B9F35B700B2A154 /* MessagesView.swift */; };
 		C0D22BBE2BA06AEC00E4BE83 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D22BBD2BA06AEC00E4BE83 /* MessagesManager.swift */; };
+		C0D22BC02BA0782C00E4BE83 /* MessagesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D22BBF2BA0782C00E4BE83 /* MessagesCellView.swift */; };
 		C0D565F42B7CAF8E00EE0DA0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D565F32B7CAF8E00EE0DA0 /* MainView.swift */; };
 		C0D565F62B7CB30100EE0DA0 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D565F52B7CB30100EE0DA0 /* HomeView.swift */; };
 		C0EE66AC2B62654A002F13EB /* MessageBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE66AB2B62654A002F13EB /* MessageBarView.swift */; };
@@ -65,6 +66,7 @@
 		C0CB4BF52B6922F200DCC6E9 /* NewContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContactView.swift; sourceTree = "<group>"; };
 		C0CDBDF22B9F35B700B2A154 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		C0D22BBD2BA06AEC00E4BE83 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
+		C0D22BBF2BA0782C00E4BE83 /* MessagesCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCellView.swift; sourceTree = "<group>"; };
 		C0D565F32B7CAF8E00EE0DA0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C0D565F52B7CB30100EE0DA0 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C0EE66AB2B62654A002F13EB /* MessageBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBarView.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 			children = (
 				C0CDBDF22B9F35B700B2A154 /* MessagesView.swift */,
 				C0D22BBD2BA06AEC00E4BE83 /* MessagesManager.swift */,
+				C0D22BBF2BA0782C00E4BE83 /* MessagesCellView.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				C02BEDAE2B7E01A500C15D11 /* HomeCellView.swift in Sources */,
 				C0FB12A12B5536030068C633 /* NewMessageCellView.swift in Sources */,
 				C07F56482B7F980200AF7577 /* NewContactManager.swift in Sources */,
+				C0D22BC02BA0782C00E4BE83 /* MessagesCellView.swift in Sources */,
 				C0EE66AC2B62654A002F13EB /* MessageBarView.swift in Sources */,
 				C0D22BBE2BA06AEC00E4BE83 /* MessagesManager.swift in Sources */,
 				C01FE5AD2B67F7F70049B9EE /* ContactManager.swift in Sources */,

@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 @MainActor
 final class MessagesViewModel: ObservableObject {
     
-    @Published private(set) var messages: [Message] = []
+    @Published private(set) var messages: [MessageItem] = []
     
     func fetchLastMessages() async {
         

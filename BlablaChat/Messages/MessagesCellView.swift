@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 
 struct MessageCellView: View {
     
-    let messageItem: Message
+    let messageItem: MessageItem
     
     var body: some View {
             HStack {
@@ -36,6 +36,6 @@ struct MessageCellView: View {
 
 struct MessagesCellView_Previews: PreviewProvider {
     static var previews: some View {
-        MessageCellView(messageItem: Message(id: "1", from_id: "2", to_id: "3", message_text: "Salut", date_send: Timestamp(), room_id: "1"))
+        MessageCellView(messageItem: MessageItem(room_id: "1", room_name: "my room", from_id: "2", to_id: "3", message_text: "Salut", date_send: Timestamp()))
     }
 }

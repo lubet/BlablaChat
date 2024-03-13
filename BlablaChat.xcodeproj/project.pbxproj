@@ -10,8 +10,6 @@
 		C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */; };
 		C01FE5AB2B67F47E0049B9EE /* ContactCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */; };
 		C01FE5AD2B67F7F70049B9EE /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */; };
-		C02BEDAE2B7E01A500C15D11 /* HomeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02BEDAD2B7E01A500C15D11 /* HomeCellView.swift */; };
-		C02BEDB02B7E026C00C15D11 /* HomeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02BEDAF2B7E026C00C15D11 /* HomeManager.swift */; };
 		C0326A132B6A2F4C005B8181 /* NavStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0326A122B6A2F4C005B8181 /* NavStackView.swift */; };
 		C03B72D12B5FA2BB0050C524 /* EssaiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03B72D02B5FA2BB0050C524 /* EssaiView.swift */; };
 		C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */; };
@@ -36,7 +34,6 @@
 		C0D22BBE2BA06AEC00E4BE83 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D22BBD2BA06AEC00E4BE83 /* MessagesManager.swift */; };
 		C0D22BC02BA0782C00E4BE83 /* MessagesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D22BBF2BA0782C00E4BE83 /* MessagesCellView.swift */; };
 		C0D565F42B7CAF8E00EE0DA0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D565F32B7CAF8E00EE0DA0 /* MainView.swift */; };
-		C0D565F62B7CB30100EE0DA0 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D565F52B7CB30100EE0DA0 /* HomeView.swift */; };
 		C0EE66AC2B62654A002F13EB /* MessageBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE66AB2B62654A002F13EB /* MessageBarView.swift */; };
 		C0FB12A12B5536030068C633 /* NewMessageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FB12A02B5536030068C633 /* NewMessageCellView.swift */; };
 /* End PBXBuildFile section */
@@ -45,8 +42,6 @@
 		C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchXavierView.swift; sourceTree = "<group>"; };
 		C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCellView.swift; sourceTree = "<group>"; };
 		C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
-		C02BEDAD2B7E01A500C15D11 /* HomeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellView.swift; sourceTree = "<group>"; };
-		C02BEDAF2B7E026C00C15D11 /* HomeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeManager.swift; sourceTree = "<group>"; };
 		C0326A122B6A2F4C005B8181 /* NavStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavStackView.swift; sourceTree = "<group>"; };
 		C03B72D02B5FA2BB0050C524 /* EssaiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssaiView.swift; sourceTree = "<group>"; };
 		C047E9C02B45625C00C6D48F /* BlablaChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlablaChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,7 +63,6 @@
 		C0D22BBD2BA06AEC00E4BE83 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
 		C0D22BBF2BA0782C00E4BE83 /* MessagesCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCellView.swift; sourceTree = "<group>"; };
 		C0D565F32B7CAF8E00EE0DA0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		C0D565F52B7CB30100EE0DA0 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C0EE66AB2B62654A002F13EB /* MessageBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBarView.swift; sourceTree = "<group>"; };
 		C0FB12A02B5536030068C633 /* NewMessageCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,7 +85,6 @@
 		C01FE5A72B67F0610049B9EE /* StandBy */ = {
 			isa = PBXGroup;
 			children = (
-				C02BEDAB2B7E00C100C15D11 /* Home */,
 				C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */,
 				C0C1A9482B62ACC400646851 /* SearchNick.swift */,
 				C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */,
@@ -99,16 +92,6 @@
 				C0FB12A02B5536030068C633 /* NewMessageCellView.swift */,
 			);
 			path = StandBy;
-			sourceTree = "<group>";
-		};
-		C02BEDAB2B7E00C100C15D11 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				C0D565F52B7CB30100EE0DA0 /* HomeView.swift */,
-				C02BEDAF2B7E026C00C15D11 /* HomeManager.swift */,
-				C02BEDAD2B7E01A500C15D11 /* HomeCellView.swift */,
-			);
-			path = Home;
 			sourceTree = "<group>";
 		};
 		C02BEDAC2B7E012600C15D11 /* Managers */ = {
@@ -287,10 +270,8 @@
 				C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */,
 				C0CB4BF62B6922F200DCC6E9 /* NewContactView.swift in Sources */,
 				C0326A132B6A2F4C005B8181 /* NavStackView.swift in Sources */,
-				C0D565F62B7CB30100EE0DA0 /* HomeView.swift in Sources */,
 				C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */,
 				C03B72D12B5FA2BB0050C524 /* EssaiView.swift in Sources */,
-				C02BEDAE2B7E01A500C15D11 /* HomeCellView.swift in Sources */,
 				C0FB12A12B5536030068C633 /* NewMessageCellView.swift in Sources */,
 				C07F56482B7F980200AF7577 /* NewContactManager.swift in Sources */,
 				C0D22BC02BA0782C00E4BE83 /* MessagesCellView.swift in Sources */,
@@ -299,7 +280,6 @@
 				C01FE5AD2B67F7F70049B9EE /* ContactManager.swift in Sources */,
 				C047E9E42B45A8FB00C6D48F /* UserManager.swift in Sources */,
 				C01FE5AB2B67F47E0049B9EE /* ContactCellView.swift in Sources */,
-				C02BEDB02B7E026C00C15D11 /* HomeManager.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
 				C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,

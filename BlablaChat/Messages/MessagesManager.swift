@@ -78,14 +78,18 @@ final class MessagesManager {
         
         let myMessages = [MessageItem]()
         
-        db.collectionGroup("messages").whereField("from_id", isEqualTo: user_id).getDocuments { (snapshot,  error) in
+        db.collectionGroup("messages").whereFilter(Filter.orFilter([
+            Filter.whereField("from_id", isEqualTo: user_id),
+            Filter.whereField("to_id", isEqualTo: user_id)
+            ]))
+            .getDocuments() { (snapshot,  error) in
             if let e = error {
                 print("There was an error getting the documents \(e)")
             } else {
-                if let dorms = snapshot?.documents {
-                    for doc in dorms {
+                if let messages = snapshot?.documents {
+                    for doc in messages {
                         let data = doc.data()
-                        if let dormRoomNumber = data["message_text"]
+                        if let dormRoomNumber = data["id"]
                         {
                             let someVariable = dormRoomNumber
                             print("message: \(someVariable)")

@@ -64,16 +64,8 @@ final class MessagesManager {
         messageCollection(room_id: room_id).document(message_id)
     }
     
-    // ---------------------------------------------------------------------
     
-//    let query = db.collection("cities").whereFilter(Filter.orFilter([
-//                    Filter.whereField("capital", isEqualTo: true),
-//                    Filter.whereField("population", isGreaterThanOrEqualTo: 1000000);
-//                ]))
-      
-    
-    
-    // LastMessages
+    // Mes derniers messages in or out
     func getLastMessages(user_id: String) async throws -> [MessageItem] {
         
         let myMessages = [MessageItem]()
@@ -84,15 +76,15 @@ final class MessagesManager {
             ]))
             .getDocuments() { (snapshot,  error) in
             if let e = error {
-                print("There was an error getting the documents \(e)")
+                print("getLastMessages - error getting the documents \(e)")
             } else {
                 if let messages = snapshot?.documents {
                     for doc in messages {
                         let data = doc.data()
-                        if let dormRoomNumber = data["id"]
+                        if let info = data["id"]
                         {
-                            let someVariable = dormRoomNumber
-                            print("message: \(someVariable)")
+                            let someInfo = info
+                            print("message: \(someInfo)")
                         }
                     }
                 }

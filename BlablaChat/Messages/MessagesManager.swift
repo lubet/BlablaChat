@@ -76,11 +76,9 @@ final class MessagesManager {
     // LastMessages
     func getLastMessages(user_id: String) async throws -> [MessageItem] {
         
-        var myMessages = [MessageItem]()
+        let myMessages = [MessageItem]()
         
-        db.collectionGroup("messages")
-            .whereField("from_id", isEqualTo: user_id)
-            .getDocuments { (snapshot,  error) in
+        db.collectionGroup("messages").whereField("from_id", isEqualTo: user_id).getDocuments { (snapshot,  error) in
             if let e = error {
                 print("There was an error getting the documents \(e)")
             } else {

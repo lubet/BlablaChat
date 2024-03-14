@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 
 private let db = Firestore.firestore()
 
-struct MessageItem: Identifiable, Codable {
+struct MessagesRoom: Identifiable, Codable {
     let room_id: String
     let room_name: String
     let from_id: String
@@ -65,33 +65,32 @@ final class MessagesManager {
     }
     
     
-    // Mes derniers messages in or out
-    func getLastMessages(user_id: String) async throws -> [MessageItem] {
-        
-        let myMessages = [MessageItem]()
-        
-        db.collectionGroup("messages").whereFilter(Filter.orFilter([
-            Filter.whereField("from_id", isEqualTo: user_id),
-            Filter.whereField("to_id", isEqualTo: user_id)
-            ]))
-            .getDocuments() { (snapshot,  error) in
-            if let e = error {
-                print("getLastMessages - error getting the documents \(e)")
-            } else {
-                if let messages = snapshot?.documents {
-                    for doc in messages {
-                        let data = doc.data()
-                        if let info = data["id"]
-                        {
-                            let someInfo = info
-                            print("message: \(someInfo)")
-                        }
-                    }
-                }
+    func getAllRooms() async throws -> [Room] {
+        var rooms = [Room]()
+        do {
+            let querySnapshot = try await roomCollection.getDocuments()
+            for document in querySnapshot.documents {
+                let room = try document.data(as: Room.self)
+                rooms.append(room)
             }
+        } catch {
+            print("getAllRooms - Error getting documents: \(error.localizedDescription)")
         }
-        return myMessages
+        return rooms
     }
     
+    func getMessagesRoom(room_id) -> [MessagesRoom] {
+        
+
+        
+        
+    }
+    
+    
+    // Mes derniers messages in or out
+    func getLastMessages(user_id: String) async throws -> [MessageRoom] {
+        let myMessages = [MessageRoom]()
+        return myMessages
+    }
     // -------------------------------------------------------------------
 }

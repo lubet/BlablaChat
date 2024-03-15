@@ -11,9 +11,10 @@ import FirebaseFirestoreSwift
 
 private let db = Firestore.firestore()
 
-struct MessagesRoom: Identifiable, Codable {
+struct MessageItem: Identifiable, Codable {
     let room_id: String
     let room_name: String
+    let dateCreated: Timestamp
     let from_id: String
     let to_id: String
     let message_text: String
@@ -22,10 +23,21 @@ struct MessagesRoom: Identifiable, Codable {
     var id: String {
        room_id
     }
+
+    enum CodingKeys: String, CodingKey {
+        case room_id
+        case room_name
+        case dateCreated = "date_created"
+        case from_id
+        case to_id
+        case message_text
+        case date_send
+    }
     
     init(
         room_id: String,
         room_name: String,
+        dateCreated: Timestamp,
         from_id: String,
         to_id: String,
         message_text: String,
@@ -33,6 +45,7 @@ struct MessagesRoom: Identifiable, Codable {
     ) {
         self.room_id = room_id
         self.room_name = room_name
+        self.dateCreated = dateCreated
         self.from_id = from_id
         self.to_id = to_id
         self.message_text = message_text
@@ -79,12 +92,12 @@ final class MessagesManager {
         return rooms
     }
     
-//    func getMessagesRoom(room_id) -> [MessagesRoom] {
-//
-//
-//
-//
-//    }
+    
+    func getRoomName(room_id: String) {
+        
+        
+        
+    }
     
     
     // Mes derniers messages in or out
@@ -101,6 +114,7 @@ final class MessagesManager {
             for doc in snap.documents {
                 let msg = try doc.data(as: Message.self)
                 myMessages.append(msg)
+                print("\(msg.id)")
             }
         }
         return myMessages

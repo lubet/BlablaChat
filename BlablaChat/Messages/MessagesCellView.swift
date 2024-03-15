@@ -36,6 +36,6 @@ struct MessageCellView: View {
 
 struct MessagesCellView_Previews: PreviewProvider {
     static var previews: some View {
-        MessageCellView(messageItem: MessageItem(room_id: "1", room_name: "my room", from_id: "2", to_id: "3", message_text: "Salut", date_send: Timestamp()))
+        MessageCellView(messageItem: MessageItem(room_id: "1", room_name: "my room", dateCreated: Timestamp(), from_id: "2", to_id: "3", message_text: "Salut", date_send: Timestamp()))
     }
 }

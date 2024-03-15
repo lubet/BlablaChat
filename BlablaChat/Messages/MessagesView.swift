@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 @MainActor
 final class MessagesViewModel: ObservableObject {
     
-    @Published private(set) var messages: [MessageItem] = []
+    @Published private(set) var messages: [Message] = []
     
     func fetchLastMessages() async {
         
@@ -37,10 +37,10 @@ struct MessagesView: View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    ForEach(viewModel.messages) { oneMessage in
-                        // Text(oneContact.nom)
-                        MessageCellView(messageItem: oneMessage)
-                    }
+//                    ForEach(viewModel.messages) { oneMessage in
+//                        // Text(oneContact.nom)
+//                        MessageCellView(messageItem: oneMessage)
+//                    }
                 }
             }
         }

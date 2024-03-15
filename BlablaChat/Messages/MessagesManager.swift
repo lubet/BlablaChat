@@ -93,17 +93,22 @@ final class MessagesManager {
     }
     
     // Completer chaque message avec le nom et la date des rooms
-    func majMessages(message: [Message], rooms: [Room]) async throws -> [MessageItem] {
+    func majMessages(messages: [Message], rooms: [Room]) async throws -> [MessageItem] {
         var messageItems = [MessageItem]()
         
         // Pour chaque message aller avec le room_id rechercher le nom du room dans rooms
         // creer un enreg MesageItem avec les données du message et du room
-        
-        
-        
+        for msg in messages {
+            var msg_room_id = msg.room_id
+            for room in rooms {
+                if room.room_id == msg_room_id {
+                    // Créer un messageItem et l'ajuter à "messageItems"
+                    continue
+                }
+            }
+        }
         return messageItems
     }
-    
     
     // Tout mes messages send or received
     func getMessages(user_id: String) async throws -> [Message] {

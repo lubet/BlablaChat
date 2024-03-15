@@ -96,6 +96,8 @@ final class MessagesManager {
     func majMessages(message: [Message], rooms: [Room]) async throws -> [MessageItem] {
         var messageItems = [MessageItem]()
         
+        // Pour chaque message aller avec le room_id rechercher le nom du room dans rooms
+        // creer un enreg MesageItem avec les données du message et du room
         
         
         

@@ -33,7 +33,7 @@ final class MessagesViewModel: ObservableObject {
             // All rooms
             self.rooms = try await MessagesManager.shared.getAllRooms()
             
-            // Get messages with infos rooms
+            // Merge messages with infos rooms
             self.messageItems = try await MessagesManager.shared.majMessages(message: messages, rooms: rooms)
             
             

@@ -79,17 +79,30 @@ final class MessagesManager {
         return rooms
     }
     
-    func getMessagesRoom(room_id) -> [MessagesRoom] {
-        
-
-        
-        
-    }
+//    func getMessagesRoom(room_id) -> [MessagesRoom] {
+//
+//
+//
+//
+//    }
     
     
     // Mes derniers messages in or out
-    func getLastMessages(user_id: String) async throws -> [MessageRoom] {
-        let myMessages = [MessageRoom]()
+    func getLastMessages(user_id: String) async throws -> [Message] {
+        var myMessages = [Message]()
+        
+        let querySnapshot = try? await db.collectionGroup("messages").whereFilter(Filter.orFilter([
+            Filter.whereField("from_id", isEqualTo: user_id),
+            Filter.whereField("to_id", isEqualTo: user_id)
+        ]))
+            .getDocuments()
+        
+        if let snap = querySnapshot {
+            for doc in snap.documents {
+                let msg = try doc.data(as: Message.self)
+                myMessages.append(msg)
+            }
+        }
         return myMessages
     }
     // -------------------------------------------------------------------

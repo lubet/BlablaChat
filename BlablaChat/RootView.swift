@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MainView: View {
+struct RootView: View {
     var body: some View {
         TabView {
             MessagesView() // Liste des conversations
@@ -32,8 +32,8 @@ struct MainView: View {
     }
 }
 
-struct MainView_Previews: PreviewProvider {
+struct RootView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        RootView()
     }
 }

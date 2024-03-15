@@ -100,7 +100,7 @@ final class MessagesManager {
     }
     
     
-    // Mes derniers messages in or out
+    // Mes messages send or received
     func getLastMessages(user_id: String) async throws -> [Message] {
         var myMessages = [Message]()
         

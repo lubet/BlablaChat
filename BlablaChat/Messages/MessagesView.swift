@@ -12,7 +12,11 @@ import FirebaseFirestoreSwift
 @MainActor
 final class MessagesViewModel: ObservableObject {
     
-    @Published private(set) var messages: [Message] = []
+    var messages: [Message] = []
+
+    var rooms: [Room] = []
+    
+    @Published private(set) var messageItems: [MessageItem] = []
     
     func fetchLastMessages() async {
         
@@ -23,7 +27,16 @@ final class MessagesViewModel: ObservableObject {
             let authDataResult = try AuthManager.shared.getAuthenticatedUser()
             let user_id = authDataResult.uid
             
-            self.messages = try await MessagesManager.shared.getLastMessages(user_id: user_id)
+            // Mes messages send or received
+            self.messages = try await MessagesManager.shared.getMessages(user_id: user_id)
+            
+            // All rooms
+            self.rooms = try await MessagesManager.shared.getAllRooms()
+            
+            // Get messages with infos rooms
+            self.messageItems = try await MessagesManager.shared.majMessages(message: messages, rooms: rooms)
+            
+            
         }
     }
 }

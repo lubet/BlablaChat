@@ -92,16 +92,19 @@ final class MessagesManager {
         return rooms
     }
     
-    
-    func getRoomName(room_id: String) {
+    // Completer chaque message avec le nom et la date des rooms
+    func majMessages(message: [Message], rooms: [Room]) async throws -> [MessageItem] {
+        var messageItems = [MessageItem]()
         
         
         
+        
+        return messageItems
     }
     
     
-    // Mes messages send or received
-    func getLastMessages(user_id: String) async throws -> [Message] {
+    // Tout mes messages send or received
+    func getMessages(user_id: String) async throws -> [Message] {
         var myMessages = [Message]()
         
         let querySnapshot = try? await db.collectionGroup("messages").whereFilter(Filter.orFilter([

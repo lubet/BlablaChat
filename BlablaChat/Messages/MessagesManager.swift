@@ -14,7 +14,6 @@ private let db = Firestore.firestore()
 struct MessageItem: Identifiable, Codable {
     let room_id: String
     let room_name: String
-    let dateCreated: Timestamp
     let from_id: String
     let to_id: String
     let message_text: String
@@ -27,7 +26,6 @@ struct MessageItem: Identifiable, Codable {
     enum CodingKeys: String, CodingKey {
         case room_id
         case room_name
-        case dateCreated = "date_created"
         case from_id
         case to_id
         case message_text
@@ -37,7 +35,6 @@ struct MessageItem: Identifiable, Codable {
     init(
         room_id: String,
         room_name: String,
-        dateCreated: Timestamp,
         from_id: String,
         to_id: String,
         message_text: String,
@@ -45,7 +42,6 @@ struct MessageItem: Identifiable, Codable {
     ) {
         self.room_id = room_id
         self.room_name = room_name
-        self.dateCreated = dateCreated
         self.from_id = from_id
         self.to_id = to_id
         self.message_text = message_text

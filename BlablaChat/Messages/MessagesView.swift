@@ -34,9 +34,16 @@ final class MessagesViewModel: ObservableObject {
             self.rooms = try await MessagesManager.shared.getAllRooms()
             
             // Merge messages with infos rooms
-            self.messageItems = try await MessagesManager.shared.majMessages(messages: messages, rooms: rooms)
+            // self.messageItems = try await MessagesManager.shared.majMessages(messages: messages, rooms: rooms)
             
-            
+            for room in rooms {
+                for message in messages {
+                    if message.room_id == room.room_id {
+                        messageItems = [MessageItem(room_id: message.room_id, room_name: room.room_name, from_id: message.from_id, to_id: message.to_id, message_text: message.message_text, date_send: message.date_send)]
+                        print("messageItems: \(messageItems)")
+                    }
+                }
+            }
         }
     }
 }

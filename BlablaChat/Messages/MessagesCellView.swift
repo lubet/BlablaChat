@@ -23,7 +23,7 @@ struct MessageCellView: View {
                         .background(Color.gray)
                         .multilineTextAlignment(.leading)
                 }
-                Text("\(messageItem.date_send)")
+                Text("\(messageItem.message_send)")
                     .font(.footnote)
                     .frame(width: 100,height: 50 ,alignment: .topTrailing)
                     .background(Color.green)
@@ -36,6 +36,6 @@ struct MessageCellView: View {
 
 struct MessagesCellView_Previews: PreviewProvider {
     static var previews: some View {
-        MessageCellView(messageItem: MessageItem(room_id: "1", room_name: "my room", from_id: "2", to_id: "3", message_text: "Salut", date_send: Timestamp()))
+        MessageCellView(messageItem: MessageItem(room_id: "1", room_name: "my room", room_date: Timestamp(), from_id: "2", to_id: "3", message_text: "Salut", message_send: Timestamp()))
     }
 }

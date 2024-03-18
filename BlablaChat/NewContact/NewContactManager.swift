@@ -50,18 +50,6 @@ struct Room: Identifiable, Codable {
         case dateCreated = "date_created"
         case last_message
     }
-    
-    init(
-        room_id:String,
-        room_name:String,
-        dateCeated:Timestamp,
-        last_message:String
-    ) {
-        self.room_id = room_id
-        self.room_name = room_name
-        self.dateCreated = Timestamp()
-        self.last_message = last_message
-    }
 }
 
 struct Message: Identifiable, Codable {

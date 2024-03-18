@@ -14,10 +14,11 @@ private let db = Firestore.firestore()
 struct MessageItem: Identifiable, Codable {
     let room_id: String
     let room_name: String
+    let room_date: Timestamp
     let from_id: String
     let to_id: String
     let message_text: String
-    let date_send: Timestamp
+    let message_send: Timestamp
     
     var id: String {
        room_id
@@ -26,26 +27,11 @@ struct MessageItem: Identifiable, Codable {
     enum CodingKeys: String, CodingKey {
         case room_id
         case room_name
+        case room_date
         case from_id
         case to_id
         case message_text
-        case date_send
-    }
-    
-    init(
-        room_id: String,
-        room_name: String,
-        from_id: String,
-        to_id: String,
-        message_text: String,
-        date_send: Timestamp
-    ) {
-        self.room_id = room_id
-        self.room_name = room_name
-        self.from_id = from_id
-        self.to_id = to_id
-        self.message_text = message_text
-        self.date_send = Timestamp()
+        case message_send
     }
 }
 

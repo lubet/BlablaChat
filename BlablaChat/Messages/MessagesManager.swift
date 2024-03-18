@@ -11,31 +11,6 @@ import FirebaseFirestoreSwift
 
 private let db = Firestore.firestore()
 
-struct MessageItem: Identifiable, Codable {
-    let room_id: String
-    let room_name: String
-    let room_date: Timestamp
-    let from_id: String
-    let to_id: String
-    let message_text: String
-    let message_send: Timestamp
-    
-    var id: String {
-       room_id
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case room_id
-        case room_name
-        case room_date
-        case from_id
-        case to_id
-        case message_text
-        case message_send
-    }
-}
-
-
 final class MessagesManager {
     
     static let shared = MessagesManager()
@@ -63,7 +38,9 @@ final class MessagesManager {
     func getAllRooms() async throws -> [Room] {
         var rooms = [Room]()
         do {
-            let querySnapshot = try await roomCollection.getDocuments()
+            let querySnapshot = try await roomCollection
+                .order(by: "date_created")
+                .getDocuments()
             for document in querySnapshot.documents {
                 let room = try document.data(as: Room.self)
                 rooms.append(room)
@@ -73,25 +50,7 @@ final class MessagesManager {
         }
         return rooms
     }
-    
-    // Completer chaque message avec le nom et la date des rooms
-//    func majMessages(messages: [Message], rooms: [Room]) async throws -> [MessageItem] {
-//        var messageItems = [MessageItem]()
-//
-//        // Pour chaque message aller avec le room_id rechercher le nom du room dans rooms
-//        // creer un enreg MesageItem avec les données du message et du room
-//        for msg in messages {
-//            var msg_room_id = msg.room_id
-//            for room in rooms {
-//                if room.room_id == msg_room_id {
-//                    // Créer un messageItem et l'ajuter à "messageItems"
-//                    continue
-//                }
-//            }
-//        }
-//        return messageItems
-//    }
-    
+        
     // Tout mes messages send or received
     func getMessages(user_id: String) async throws -> [Message] {
         var myMessages = [Message]()
@@ -100,6 +59,7 @@ final class MessagesManager {
             Filter.whereField("from_id", isEqualTo: user_id),
             Filter.whereField("to_id", isEqualTo: user_id)
         ]))
+            .order(by: "date_send")
             .getDocuments()
         
         if let snap = querySnapshot {

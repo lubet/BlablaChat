@@ -9,6 +9,30 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+struct MessageItem: Identifiable, Codable {
+    let room_id: String
+    let room_name: String
+    let room_date: Timestamp
+    let from_id: String
+    let to_id: String
+    let message_text: String
+    let message_send: Timestamp
+    
+    var id: String {
+       room_id
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case room_id
+        case room_name
+        case room_date
+        case from_id
+        case to_id
+        case message_text
+        case message_send
+    }
+}
+
 @MainActor
 final class MessagesViewModel: ObservableObject {
     

@@ -46,14 +46,6 @@ final class MessagesViewModel: ObservableObject {
             for room in rooms {
                 for message in messages {
                     if message.room_id == room.room_id {
-                        let date = message.date_send.dateValue()
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateStyle = .medium
-                        dateFormatter.timeStyle = .medium
-                        dateFormatter.locale = Locale(identifier: "FR-fr")
-                        let strDate = "\(dateFormatter.string(from: date))"
-                        print("date french: \(strDate)")
-                        
                         messageItems.append(contentsOf: [MessageItem(room_id: message.room_id, room_name: room.room_name, room_date: room.dateCreated, from_id: message.from_id, to_id: message.to_id, message_text: message.message_text, message_send: message.date_send)])
                         // print("messageItems: \(messageItems)\n")
                     }

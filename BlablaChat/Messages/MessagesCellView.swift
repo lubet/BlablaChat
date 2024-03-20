@@ -23,7 +23,7 @@ struct MessageCellView: View {
                         .background(Color.gray)
                         .multilineTextAlignment(.leading)
                 }
-                var myDate = Date.timeStampToString(dateMessage: messageItem.message_send)
+                let myDate = Date.timeStampToString(dateMessage: messageItem.message_send)
                 Text("\(myDate)")
                     .font(.footnote)
                     .frame(width: 100,height: 50 ,alignment: .topTrailing)
@@ -49,7 +49,7 @@ extension Date {
         dateFormatter.timeStyle = .medium
         dateFormatter.locale = Locale(identifier: "FR-fr")
         let strDate = "\(dateFormatter.string(from: date))"
-        print("date french: \(strDate)")
+        print("date french str: \(strDate)")
         return strDate
     }
 }

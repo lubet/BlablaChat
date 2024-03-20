@@ -15,7 +15,7 @@ struct MessageItem: Identifiable, Codable {
     let room_name: String
     let room_date: Timestamp
     let from_id: String
-    let to_id: String
+    let received: Bool
     let message_text: String
     let message_send: Timestamp
 }
@@ -29,6 +29,7 @@ final class MessagesViewModel: ObservableObject {
     
     @Published private(set) var messageItems: [MessageItem] = []
     
+    // Affichage des messages
     func fetchLastMessages() async {
         
         Task {
@@ -43,15 +44,18 @@ final class MessagesViewModel: ObservableObject {
             self.rooms = try await MessagesManager.shared.getAllRooms()
             
             // messageItems avec infos rooms
+            var received: Bool = false
             for room in rooms {
                 for message in messages {
-                    if message.room_id == room.room_id {
-                        messageItems.append(contentsOf: [MessageItem(room_id: message.room_id, room_name: room.room_name, room_date: room.dateCreated, from_id: message.from_id, to_id: message.to_id, message_text: message.message_text, message_send: message.date_send)])
-                        // print("messageItems: \(messageItems)\n")
+                    if (message.room_id == room.room_id) {
+                        received = false
+                        if (message.from_id == user_id) {
+                            received = true
+                        }
+                        messageItems.append(contentsOf: [MessageItem(room_id: message.room_id, room_name: room.room_name, room_date: room.dateCreated, from_id: message.from_id, received: received, message_text: message.message_text, message_send: message.date_send)])
                     }
                 }
             }
-            //print("nbre messageItems: \(messageItems.count)")
         }
     }
 }
@@ -66,7 +70,6 @@ struct MessagesView: View {
             ScrollView {
                 VStack {
                     ForEach(viewModel.messageItems) { oneMessage in
-                        // Text(oneContact.nom)
                         MessageCellView(messageItem: oneMessage)
                     }
                 }

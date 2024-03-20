@@ -10,6 +10,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct MessageItem: Identifiable, Codable {
+    var id: String = UUID().uuidString
     let room_id: String
     let room_name: String
     let room_date: Timestamp
@@ -17,10 +18,6 @@ struct MessageItem: Identifiable, Codable {
     let to_id: String
     let message_text: String
     let message_send: Timestamp
-    
-    var id: String {
-       room_id
-    }
 }
 
 @MainActor
@@ -51,11 +48,12 @@ final class MessagesViewModel: ObservableObject {
             for room in rooms {
                 for message in messages {
                     if message.room_id == room.room_id {
-                        messageItems = [MessageItem(room_id: message.room_id, room_name: room.room_name, room_date: room.dateCreated, from_id: message.from_id, to_id: message.to_id, message_text: message.message_text, message_send: message.date_send)]
-                        print("messageItems: \(messageItems)\n")
+                        messageItems.append(contentsOf: [MessageItem(room_id: message.room_id, room_name: room.room_name, room_date: room.dateCreated, from_id: message.from_id, to_id: message.to_id, message_text: message.message_text, message_send: message.date_send)])
+                        // print("messageItems: \(messageItems)\n")
                     }
                 }
             }
+            //print("nbre messageItems: \(messageItems.count)")
         }
     }
 }
@@ -69,10 +67,10 @@ struct MessagesView: View {
         NavigationStack {
             ScrollView {
                 VStack {
-//                    ForEach(viewModel.messages) { oneMessage in
-//                        // Text(oneContact.nom)
-//                        MessageCellView(messageItem: oneMessage)
-//                    }
+                    ForEach(viewModel.messageItems) { oneMessage in
+                        // Text(oneContact.nom)
+                        MessageCellView(messageItem: oneMessage)
+                    }
                 }
             }
         }

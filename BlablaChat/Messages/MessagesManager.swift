@@ -34,7 +34,7 @@ final class MessagesManager {
         messageCollection(room_id: room_id).document(message_id)
     }
     
-    
+    // Tous les rooms triés par date
     func getAllRooms() async throws -> [Room] {
         var rooms = [Room]()
         do {
@@ -51,7 +51,7 @@ final class MessagesManager {
         return rooms
     }
         
-    // Tout mes messages send or received
+    // Tout mes messages send or received triés par dates
     func getMessages(user_id: String) async throws -> [Message] {
         var myMessages = [Message]()
         

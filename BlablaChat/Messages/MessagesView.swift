@@ -21,16 +21,6 @@ struct MessageItem: Identifiable, Codable {
     var id: String {
        room_id
     }
-
-    enum CodingKeys: String, CodingKey {
-        case room_id
-        case room_name
-        case room_date
-        case from_id
-        case to_id
-        case message_text
-        case message_send
-    }
 }
 
 @MainActor
@@ -43,8 +33,6 @@ final class MessagesViewModel: ObservableObject {
     @Published private(set) var messageItems: [MessageItem] = []
     
     func fetchLastMessages() async {
-        
-        print("fetchLastMessages")
         
         Task {
             

@@ -57,7 +57,7 @@ final class NewContactViewModel: ObservableObject {
         let room = try await NewContactManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
         if (room == "") {
             // Non -> créer un room
-            let room_id = try await NewContactManager.shared.createRoom(name: "Moi et un contact")
+            let room_id = try await NewContactManager.shared.createRoom(name: AuthUser.email ?? "")
             // création d'un document membre
             try await NewContactManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
             // Créer un message avec le room

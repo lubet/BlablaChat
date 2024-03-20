@@ -36,15 +36,13 @@ final class MessagesViewModel: ObservableObject {
             let authDataResult = try AuthManager.shared.getAuthenticatedUser()
             let user_id = authDataResult.uid
             
-            // Mes messages send or received
+            // All mes messages send or received
             self.messages = try await MessagesManager.shared.getMessages(user_id: user_id)
             
             // All rooms
             self.rooms = try await MessagesManager.shared.getAllRooms()
             
-            // Merge messages with infos rooms
-            // self.messageItems = try await MessagesManager.shared.majMessages(messages: messages, rooms: rooms)
-            
+            // messageItems avec infos rooms
             for room in rooms {
                 for message in messages {
                     if message.room_id == room.room_id {

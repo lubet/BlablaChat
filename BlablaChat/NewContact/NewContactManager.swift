@@ -39,6 +39,8 @@ struct Room: Identifiable, Codable {
     let room_name: String
     let dateCreated: Timestamp
     let last_message: String
+    let date_send: Timestamp
+    let from_id: String
     
     var id: String {
         room_id
@@ -49,6 +51,8 @@ struct Room: Identifiable, Codable {
         case room_name
         case dateCreated = "date_created"
         case last_message
+        case date_send
+        case from_id
     }
 }
 
@@ -219,18 +223,32 @@ final class NewContactManager {
             try await memberRef.setData(data, merge: false)
     }
     
+    // Création du message et maj du dernier message de Room avec le message
     func createMessage(from_id: String, to_id: String, message_text: String, room_id: String) async throws {
         let messageRef = roomDocument(room_id: room_id).collection("messages").document()
         let message_id = messageRef.documentID
+        
+        let dateMessage = Timestamp()
         
         let data: [String:Any] = [
             "id": message_id,
             "from_id": from_id,
             "to_id": to_id,
             "message_text": message_text,
-            "date_send": Timestamp(),
+            "date_send": dateMessage,
             "room_id": room_id
         ]
         try await messageRef.setData(data, merge: false)
+        
+        // Maj dernier message dans Room
+        let roomRef = roomDocument(room_id: room_id)
+
+        let dataRoom: [String:Any] = [
+            "last_message": message_text,
+            "date_send": dateMessage,
+            "from_id": from_id
+        ]
+        
+        try await roomRef.setData(dataRoom, merge: true)
     }
 }

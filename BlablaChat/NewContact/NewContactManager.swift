@@ -39,8 +39,8 @@ struct Room: Identifiable, Codable {
     let room_name: String
     let dateCreated: Timestamp
     let last_message: String
-    let date_send: Timestamp
-    let from_id: String
+    let date_message: Timestamp
+    let from_message: String
     
     var id: String {
         room_id
@@ -51,8 +51,8 @@ struct Room: Identifiable, Codable {
         case room_name
         case dateCreated = "date_created"
         case last_message
-        case date_send
-        case from_id
+        case date_message
+        case from_message
     }
 }
 
@@ -245,8 +245,8 @@ final class NewContactManager {
 
         let dataRoom: [String:Any] = [
             "last_message": message_text,
-            "date_send": dateMessage,
-            "from_id": from_id
+            "date_message": dateMessage,
+            "from_message": from_id
         ]
         
         try await roomRef.setData(dataRoom, merge: true)

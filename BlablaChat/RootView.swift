@@ -10,6 +10,11 @@ import SwiftUI
 struct RootView: View {
     var body: some View {
         TabView {
+            LastMessagesView() // Dernier messages de chaque rooms
+                .tabItem {
+                    Image(systemName: "message")
+                    Text("Rooms/Messages")
+                }
             MessagesView() // Liste des conversations
                 .tabItem {
                     Image(systemName: "house.fill")
@@ -21,12 +26,6 @@ struct RootView: View {
                     Image(systemName: "person.fill")
                     Text("Contact")
                         .foregroundColor(.black)
-                }
-            
-            //
-            Text("Créer un groupe de contact")
-                .tabItem {
-                    Image(systemName: "person.3")
                 }
         }
     }

@@ -43,7 +43,7 @@ final class MessagesViewModel: ObservableObject {
             // All rooms
             self.rooms = try await MessagesManager.shared.getAllRooms()
             
-            // messageItems avec infos rooms
+            // Affichage de messageItems avec infos rooms
             var received: Bool = false
             for room in rooms {
                 for message in messages {

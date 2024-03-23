@@ -47,7 +47,7 @@ struct LastMessagesView: View {
             .onAppear(perform: { viewModel.addLastMessages() })
             .navigationTitle("Last Messages")
             .navigationBarItems(
-                leading: Image(systemName: "person.fill"),
+                // leading: Image(systemName: "person.fill"),
                 trailing: NavigationLink(
                     destination: monProfil(),
                     label: {Image(systemName: "square.and.pencil")}
@@ -57,11 +57,11 @@ struct LastMessagesView: View {
     }
 }
 
-struct monProfil: View {
-    var body: some View {
-        Text("Contacts")
-    }
-}
+//struct monProfil: View {
+//    var body: some View {
+//        Text("Contacts")
+//    }
+//}
 
 struct LastMessagesView_Previews: PreviewProvider {
     static var previews: some View {

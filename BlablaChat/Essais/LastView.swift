@@ -76,6 +76,11 @@ struct LastView: View {
     }
 }
 
+struct monProfil: View {
+    var body: some View {
+        Text("Contacts")
+    }
+}
 struct LastView_Previews: PreviewProvider {
     static var previews: some View {
         LastView()

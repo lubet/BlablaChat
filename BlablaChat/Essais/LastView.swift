@@ -9,41 +9,21 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct Last: Identifiable {
+struct LastModel: Identifiable {
     let id: String = UUID().uuidString
     let room_id: String
     let room_name: String
-    let room_date: String
 }
 
-struct LastView: View {
+class LastViewModel: ObservableObject {
     
-    @State var LastArray: [Last] = []
-    
-    var body: some View {
-        NavigationView {
-            List {
-                ForEach(LastArray) { un in
-                    HStack {
-                        Text("\(un.room_name)")
-                        Text("\(un.room_date)")
-                    }
-                }
-                .onDelete()
-            }
-            .listStyle(GroupedListStyle())
-            .navigationTitle("titre Essai")
-            .onAppear {
-                getLast()
-            }
-        }
-    }
+    @Published var LastArray: [LastModel] = []
     
     func getLast() {
-        let last1 = Last(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
-        let last2 = Last(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
-        let last3 = Last(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
-        let last4 = Last(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
+        let last1 = LastModel(room_id: "1", room_name: "room1")
+        let last2 = LastModel(room_id: "1", room_name: "room1")
+        let last3 = LastModel(room_id: "1", room_name: "room1")
+        let last4 = LastModel(room_id: "1", room_name: "room1")
         
         LastArray.append(last1)
         LastArray.append(last2)
@@ -54,9 +34,34 @@ struct LastView: View {
     func deleteLast(index: IndexSet) {
         LastArray.remove(atOffsets: index)
     }
+
     
 }
 
+struct LastView: View {
+    
+    // @State var LastArray: [LastModel] = []
+    
+    @ObservedObject var lastViewModel: LastViewModel = LastViewModel()
+    
+    var body: some View {
+        NavigationView {
+            List {
+                ForEach(lastViewModel.LastArray) { un in
+                    HStack {
+                        Text("\(un.room_name)")
+                    }
+                }
+                .onDelete(perform: lastViewModel.deleteLast)
+            }
+            .listStyle(GroupedListStyle())
+            .navigationTitle("titre Essai")
+            .onAppear {
+                lastViewModel.getLast()
+            }
+        }
+    }
+}
 
 struct LastView_Previews: PreviewProvider {
     static var previews: some View {

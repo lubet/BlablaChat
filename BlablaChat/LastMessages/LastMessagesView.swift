@@ -1,53 +1,72 @@
 //
-//  LastMessagesView.swift
+//  LastView.swift
 //  BlablaChat
 //
-//  Created by Lubet-Moncla Xavier on 22/03/2024.
+//  Created by Lubet-Moncla Xavier on 23/03/2024.
 //
 
 import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct LastMessageItem: Identifiable {
+struct LastModel: Identifiable {
     let id: String = UUID().uuidString
     let room_id: String
     let room_name: String
-    let room_date: Date
+    let room_date: String
+    let message_texte: String
+    let message_date: String
 }
 
-@MainActor
-final class LastMessagesViewModel: ObservableObject {
+class LastViewModel: ObservableObject {
     
-    @Published private(set) var lastMessages: [LastMessageItem] = []
+    @Published var LastArray: [LastModel] = []
+    
+    func getLast() {
+        let last1 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Message 1", message_date: timeStampToString(dateMessage: Timestamp()))
+        let last2 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Message 1", message_date: timeStampToString(dateMessage: Timestamp()))
+        let last3 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Message 1", message_date: timeStampToString(dateMessage: Timestamp()))
+        let last4 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Message 1", message_date: timeStampToString(dateMessage: Timestamp()))
+        let last5 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Message 1", message_date: timeStampToString(dateMessage: Timestamp()))
 
-    func addLastMessages() {
-        let lastMessages = [
-            LastMessageItem(room_id: "1", room_name: "room1", room_date: Date())
-        ]
-        
-        print(lastMessages)
+        LastArray.append(last1)
+        LastArray.append(last2)
+        LastArray.append(last3)
+        LastArray.append(last4)
+        LastArray.append(last5)
     }
+
+    func deleteLast(index: IndexSet) {
+        LastArray.remove(atOffsets: index)
+    }
+
+    
 }
 
-
-struct LastMessagesView: View {
+struct LastView: View {
     
-    @StateObject var viewModel = LastMessagesViewModel()
+    // @ObserverObject relaod si la vue is refresh contrairement à @StateObject
+    @ObservedObject var lastViewModel: LastViewModel = LastViewModel()
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack {
-                    ForEach(viewModel.lastMessages) { lastMessage in
-                        Text("\(lastMessage.room_name)")
+            List {
+                ForEach(lastViewModel.LastArray) { un in
+                    HStack {
+                        Text("\(un.room_name)")
+                        Text("\(un.room_date)")
+                        Text("\(un.message_texte)")
                     }
                 }
+                .onDelete(perform: lastViewModel.deleteLast)
             }
-            .onAppear(perform: { viewModel.addLastMessages() })
-            .navigationTitle("Last Messages")
+            // .listStyle()
+            .navigationTitle("Messages")
+            .onAppear {
+                lastViewModel.getLast()
+            }
             .navigationBarItems(
-                // leading: Image(systemName: "person.fill"),
+                leading: Image(systemName: "person.fill"),
                 trailing: NavigationLink(
                     destination: monProfil(),
                     label: {Image(systemName: "square.and.pencil")}
@@ -57,14 +76,13 @@ struct LastMessagesView: View {
     }
 }
 
-//struct monProfil: View {
-//    var body: some View {
-//        Text("Contacts")
-//    }
-//}
-
-struct LastMessagesView_Previews: PreviewProvider {
+struct monProfil: View {
+    var body: some View {
+        Text("Contacts")
+    }
+}
+struct LastView_Previews: PreviewProvider {
     static var previews: some View {
-        LastMessagesView()
+        LastView()
     }
 }

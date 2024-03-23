@@ -10,7 +10,7 @@ import SwiftUI
 struct RootView: View {
     var body: some View {
         TabView {
-            LastMessagesView() // Dernier messages de chaque rooms
+            LastView() // Dernier messages de chaque rooms
                 .tabItem {
                     Image(systemName: "message")
                     Text("Rooms/Messages")

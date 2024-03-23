@@ -14,6 +14,8 @@ struct LastModel: Identifiable {
     let room_id: String
     let room_name: String
     let room_date: String
+    let message_texte: String
+    let message_date: String
 }
 
 class LastViewModel: ObservableObject {
@@ -21,11 +23,11 @@ class LastViewModel: ObservableObject {
     @Published var LastArray: [LastModel] = []
     
     func getLast() {
-        let last1 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
-        let last2 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
-        let last3 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
-        let last4 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
-        let last5 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
+        let last1 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Message 1", message_date: timeStampToString(dateMessage: Timestamp()))
+        let last2 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Message 1", message_date: timeStampToString(dateMessage: Timestamp()))
+        let last3 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Message 1", message_date: timeStampToString(dateMessage: Timestamp()))
+        let last4 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Message 1", message_date: timeStampToString(dateMessage: Timestamp()))
+        let last5 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Message 1", message_date: timeStampToString(dateMessage: Timestamp()))
 
         LastArray.append(last1)
         LastArray.append(last2)
@@ -53,15 +55,23 @@ struct LastView: View {
                     HStack {
                         Text("\(un.room_name)")
                         Text("\(un.room_date)")
+                        Text("\(un.message_texte)")
                     }
                 }
                 .onDelete(perform: lastViewModel.deleteLast)
             }
-            .listStyle(GroupedListStyle())
+            // .listStyle()
             .navigationTitle("titre Essai")
             .onAppear {
                 lastViewModel.getLast()
             }
+            .navigationBarItems(
+                leading: Image(systemName: "person.fill"),
+                trailing: NavigationLink(
+                    destination: monProfil(),
+                    label: {Image(systemName: "square.and.pencil")}
+                )
+            )
         }
     }
 }

@@ -13,7 +13,7 @@ struct LastModel: Identifiable {
     let id: String = UUID().uuidString
     let room_id: String
     let room_name: String
-    let room_date: Timestamp
+    let room_date: String
 }
 
 class LastViewModel: ObservableObject {
@@ -21,15 +21,17 @@ class LastViewModel: ObservableObject {
     @Published var LastArray: [LastModel] = []
     
     func getLast() {
-        let last1 = LastModel(room_id: "1", room_name: "room1", room_date: Timestamp())
-        let last2 = LastModel(room_id: "1", room_name: "room1", room_date: Timestamp())
-        let last3 = LastModel(room_id: "1", room_name: "room1", room_date: Timestamp())
-        let last4 = LastModel(room_id: "1", room_name: "room1", room_date: Timestamp())
-        
+        let last1 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
+        let last2 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
+        let last3 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
+        let last4 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
+        let last5 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
+
         LastArray.append(last1)
         LastArray.append(last2)
         LastArray.append(last3)
         LastArray.append(last4)
+        LastArray.append(last5)
     }
 
     func deleteLast(index: IndexSet) {
@@ -41,8 +43,7 @@ class LastViewModel: ObservableObject {
 
 struct LastView: View {
     
-    // @State var LastArray: [LastModel] = []
-    
+    // @ObserverObject relaod si la vue is refresh contrairement à @StateObject
     @ObservedObject var lastViewModel: LastViewModel = LastViewModel()
     
     var body: some View {

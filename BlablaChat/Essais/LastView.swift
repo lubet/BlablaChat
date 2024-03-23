@@ -18,9 +18,7 @@ struct Last: Identifiable {
 
 struct LastView: View {
     
-    @State var LastArray: [Last] = [
-        Last(room_id: "1", room_name: "Essai", room_date: timeStampToString(dateMessage: Timestamp()))
-    ]
+    @State var LastArray: [Last] = []
     
     var body: some View {
         NavigationView {
@@ -31,6 +29,7 @@ struct LastView: View {
                         Text("\(un.room_date)")
                     }
                 }
+                .onDelete()
             }
             .listStyle(GroupedListStyle())
             .navigationTitle("titre Essai")
@@ -39,11 +38,25 @@ struct LastView: View {
             }
         }
     }
+    
+    func getLast() {
+        let last1 = Last(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
+        let last2 = Last(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
+        let last3 = Last(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
+        let last4 = Last(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
+        
+        LastArray.append(last1)
+        LastArray.append(last2)
+        LastArray.append(last3)
+        LastArray.append(last4)
+    }
+
+    func deleteLast(index: IndexSet) {
+        LastArray.remove(atOffsets: index)
+    }
+    
 }
 
-func getLast() {
-    let last1 = Last(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()))
-}
 
 struct LastView_Previews: PreviewProvider {
     static var previews: some View {

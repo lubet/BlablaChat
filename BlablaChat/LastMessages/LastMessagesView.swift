@@ -18,7 +18,7 @@ struct LastModel: Identifiable {
     let message_date: String
 }
 
-class LastViewModel: ObservableObject {
+class LastMessagesViewModel: ObservableObject {
     
     @Published var LastArray: [LastModel] = []
     
@@ -43,10 +43,10 @@ class LastViewModel: ObservableObject {
     
 }
 
-struct LastView: View {
+struct LastMessagesView: View {
     
     // @ObserverObject relaod si la vue is refresh contrairement à @StateObject
-    @ObservedObject var lastViewModel: LastViewModel = LastViewModel()
+    @ObservedObject var lastViewModel: LastMessagesViewModel = LastMessagesViewModel()
     
     var body: some View {
         NavigationView {
@@ -81,8 +81,8 @@ struct monProfil: View {
         Text("Contacts")
     }
 }
-struct LastView_Previews: PreviewProvider {
+struct LastMessagesView_Previews: PreviewProvider {
     static var previews: some View {
-        LastView()
+        LastMessagesView()
     }
 }

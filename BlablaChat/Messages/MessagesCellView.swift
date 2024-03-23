@@ -31,7 +31,7 @@ struct MessageCellView: View {
                         //.padding()
                         //.multilineTextAlignment(.leading)
                 }
-                let myDate = Date.timeStampToString(dateMessage: messageItem.message_send)
+                let myDate = timeStampToString(dateMessage: messageItem.message_send)
                 Text("\(myDate)")
                     .font(.footnote)
                     .frame(width: 100,height: 40 ,alignment: .topTrailing)
@@ -51,14 +51,14 @@ struct MessagesCellView_Previews: PreviewProvider {
     }
 }
 
-extension Date {
-    static func timeStampToString(dateMessage: Timestamp) -> String {
-        let date = dateMessage.dateValue()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .medium
-        dateFormatter.locale = Locale(identifier: "FR-fr")
-        let strDate = "\(dateFormatter.string(from: date))"
-        return strDate
-    }
-}
+//extension Date {
+//    static func timeStampToString(dateMessage: Timestamp) -> String {
+//        let date = dateMessage.dateValue()
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateStyle = .short
+//        dateFormatter.timeStyle = .medium
+//        dateFormatter.locale = Locale(identifier: "FR-fr")
+//        let strDate = "\(dateFormatter.string(from: date))"
+//        return strDate
+//    }
+//}

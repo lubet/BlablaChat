@@ -9,29 +9,43 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-//struct LastMessageItem: Identifiable, Codable {
-//    var id: String = UUID().uuidString
-//    let room_id: String
-//    let room_name: String
-//    let room_date: Timestamp
-//    let from_id: String
-//    let received: Bool
-//    let message_text: String
-//    let message_send: Timestamp
-//}
+struct LastMessageItem: Identifiable {
+    let id: String = UUID().uuidString
+    let room_id: String
+    let room_name: String
+    let room_date: Date
+}
+
+@MainActor
+final class LastMessagesViewModel: ObservableObject {
+    
+    @Published private(set) var lastMessages: [LastMessageItem] = []
+
+    func addLastMessages() {
+        let lastMessages = [
+            LastMessageItem(room_id: "1", room_name: "room1", room_date: Date())
+        ]
+        
+        print(lastMessages)
+    }
+}
 
 
 struct LastMessagesView: View {
+    
+    @StateObject var viewModel = LastMessagesViewModel()
+    
     var body: some View {
         NavigationView {
             ScrollView {
-                Text("Rooms/lastMessages")
-                Text("Rooms/lastMessages")
-                Text("Rooms/lastMessages")
-                Text("Rooms/lastMessages")
+                VStack {
+                    ForEach(viewModel.lastMessages) { lastMessage in
+                        Text("\(lastMessage.room_name)")
+                    }
+                }
             }
-            .navigationTitle("Mes messages")
-//            .navigationBarTitleDisplayMode(.automatic)
+            .onAppear(perform: { viewModel.addLastMessages() })
+            .navigationTitle("Last Messages")
             .navigationBarItems(
                 leading: Image(systemName: "person.fill"),
                 trailing: NavigationLink(

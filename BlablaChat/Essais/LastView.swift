@@ -13,6 +13,7 @@ struct LastModel: Identifiable {
     let id: String = UUID().uuidString
     let room_id: String
     let room_name: String
+    let room_date: Timestamp
 }
 
 class LastViewModel: ObservableObject {
@@ -20,10 +21,10 @@ class LastViewModel: ObservableObject {
     @Published var LastArray: [LastModel] = []
     
     func getLast() {
-        let last1 = LastModel(room_id: "1", room_name: "room1")
-        let last2 = LastModel(room_id: "1", room_name: "room1")
-        let last3 = LastModel(room_id: "1", room_name: "room1")
-        let last4 = LastModel(room_id: "1", room_name: "room1")
+        let last1 = LastModel(room_id: "1", room_name: "room1", room_date: Timestamp())
+        let last2 = LastModel(room_id: "1", room_name: "room1", room_date: Timestamp())
+        let last3 = LastModel(room_id: "1", room_name: "room1", room_date: Timestamp())
+        let last4 = LastModel(room_id: "1", room_name: "room1", room_date: Timestamp())
         
         LastArray.append(last1)
         LastArray.append(last2)
@@ -50,6 +51,7 @@ struct LastView: View {
                 ForEach(lastViewModel.LastArray) { un in
                     HStack {
                         Text("\(un.room_name)")
+                        Text("\(un.room_date)")
                     }
                 }
                 .onDelete(perform: lastViewModel.deleteLast)

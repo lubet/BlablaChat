@@ -6,34 +6,13 @@
 //
 
 import SwiftUI
-import FirebaseFirestore
-import FirebaseFirestoreSwift
-
-struct LastModel: Identifiable {
-    let id: String = UUID().uuidString
-    let room_id: String
-    let room_name: String
-    let room_date: String
-    let message_texte: String
-    let message_date: String
-}
 
 class LastMessagesViewModel: ObservableObject {
     
     @Published var LastArray: [LastModel] = []
     
     func getLast() {
-        let last1 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Message 1", message_date: timeStampToString(dateMessage: Timestamp()))
-        let last2 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Message 1", message_date: timeStampToString(dateMessage: Timestamp()))
-        let last3 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Message 1", message_date: timeStampToString(dateMessage: Timestamp()))
-        let last4 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Message 1", message_date: timeStampToString(dateMessage: Timestamp()))
-        let last5 = LastModel(room_id: "1", room_name: "room1", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Message 1", message_date: timeStampToString(dateMessage: Timestamp()))
 
-        LastArray.append(last1)
-        LastArray.append(last2)
-        LastArray.append(last3)
-        LastArray.append(last4)
-        LastArray.append(last5)
     }
 
     func deleteLast(index: IndexSet) {

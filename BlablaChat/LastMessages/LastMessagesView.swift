@@ -6,19 +6,24 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 // A mettre dans la View
 struct LastMessage: Identifiable, Codable {
-    let id: String
     let room_id: String
     let room_name: String // nom du créateur du premier message
     let room_date: String
     let message_texte: String
-    let message_date: String
+    let message_date: Timestamp
     let message_from: String
+    
+    var id: String {
+        room_id
+    }
+
 
     enum CodingKeys: String, CodingKey {
-        case id = "id"
         case room_id = "room_id"
         case room_name = "room_name"
         case room_date = "room_date"
@@ -26,6 +31,23 @@ struct LastMessage: Identifiable, Codable {
         case message_date = "message_date"
         case message_from = "message_from"
     }
+    
+    init(
+        room_id: String,
+        room_name: String,
+        room_date: String,
+        message_texte: String,
+        message_date: Timestamp,
+        message_from: String
+    ) {
+        self.room_id = room_id
+        self.room_name = room_name
+        self.room_date = room_date
+        self.message_texte = message_texte
+        self.message_date = message_date
+        self.message_from = message_from
+    }
+
 }
 
 @MainActor
@@ -35,17 +57,33 @@ class LastMessagesViewModel: ObservableObject {
     
     private var members: [Member] = []
     
+    private var rooms: [Room] = []
+    
     func getLastMessages() async {
         
         Task {
             let AuthUser = try AuthManager.shared.getAuthenticatedUser()
             let user_id = AuthUser.uid
             
-            // members contient les rooms avec pour chaque room le dernier message
-            self.members = try await LastMessagesManager.shared.getMyRooms(user_id: user_id)
+            // Mes room_id dans membre
+            self.members = try await LastMessagesManager.shared.getMyRoomsId(user_id: user_id)
 
+            // Tous les rooms avec le dernier message
+            self.rooms = try await MessagesManager.shared.getAllRooms()
+            
+            // Recherche du dernier message dans les rooms à l'aide de mes room_id de member
             for member in members {
-                print("from: \(member.from_id), to: \(member.to_id), room: \(member.room_id)")
+                // print("from: \(member.from_id), to: \(member.to_id), room: \(member.room_id)")
+                // get le room qui correspond a
+                for room in rooms {
+                    if member.room_id == room.room_id {
+                        lastMessages.append(LastMessage(room_id: member.room_id, room_name: room.room_name,
+                        room_date: timeStampToString(dateMessage: room.date_message), message_texte: room.last_message, message_date: room.date_message, message_from: room.from_message))
+                        print("room_id:\(member.room_id) - room_name:\(room.room_name) - texte:\(room.last_message) - from:\(room.from_message) -  to: \(member.to_id)*****\n")
+                        
+                    }
+                }
+                
             }
             
         }

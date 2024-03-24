@@ -38,8 +38,8 @@ final class LastMessagesManager {
         return memberCollection.document(user_id)
     }
     
-    // Récupérer mes rooms
-    func getMyRooms(user_id: String) async throws -> [Member] {
+    // Récupérer de member les room_id pour lequelles je suis membre
+    func getMyRoomsId(user_id: String) async throws -> [Member] {
         var members = [Member]()
         do {
             let querySnapshot = try await memberCollection.whereFilter(Filter.orFilter([
@@ -56,5 +56,9 @@ final class LastMessagesManager {
             print("getMyRooms - Error getting documents: \(error.localizedDescription)")
         }
         return members
+    }
+    
+    func getLastMessages(room_id: String) {
+        
     }
 }

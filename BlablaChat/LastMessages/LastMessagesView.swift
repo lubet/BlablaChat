@@ -92,7 +92,7 @@ struct LastMessagesView: View {
                 ForEach(viewModel.lastMessages) { lastMessage in
                     LastMessagesCellView(lastMessage: lastMessage)
                 }
-                //.onDelete(perform: viewModel.deleteLast)
+                .onDelete(perform: viewModel.deleteLast)
             }
             .task { await viewModel.getLastMessages() }
             // .listStyle()

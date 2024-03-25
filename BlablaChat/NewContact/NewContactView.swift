@@ -87,7 +87,7 @@ struct NewContactView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+            List {
                 VStack {
                     ForEach(filteredContacts) { oneContact in
                         // Text(oneContact.nom)

@@ -24,7 +24,7 @@ struct ContactCellView: View {
             }
             .frame(maxWidth: .infinity, alignment: .center)
             .padding()
-            .background(Color.black.opacity(0.05))
+            // .background(Color.black.opacity(0.05))
         }
         .padding(.horizontal,18)
     }

@@ -15,13 +15,13 @@ struct RootView: View {
                     Image(systemName: "message")
                     Text("Rooms/Messages")
                 }
-            MessagesView() // Liste des conversations
+            MessagesView() // Messages d'un room
                 .tabItem {
                     Image(systemName: "house.fill")
                     Text("Conversations")
                 }
             
-            NewContactView() // Nouveau contact
+            NewContactView() // Contacts
                 .tabItem {
                     Image(systemName: "person.fill")
                     Text("Contact")

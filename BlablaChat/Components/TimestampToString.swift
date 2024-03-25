@@ -13,7 +13,7 @@ func timeStampToString(dateMessage: Timestamp) -> String {
     let date = dateMessage.dateValue()
     let dateFormatter = DateFormatter()
     dateFormatter.dateStyle = .short
-    dateFormatter.timeStyle = .medium
+    dateFormatter.timeStyle = .none
     dateFormatter.locale = Locale(identifier: "FR-fr")
     let strDate = "\(dateFormatter.string(from: date))"
     return strDate

@@ -15,7 +15,7 @@ struct LastMessage: Identifiable, Codable {
     let room_name: String // nom du destinataire lors de la création du room
     let room_date: String
     let message_texte: String
-    let message_date: Timestamp
+    let message_date: String
     let message_from: String
     
     var id: String {
@@ -44,6 +44,8 @@ class LastMessagesViewModel: ObservableObject {
     func getLastMessages() async {
         
         Task {
+            lastMessages = []
+            
             let AuthUser = try AuthManager.shared.getAuthenticatedUser()
             let user_id = AuthUser.uid
             
@@ -60,7 +62,8 @@ class LastMessagesViewModel: ObservableObject {
                 for room in rooms {
                     if member.room_id == room.room_id {
                         lastMessages.append(LastMessage(room_id: member.room_id, room_name: room.room_name,
-                        room_date: timeStampToString(dateMessage: room.dateCreated), message_texte: room.last_message, message_date: room.date_message, message_from: room.from_message))
+                                                        room_date: timeStampToString(dateMessage: room.dateCreated), message_texte: room.last_message,
+                                                        message_date: timeStampToString(dateMessage:  room.date_message), message_from: room.from_message))
                         print("room_id:\(member.room_id) - room_name:\(room.room_name) - texte:\(room.last_message) - from:\(room.from_message) -  to: \(member.to_id)*****\n")
                         
                     }
@@ -72,7 +75,7 @@ class LastMessagesViewModel: ObservableObject {
         
     }
     
-    func deleteLast(index: IndexSet) async {
+    func deleteLast(index: IndexSet) {
         lastMessages.remove(atOffsets: index)
     }
 
@@ -86,14 +89,8 @@ struct LastMessagesView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.lastMessages) { un in
-                    HStack {
-                        VStack {
-                            Text("\(un.room_name)")
-                            Text("\(un.message_texte)")
-                        }
-                        Text("\(un.room_date)")
-                    }
+                ForEach(viewModel.lastMessages) { lastMessage in
+                    LastMessagesCellView(lastMessage: lastMessage)
                 }
                 //.onDelete(perform: viewModel.deleteLast)
             }

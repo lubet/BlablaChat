@@ -34,6 +34,8 @@ final class MessagesViewModel: ObservableObject {
         
         Task {
             
+            messageItems = []
+            
             let authDataResult = try AuthManager.shared.getAuthenticatedUser()
             let user_id = authDataResult.uid
             
@@ -67,15 +69,16 @@ struct MessagesView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+            List {
                 VStack {
                     ForEach(viewModel.messageItems) { oneMessage in
                         MessageCellView(messageItem: oneMessage)
                     }
                 }
             }
+            .task { await viewModel.fetchLastMessages() }
+            .navigationTitle("Conversations")
         }
-        .task { await viewModel.fetchLastMessages() }
     }
 }
 

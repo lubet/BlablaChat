@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 // A mettre dans la View
 struct LastMessage: Identifiable, Codable {
     let room_id: String
-    let room_name: String // nom du créateur du premier message
+    let room_name: String // nom du destinataire lors de la création du room
     let room_date: String
     let message_texte: String
     let message_date: Timestamp
@@ -22,7 +22,6 @@ struct LastMessage: Identifiable, Codable {
         room_id
     }
 
-
     enum CodingKeys: String, CodingKey {
         case room_id = "room_id"
         case room_name = "room_name"
@@ -31,23 +30,6 @@ struct LastMessage: Identifiable, Codable {
         case message_date = "message_date"
         case message_from = "message_from"
     }
-    
-    init(
-        room_id: String,
-        room_name: String,
-        room_date: String,
-        message_texte: String,
-        message_date: Timestamp,
-        message_from: String
-    ) {
-        self.room_id = room_id
-        self.room_name = room_name
-        self.room_date = room_date
-        self.message_texte = message_texte
-        self.message_date = message_date
-        self.message_from = message_from
-    }
-
 }
 
 @MainActor

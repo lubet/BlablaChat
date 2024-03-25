@@ -54,20 +54,23 @@ final class MessagesManager {
     // Tout mes messages send or received triés par dates
     func getMessages(user_id: String) async throws -> [Message] {
         var myMessages = [Message]()
-        
-        let querySnapshot = try? await db.collectionGroup("messages").whereFilter(Filter.orFilter([
-            Filter.whereField("from_id", isEqualTo: user_id),
-            Filter.whereField("to_id", isEqualTo: user_id)
-        ]))
-            .order(by: "date_send")
-            .getDocuments()
-        
-        if let snap = querySnapshot {
-            for doc in snap.documents {
-                let msg = try doc.data(as: Message.self)
-                myMessages.append(msg)
-                print("\(msg.id)")
+        do {
+            let querySnapshot = try? await db.collectionGroup("messages").whereFilter(Filter.orFilter([
+                Filter.whereField("from_id", isEqualTo: user_id),
+                Filter.whereField("to_id", isEqualTo: user_id)
+            ]))
+                .order(by: "date_send")
+                .getDocuments()
+            
+            if let snap = querySnapshot {
+                for doc in snap.documents {
+                    let msg = try doc.data(as: Message.self)
+                    myMessages.append(msg)
+                    print("\(msg.id)")
+                }
             }
+        } catch {
+            print("getMessages - Error getting documents: \(error.localizedDescription)")
         }
         return myMessages
     }

@@ -72,22 +72,6 @@ struct Message: Identifiable, Codable {
         case date_send = "date_send"
         case room_id = "room_id"
     }
-    
-    init(
-        id: String,
-        from_id: String,
-        to_id: String,
-        message_text: String,
-        date_send: Timestamp,
-        room_id: String
-    ) {
-        self.id = id
-        self.from_id = from_id
-        self.to_id = to_id
-        self.message_text = message_text
-        self.date_send = Timestamp()
-        self.room_id = room_id
-    }
 }
 
 final class NewContactManager {
@@ -140,7 +124,7 @@ final class NewContactManager {
                 }
             }
         } catch {
-            print("Error getting documents: \(error.localizedDescription)")
+            print("searchContact - Error getting documents: \(error.localizedDescription)")
         }
         print("searchContact non trouvé")
         return ""

@@ -63,6 +63,7 @@ final class ContactManager {
                 contacts.append(qqun)
             })
         } catch {
+            print("getAllContacts - Error getting documents: \(error.localizedDescription)")
             return []
         }
         return contacts

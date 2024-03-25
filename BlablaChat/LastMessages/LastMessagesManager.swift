@@ -53,7 +53,7 @@ final class LastMessagesManager {
                 members.append(membre)
             }
         } catch {
-            print("getMyRooms - Error getting documents: \(error.localizedDescription)")
+            print("getMyRooms - Error getting documents from members: \(error.localizedDescription)")
         }
         return members
     }

@@ -69,7 +69,7 @@ struct ListeMessagesView: View {
             .navigationBarItems(
                 leading: Image(systemName: "person.fill"),
                 trailing: NavigationLink(
-                    destination: monProfil(),
+                    destination: MonProfil(),
                     label: {Image(systemName: "square.and.pencil")}
                 )
             )
@@ -77,7 +77,7 @@ struct ListeMessagesView: View {
     }
 }
 
-struct maListe: View {
+struct MonProfil: View {
     var body: some View {
         Text("Contacts")
     }

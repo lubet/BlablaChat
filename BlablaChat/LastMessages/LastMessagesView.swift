@@ -137,7 +137,7 @@ struct LastMessagesView: View {
             .navigationBarItems(
                 leading: Image(systemName: "person.fill"),
                 trailing: NavigationLink(
-                    destination: monProfil(),
+                    destination: NewContact(),
                     label: {Image(systemName: "square.and.pencil")}
                 )
             )
@@ -146,9 +146,9 @@ struct LastMessagesView: View {
 }
 
 
-struct monProfil: View {
+struct NewContact: View {
     var body: some View {
-        Text("Contacts")
+        Text("Liste des Contacts")
     }
 }
 struct LastMessagesView_Previews: PreviewProvider {

@@ -37,6 +37,7 @@ struct LastMessage: Identifiable, Codable {
 class LastMessagesViewModel: ObservableObject {
     
     @Published private(set) var lastMessages: [LastMessage] = []
+    @Published private(set) var filteredMessages: [LastMessage] = []
     @Published var searchText: String = ""
     
     private var members: [Member] = []
@@ -59,7 +60,17 @@ class LastMessagesViewModel: ObservableObject {
     }
 
     private func filterLastMessages(searchText: String) {
+        guard !searchText.isEmpty else {
+            filteredMessages = []
+            return
+        }
         
+        let search = searchText.lowercased()
+        filteredMessages = lastMessages.filter({ message in
+            let emailContainsSearch = message.room_name.lowercased().contains(search)
+            let messageContainsSearch 
+            
+        })
     }
     
     func getLastMessages() async {

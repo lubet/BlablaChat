@@ -86,26 +86,22 @@ struct NewContactView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            List {
-                VStack {
-                    ForEach(filteredContacts) { oneContact in
-                        // Text(oneContact.nom)
-                        ContactCellView(lecontact: oneContact)
-                    }
+        List {
+            VStack {
+                ForEach(filteredContacts) { oneContact in
+                    ContactCellView(lecontact: oneContact)
                 }
             }
-            bottomMessageBar
+        }
+        bottomMessageBar
             .navigationTitle("Contacts")
             .alert(isPresented: $showAlert) {
                 getAlert()
             }
-        }
-        .task { await viewModel.getContacts() }
-        .searchable(text: $searchText, prompt: "Recherche d'un contact")
+            .task { await viewModel.getContacts() }
+            .searchable(text: $searchText, prompt: "Recherche d'un contact")
     }
 }
-
 
 struct NewContactView_Previews: PreviewProvider {
     static var previews: some View {

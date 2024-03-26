@@ -30,7 +30,7 @@ struct HandleSendView: View {
     let to_email: String = "11" // destinaire
 
     var body: some View {
-        NavigationView {
+        // NavigationView {
             VStack {
                 Spacer()
                 HStack {
@@ -50,7 +50,7 @@ struct HandleSendView: View {
             .padding()
             .navigationTitle("Nouveau message")
             .background(Color.gray.opacity(0.3).cornerRadius(10))
-        }
+        //}
     }
 }
 

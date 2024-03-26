@@ -50,7 +50,7 @@ struct ListeMessagesView: View {
     @ObservedObject var listViewModel: ListeMessagesViewModel = ListeMessagesViewModel()
     
     var body: some View {
-        NavigationView {
+        //NavigationView {
             List {
                 ForEach(listViewModel.ListArray) { un in
                     HStack {
@@ -73,7 +73,7 @@ struct ListeMessagesView: View {
                     label: {Image(systemName: "square.and.pencil")}
                 )
             )
-        }
+        //}
     }
 }
 

@@ -14,7 +14,7 @@ struct ContactCellView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack {
+            VStack {
                 Text(lecontact.nom)
                     .font(.headline)
                     .foregroundColor(.black)
@@ -26,7 +26,7 @@ struct ContactCellView: View {
             .padding()
             // .background(Color.black.opacity(0.05))
         }
-        .padding(.horizontal,18)
+        .padding(.horizontal,10)
     }
 }
 

@@ -56,7 +56,7 @@ struct LoginView: View {
     @State var image: UIImage?
     
     var body: some View {
-        NavigationView {
+        //NavigationView {
             ScrollView {
                 VStack {
                     Button {
@@ -125,7 +125,7 @@ struct LoginView: View {
                     Spacer()
                 }
             }
-        }
+        //}
         .background(Color(.init("GrisClair")))
         .padding()
         // Image

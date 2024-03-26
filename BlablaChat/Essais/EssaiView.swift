@@ -21,7 +21,7 @@ struct EssaiView: View {
     @StateObject private var vm = EssaiViewViewModel()
     
     var body: some View {
-        NavigationView {
+        //NavigationView {
             VStack {
                 Spacer()
                 HStack {
@@ -43,7 +43,7 @@ struct EssaiView: View {
             .padding()
             .navigationTitle("Nouveau message")
             .background(Color.gray.opacity(0.3).cornerRadius(10))
-        }
+        //}
     }
 }
 

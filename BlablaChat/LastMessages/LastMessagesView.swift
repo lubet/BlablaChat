@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import Combine
 
 // A mettre dans la View
 struct LastMessage: Identifiable, Codable {
@@ -36,10 +37,30 @@ struct LastMessage: Identifiable, Codable {
 class LastMessagesViewModel: ObservableObject {
     
     @Published private(set) var lastMessages: [LastMessage] = []
+    @Published var searchText: String = ""
     
     private var members: [Member] = []
     
     private var rooms: [Room] = []
+    
+    private var cancellable = Set<AnyCancellable>()
+    
+    init() {
+        addSubscribers()
+    }
+    
+    private func addSubscribers() {
+        $searchText
+            .debounce(for: 0.3, scheduler: DispatchQueue.main)
+            .sink { [weak self] searchText in
+                self?.filterLastMessages(searchText: searchText)
+            }
+            .store(in: &cancellable)
+    }
+
+    private func filterLastMessages(searchText: String) {
+        
+    }
     
     func getLastMessages() async {
         
@@ -94,6 +115,7 @@ struct LastMessagesView: View {
                 }
                 .onDelete(perform: viewModel.deleteLast)
             }
+            .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
             .task { await viewModel.getLastMessages() }
             // .listStyle()
             .navigationTitle("Messages")

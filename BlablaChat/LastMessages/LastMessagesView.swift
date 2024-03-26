@@ -46,6 +46,10 @@ class LastMessagesViewModel: ObservableObject {
     
     private var cancellable = Set<AnyCancellable>()
     
+    var isSearching: Bool {
+        !searchText.isEmpty
+    }
+    
     init() {
         addSubscribers()
     }
@@ -121,7 +125,7 @@ struct LastMessagesView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.lastMessages) { lastMessage in
+                ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
                     LastMessagesCellView(lastMessage: lastMessage)
                 }
                 .onDelete(perform: viewModel.deleteLast)

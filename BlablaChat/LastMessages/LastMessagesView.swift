@@ -68,8 +68,8 @@ class LastMessagesViewModel: ObservableObject {
         let search = searchText.lowercased()
         filteredMessages = lastMessages.filter({ message in
             let emailContainsSearch = message.room_name.lowercased().contains(search)
-            let messageContainsSearch 
-            
+            let messageContainsSearch = message.message_texte.lowercased().contains(search)
+            return emailContainsSearch || messageContainsSearch
         })
     }
     

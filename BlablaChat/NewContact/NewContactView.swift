@@ -18,17 +18,49 @@
 // -----------------------------------------------------
 
 import SwiftUI
+import Combine
 
 @MainActor
 final class NewContactViewModel: ObservableObject {
     
-    // init() { }
-    
     @Published private(set) var mesContacts: [Contact] = []
-    // private(set) var pairMembres: [Member] = []
+    @Published private(set) var filteredContacts: [Contact] = []
+    @Published var searchText: String = ""
+    
+    private var cancellable = Set<AnyCancellable>()
 
+    var isSearching: Bool {
+        !searchText.isEmpty
+    }
+
+    init() {
+        addSubscribers()
+    }
+    
+    private func addSubscribers() {
+        $searchText
+            .debounce(for: 0.3, scheduler: DispatchQueue.main)
+            .sink { [weak self] searchText in
+                self?.filterContacts(searchText: searchText)
+            }
+            .store(in: &cancellable)
+    }
+
+    private func filterContacts(searchText: String) {
+        guard !searchText.isEmpty else {
+            filteredContacts = []
+            return
+        }
+        
+        let search = searchText.lowercased()
+        filteredContacts = mesContacts.filter({ contact in
+            let emailContainsSearch = contact.nom.lowercased().contains(search)
+            let messageContainsSearch = contact.email.lowercased().contains(search)
+            return emailContainsSearch || messageContainsSearch
+        })
+    }
+    
     func getContacts() async {
-            // self.mesContacts = await ContactManager.shared.getAllContacts()
         self.mesContacts = await ContactManager.shared.mockContacts()
     }
 
@@ -80,26 +112,22 @@ struct NewContactView: View {
     @State var alertTitle: String = ""
     @State var showAlert: Bool = false
     
-    var filteredContacts: [Contact] {
-        guard !searchText.isEmpty else { return viewModel.mesContacts}
-        return viewModel.mesContacts.filter { $0.nom.localizedCaseInsensitiveContains(searchText)}
-    }
-    
     var body: some View {
         List {
             VStack {
-                ForEach(filteredContacts) { oneContact in
+                ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts) { oneContact in
                     ContactCellView(lecontact: oneContact)
                 }
             }
         }
+        .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un contact")
         bottomMessageBar
             .navigationTitle("Contacts")
             .alert(isPresented: $showAlert) {
                 getAlert()
             }
             .task { await viewModel.getContacts() }
-            .searchable(text: $searchText, prompt: "Recherche d'un contact")
+            // .searchable(text: $searchText, prompt: "Recherche d'un contact")
     }
 }
 
@@ -141,7 +169,7 @@ extension NewContactView {
     func sendButtonPresses() {
         if textIsCorrect() {
             Task {
-                try? await viewModel.saveMessage(to_email: filteredContacts[0].email, textMessage: messageTexte)
+                try? await viewModel.saveMessage(to_email: viewModel.filteredContacts[0].email, textMessage: messageTexte)
             }
         }
     }
@@ -152,7 +180,7 @@ extension NewContactView {
             showAlert.toggle()
             return false
         }
-        if filteredContacts.count != 1 {
+        if viewModel.filteredContacts.count != 1 {
             alertTitle = "Veuillez selectionner un contact"
             showAlert.toggle()
             return false

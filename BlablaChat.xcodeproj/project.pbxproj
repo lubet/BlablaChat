@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C01826742BB3273A00CBA5F2 /* RoomMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01826732BB3273A00CBA5F2 /* RoomMessagesView.swift */; };
 		C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */; };
 		C01FE5AB2B67F47E0049B9EE /* ContactCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */; };
 		C01FE5AD2B67F7F70049B9EE /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C01826732BB3273A00CBA5F2 /* RoomMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMessagesView.swift; sourceTree = "<group>"; };
 		C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchXavierView.swift; sourceTree = "<group>"; };
 		C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCellView.swift; sourceTree = "<group>"; };
 		C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
@@ -92,6 +94,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C01826722BB3270800CBA5F2 /* RoomMessages */ = {
+			isa = PBXGroup;
+			children = (
+				C01826732BB3273A00CBA5F2 /* RoomMessagesView.swift */,
+			);
+			path = RoomMessages;
+			sourceTree = "<group>";
+		};
 		C01FE5A72B67F0610049B9EE /* StandBy */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +154,7 @@
 		C047E9C22B45625C00C6D48F /* BlablaChat */ = {
 			isa = PBXGroup;
 			children = (
+				C01826722BB3270800CBA5F2 /* RoomMessages */,
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
 				C047E9C52B45625C00C6D48F /* LoginView.swift */,
 				C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */,
@@ -306,6 +317,7 @@
 				C047E9E42B45A8FB00C6D48F /* UserManager.swift in Sources */,
 				C01FE5AB2B67F47E0049B9EE /* ContactCellView.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
+				C01826742BB3273A00CBA5F2 /* RoomMessagesView.swift in Sources */,
 				C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */,
 				C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,

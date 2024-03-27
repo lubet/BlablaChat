@@ -123,10 +123,12 @@ struct LastMessagesView: View {
     @ObservedObject var viewModel: LastMessagesViewModel = LastMessagesViewModel()
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
-                    LastMessagesCellView(lastMessage: lastMessage)
+                    NavigationLink(value: lastMessage.room_id) {
+                        LastMessagesCellView(lastMessage: lastMessage)
+                    }
                 }
                 .onDelete(perform: viewModel.deleteLast)
             }
@@ -134,6 +136,9 @@ struct LastMessagesView: View {
             .task { await viewModel.getLastMessages() }
             // .listStyle()
             .navigationTitle("Messages")
+            .navigationDestination(for: String.self) { value in
+                RoomMessagesView(value: value)
+            }
             .navigationBarItems(
                 leading: Image(systemName: "person.fill"),
                 trailing: NavigationLink(

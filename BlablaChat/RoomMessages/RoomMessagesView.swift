@@ -8,15 +8,21 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 struct RoomMessagesView: View {
+    
+    let value: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+
+        Text("value \(value)")
     }
 }
 
 struct RoomMessagesView_Previews: PreviewProvider {
     static var previews: some View {
-        RoomMessagesView()
+        RoomMessagesView(value: "Essai")
     }
 }

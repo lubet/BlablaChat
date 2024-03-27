@@ -68,7 +68,6 @@ struct MessagesView: View {
     @StateObject private var viewModel = MessagesViewModel()
     
     var body: some View {
-        NavigationStack {
             List {
                 VStack {
                     ForEach(viewModel.messageItems) { oneMessage in
@@ -78,7 +77,6 @@ struct MessagesView: View {
             }
             .task { await viewModel.fetchLastMessages() }
             .navigationTitle("Conversations")
-        }
     }
 }
 

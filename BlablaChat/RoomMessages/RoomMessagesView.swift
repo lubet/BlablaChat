@@ -11,6 +11,19 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+class RoomMessagesViewModel: ObservableObject {
+    
+    @Published private(set) var RoomMessages: [Message] = []
+    
+    func getRoomMessages(room_id: String) async throws {
+    
+        let RoomMessages = try await RoomMessagesManager.shared.getRoomMessages(room_id: room_id)
+        
+    }
+    
+}
+
+
 struct RoomMessagesView: View {
     
     let value: String

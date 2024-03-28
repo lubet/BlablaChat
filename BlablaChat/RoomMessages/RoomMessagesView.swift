@@ -19,7 +19,6 @@ class RoomMessagesViewModel: ObservableObject {
     func getRoomMessages(room_id: String) async throws {
     
         let RoomMessages = try await RoomMessagesManager.shared.getRoomMessages(room_id: room_id)
-        
     }
     
 }
@@ -27,11 +26,19 @@ class RoomMessagesViewModel: ObservableObject {
 
 struct RoomMessagesView: View {
     
+    @StateObject var viewModel = RoomMessagesViewModel()
+    
     let value: String
     
     var body: some View {
-        
-        Text("\(value)")
+        ScrollView {
+            ForEach(viewModel.RoomMessages) { message in
+                Text("\(message.message_text)")
+            }
+        }
+        .task {
+            try? await viewModel.getRoomMessages(room_id: value)
+        }
     }
 }
 

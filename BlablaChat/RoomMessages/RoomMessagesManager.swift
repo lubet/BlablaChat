@@ -17,18 +17,6 @@ final class RoomMessagesManager {
     
     init() { }
 
-    // -----------------------------------------------------------------
-    private let roomCollection = db.collection("rooms")
-    
-    private func roomDocument(room_id: String) -> DocumentReference {
-        return roomCollection.document(room_id)
-    }
-    
-    // Collection messages - sous collection de rooms
-    private func messageCollection(room_id: String) -> CollectionReference {
-        roomDocument(room_id: room_id).collection("messages")
-    }
-
     // Tous les messages d'un room en ordre décroissant
     func getRoomMessages(room_id: String) async throws -> [Message] {
         // Collecter tous messages avec le room_id

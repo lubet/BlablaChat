@@ -29,8 +29,8 @@ struct RoomMessagesView: View {
     let value: String
     
     var body: some View {
-
-        Text("value \(value)")
+        
+        
     }
 }
 

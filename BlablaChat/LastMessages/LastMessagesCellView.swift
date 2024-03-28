@@ -20,7 +20,7 @@ struct LastMessagesCellView: View {
                     .font(.body).bold()
                     //.background(Color.white)
                     //.frame(width: 200,alignment: .leading)
-                    .foregroundColor(Color.black)
+                    //.foregroundColor(Color.black)
                     //.multilineTextAlignment(.leading)
                 
                 Text("\(lastMessage.message_texte)")

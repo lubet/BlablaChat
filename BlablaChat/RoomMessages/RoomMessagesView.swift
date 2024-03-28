@@ -11,6 +11,7 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+@MainActor
 class RoomMessagesViewModel: ObservableObject {
     
     @Published private(set) var RoomMessages: [Message] = []
@@ -30,7 +31,7 @@ struct RoomMessagesView: View {
     
     var body: some View {
         
-        
+        Text("\(value)")
     }
 }
 

@@ -25,7 +25,7 @@ final class RoomMessagesManager {
         do {
             let querySnapshot = try? await db.collectionGroup("messages")
                 .whereField("room_id", isEqualTo: room_id)
-                .order(by: "date_send", descending: true)
+                .order(by: "date_send")
                 .getDocuments()
             
             if let snap = querySnapshot {
@@ -38,6 +38,7 @@ final class RoomMessagesManager {
         } catch {
             print("getMessages - Error getting documents: \(error.localizedDescription)")
         }
+        print("getRoomMessages: \(roomMessages)")
         return roomMessages
     }
 }

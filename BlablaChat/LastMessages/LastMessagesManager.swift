@@ -38,6 +38,23 @@ final class LastMessagesManager {
         return memberCollection.document(user_id)
     }
     
+    // Tous les rooms triés par date
+    func getAllRooms() async throws -> [Room] {
+        var rooms = [Room]()
+        do {
+            let querySnapshot = try await roomCollection
+                .order(by: "date_created")
+                .getDocuments()
+            for document in querySnapshot.documents {
+                let room = try document.data(as: Room.self)
+                rooms.append(room)
+            }
+        } catch {
+            print("getAllRooms - Error getting documents: \(error.localizedDescription)")
+        }
+        return rooms
+    }
+    
     // Récupérer de member les room_id pour lequelles je suis membre
     func getMyRoomsId(user_id: String) async throws -> [Member] {
         var members = [Member]()
@@ -58,7 +75,4 @@ final class LastMessagesManager {
         return members
     }
     
-    func getLastMessages(room_id: String) {
-        
-    }
 }

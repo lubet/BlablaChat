@@ -18,7 +18,8 @@ struct BlablaChatApp: App {
             // NewContactView()
             // LoginView()
             RootView()
-            // MessagesView()
+            // RoomMessagesView(room_id)
+            // MessagesView() obsoléte
         }
     }
 }

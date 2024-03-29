@@ -17,8 +17,8 @@ class RoomMessagesViewModel: ObservableObject {
     @Published private(set) var RoomMessages: [Message] = []
     
     func getRoomMessages(room_id: String) async throws {
-    
-        let RoomMessages = try await RoomMessagesManager.shared.getRoomMessages(room_id: room_id)
+        self.RoomMessages = try await RoomMessagesManager.shared.getRoomMessages(room_id: room_id)
+        print("RoomMessages: \(RoomMessages)")
     }
     
 }
@@ -26,18 +26,24 @@ class RoomMessagesViewModel: ObservableObject {
 
 struct RoomMessagesView: View {
     
-    @StateObject var viewModel = RoomMessagesViewModel()
+    @StateObject private var viewModel = RoomMessagesViewModel()
+    
     
     let value: String
     
     var body: some View {
-        ScrollView {
+        List {
             ForEach(viewModel.RoomMessages) { message in
                 Text("\(message.message_text)")
             }
         }
+        .navigationTitle("Messages")
         .task {
-            try? await viewModel.getRoomMessages(room_id: value)
+            do {
+                try await viewModel.getRoomMessages(room_id: value)
+            } catch {
+                print("RoomMessagesView - Error getting documents: \(error.localizedDescription)")
+            }
         }
     }
 }

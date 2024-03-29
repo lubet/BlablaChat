@@ -88,13 +88,11 @@ class LastMessagesViewModel: ObservableObject {
             // Mes room_id dans membre
             self.members = try await LastMessagesManager.shared.getMyRoomsId(user_id: user_id)
 
-            // Tous les rooms avec le dernier message
-            self.rooms = try await MessagesManager.shared.getAllRooms()
+            // Tous les rooms avec le dernier message (fait partie de la structure de Room)
+            self.rooms = try await LastMessagesManager.shared.getAllRooms()
             
-            // Recherche du dernier message dans les rooms à l'aide de mes room_id de member
+            // Mise en relation de mes member/rooms avec toutes les rooms pour extraire mes derniers messages (contenu dans room)
             for member in members {
-                // print("from: \(member.from_id), to: \(member.to_id), room: \(member.room_id)")
-                // get le room qui correspond a
                 for room in rooms {
                     if member.room_id == room.room_id {
                         lastMessages.append(LastMessage(room_id: member.room_id, room_name: room.room_name,

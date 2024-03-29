@@ -12,10 +12,10 @@ import FirebaseFirestoreSwift
 @MainActor
 final class MessagesViewModel: ObservableObject {
     
-    @Published private(set) var RoomMessages: [Message] = []
+    @Published private(set) var messagesBubble: [MessageBubble] = []
     
     func getRoomMessages(room_id: String) async throws {
-        self.RoomMessages = try await MessagesManager.shared.getRoomMessages(room_id: room_id)
+        self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id)
         // print("RoomMessages: \(RoomMessages)")
     }
 }
@@ -28,8 +28,8 @@ struct MessagesView: View {
     
     var body: some View {
         List {
-            ForEach(viewModel.RoomMessages) { message in
-                Text("\(message.message_text)")
+            ForEach(viewModel.messagesBubble) { messageBubble in
+                MessagesCellView(messageBubble: messageBubble)
             }
         }
         .navigationTitle("Messages")

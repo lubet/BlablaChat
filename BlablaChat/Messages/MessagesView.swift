@@ -15,7 +15,11 @@ final class MessagesViewModel: ObservableObject {
     @Published private(set) var messagesBubble: [MessageBubble] = []
     
     func getRoomMessages(room_id: String) async throws {
-        self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id)
+        
+        let AuthUser = try AuthManager.shared.getAuthenticatedUser()
+        let user_id = AuthUser.uid
+        
+        self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
         // print("RoomMessages: \(RoomMessages)")
     }
 }

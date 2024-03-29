@@ -4,6 +4,8 @@
 //
 //  Created by Lubet-Moncla Xavier on 29/03/2024.
 //
+// Messages "bubble" d'un room
+//
 
 import Foundation
 import FirebaseFirestore
@@ -15,14 +17,15 @@ struct MessageBubble: Identifiable{
     let id: String
     let message_text: String
     let message_date: String
+    let send: Bool
     
-    init(id: String, message_text: String, message_date: String) {
+    init(id: String, message_text: String, message_date: String, send: Bool) {
         self.id = id
         self.message_text = message_text
         self.message_date = message_date
+        self.send = send
     }
 }
-
 
 final class MessagesManager {
     
@@ -30,10 +33,10 @@ final class MessagesManager {
     
     init() { }
 
-    // Tous les messages d'un room en ordre décroissant
-    func getRoomMessages(room_id: String) async throws -> [MessageBubble] {
-        // Collecter tous messages avec le room_id
+    // Tous les messages d'un room en ordre croissant pour affichage "bubble"
+    func getRoomMessages(room_id: String, user_id: String) async throws -> [MessageBubble] {
         var messagesBubble = [MessageBubble]()
+        var send: Bool
         
         do {
             let querySnapshot = try? await db.collectionGroup("messages")
@@ -44,15 +47,18 @@ final class MessagesManager {
             if let snap = querySnapshot {
                 for doc in snap.documents {
                     let msg = try doc.data(as: Message.self)
-                    let oneBubble = MessageBubble(id: UUID().uuidString, message_text: msg.message_text, message_date: timeStampToString(dateMessage: msg.date_send))
+                    if (msg.from_id == user_id) {
+                        send = true
+                    } else {
+                        send = false
+                    }
+                    let oneBubble = MessageBubble(id: UUID().uuidString, message_text: msg.message_text, message_date: timeStampToString(dateMessage: msg.date_send), send: send)
                     messagesBubble.append(oneBubble)
-                    print("\(msg.id)")
                 }
             }
         } catch {
             print("getMessages - Error getting documents: \(error.localizedDescription)")
         }
-        print("getRoomMessages: \(messagesBubble)")
         return messagesBubble
     }
 }

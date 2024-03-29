@@ -22,6 +22,6 @@ struct MessagesCellView: View {
 
 struct MessagesCellView_Previews: PreviewProvider {
     static var previews: some View {
-        MessagesCellView(messageBubble: MessageBubble(id: "123456", message_text: "Coucou", message_date: "12/01/2024"))
+        MessagesCellView(messageBubble: MessageBubble(id: "123456", message_text: "Coucou", message_date: "12/01/2024", send: true))
     }
 }

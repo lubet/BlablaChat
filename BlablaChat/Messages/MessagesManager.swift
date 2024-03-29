@@ -1,8 +1,8 @@
 //
-//  RoomMessagesManager.swift
+//  MessagesManager.swift
 //  BlablaChat
 //
-//  Created by Lubet-Moncla Xavier on 27/03/2024.
+//  Created by Lubet-Moncla Xavier on 29/03/2024.
 //
 
 import Foundation
@@ -11,9 +11,9 @@ import FirebaseFirestoreSwift
 
 private let db = Firestore.firestore()
 
-final class RoomMessagesManager {
+final class MessagesManager {
     
-    static let shared = RoomMessagesManager()
+    static let shared = MessagesManager()
     
     init() { }
 

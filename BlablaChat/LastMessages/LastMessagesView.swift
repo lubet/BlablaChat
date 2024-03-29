@@ -135,7 +135,7 @@ struct LastMessagesView: View {
             // .listStyle()
             .navigationTitle("Messages")
             .navigationDestination(for: String.self) { value in
-                RoomMessagesView(value: value)
+                MessagesView(value: value)
             }
             .navigationBarItems(
                 leading: Image(systemName: "person.fill"),

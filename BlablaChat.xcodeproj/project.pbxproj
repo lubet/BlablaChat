@@ -9,13 +9,15 @@
 /* Begin PBXBuildFile section */
 		C00CEF102BB55206004C7016 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C00CEF0F2BB55206004C7016 /* SDWebImageSwiftUI */; };
 		C00CEF122BB5538E004C7016 /* WebImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00CEF112BB5538E004C7016 /* WebImageView.swift */; };
-		C01826742BB3273A00CBA5F2 /* RoomMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01826732BB3273A00CBA5F2 /* RoomMessagesView.swift */; };
 		C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */; };
 		C01FE5AB2B67F47E0049B9EE /* ContactCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */; };
 		C01FE5AD2B67F7F70049B9EE /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */; };
 		C02A8C382BB1D62E005ECF0F /* LastMessagesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02A8C372BB1D62E005ECF0F /* LastMessagesCellView.swift */; };
 		C0326A132B6A2F4C005B8181 /* NavStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0326A122B6A2F4C005B8181 /* NavStackView.swift */; };
 		C03B72D12B5FA2BB0050C524 /* EssaiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03B72D02B5FA2BB0050C524 /* EssaiView.swift */; };
+		C0476E7D2BB71033000D860C /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0476E7C2BB71033000D860C /* MessagesView.swift */; };
+		C0476E7F2BB71086000D860C /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0476E7E2BB71086000D860C /* MessagesManager.swift */; };
+		C0476E812BB712A4000D860C /* MessagesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0476E802BB712A4000D860C /* MessagesCellView.swift */; };
 		C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */; };
 		C047E9C62B45625C00C6D48F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C52B45625C00C6D48F /* LoginView.swift */; };
 		C047E9C82B45625D00C6D48F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C047E9C72B45625D00C6D48F /* Assets.xcassets */; };
@@ -31,7 +33,6 @@
 		C047E9E42B45A8FB00C6D48F /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9E32B45A8FB00C6D48F /* UserManager.swift */; };
 		C048F18A2BAF2C1200742CD2 /* ListeMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C048F1892BAF2C1200742CD2 /* ListeMessagesView.swift */; };
 		C048F18C2BAF2E2400742CD2 /* LastMessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C048F18B2BAF2E2400742CD2 /* LastMessagesManager.swift */; };
-		C0610C2D2BB424F300B3EFA1 /* RoomMessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0610C2C2BB424F300B3EFA1 /* RoomMessagesManager.swift */; };
 		C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A8DB82BAEC5030007436C /* TimestampToString.swift */; };
 		C07564EC2BADEA8500E8D7D9 /* LastMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07564EB2BADEA8500E8D7D9 /* LastMessagesView.swift */; };
 		C07F56482B7F980200AF7577 /* NewContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07F56472B7F980200AF7577 /* NewContactManager.swift */; };
@@ -46,13 +47,15 @@
 
 /* Begin PBXFileReference section */
 		C00CEF112BB5538E004C7016 /* WebImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImageView.swift; sourceTree = "<group>"; };
-		C01826732BB3273A00CBA5F2 /* RoomMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMessagesView.swift; sourceTree = "<group>"; };
 		C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchXavierView.swift; sourceTree = "<group>"; };
 		C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCellView.swift; sourceTree = "<group>"; };
 		C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		C02A8C372BB1D62E005ECF0F /* LastMessagesCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesCellView.swift; sourceTree = "<group>"; };
 		C0326A122B6A2F4C005B8181 /* NavStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavStackView.swift; sourceTree = "<group>"; };
 		C03B72D02B5FA2BB0050C524 /* EssaiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssaiView.swift; sourceTree = "<group>"; };
+		C0476E7C2BB71033000D860C /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
+		C0476E7E2BB71086000D860C /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
+		C0476E802BB712A4000D860C /* MessagesCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCellView.swift; sourceTree = "<group>"; };
 		C047E9C02B45625C00C6D48F /* BlablaChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlablaChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlablaChatApp.swift; sourceTree = "<group>"; };
 		C047E9C52B45625C00C6D48F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -65,7 +68,6 @@
 		C047E9E32B45A8FB00C6D48F /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		C048F1892BAF2C1200742CD2 /* ListeMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeMessagesView.swift; sourceTree = "<group>"; };
 		C048F18B2BAF2E2400742CD2 /* LastMessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesManager.swift; sourceTree = "<group>"; };
-		C0610C2C2BB424F300B3EFA1 /* RoomMessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMessagesManager.swift; sourceTree = "<group>"; };
 		C06A8DB82BAEC5030007436C /* TimestampToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampToString.swift; sourceTree = "<group>"; };
 		C07564EB2BADEA8500E8D7D9 /* LastMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesView.swift; sourceTree = "<group>"; };
 		C07F56472B7F980200AF7577 /* NewContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContactManager.swift; sourceTree = "<group>"; };
@@ -94,15 +96,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C01826722BB3270800CBA5F2 /* RoomMessages */ = {
-			isa = PBXGroup;
-			children = (
-				C01826732BB3273A00CBA5F2 /* RoomMessagesView.swift */,
-				C0610C2C2BB424F300B3EFA1 /* RoomMessagesManager.swift */,
-			);
-			path = RoomMessages;
-			sourceTree = "<group>";
-		};
 		C01FE5A72B67F0610049B9EE /* StandBy */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +130,16 @@
 			path = Essais;
 			sourceTree = "<group>";
 		};
+		C0476E7B2BB70FF9000D860C /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				C0476E7C2BB71033000D860C /* MessagesView.swift */,
+				C0476E7E2BB71086000D860C /* MessagesManager.swift */,
+				C0476E802BB712A4000D860C /* MessagesCellView.swift */,
+			);
+			path = Messages;
+			sourceTree = "<group>";
+		};
 		C047E9B72B45625C00C6D48F = {
 			isa = PBXGroup;
 			children = (
@@ -160,7 +163,7 @@
 				C047E9C52B45625C00C6D48F /* LoginView.swift */,
 				C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */,
 				C07564EA2BADEA4F00E8D7D9 /* LastMessages */,
-				C01826722BB3270800CBA5F2 /* RoomMessages */,
+				C0476E7B2BB70FF9000D860C /* Messages */,
 				C06B1DDF2B74D4330016E8B6 /* NewContact */,
 				C02BEDAC2B7E012600C15D11 /* Managers */,
 				C0B9DC842B5EB05B006C2B46 /* Components */,
@@ -297,6 +300,7 @@
 				C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */,
 				C0CB4BF62B6922F200DCC6E9 /* NewContactView.swift in Sources */,
 				C0326A132B6A2F4C005B8181 /* NavStackView.swift in Sources */,
+				C0476E7D2BB71033000D860C /* MessagesView.swift in Sources */,
 				C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */,
 				C03B72D12B5FA2BB0050C524 /* EssaiView.swift in Sources */,
 				C0FB12A12B5536030068C633 /* NewMessageCellView.swift in Sources */,
@@ -309,15 +313,15 @@
 				C047E9E42B45A8FB00C6D48F /* UserManager.swift in Sources */,
 				C01FE5AB2B67F47E0049B9EE /* ContactCellView.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
-				C01826742BB3273A00CBA5F2 /* RoomMessagesView.swift in Sources */,
 				C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */,
 				C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,
+				C0476E7F2BB71086000D860C /* MessagesManager.swift in Sources */,
 				C0D565F42B7CAF8E00EE0DA0 /* RootView.swift in Sources */,
 				C048F18A2BAF2C1200742CD2 /* ListeMessagesView.swift in Sources */,
 				C048F18C2BAF2E2400742CD2 /* LastMessagesManager.swift in Sources */,
+				C0476E812BB712A4000D860C /* MessagesCellView.swift in Sources */,
 				C047E9E22B45880400C6D48F /* StorageManager.swift in Sources */,
-				C0610C2D2BB424F300B3EFA1 /* RoomMessagesManager.swift in Sources */,
 				C047E9C62B45625C00C6D48F /* LoginView.swift in Sources */,
 				C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */,
 			);

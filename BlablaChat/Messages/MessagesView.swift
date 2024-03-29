@@ -1,10 +1,8 @@
 //
-//  RoomMessagesView.swift
+//  MessagesView.swift
 //  BlablaChat
 //
-//  Created by Lubet-Moncla Xavier on 26/03/2024.
-//
-// Tous les messages concernant un room triés par date décroissante
+//  Created by Lubet-Moncla Xavier on 29/03/2024.
 //
 
 import SwiftUI
@@ -12,22 +10,19 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 @MainActor
-class RoomMessagesViewModel: ObservableObject {
+final class MessagesViewModel: ObservableObject {
     
     @Published private(set) var RoomMessages: [Message] = []
     
     func getRoomMessages(room_id: String) async throws {
-        self.RoomMessages = try await RoomMessagesManager.shared.getRoomMessages(room_id: room_id)
-        print("RoomMessages: \(RoomMessages)")
+        self.RoomMessages = try await MessagesManager.shared.getRoomMessages(room_id: room_id)
+        // print("RoomMessages: \(RoomMessages)")
     }
-    
 }
 
-
-struct RoomMessagesView: View {
+struct MessagesView: View {
     
-    @StateObject private var viewModel = RoomMessagesViewModel()
-    
+    @StateObject private var viewModel = MessagesViewModel()
     
     let value: String
     
@@ -48,8 +43,8 @@ struct RoomMessagesView: View {
     }
 }
 
-struct RoomMessagesView_Previews: PreviewProvider {
+struct MessagesView_Previews: PreviewProvider {
     static var previews: some View {
-        RoomMessagesView(value: "Essai")
+        MessagesView(value: "123456")
     }
 }

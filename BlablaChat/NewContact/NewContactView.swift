@@ -6,16 +6,14 @@
 //
 // Choisir un contact, saisir un message et l'envoyer
 // 1) Vérifier si le contact choisit est présent dans "users"
-//       si il ne l'est pas -> le creer et prendre son user_id
+//       si il ne l'est pas -> le creer et prendre son user_id qui devient le contact_id)
 //       si il y est -> prendre son user-id
-// 2) Chercher dans "group_member" si il existe les deux user_id
-//      avec le même conversation_id
-//      si oui -> 3)
-//      si non -> créer 2 enregs:
-//          mon_user_id + conversation_id
-//          destinataire_user_id + même conversation_id
-// 3) Créer le message avec le conversation_id
-// -----------------------------------------------------
+// 2) Chercher dans "group_member" si il existe un enreg avec mon user_id et le contact_id ayant le même room_id (conversation)
+//      si oui: une conversation existe déjà -> 3)
+//      si non -> créer un enreg dans room (nouvelle conversation)
+//                créer un enreg dans membre (mon user_id, contact_id, room-id. (nouveau membre: moi et le contact).
+// 3) Créer le message avec le room_id
+// ---------------------------------------------------------------------------------------------------------------------------
 
 import SwiftUI
 import Combine

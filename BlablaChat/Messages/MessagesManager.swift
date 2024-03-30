@@ -48,9 +48,9 @@ final class MessagesManager {
                 for doc in snap.documents {
                     let msg = try doc.data(as: Message.self)
                     if (msg.from_id == user_id) {
-                        received.toggle() // TODO Penser à le remettre convenablement
+                        received.toggle() // received = true
                     } else {
-                        received.toggle()
+                        received.toggle() // received = false
                     }
                     let oneBubble = MessageBubble(id: UUID().uuidString, message_text: msg.message_text, message_date: timeStampToString(dateMessage: msg.date_send), received: received)
                     messagesBubble.append(oneBubble)

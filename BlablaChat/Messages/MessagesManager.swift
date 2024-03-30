@@ -4,7 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 29/03/2024.
 //
-// Messages "bubble" d'un room
+// Tous les messages d'un room (conversation avec quelqu'un)
 //
 
 import Foundation
@@ -17,13 +17,13 @@ struct MessageBubble: Identifiable{
     let id: String
     let message_text: String
     let message_date: String
-    let send: Bool
+    let received: Bool
     
-    init(id: String, message_text: String, message_date: String, send: Bool) {
+    init(id: String, message_text: String, message_date: String, received: Bool) {
         self.id = id
         self.message_text = message_text
         self.message_date = message_date
-        self.send = send
+        self.received = received
     }
 }
 
@@ -36,7 +36,7 @@ final class MessagesManager {
     // Tous les messages d'un room en ordre croissant pour affichage "bubble"
     func getRoomMessages(room_id: String, user_id: String) async throws -> [MessageBubble] {
         var messagesBubble = [MessageBubble]()
-        var send: Bool
+        var received: Bool = false
         
         do {
             let querySnapshot = try? await db.collectionGroup("messages")
@@ -48,11 +48,11 @@ final class MessagesManager {
                 for doc in snap.documents {
                     let msg = try doc.data(as: Message.self)
                     if (msg.from_id == user_id) {
-                        send = true
+                        received.toggle() // TODO Penser à le remettre convenablement
                     } else {
-                        send = false
+                        received.toggle()
                     }
-                    let oneBubble = MessageBubble(id: UUID().uuidString, message_text: msg.message_text, message_date: timeStampToString(dateMessage: msg.date_send), send: send)
+                    let oneBubble = MessageBubble(id: UUID().uuidString, message_text: msg.message_text, message_date: timeStampToString(dateMessage: msg.date_send), received: received)
                     messagesBubble.append(oneBubble)
                 }
             }

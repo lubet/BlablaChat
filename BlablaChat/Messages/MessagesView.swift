@@ -31,10 +31,14 @@ struct MessagesView: View {
     let value: String
     
     var body: some View {
-        List {
-            ForEach(viewModel.messagesBubble) { messageBubble in
-                MessagesCellView(messageBubble: messageBubble)
+        VStack {
+            ScrollView {
+                ForEach(viewModel.messagesBubble) { messageBubble in
+                    MessagesCellView(message: messageBubble)
+                }
             }
+            .padding(.top, 10)
+            .background(.white)
         }
         .navigationTitle("Messages")
         .task {

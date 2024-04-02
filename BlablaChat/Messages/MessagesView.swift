@@ -16,13 +16,23 @@ final class MessagesViewModel: ObservableObject {
     
     @Published private(set) var messagesBubble: [MessageBubble] = []
     
+    var user_id:String = ""
+    
+    // Tous les messages d'un room
     func getRoomMessages(room_id: String) async throws {
         
         let AuthUser = try AuthManager.shared.getAuthenticatedUser()
-        let user_id = AuthUser.uid
+        user_id = AuthUser.uid
         
         self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
-        // print("RoomMessages: \(RoomMessages)")
+    }
+        
+    func saveMessage(to_id: String, message_text: String, room_id: String) async throws {
+        do {
+            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: to_id, message_text: message_text, room_id: room_id)
+        } catch {
+            print("Error saveMessage: \(error.localizedDescription)")
+        }
     }
 }
 
@@ -32,7 +42,7 @@ struct MessagesView: View {
     
     @State var messageText: String = ""
     
-    let value: String
+    let value: String // room_id
     
     var body: some View {
         VStack {
@@ -73,15 +83,18 @@ extension MessagesView {
                 .onTapGesture {
                     messageText = ""
                 }
-
+            
             TextField("Message", text: $messageText, axis: .vertical)
                 .foregroundColor(Color.black)
-
+            
             Image(systemName: "paperplane.circle")
                 .padding()
                 .offset(x:10)
                 .foregroundColor(Color.blue)
                 .opacity(messageText.isEmpty ? 0.0 : 1.0)
+                .onTapGesture {
+                    // viewModel.saveMessage(to_id: <#T##String#>, message_text: messageText, room_id: value)
+                }
         }
         .font(.headline)
         // .padding()

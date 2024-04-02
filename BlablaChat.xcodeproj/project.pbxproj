@@ -36,6 +36,7 @@
 		C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A8DB82BAEC5030007436C /* TimestampToString.swift */; };
 		C07564EC2BADEA8500E8D7D9 /* LastMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07564EB2BADEA8500E8D7D9 /* LastMessagesView.swift */; };
 		C07F56482B7F980200AF7577 /* NewContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07F56472B7F980200AF7577 /* NewContactManager.swift */; };
+		C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B8555B2BBBFD5900B3956A /* TextBarView.swift */; };
 		C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */; };
 		C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C1A9482B62ACC400646851 /* SearchNick.swift */; };
 		C0CB4BF42B68FD6600DCC6E9 /* ContactEssaiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CB4BF32B68FD6600DCC6E9 /* ContactEssaiView.swift */; };
@@ -71,6 +72,7 @@
 		C06A8DB82BAEC5030007436C /* TimestampToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampToString.swift; sourceTree = "<group>"; };
 		C07564EB2BADEA8500E8D7D9 /* LastMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesView.swift; sourceTree = "<group>"; };
 		C07F56472B7F980200AF7577 /* NewContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContactManager.swift; sourceTree = "<group>"; };
+		C0B8555B2BBBFD5900B3956A /* TextBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBarView.swift; sourceTree = "<group>"; };
 		C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleSendView.swift; sourceTree = "<group>"; };
 		C0C1A9482B62ACC400646851 /* SearchNick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNick.swift; sourceTree = "<group>"; };
 		C0CB4BF32B68FD6600DCC6E9 /* ContactEssaiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactEssaiView.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 			children = (
 				C047E9DD2B45668800C6D48F /* ImagePicker.swift */,
 				C06A8DB82BAEC5030007436C /* TimestampToString.swift */,
+				C0B8555B2BBBFD5900B3956A /* TextBarView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,
 				C0476E7F2BB71086000D860C /* MessagesManager.swift in Sources */,
+				C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */,
 				C0D565F42B7CAF8E00EE0DA0 /* RootView.swift in Sources */,
 				C048F18A2BAF2C1200742CD2 /* ListeMessagesView.swift in Sources */,
 				C048F18C2BAF2E2400742CD2 /* LastMessagesManager.swift in Sources */,

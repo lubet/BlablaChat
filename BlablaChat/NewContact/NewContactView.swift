@@ -112,13 +112,11 @@ struct NewContactView: View {
     
     var body: some View {
         List {
-            VStack {
-                ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts) { oneContact in
-                    ContactCellView(lecontact: oneContact)
-                }
+            ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts) { oneContact in
+                ContactCellView(lecontact: oneContact)
             }
         }
-        .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un contact")
+        .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Rechercher un contact")
         bottomMessageBar
             .navigationTitle("Contacts")
             .alert(isPresented: $showAlert) {

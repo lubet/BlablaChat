@@ -13,8 +13,8 @@ struct ContactCellView: View {
     let lecontact: Contact
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            VStack {
+        HStack {
+            VStack(alignment: .leading, spacing: 10) {
                 Text(lecontact.nom)
                     .font(.headline)
                     .foregroundColor(.black)
@@ -22,7 +22,7 @@ struct ContactCellView: View {
                     .font(.headline)
                     .foregroundColor(.black)
             }
-            .frame(maxWidth: .infinity, alignment: .center)
+            .frame(width: 200, alignment: .center)
             .padding()
             // .background(Color.black.opacity(0.05))
         }

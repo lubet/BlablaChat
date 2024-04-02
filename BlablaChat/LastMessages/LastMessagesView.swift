@@ -98,8 +98,6 @@ class LastMessagesViewModel: ObservableObject {
                         lastMessages.append(LastMessage(room_id: member.room_id, room_name: room.room_name,
                                                         room_date: timeStampToString(dateMessage: room.dateCreated), message_texte: room.last_message,
                                                         message_date: timeStampToString(dateMessage:  room.date_message), message_from: room.from_message))
-                        print("room_id:\(member.room_id) - room_name:\(room.room_name) - texte:\(room.last_message) - from:\(room.from_message) -  to: \(member.to_id)*****\n")
-                        
                     }
                 }
                 

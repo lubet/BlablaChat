@@ -84,7 +84,7 @@ extension MessagesView {
                 .opacity(messageText.isEmpty ? 0.0 : 1.0)
         }
         .font(.headline)
-        .padding()
+        // .padding()
         .background(
             RoundedRectangle(cornerRadius: 25)
                 .fill(Color.black.opacity(0.05))

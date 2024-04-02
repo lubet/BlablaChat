@@ -30,6 +30,8 @@ struct MessagesView: View {
     
     @StateObject private var viewModel = MessagesViewModel()
     
+    @State var messageText: String = ""
+    
     let value: String
     
     var body: some View {
@@ -41,6 +43,8 @@ struct MessagesView: View {
             }
             .padding(.top, 10)
             .background(.white)
+            
+            MessageBar
         }
         .navigationTitle("Messages")
         .task {
@@ -56,5 +60,35 @@ struct MessagesView: View {
 struct MessagesView_Previews: PreviewProvider {
     static var previews: some View {
         MessagesView(value: "123456")
+    }
+}
+
+extension MessagesView {
+    
+    private var MessageBar: some View {
+        
+        HStack {
+            Image(systemName: "xmark.circle")
+                .foregroundColor(Color.black)
+                .onTapGesture {
+                    messageText = ""
+                }
+
+            TextField("Message", text: $messageText, axis: .vertical)
+                .foregroundColor(Color.black)
+
+            Image(systemName: "paperplane.circle")
+                .padding()
+                .offset(x:10)
+                .foregroundColor(Color.blue)
+                .opacity(messageText.isEmpty ? 0.0 : 1.0)
+        }
+        .font(.headline)
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 25)
+                .fill(Color.black.opacity(0.05))
+        )
+        .padding()
     }
 }

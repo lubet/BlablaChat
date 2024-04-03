@@ -32,6 +32,9 @@ final class MessagesManager {
     static let shared = MessagesManager()
     
     init() { }
+    
+    // Membres
+    private let memberCollection = db.collection("members")
 
     // Tous les messages d'un room en ordre croissant pour affichage "bubble"
     func getRoomMessages(room_id: String, user_id: String) async throws -> [MessageBubble] {
@@ -60,5 +63,34 @@ final class MessagesManager {
             print("getMessages - Error getting documents: \(error.localizedDescription)")
         }
         return messagesBubble
+    }
+    
+    // Recherche de to_id dans membres
+    func getToId(room_id: String, user_id: String) async throws -> String {
+
+        var to_id: String = "0"
+        
+        do {
+            let querySnapshot = try? await memberCollection
+                .whereField("room_id", isEqualTo: room_id)
+                .whereField("user_id", isEqualTo: user_id)
+                .getDocuments()
+            
+            let nbMembre = querySnapshot?.count
+            
+            if (nbMembre != 1) {
+                print("getToId - Erreur nbre membres différend de un: \(nbMembre ?? 0)")
+            } else {
+                if let snap = querySnapshot {
+                    for doc in snap.documents {
+                        let membre = try doc.data(as: Member.self)
+                        to_id = membre.to_id
+                    }
+                }
+            }
+        } catch {
+            print("getToId - Error getting documents: \(error.localizedDescription)")
+        }
+        return to_id
     }
 }

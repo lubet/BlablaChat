@@ -11,7 +11,8 @@ import FirebaseFirestoreSwift
 import Combine
 
 // A mettre dans la View
-struct LastMessage: Identifiable, Codable {
+struct LastMessage: Identifiable, Codable, Hashable {
+    let id = UUID().uuidString
     let room_id: String
     let room_name: String // nom du destinataire lors de la création du room
     let room_date: String
@@ -19,12 +20,9 @@ struct LastMessage: Identifiable, Codable {
     let message_date: String
     let message_from: String
     let message_to: String
-    
-    var id: String {
-        room_id
-    }
 
     enum CodingKeys: String, CodingKey {
+        case id = "id"
         case room_id = "room_id"
         case room_name = "room_name"
         case room_date = "room_date"
@@ -119,12 +117,11 @@ struct LastMessagesView: View {
     
     // @ObserverObject relaod si la vue is refresh contrairement à @StateObject
     @ObservedObject var viewModel: LastMessagesViewModel = LastMessagesViewModel()
-    
+        
     var body: some View {
         NavigationStack {
             List {
                 ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
-                    
                     NavigationLink(value: lastMessage.room_id) {
                         LastMessagesCellView(lastMessage: lastMessage)
                     }
@@ -136,9 +133,12 @@ struct LastMessagesView: View {
             // .listStyle()
             .navigationTitle("Messages")
             
+            // -> BubbleMessages
             .navigationDestination(for: String.self) { value in
                 MessagesView(value: value)
             }
+            
+            // -> Contacts
             .navigationBarItems(
                 leading: Image(systemName: "person.fill"),
                 trailing: NavigationLink(

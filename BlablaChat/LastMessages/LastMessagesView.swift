@@ -18,6 +18,7 @@ struct LastMessage: Identifiable, Codable {
     let message_texte: String
     let message_date: String
     let message_from: String
+    let message_to: String
     
     var id: String {
         room_id
@@ -30,6 +31,7 @@ struct LastMessage: Identifiable, Codable {
         case message_texte = "messge_texte"
         case message_date = "message_date"
         case message_from = "message_from"
+        case message_to = "message_to"
     }
 }
 
@@ -97,7 +99,7 @@ class LastMessagesViewModel: ObservableObject {
                     if member.room_id == room.room_id {
                         lastMessages.append(LastMessage(room_id: member.room_id, room_name: room.room_name,
                                                         room_date: timeStampToString(dateMessage: room.dateCreated), message_texte: room.last_message,
-                                                        message_date: timeStampToString(dateMessage:  room.date_message), message_from: room.from_message))
+                                                        message_date: timeStampToString(dateMessage:  room.date_message), message_from: room.from_message, message_to: member.to_id))
                     }
                 }
                 
@@ -122,16 +124,18 @@ struct LastMessagesView: View {
         NavigationStack {
             List {
                 ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
+                    
                     NavigationLink(value: lastMessage.room_id) {
                         LastMessagesCellView(lastMessage: lastMessage)
                     }
                 }
-                .onDelete(perform: viewModel.deleteLast)
+                // .onDelete(perform: viewModel.deleteLast)
             }
             .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
             .task { await viewModel.getLastMessages() }
             // .listStyle()
             .navigationTitle("Messages")
+            
             .navigationDestination(for: String.self) { value in
                 MessagesView(value: value)
             }

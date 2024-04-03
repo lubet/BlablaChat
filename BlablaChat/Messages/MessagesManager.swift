@@ -65,7 +65,7 @@ final class MessagesManager {
         return messagesBubble
     }
     
-    // Recherche de to_id dans membres
+    // Recherche avec room_id et user_id d'un seul enreg dans membres afin d'obtenir le to_id
     func getToId(room_id: String, user_id: String) async throws -> String {
 
         var to_id: String = "0"
@@ -73,7 +73,8 @@ final class MessagesManager {
         do {
             let querySnapshot = try? await memberCollection
                 .whereField("room_id", isEqualTo: room_id)
-                .whereField("user_id", isEqualTo: user_id)
+                .whereField("from_id", isEqualTo: user_id)
+                // OU .whereField("to_id", isEqualTo: user_id)
                 .getDocuments()
             
             let nbMembre = querySnapshot?.count

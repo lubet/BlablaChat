@@ -44,7 +44,10 @@ struct MessagesView: View {
     
     @StateObject private var viewModel = MessagesViewModel()
     
-    @State var messageText: String = ""
+    @State private var messageText: String = ""
+    
+    @State var alertTitle: String = ""
+    @State var showAlert: Bool = false
     
     // <- LastMessagesView
     let value: String
@@ -60,6 +63,9 @@ struct MessagesView: View {
             .background(.white)
             
             MessageBar
+                .alert(isPresented: $showAlert) {
+                    getAlert()
+                }
         }
         .navigationTitle("Messages")
         .task {
@@ -75,14 +81,11 @@ struct MessagesView: View {
 struct MessagesView_Previews: PreviewProvider {
     static var previews: some View {
         MessagesView(value: "123")
-        //        MessagesView(value: LastMessage(room_id: "1", room_name: "My room B", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Salut les amis", message_date: timeStampToString(dateMessage: Timestamp())  , message_from: "Xavier", message_to: "Message to Alfred"))
     }
 }
 
 extension MessagesView {
-    
     private var MessageBar: some View {
-        
         HStack {
             Image(systemName: "xmark.circle")
                 .foregroundColor(Color.black)
@@ -99,9 +102,7 @@ extension MessagesView {
                 .foregroundColor(Color.blue)
                 .opacity(messageText.isEmpty ? 0.0 : 1.0)
                 .onTapGesture {
-                    Task {
-                        try? await viewModel.saveMessage(message_text: messageText, room_id: value)
-                    }
+                    sendButton()
                 }
         }
         .font(.headline)
@@ -111,4 +112,26 @@ extension MessagesView {
         )
         .padding()
     }
+    
+    func sendButton() {
+        if textIsCorrect() {
+            Task {
+                try? await viewModel.saveMessage(message_text: messageText, room_id: value)
+            }
+        }
+    }
+    
+    func textIsCorrect() -> Bool {
+        if messageText.count < 3 {
+            alertTitle = "Saisir un message d'au moins 3 caractères"
+            showAlert.toggle()
+            return false
+        }
+        return true
+    }
+    
+    func getAlert() -> Alert {
+        return Alert(title: Text(alertTitle))
+    }
+
 }

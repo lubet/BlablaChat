@@ -85,7 +85,7 @@ struct MessagesView_Previews: PreviewProvider {
 extension MessagesView {
     private var MessageBar: some View {
         HStack {
-            Image(systemName: "xmark.circle")
+            Image(systemName: "photo")
                 .foregroundColor(Color.black)
                 .onTapGesture {
                     messageText = ""

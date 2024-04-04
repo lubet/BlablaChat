@@ -126,7 +126,7 @@ struct LastMessagesView: View {
                         LastMessagesCellView(lastMessage: lastMessage)
                     }
                 }
-                // .onDelete(perform: viewModel.deleteLast)
+                // .onDelete(perform: viewModel.deleteLast) voir Nick remove favorites products
             }
             .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
             .task { await viewModel.getLastMessages() }

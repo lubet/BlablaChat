@@ -41,11 +41,8 @@ final class MessagesViewModel: ObservableObject {
 }
 
 struct MessagesView: View {
-    
     @StateObject private var viewModel = MessagesViewModel()
-    
     @State private var messageText: String = ""
-    
     @State var alertTitle: String = ""
     @State var showAlert: Bool = false
     
@@ -84,6 +81,7 @@ struct MessagesView_Previews: PreviewProvider {
     }
 }
 
+// Barre de saisie du message
 extension MessagesView {
     private var MessageBar: some View {
         HStack {

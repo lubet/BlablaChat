@@ -50,8 +50,8 @@ struct MessagesView: View {
     let value: String
     
     var body: some View {
-        VStack {
-            ScrollView {
+        ScrollView {
+            VStack(spacing: 20) {
                 ForEach(viewModel.messagesBubble) { messageBubble in
                     MessagesCellView(message: messageBubble)
                 }
@@ -59,11 +59,11 @@ struct MessagesView: View {
             .padding(.top, 10)
             .background(.white)
             
-            MessageBar
-                .alert(isPresented: $showAlert) {
-                    getAlert()
-                }
         }
+        MessageBar
+            .alert(isPresented: $showAlert) {
+                getAlert()
+            }
         .navigationTitle("Messages")
         .task {
             do {

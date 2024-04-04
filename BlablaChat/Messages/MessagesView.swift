@@ -16,24 +16,24 @@ final class MessagesViewModel: ObservableObject {
     
     @Published private(set) var messagesBubble: [MessageBubble] = []
     
-    var user_id:String = ""
-    
     // Tous les messages d'un room
     func getRoomMessages(room_id: String) async throws {
-        
-        let AuthUser = try AuthManager.shared.getAuthenticatedUser()
-        user_id = AuthUser.uid
-        
-        self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
+        guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+
+        self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
     }
         
     func saveMessage(message_text: String, room_id: String) async throws {
+        guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         
+        let user_id = AuthUser.uid
+
         // Recherche du to_id dans member
         let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)
         
         do {
             try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id)
+            self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
         } catch {
             print("Error saveMessage: \(error.localizedDescription)")
         }

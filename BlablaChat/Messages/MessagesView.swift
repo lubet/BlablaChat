@@ -99,11 +99,12 @@ extension MessagesView {
                 .foregroundColor(Color.blue)
                 .opacity(messageText.isEmpty ? 0.0 : 1.0)
                 .onTapGesture {
-                        // TODO await viewModel.saveMessage(message_text: messageText, room_id: value)
+                    Task {
+                        try? await viewModel.saveMessage(message_text: messageText, room_id: value)
+                    }
                 }
         }
         .font(.headline)
-        // .padding()
         .background(
             RoundedRectangle(cornerRadius: 25)
                 .fill(Color.black.opacity(0.05))

@@ -228,7 +228,7 @@ final class NewContactManager {
     }
     
     // Création du message et maj du dernier message de Room avec le message
-    func createMessage(from_id: String, to_id: String, message_text: String, room_id: String) async throws {
+    func createMessage(from_id: String, to_id: String, message_text: String, room_id: String, image_link: URL) async throws {
         let messageRef = roomDocument(room_id: room_id).collection("messages").document()
         let message_id = messageRef.documentID
         
@@ -240,7 +240,8 @@ final class NewContactManager {
             "to_id": to_id,
             "message_text": message_text,
             "date_send": dateMessage,
-            "room_id": room_id
+            "room_id": room_id,
+            "image_link": image_link
         ]
         try await messageRef.setData(data, merge: false)
         
@@ -250,7 +251,8 @@ final class NewContactManager {
         let dataRoom: [String:Any] = [
             "last_message": message_text,
             "date_message": dateMessage,
-            "from_message": from_id
+            "from_message": from_id,
+            "image_link": image_link
         ]
         
         try await roomRef.setData(dataRoom, merge: true)

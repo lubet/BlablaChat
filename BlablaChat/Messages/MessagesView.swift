@@ -54,12 +54,25 @@ final class MessagesViewModel: ObservableObject {
         // Recherche du to_id dans member
         let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)
         
+        // Sauver l'image dans Storage
+        guard let image = selectedImage else { return }
+        let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: toId)
+        
+        // Obtenir l'URL correspondante au path dans Storage
+        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
+        
+        // Créer le message mettre l'URL dans image_link du message
+
+        // SDWeb pour l'affichage Bubble
+        
         do {
-            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id)
+            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: lurl)
+            
             self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
         } catch {
             print("Error saveMessage: \(error.localizedDescription)")
         }
+        
     }
 }
 

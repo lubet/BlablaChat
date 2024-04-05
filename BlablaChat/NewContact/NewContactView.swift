@@ -83,6 +83,9 @@ final class NewContactViewModel: ObservableObject {
             print("createContact retour:\(contact_id)")
         }
         
+        // TODO
+        guard let url = URL(string: "https://picsum.photos/200") else { return }
+        
         // Renvoie le room_id du couple from/to ou to/from présent ou non dans membre
         let room = try await NewContactManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
         if (room == "") {
@@ -91,10 +94,10 @@ final class NewContactViewModel: ObservableObject {
             // création d'un document membre
             try await NewContactManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
             // Créer un message avec le room
-            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: textMessage, room_id: room_id)
+            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: textMessage, room_id: room_id, image_link: url)
         } else {
             // Si un room commun -> créer le message avec le room existant
-            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: textMessage, room_id: room)
+            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: textMessage, room_id: room, image_link: url)
         }
     }
 }

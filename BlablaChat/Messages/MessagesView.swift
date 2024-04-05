@@ -51,7 +51,7 @@ final class MessagesViewModel: ObservableObject {
         
         let user_id = AuthUser.uid
 
-        // TODO
+        // A vérifier
         
         // Recherche du to_id dans member
         let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)
@@ -67,7 +67,7 @@ final class MessagesViewModel: ObservableObject {
         do {
             try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: lurl)
 
-            // TODO prévoir image_link dans messageBubble et affichage avec sdWeb
+            // TODO prévoir image_link dans messageBubble et affichage avec sdWeb - gérér si pas d'image
             self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
         } catch {
             print("Error saveMessage: \(error.localizedDescription)")

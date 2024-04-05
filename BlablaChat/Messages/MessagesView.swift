@@ -10,11 +10,34 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import PhotosUI
 
 @MainActor
 final class MessagesViewModel: ObservableObject {
     
     @Published private(set) var messagesBubble: [MessageBubble] = []
+    
+    // PhotoPicker
+    @Published private(set) var selectedImage: UIImage? = nil
+    @Published var imageSelection: PhotosPickerItem? = nil {
+        didSet {
+            setImage(from: imageSelection)
+        }
+    }
+    
+    // PhotoPickeritem -> UIImage
+    private func setImage(from selection: PhotosPickerItem?) {
+        guard let selection else { return }
+        
+        Task {
+            if let data = try? await selection.loadTransferable(type: Data.self) {
+                if let uiImage = UIImage(data: data) {
+                    selectedImage = uiImage
+                    return
+                }
+            }
+        }
+    }
     
     // Tous les messages d'un room
     func getRoomMessages(room_id: String) async throws {
@@ -85,11 +108,10 @@ struct MessagesView_Previews: PreviewProvider {
 extension MessagesView {
     private var MessageBar: some View {
         HStack {
-            Image(systemName: "photo")
-                .foregroundColor(Color.black)
-                .onTapGesture {
-                    messageText = ""
-                }
+            PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
+                Image(systemName: "photo")
+                    .foregroundColor(Color.black)
+            }
             
             TextField("Message", text: $messageText, axis: .vertical)
                 .foregroundColor(Color.black)

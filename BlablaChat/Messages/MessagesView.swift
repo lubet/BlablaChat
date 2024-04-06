@@ -45,7 +45,8 @@ final class MessagesViewModel: ObservableObject {
 
         self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
     }
-        
+     
+    // Sauvegarde du message avec ou sans photo 
     func saveMessage(message_text: String, room_id: String) async throws {
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         
@@ -121,14 +122,18 @@ struct MessagesView_Previews: PreviewProvider {
 extension MessagesView {
     private var MessageBar: some View {
         HStack {
+            
+            // Affichage des photos
             PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
                 Image(systemName: "photo")
                     .foregroundColor(Color.black)
             }
             
+            // Saisie du message
             TextField("Message", text: $messageText, axis: .vertical)
                 .foregroundColor(Color.black)
             
+            // Envoi du message
             Image(systemName: "paperplane.circle")
                 .padding()
                 .offset(x:10)

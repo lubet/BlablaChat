@@ -34,6 +34,7 @@ final class MessagesViewModel: ObservableObject {
                 if let uiImage = UIImage(data: data) {
                     selectedImage = uiImage
                     return
+                    // TODO sauvegarde d'un message avec l'url de l'image... mais pas de message
                 }
             }
         }
@@ -46,7 +47,7 @@ final class MessagesViewModel: ObservableObject {
         self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
     }
      
-    // Sauvegarde du message avec ou sans photo 
+    // Sauvegarde du message avec ou sans photo
     func saveMessage(message_text: String, room_id: String) async throws {
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         

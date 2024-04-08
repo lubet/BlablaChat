@@ -52,23 +52,25 @@ final class MessagesViewModel: ObservableObject {
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         
         let user_id = AuthUser.uid
-
-        // A vérifier
         
         // Recherche du to_id dans member
         let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)
         
         // Sauver l'image dans Storage
-        guard let image = selectedImage else { return }
-        let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: toId)
-        
-        // Obtenir l'URL correspondante au path dans Storage
-        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-        
-        
-        do {
-            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: lurl)
+        if let image = selectedImage {
 
+            let lurl: URL
+
+            let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: toId)
+            
+            lurl = try await StorageManager.shared.getUrlForImage(path: path)
+            
+            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: lurl.absoluteString)
+        } else {
+            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: "")
+       }
+            
+        do {
             // TODO prévoir image_link dans messageBubble et affichage avec sdWeb - gérér si pas d'image
             self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
         } catch {
@@ -124,6 +126,11 @@ extension MessagesView {
     private var MessageBar: some View {
         HStack {
             
+            //TODO 
+            if let image = viewModel.selectedImage {
+                // saveImage()
+            }
+            
             // Affichage des photos
             PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
                 Image(systemName: "photo")
@@ -150,6 +157,12 @@ extension MessagesView {
                 .fill(Color.black.opacity(0.05))
         )
         .padding()
+    }
+    
+    func saveImage() {
+        Task {
+            try? await viewModel.saveMessage(message_text: messageText, room_id: value)
+        }
     }
     
     func sendButton() {

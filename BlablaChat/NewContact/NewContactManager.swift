@@ -228,7 +228,7 @@ final class NewContactManager {
     }
     
     // Création du message et maj du dernier message de Room avec le message
-    func createMessage(from_id: String, to_id: String, message_text: String, room_id: String, image_link: URL) async throws {
+    func createMessage(from_id: String, to_id: String, message_text: String, room_id: String, image_link: String) async throws {
         let messageRef = roomDocument(room_id: room_id).collection("messages").document()
         let message_id = messageRef.documentID
         

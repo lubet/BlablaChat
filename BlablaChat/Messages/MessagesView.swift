@@ -34,7 +34,6 @@ final class MessagesViewModel: ObservableObject {
                 if let uiImage = UIImage(data: data) {
                     selectedImage = uiImage
                     return
-                    // TODO sauvegarde d'un message avec l'url de l'image... mais pas de message
                 }
             }
         }
@@ -125,12 +124,7 @@ struct MessagesView_Previews: PreviewProvider {
 extension MessagesView {
     private var MessageBar: some View {
         HStack {
-            
-            //TODO 
-            if let image = viewModel.selectedImage {
-                // saveImage()
-            }
-            
+           
             // Affichage des photos
             PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
                 Image(systemName: "photo")

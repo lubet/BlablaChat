@@ -17,7 +17,7 @@ final class MessagesViewModel: ObservableObject {
     
     @Published private(set) var messagesBubble: [MessageBubble] = []
     
-    @Published var param: [String:Any] = [:]
+    @Published var param: [String:Any] = [:] // pour récupérer le room_id utiliser dans setImage()
     
     // PhotoPicker
     @Published private(set) var selectedImage: UIImage? = nil
@@ -39,7 +39,8 @@ final class MessagesViewModel: ObservableObject {
                     guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
                     let user_id = AuthUser.uid
                     
-                    let room_id = param["room_id"] ?? ""
+                    guard let room_id = param["room_id"] else { return }
+                    
                     let toId =  try await MessagesManager.shared.getToId(room_id: room_id as! String, user_id: user_id)
 
                     let lurl: URL
@@ -114,7 +115,7 @@ struct MessagesView: View {
             }
         .navigationTitle("Messages")
         .task {
-            viewModel.param = ["room_id":value] // pour sauver la photo
+            viewModel.param = ["room_id":value] // pour passer le room à la photo - voir setImage() en haut
             do {
                 try await viewModel.getRoomMessages(room_id: value)
             } catch {
@@ -163,12 +164,7 @@ extension MessagesView {
         .padding()
     }
     
-    func saveImage() {
-        Task {
-            try? await viewModel.saveMessage(message_text: messageText, room_id: value)
-        }
-    }
-    
+    // Sauvegarde du message "texte"
     func sendButton() {
         if textIsCorrect() {
             Task {

@@ -17,6 +17,8 @@ final class MessagesViewModel: ObservableObject {
     
     @Published private(set) var messagesBubble: [MessageBubble] = []
     
+    @Published var param: [String:Any] = [:]
+    
     // PhotoPicker
     @Published private(set) var selectedImage: UIImage? = nil
     @Published var imageSelection: PhotosPickerItem? = nil {
@@ -25,7 +27,7 @@ final class MessagesViewModel: ObservableObject {
         }
     }
     
-    // PhotoPickeritem -> UIImage
+    // PhotoPickeritem -> UIImage + Sauvegarde de l'image dans Storage
     private func setImage(from selection: PhotosPickerItem?) {
         guard let selection else { return }
         
@@ -33,44 +35,51 @@ final class MessagesViewModel: ObservableObject {
             if let data = try? await selection.loadTransferable(type: Data.self) {
                 if let uiImage = UIImage(data: data) {
                     selectedImage = uiImage
+
+                    guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+                    let user_id = AuthUser.uid
+                    
+                    let room_id = param["room_id"] ?? ""
+                    let toId =  try await MessagesManager.shared.getToId(room_id: room_id as! String, user_id: user_id)
+
+                    let lurl: URL
+                    
+                    guard let image = selectedImage else { return }
+                    
+                    let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: toId)
+                    
+                    lurl = try await StorageManager.shared.getUrlForImage(path: path)
+                    
+                    try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: "", room_id: room_id as! String, image_link: lurl.absoluteString)
+                    
                     return
                 }
             }
         }
     }
+        
     
     // Tous les messages d'un room
     func getRoomMessages(room_id: String) async throws {
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-
         self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
     }
      
-    // Sauvegarde du message avec ou sans photo
+    // Sauvegarde du message "texte" (la photo est traitée à part - voir setImage())
     func saveMessage(message_text: String, room_id: String) async throws {
+
+        // user "envoyeur"
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        
         let user_id = AuthUser.uid
         
-        // Recherche du to_id dans member
+        // user "destinatire" to_id à trouver dans member
         let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)
         
-        // Sauver l'image dans Storage
-        if let image = selectedImage {
-
-            let lurl: URL
-
-            let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: toId)
-            
-            lurl = try await StorageManager.shared.getUrlForImage(path: path)
-            
-            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: lurl.absoluteString)
-        } else {
-            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: "")
-       }
-            
+        // Sauvegarde du message "texte"
+        try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: "")
+        
         do {
-            // TODO prévoir image_link dans messageBubble et affichage avec sdWeb - gérér si pas d'image
+            // Rafraichissement de la view actuelle
             self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
         } catch {
             print("Error saveMessage: \(error.localizedDescription)")
@@ -86,7 +95,7 @@ struct MessagesView: View {
     @State var showAlert: Bool = false
     
     // <- LastMessagesView
-    let value: String
+    let value: String // room_id
     
     var body: some View {
         ScrollView {
@@ -105,6 +114,7 @@ struct MessagesView: View {
             }
         .navigationTitle("Messages")
         .task {
+            viewModel.param = ["room_id":value] // pour sauver la photo
             do {
                 try await viewModel.getRoomMessages(room_id: value)
             } catch {

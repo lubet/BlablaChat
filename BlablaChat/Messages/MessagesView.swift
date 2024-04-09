@@ -47,6 +47,7 @@ final class MessagesViewModel: ObservableObject {
                     
                     guard let image = selectedImage else { return }
                     
+                    // path = users/user_id/<nom du fichier.jpeg
                     let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: toId)
                     
                     lurl = try await StorageManager.shared.getUrlForImage(path: path)

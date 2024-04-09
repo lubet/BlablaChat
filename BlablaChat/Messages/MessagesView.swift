@@ -51,7 +51,7 @@ final class MessagesViewModel: ObservableObject {
                     
                     lurl = try await StorageManager.shared.getUrlForImage(path: path)
                     
-                    try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: "", room_id: room_id as! String, image_link: lurl.absoluteString)
+                    try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: "Photo ->", room_id: room_id as! String, image_link: lurl.absoluteString)
                     
                     return
                 }
@@ -62,6 +62,7 @@ final class MessagesViewModel: ObservableObject {
     
     // Tous les messages d'un room
     func getRoomMessages(room_id: String) async throws {
+        
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
     }

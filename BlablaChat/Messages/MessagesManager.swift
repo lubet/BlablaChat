@@ -18,12 +18,14 @@ struct MessageBubble: Identifiable{
     let message_text: String
     let message_date: String
     let received: Bool
+    let imageLink: String
     
-    init(id: String, message_text: String, message_date: String, received: Bool) {
+    init(id: String, message_text: String, message_date: String, received: Bool, imageLink: String) {
         self.id = id
         self.message_text = message_text
         self.message_date = message_date
         self.received = received
+        self.imageLink = imageLink
     }
 }
 
@@ -55,7 +57,7 @@ final class MessagesManager {
                     } else {
                         received.toggle() // received = false
                     }
-                    let oneBubble = MessageBubble(id: UUID().uuidString, message_text: msg.message_text, message_date: timeStampToString(dateMessage: msg.date_send), received: received)
+                    let oneBubble = MessageBubble(id: UUID().uuidString, message_text: msg.message_text, message_date: timeStampToString(dateMessage: msg.date_send), received: received, imageLink: msg.image_link ?? "")
                     messagesBubble.append(oneBubble)
                 }
             }

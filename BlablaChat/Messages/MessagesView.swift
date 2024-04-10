@@ -19,6 +19,8 @@ final class MessagesViewModel: ObservableObject {
     
     @Published var param: [String:Any] = [:] // pour récupérer le room_id utiliser dans setImage()
     
+    @Published private(set) var lastMessageId = "" // ScrollViewReader
+    
     // PhotoPicker
     @Published private(set) var selectedImage: UIImage? = nil
     @Published var imageSelection: PhotosPickerItem? = nil {
@@ -74,6 +76,12 @@ final class MessagesViewModel: ObservableObject {
         
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
+        
+        // Pour le scrollViewReader
+        if let id = self.messagesBubble.last?.id {
+            self.lastMessageId = id
+            print("id: \(id)")
+        }
     }
      
     // Sauvegarde du message "texte" (la photo est traitée à part - voir setImage())
@@ -109,6 +117,7 @@ struct MessagesView: View {
     let value: String // room_id
     
     var body: some View {
+        
         ScrollViewReader { proxy in
             ScrollView {
                 VStack(spacing: 20) {
@@ -122,6 +131,11 @@ struct MessagesView: View {
                 }
                 .padding(.top, 10)
                 .background(.white)
+            }
+            .onChange(of: viewModel.lastMessageId) { id in
+                withAnimation {
+                    proxy.scrollTo(id, anchor: .bottom)
+                }
             }
         }
         MessageBar

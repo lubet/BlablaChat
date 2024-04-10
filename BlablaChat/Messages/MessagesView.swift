@@ -29,6 +29,7 @@ final class MessagesViewModel: ObservableObject {
     
     // PhotoPickeritem -> UIImage + Sauvegarde de l'image dans Storage
     private func setImage(from selection: PhotosPickerItem?) {
+        
         guard let selection else { return }
         
         Task {
@@ -52,7 +53,14 @@ final class MessagesViewModel: ObservableObject {
                     
                     lurl = try await StorageManager.shared.getUrlForImage(path: path)
                     
-                    try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: "Photo ->", room_id: room_id as! String, image_link: lurl.absoluteString)
+                    try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: "", room_id: room_id as! String, image_link: lurl.absoluteString)
+                    
+                    do {
+                        // Rafraichissement de la view actuelle
+                        self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id as! String, user_id: AuthUser.uid)
+                    } catch {
+                        print("Error saveMessage: \(error.localizedDescription)")
+                    }
                     
                     return
                 }
@@ -104,12 +112,15 @@ struct MessagesView: View {
         ScrollView {
             VStack(spacing: 20) {
                 ForEach(viewModel.messagesBubble) { messageBubble in
-                    MessagesCellView(message: messageBubble)
+                    if messageBubble.imageLink != "" {
+                        MessagesCellPhoto(message: messageBubble)
+                    } else {
+                        MessagesCellView(message: messageBubble)
+                    }
                 }
             }
             .padding(.top, 10)
             .background(.white)
-            
         }
         MessageBar
             .alert(isPresented: $showAlert) {
@@ -119,7 +130,7 @@ struct MessagesView: View {
         .task {
             viewModel.param = ["room_id":value] // pour passer le room à la photo - voir setImage() en haut
             do {
-                try await viewModel.getRoomMessages(room_id: value)
+                try await viewModel.getRoomMessages(room_id: value) // Tous les messages d'un room 
             } catch {
                 print("RoomMessagesView - Error getting documents: \(error.localizedDescription)")
             }

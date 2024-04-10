@@ -34,13 +34,13 @@ final class StorageManager {
         return try await Storage.storage().reference(withPath: path).downloadURL()
     }
     
-    // dataImage path = chemin complet /users/userId/data.jpeg
+    // NON Utiliser - Retourne une dataImage, path = chemin complet /users/userId/data.jpeg
     func getData(userId: String, path: String) async throws -> Data {
         // try await userReference(userId: userId).child(path).data(maxSize: 3 * 1024 * 1024)
         return try await storage.child(path).data(maxSize: 3 * 1024 * 1024)
     }
 
-    // UIImage
+    // NON utiliser - Retourne une UIImage à partir d'une dataImage de Storage
     func getImage(userId: String, path: String) async throws -> UIImage {
         let data = try await getData(userId: userId, path: path)
         guard let image = UIImage(data: data) else {

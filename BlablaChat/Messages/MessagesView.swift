@@ -109,18 +109,20 @@ struct MessagesView: View {
     let value: String // room_id
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                ForEach(viewModel.messagesBubble) { messageBubble in
-                    if messageBubble.imageLink != "" {
-                        MessagesCellPhoto(message: messageBubble)
-                    } else {
-                        MessagesCellView(message: messageBubble)
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(spacing: 20) {
+                    ForEach(viewModel.messagesBubble) { messageBubble in
+                        if messageBubble.imageLink != "" {
+                            MessagesCellPhoto(message: messageBubble)
+                        } else {
+                            MessagesCellView(message: messageBubble)
+                        }
                     }
                 }
+                .padding(.top, 10)
+                .background(.white)
             }
-            .padding(.top, 10)
-            .background(.white)
         }
         MessageBar
             .alert(isPresented: $showAlert) {

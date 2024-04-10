@@ -23,6 +23,8 @@ struct MessagesCellPhoto: View {
                     .resizable()
                     // .scaledToFill()
                     .frame(width: 150, height: 150)
+                    .cornerRadius(10)
+                    .shadow(radius: 10)
             }
             .frame(maxWidth: 300, alignment: message.received ? .leading : .trailing)
             .onTapGesture {

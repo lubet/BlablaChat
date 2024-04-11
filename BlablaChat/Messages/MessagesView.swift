@@ -61,13 +61,14 @@ final class MessagesViewModel: ObservableObject {
                     do {
                         // Rafraichissement de la view actuelle
                         self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id as! String, user_id: AuthUser.uid)
+                        
+                        scrollViewReaderId()
+                        
                     } catch {
                         print("Error saveMessage: \(error.localizedDescription)")
+                        return
                     }
                     
-                    scrollViewReaderId()
-                    
-                    return
                 }
             }
         }
@@ -100,11 +101,13 @@ final class MessagesViewModel: ObservableObject {
         do {
             // Rafraichissement de la view actuelle
             self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
+            
+            scrollViewReaderId()
+            
         } catch {
             print("Error saveMessage: \(error.localizedDescription)")
+            return
         }
-        
-        scrollViewReaderId()
         
     }
     

@@ -19,7 +19,8 @@ final class MessagesViewModel: ObservableObject {
     
     @Published var param: [String:Any] = [:] // pour récupérer le room_id utiliser dans setImage()
     
-    @Published private(set) var lastMessageId = "" // ScrollViewReader
+    // ScrollViewReader
+    @Published private(set) var lastMessageId = ""
     
     // PhotoPicker
     @Published private(set) var selectedImage: UIImage? = nil
@@ -64,6 +65,8 @@ final class MessagesViewModel: ObservableObject {
                         print("Error saveMessage: \(error.localizedDescription)")
                     }
                     
+                    scrollViewReaderId()
+                    
                     return
                 }
             }
@@ -77,11 +80,8 @@ final class MessagesViewModel: ObservableObject {
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
         
-        // Pour le scrollViewReader
-        if let id = self.messagesBubble.last?.id {
-            self.lastMessageId = id
-            print("id: \(id)")
-        }
+        scrollViewReaderId()
+        
     }
      
     // Sauvegarde du message "texte" (la photo est traitée à part - voir setImage())
@@ -104,6 +104,15 @@ final class MessagesViewModel: ObservableObject {
             print("Error saveMessage: \(error.localizedDescription)")
         }
         
+        scrollViewReaderId()
+        
+    }
+    
+    func scrollViewReaderId() {
+        if let id = self.messagesBubble.last?.id {
+            self.lastMessageId = id
+            print("id: \(id)")
+        }
     }
 }
 
@@ -118,10 +127,10 @@ struct MessagesView: View {
     
     var body: some View {
         
-        ScrollViewReader { proxy in
-            ScrollView {
+        ScrollView {
+            ScrollViewReader { proxy in
                 VStack(spacing: 20) {
-                    ForEach(viewModel.messagesBubble) { messageBubble in
+                    ForEach(viewModel.messagesBubble, id: \.id) { messageBubble in
                         if messageBubble.imageLink != "" {
                             MessagesCellPhoto(message: messageBubble)
                         } else {
@@ -131,10 +140,10 @@ struct MessagesView: View {
                 }
                 .padding(.top, 10)
                 .background(.white)
-            }
-            .onChange(of: viewModel.lastMessageId) { id in
-                withAnimation {
-                    proxy.scrollTo(id, anchor: .bottom)
+                .onChange(of: viewModel.lastMessageId) { id in
+                    withAnimation {
+                        proxy.scrollTo(id, anchor: .bottom)
+                    }
                 }
             }
         }

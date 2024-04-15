@@ -8,12 +8,24 @@
 import SwiftUI
 
 struct RootView: View {
+
+    @State private var showSignInView: Bool = false
+    
     var body: some View {
-        LastMessagesView() // Dernier messages de chaque rooms
-            .tabItem {
-                Image(systemName: "message")
-                Text("Rooms/Messages")
+        ZStack {
+            NavigationStack {
+                LastMessagesView()
             }
+        }
+        .onAppear {
+            let authUser = try? AuthManager.shared.getAuthenticatedUser()
+            self.showSignInView = authUser == nil
+        }
+        .fullScreenCover(isPresented: $showSignInView) {
+            NavigationStack {
+                AuthenticationView()
+            }
+        }
     }
 }
 

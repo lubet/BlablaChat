@@ -19,7 +19,7 @@
 		C0476E7F2BB71086000D860C /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0476E7E2BB71086000D860C /* MessagesManager.swift */; };
 		C0476E812BB712A4000D860C /* MessagesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0476E802BB712A4000D860C /* MessagesCellView.swift */; };
 		C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */; };
-		C047E9C62B45625C00C6D48F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C52B45625C00C6D48F /* LoginView.swift */; };
+		C047E9C62B45625C00C6D48F /* LoginEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C52B45625C00C6D48F /* LoginEmailView.swift */; };
 		C047E9C82B45625D00C6D48F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C047E9C72B45625D00C6D48F /* Assets.xcassets */; };
 		C047E9CB2B45625D00C6D48F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C047E9CA2B45625D00C6D48F /* Preview Assets.xcassets */; };
 		C047E9D22B45646A00C6D48F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C047E9D12B45646A00C6D48F /* GoogleService-Info.plist */; };
@@ -61,7 +61,7 @@
 		C0476E802BB712A4000D860C /* MessagesCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCellView.swift; sourceTree = "<group>"; };
 		C047E9C02B45625C00C6D48F /* BlablaChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlablaChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlablaChatApp.swift; sourceTree = "<group>"; };
-		C047E9C52B45625C00C6D48F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		C047E9C52B45625C00C6D48F /* LoginEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginEmailView.swift; sourceTree = "<group>"; };
 		C047E9C72B45625D00C6D48F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C047E9CA2B45625D00C6D48F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C047E9D12B45646A00C6D48F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -167,9 +167,9 @@
 			isa = PBXGroup;
 			children = (
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
-				C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */,
-				C047E9C52B45625C00C6D48F /* LoginView.swift */,
 				C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */,
+				C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */,
+				C047E9C52B45625C00C6D48F /* LoginEmailView.swift */,
 				C07564EA2BADEA4F00E8D7D9 /* LastMessages */,
 				C0476E7B2BB70FF9000D860C /* Messages */,
 				C06B1DDF2B74D4330016E8B6 /* NewContact */,
@@ -334,7 +334,7 @@
 				C068CD3B2BCD769E0072A797 /* AuthenticationView.swift in Sources */,
 				C0476E812BB712A4000D860C /* MessagesCellView.swift in Sources */,
 				C047E9E22B45880400C6D48F /* StorageManager.swift in Sources */,
-				C047E9C62B45625C00C6D48F /* LoginView.swift in Sources */,
+				C047E9C62B45625C00C6D48F /* LoginEmailView.swift in Sources */,
 				C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

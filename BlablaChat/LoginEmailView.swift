@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class LoginViewModel: ObservableObject {
+final class LoginEmailViewModel: ObservableObject {
     
     @Published var email: String = ""
     @Published var password: String = ""
@@ -48,9 +48,9 @@ final class LoginViewModel: ObservableObject {
 }
 
 // -----------------------------------------------------
-struct LoginView: View {
+struct LoginEmailView: View {
     
-    @StateObject private var viewModel = LoginViewModel()
+    @StateObject private var viewModel = LoginEmailViewModel()
     
     @State var showImagePicker: Bool = false
     @State var image: UIImage?
@@ -138,6 +138,6 @@ struct LoginView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginEmailView()
     }
 }

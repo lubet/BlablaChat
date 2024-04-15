@@ -12,16 +12,20 @@ struct AuthenticationView: View {
         VStack {
             
             NavigationLink {
-                Text("Hello")
+                LoginEmailView()
             } label: {
                 Text("S'authentifié avec l'email")
                     .font(.headline)
                     .foregroundColor(.white)
                     .frame(height: 55)
+                    .frame(maxWidth: .infinity)
                     .background(Color.blue)
                     .cornerRadius(10)
             }
+            Spacer()
         }
+        .padding()
+        .navigationTitle("Authentification")
     }
 }
 

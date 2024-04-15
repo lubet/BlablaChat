@@ -119,34 +119,32 @@ struct LastMessagesView: View {
     @ObservedObject var viewModel: LastMessagesViewModel = LastMessagesViewModel()
         
     var body: some View {
-        NavigationStack {
-            List {
-                ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
-                    NavigationLink(value: lastMessage.room_id) {
-                        LastMessagesCellView(lastMessage: lastMessage)
-                    }
+        List {
+            ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
+                NavigationLink(value: lastMessage.room_id) {
+                    LastMessagesCellView(lastMessage: lastMessage)
                 }
-                // .onDelete(perform: viewModel.deleteLast) voir Nick remove favorites products
             }
-            .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
-            .task { await viewModel.getLastMessages() }
-            // .listStyle()
-            .navigationTitle("Messages")
-            
-            // -> BubbleMessages
-            .navigationDestination(for: String.self) { value in
-                MessagesView(value: value)
-            }
-            
-            // -> Contacts
-            .navigationBarItems(
-                leading: Image(systemName: "person.fill"),
-                trailing: NavigationLink(
-                    destination: NewContactView(),
-                    label: {Image(systemName: "square.and.pencil")}
-                )
-            )
+            // .onDelete(perform: viewModel.deleteLast) voir Nick remove favorites products
         }
+        .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
+        .task { await viewModel.getLastMessages() }
+        // .listStyle()
+        .navigationTitle("Messages")
+        
+        // -> BubbleMessages
+        .navigationDestination(for: String.self) { value in
+            MessagesView(value: value)
+        }
+        
+        // -> Contacts
+        .navigationBarItems(
+            leading: Image(systemName: "person.fill"),
+            trailing: NavigationLink(
+                destination: NewContactView(),
+                label: {Image(systemName: "square.and.pencil")}
+            )
+        )
     }
 }
 

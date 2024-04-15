@@ -23,7 +23,6 @@ final class MessagesViewModel: ObservableObject {
     @Published private(set) var lastMessageId = ""
     
     // PhotoPicker
-    @Published private(set) var selectedImage: UIImage? = nil
     @Published var imageSelection: PhotosPickerItem? = nil {
         didSet {
             setImage(from: imageSelection)
@@ -34,7 +33,9 @@ final class MessagesViewModel: ObservableObject {
     private func setImage(from selection: PhotosPickerItem?) {
         
         guard let selection else { return }
-        
+
+        var selectedImage: UIImage? = nil
+
         Task {
             if let data = try? await selection.loadTransferable(type: Data.self) {
                 if let uiImage = UIImage(data: data) {
@@ -119,6 +120,8 @@ final class MessagesViewModel: ObservableObject {
     }
 }
 
+// View ---------------------------------------------------
+
 struct MessagesView: View {
     @StateObject private var viewModel = MessagesViewModel()
     @State private var messageText: String = ""
@@ -172,8 +175,9 @@ struct MessagesView_Previews: PreviewProvider {
     }
 }
 
-// Barre de saisie du message
+// Barre de saisie du message ---------------------------------------------------
 extension MessagesView {
+    
     private var MessageBar: some View {
         HStack {
            

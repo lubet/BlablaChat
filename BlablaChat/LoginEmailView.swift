@@ -52,6 +52,8 @@ struct LoginEmailView: View {
     
     @StateObject private var viewModel = LoginEmailViewModel()
     
+    @Binding var showSignInView: Bool
+    
     @State var showImagePicker: Bool = false
     @State var image: UIImage?
     
@@ -108,7 +110,8 @@ struct LoginEmailView: View {
                         Task {
                             do {
                                 try await viewModel.signIn() // Dans tous les cas le user existe (vient d'être créer ou existait déjà)
-                               return
+                                showSignInView = false
+                                return
                             } catch {
                                 print(error)
                             }
@@ -138,6 +141,6 @@ struct LoginEmailView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginEmailView()
+        LoginEmailView(showSignInView: .constant(false))
     }
 }

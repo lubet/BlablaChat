@@ -13,8 +13,22 @@ struct RootView: View {
     
     var body: some View {
         ZStack {
-            NavigationStack {
-                LastMessagesView()
+            TabView {
+                    LastMessagesView()
+                    .tabItem {
+                        Image(systemName: "tray.and.arrow.down.fill")
+                        Text("Courrier Entrant")
+                    }
+                    Text("Courrier sortant")
+                    .tabItem {
+                        Image(systemName: "tray.and.arrow.up.fill")
+                        Text("Courrier Entrant")
+                    }
+                    SettingsView()
+                    .tabItem {
+                        Image(systemName: "gear")
+                        Text("Paramètres")
+                    }
             }
         }
         .onAppear {

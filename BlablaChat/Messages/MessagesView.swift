@@ -176,6 +176,7 @@ struct MessagesView_Previews: PreviewProvider {
 }
 
 // Barre de saisie du message ---------------------------------------------------
+
 extension MessagesView {
     
     private var MessageBar: some View {

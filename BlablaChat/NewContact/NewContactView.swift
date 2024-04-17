@@ -104,6 +104,8 @@ final class NewContactViewModel: ObservableObject {
     }
 }
 
+// --------------------------------------------------
+
 struct NewContactView: View {
     
     @StateObject var viewModel = NewContactViewModel()

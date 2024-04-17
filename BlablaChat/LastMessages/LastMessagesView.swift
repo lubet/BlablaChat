@@ -117,8 +117,6 @@ struct LastMessagesView: View {
     
     // @ObserverObject relaod si la vue is refresh contrairement à @StateObject
     @ObservedObject var viewModel: LastMessagesViewModel = LastMessagesViewModel()
-    
-    // @Binding var showSignInView: Bool
         
     var body: some View {
         NavigationStack {

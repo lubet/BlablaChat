@@ -215,6 +215,7 @@ extension MessagesView {
         if textIsCorrect() {
             Task {
                 try? await viewModel.saveMessage(message_text: messageText, room_id: value)
+                messageText = ""
             }
         }
     }

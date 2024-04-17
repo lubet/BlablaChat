@@ -61,6 +61,8 @@ struct LoginEmailView: View {
         //NavigationView {
             ScrollView {
                 VStack {
+                    
+                    // Avatar
                     Button {
                         showImagePicker.toggle()
                     } label: {
@@ -96,6 +98,7 @@ struct LoginEmailView: View {
                     .padding(15)
                     .background(Color.gray.opacity(0.2))
                     
+                    // Login
                     Button {
                         Task {
                             do {
@@ -114,7 +117,7 @@ struct LoginEmailView: View {
                                 showSignInView = false
                                 return
                             } catch {
-                                print(error)
+                                print("Existe déjà: ", error)
                             }
                         }                    } label: {
                         Text("Sign In/Up")

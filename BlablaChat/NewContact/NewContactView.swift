@@ -84,7 +84,9 @@ final class NewContactViewModel: ObservableObject {
         }
         
         // TODO la sauvegarde du message et de la photo doit se faire dans MessageView
-        guard let url = URL(string: "") else { return }
+        print("Avant url")
+        guard let url = URL(string: "https://picsum.photos/id/237/200/300") else { return }
+        print("Après url")
         
         // Renvoie le room_id du couple from/to ou to/from présent ou non dans membre
         let room = try await NewContactManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)

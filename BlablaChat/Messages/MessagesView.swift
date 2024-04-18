@@ -129,7 +129,7 @@ struct MessagesView: View {
     @State var showAlert: Bool = false
     
     // <- LastMessagesView
-    let value: String // room_id
+    let value: LastMessage
     
     var body: some View {
         
@@ -161,7 +161,7 @@ struct MessagesView: View {
         .task {
             viewModel.param = ["room_id":value] // pour passer le room à la photo - voir setImage() en haut
             do {
-                try await viewModel.getRoomMessages(room_id: value) // Tous les messages d'un room 
+                try await viewModel.getRoomMessages(room_id: value.room_id) // Tous les messages d'un room
             } catch {
                 print("RoomMessagesView - Error getting documents: \(error.localizedDescription)")
             }
@@ -171,7 +171,7 @@ struct MessagesView: View {
 
 struct MessagesView_Previews: PreviewProvider {
     static var previews: some View {
-        MessagesView(value: "123")
+        MessagesView(value: LastMessage(room_id: "1", room_name: "toto", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Hello", message_date: timeStampToString(dateMessage: Timestamp()), message_from: "tutu", message_to: "toto"))
     }
 }
 
@@ -214,7 +214,7 @@ extension MessagesView {
     func sendButton() {
         if textIsCorrect() {
             Task {
-                try? await viewModel.saveMessage(message_text: messageText, room_id: value)
+                try? await viewModel.saveMessage(message_text: messageText, room_id: value.room_id)
                 messageText = ""
             }
         }

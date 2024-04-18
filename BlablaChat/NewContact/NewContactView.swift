@@ -117,8 +117,6 @@ struct NewContactView: View {
     @State var alertTitle: String = ""
     @State var showAlert: Bool = false
     
-    @Environment(\.presentationMode) var presentationMode
-    
     var body: some View {
         List {
             ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts) { oneContact in
@@ -173,11 +171,9 @@ extension NewContactView {
     
     func sendButtonPresses() {
         if textIsCorrect() {
-            Task {
-                try? await viewModel.saveMessage(to_email: viewModel.filteredContacts[0].email, textMessage: messageTexte)
-            }
-            
-            // presentationMode.wrappedValue.dismiss()
+//            Task {
+//                try? await viewModel.saveMessage(to_email: viewModel.filteredContacts[0].email, textMessage: messageTexte)
+//            }
         }
     }
     

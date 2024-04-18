@@ -117,9 +117,11 @@ struct LastMessagesView: View {
     
     // @ObserverObject relaod si la vue is refresh contrairement à @StateObject
     @ObservedObject var viewModel: LastMessagesViewModel = LastMessagesViewModel()
+    
+    @State private var path = NavigationPath()
         
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             List {
                 ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
                     NavigationLink(value: lastMessage.room_id) {

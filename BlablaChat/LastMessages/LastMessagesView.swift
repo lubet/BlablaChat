@@ -113,15 +113,16 @@ class LastMessagesViewModel: ObservableObject {
 
 }
 
+
+// ----------------------------------------------------------------------------
+
 struct LastMessagesView: View {
     
     // @ObserverObject relaod si la vue is refresh contrairement à @StateObject
     @ObservedObject var viewModel: LastMessagesViewModel = LastMessagesViewModel()
-    
-    @State private var path = NavigationPath()
-        
+            
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack() {
             List {
                 ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
                     NavigationLink(value: lastMessage) {
@@ -140,14 +141,24 @@ struct LastMessagesView: View {
                 MessagesView(value: value)
             }
             
-            // -> Contacts
-            .navigationBarItems(
-                leading: Image(systemName: "person.fill"),
-                trailing: NavigationLink(
-                    destination: NewContactView(),
-                    label: {Image(systemName: "square.and.pencil")}
-                )
-            )
+            .navigationBarItems(trailing:
+                NavigationLink(value: "❤️") {
+                    Label("Heart", systemImage: "heart.fill").symbolRenderingMode(.multicolor)
+                }
+                .navigationDestination(for: String.self) { stringValue in
+                    NewContactView()
+                })
+            
+            
+            
+//            // -> Contacts
+//            .navigationBarItems(
+//                leading: Image(systemName: "person.fill"),
+//                trailing: NavigationLink(
+//                    destination: NewContactView(),
+//                    label: {Image(systemName: "square.and.pencil")}
+//                )
+//            )
         }
     }
 }

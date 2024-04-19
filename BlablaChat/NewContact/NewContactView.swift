@@ -83,7 +83,7 @@ final class NewContactViewModel: ObservableObject {
             print("createContact retour:\(contact_id)")
         }
         
-        // TODO la sauvegarde du message et de la photo doit se faire dans MessageView
+        // TODO Virer le chien et mettre une image si existante
         print("Avant url")
         guard let url = URL(string: "https://picsum.photos/id/237/200/300") else { return }
         print("Après url")

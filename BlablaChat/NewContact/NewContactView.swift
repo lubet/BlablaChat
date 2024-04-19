@@ -117,6 +117,8 @@ struct NewContactView: View {
     @State var alertTitle: String = ""
     @State var showAlert: Bool = false
     
+    @Binding var path: NavigationPath
+    
     var body: some View {
         List {
             ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts) { oneContact in
@@ -134,11 +136,11 @@ struct NewContactView: View {
     }
 }
 
-struct NewContactView_Previews: PreviewProvider {
-    static var previews: some View {
-        NewContactView()
-    }
-}
+//struct NewContactView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NewContactView(path: NavigationPath)
+//    }
+//}
 
 // Barre de saisie et d'envoie du message
 extension NewContactView {
@@ -171,9 +173,10 @@ extension NewContactView {
     
     func sendButtonPresses() {
         if textIsCorrect() {
-//            Task {
-//                try? await viewModel.saveMessage(to_email: viewModel.filteredContacts[0].email, textMessage: messageTexte)
-//            }
+            Task {
+                try? await viewModel.saveMessage(to_email: viewModel.filteredContacts[0].email, textMessage: messageTexte)
+                path.removeLast(path.count)
+            }
         }
     }
     

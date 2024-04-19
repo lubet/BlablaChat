@@ -121,8 +121,10 @@ struct LastMessagesView: View {
     // @ObserverObject relaod si la vue is refresh contrairement à @StateObject
     @ObservedObject var viewModel: LastMessagesViewModel = LastMessagesViewModel()
             
+    @State var path = NavigationPath()
+    
     var body: some View {
-        NavigationStack() {
+        NavigationStack(path: $path) {
             List {
                 ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
                     NavigationLink(value: lastMessage) {
@@ -146,12 +148,15 @@ struct LastMessagesView: View {
                     Label("Heart", systemImage: "heart.fill").symbolRenderingMode(.multicolor)
                 }
                 .navigationDestination(for: String.self) { stringValue in
-                    NewContactView()
+                    NewContactView(path: $path)
+//                    Button("HOME") {
+//                        path.removeLast(path.count)
+//                    }
                 })
             
             
             
-//            // -> Contacts
+            // -> Contacts
 //            .navigationBarItems(
 //                leading: Image(systemName: "person.fill"),
 //                trailing: NavigationLink(

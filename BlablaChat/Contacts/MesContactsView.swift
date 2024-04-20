@@ -138,7 +138,7 @@ struct MesContactsView: View {
 
 //struct MesContactsView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        MesContactsView(path: NavigationPath.Type)
+//        MesContactsView(path: NavigationPath) TODO
 //    }
 //}
 

@@ -121,7 +121,7 @@ struct MesContactsView: View {
     
     var body: some View {
         List {
-            ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts) { oneContact in
+            ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts, id: \.self) { oneContact in
                 ContactCellView(lecontact: oneContact)
             }
         }

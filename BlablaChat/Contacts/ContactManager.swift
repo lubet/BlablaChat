@@ -10,19 +10,15 @@
 import Foundation
 import Contacts
 
-struct Contact: Identifiable {
-    let id: String
+struct Contact: Hashable {
     let nom: String
     let email: String
-    
-    init (id: String = UUID().uuidString, nom:String, email:String) {
-        self.id = id
-        self.nom = nom
-        self.email = email
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(email)
     }
     
 }
-
 
 final class ContactManager {
     

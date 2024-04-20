@@ -12,22 +12,27 @@ import SwiftUI
 @MainActor
 final class ContactBubblesViewModel: ObservableObject {
     
-    
-    
-    
 }
 
-
-
+// -----------------------------------------------------
 
 struct ContactBubblesView: View {
+    
+    let oneContact: Contact
+    
+    @Binding var path: NavigationPath
+    
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button("HOME") {
+            path.removeLast(path.count)
+        }
+
     }
 }
 
-struct ContactBubblesView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContactBubblesView()
-    }
-}
+//struct ContactBubblesView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContactBubblesView()
+//    }
+//}

@@ -148,7 +148,7 @@ struct LastMessagesView: View {
                     Label("Heart", systemImage: "heart.fill").symbolRenderingMode(.multicolor)
                 }
                 .navigationDestination(for: String.self) { stringValue in
-                    MesContactsView(path: $path)
+                    ContactsView(path: $path)
 //                    Button("HOME") {
 //                        path.removeLast(path.count)
 //                    }

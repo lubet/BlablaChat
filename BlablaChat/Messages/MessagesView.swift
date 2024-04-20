@@ -57,7 +57,7 @@ final class MessagesViewModel: ObservableObject {
                     
                     lurl = try await StorageManager.shared.getUrlForImage(path: path)
                     
-                    try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: "", room_id: room_id as! String, image_link: lurl.absoluteString)
+                    try await ContactsManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: "", room_id: room_id as! String, image_link: lurl.absoluteString)
                     
                     do {
                         // Rafraichissement de la view actuelle
@@ -97,7 +97,7 @@ final class MessagesViewModel: ObservableObject {
         let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)
         
         // Sauvegarde du message "texte"
-        try await NewContactManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: "")
+        try await ContactsManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: "")
         
         do {
             // Rafraichissement de la view actuelle

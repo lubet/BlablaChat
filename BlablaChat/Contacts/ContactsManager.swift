@@ -94,9 +94,9 @@ struct Message: Identifiable, Codable {
     }
 }
 
-final class NewContactManager {
+final class ContactsManager {
     
-    static let shared = NewContactManager()
+    static let shared = ContactsManager()
     
     init() { }
     

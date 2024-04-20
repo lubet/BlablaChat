@@ -19,7 +19,7 @@ import SwiftUI
 import Combine
 
 @MainActor
-final class NewContactViewModel: ObservableObject {
+final class MesContactsViewModel: ObservableObject {
     
     @Published private(set) var mesContacts: [Contact] = []
     @Published private(set) var filteredContacts: [Contact] = []
@@ -71,7 +71,7 @@ final class NewContactViewModel: ObservableObject {
         // user_id d'un contact
         var contact_id: String = ""
         
-         let contactId = try await NewContactManager.shared.searchContact(email: to_email) // Recherche du contact_id dans "users"
+         let contactId = try await ContactsManager.shared.searchContact(email: to_email) // Recherche du contact_id dans "users"
         
         print("contactId?:\(contactId)")
         
@@ -79,7 +79,7 @@ final class NewContactViewModel: ObservableObject {
             contact_id = contactId
             print("createContact trouvé:\(contactId)") // contact existant dans "users"
         } else {
-            contact_id = try await NewContactManager.shared.createUser(email: to_email) // Création du contact dans "users"
+            contact_id = try await ContactsManager.shared.createUser(email: to_email) // Création du contact dans "users"
             print("createContact retour:\(contact_id)")
         }
         
@@ -89,26 +89,26 @@ final class NewContactViewModel: ObservableObject {
         print("Après url")
         
         // Renvoie le room_id du couple from/to ou to/from présent ou non dans membre
-        let room = try await NewContactManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+        let room = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
         if (room == "") {
             // Non -> créer un room
-            let room_id = try await NewContactManager.shared.createRoom(name: to_email)
+            let room_id = try await ContactsManager.shared.createRoom(name: to_email)
             // création d'un document membre
-            try await NewContactManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
+            try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
             // Créer un message avec le room
-            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: textMessage, room_id: room_id, image_link: url.absoluteString)
+            try await ContactsManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: textMessage, room_id: room_id, image_link: url.absoluteString)
         } else {
             // Si un room commun -> créer le message avec le room existant
-            try await NewContactManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: textMessage, room_id: room, image_link: url.absoluteString)
+            try await ContactsManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: textMessage, room_id: room, image_link: url.absoluteString)
         }
     }
 }
 
 // --------------------------------------------------
 
-struct NewContactView: View {
+struct MesContactsView: View {
     
-    @StateObject var viewModel = NewContactViewModel()
+    @StateObject var viewModel = MesContactsViewModel()
     
     @State private var searchText: String = ""
     
@@ -136,14 +136,14 @@ struct NewContactView: View {
     }
 }
 
-//struct NewContactView_Previews: PreviewProvider {
+//struct MesContactsView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        NewContactView(path: NavigationPath)
+//        MesContactsView(path: NavigationPath.Type)
 //    }
 //}
 
 // Barre de saisie et d'envoie du message
-extension NewContactView {
+extension MesContactsView {
     
     private var bottomMessageBar: some View {
         HStack(spacing: 16) {

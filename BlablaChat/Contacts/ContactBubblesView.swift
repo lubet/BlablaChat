@@ -35,7 +35,14 @@ final class ContactBubblesViewModel: ObservableObject {
     }
     
     func getContactMesssages(email: String) async throws {
-        
+        // Trouver le user_id à l'aide de email
+        var user_id = try await ContactsManager.shared.searchContact(email: "") // TODO
+        if user_id == "" {
+            // créer le contact et renvoyer le user_id
+            user_id = try await ContactsManager.shared.createUser(email: "") // TODO
+        }
+        // Affichage des messages ou rien
+        // Tous les messages ou rien
     }
 }
 

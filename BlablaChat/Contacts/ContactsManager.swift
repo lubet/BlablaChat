@@ -139,7 +139,7 @@ final class ContactsManager {
             for document in querySnapshot.documents {
                 let user = try document.data(as: DBUser.self)
                 if (user.email == email) {
-                    print("searchContact trouvé:\(email)")
+                    print("searchContact trouvé:\(user.userId)")
                     return user.userId
                 }
             }

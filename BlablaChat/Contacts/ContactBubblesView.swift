@@ -34,15 +34,29 @@ final class ContactBubblesViewModel: ObservableObject {
     private func setImage(from selection: PhotosPickerItem?) {
     }
     
+    // Nouveau contact ou ancien avec messages ou non
     func getContactMesssages(email: String) async throws {
-        // Trouver le user_id à l'aide de email
-        var user_id = try await ContactsManager.shared.searchContact(email: "") // TODO
-        if user_id == "" {
-            // créer le contact et renvoyer le user_id
-            user_id = try await ContactsManager.shared.createUser(email: "") // TODO
+        
+        // Moi
+        guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+        let user_id = AuthUser.uid
+        
+        // Trouver dans users le contact_id à l'aide de son email
+        var contact_id  = try await ContactsManager.shared.searchContact(email: email)
+        
+        if contact_id == "" {
+            // créer le contact dans users et renvoyer son user_id
+            contact_id = try await ContactsManager.shared.createUser(email: email)
         }
-        // Affichage des messages ou rien
-        // Tous les messages ou rien
+        
+        // Recherche du couple user_id contact_id dans membre (il devrait en exister qu'une occurence)
+        let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+        
+        if room_id == "" {
+            // Pas de room_id cad pas de conversation -> messagesBubble sera vide
+        } else {
+            self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
+        }
     }
 }
 
@@ -89,7 +103,7 @@ struct ContactBubblesView: View {
         .navigationTitle("Messages")
         .task {
             do {
-                try await viewModel.getContactMesssages(email: "") // Tous les messages d'un contact
+                try await viewModel.getContactMesssages(email: oneContact.email) // Nouveau ou ancien contact
             } catch {
                 print("ContactBubblesView - Error getting messages: \(error.localizedDescription)")
             }

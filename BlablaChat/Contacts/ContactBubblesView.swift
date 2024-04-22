@@ -35,19 +35,19 @@ final class ContactBubblesViewModel: ObservableObject {
     
     @Published var param: [String:String] = ["":""]
     
-
+    
     // Sauvegarde d'un message "Photo"
     private func setImage(from selection: PhotosPickerItem?) {
         guard let selection else { return }
-
+        
         var selectedImage: UIImage? = nil
-
+        
         Task {
             if let data = try? await selection.loadTransferable(type: Data.self) {
                 
                 if let uiImage = UIImage(data: data) {
                     selectedImage = uiImage
-
+                    
                     guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
                     let user_id = AuthUser.uid
                     
@@ -62,9 +62,9 @@ final class ContactBubblesViewModel: ObservableObject {
                     } else {
                         room_id = param["room_id"] ?? ""
                     }
-                     
+                    
                     let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)
-
+                    
                     let lurl: URL
                     
                     guard let image = selectedImage else { return }
@@ -90,42 +90,57 @@ final class ContactBubblesViewModel: ObservableObject {
                 }
             }
         }
-
-        // Sauvegarde d'un message "texte"
-        func saveMessage(message_text: String, room_id: String) async throws {
-            
-            // TODO La gestion du nouveau contact (pas de users, room, member...)
-
-            // Moi
-            guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-            let user_id = AuthUser.uid
-            
-            // user "destinataire" to_id à trouver dans member
-            let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)
-            
-            // Sauvegarde du message "texte"
-            try await ContactsManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: "")
-            
-            do {
-                // Rafraichissement de la view actuelle
-                self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
-                
-                scrollViewReaderId()
-                
-            } catch {
-                print("Error saveMessage: \(error.localizedDescription)")
-                return
-            }
-            
+    }
+    // Sauvegarde d'un message "texte"
+    func saveMessage(to_email: String, textMessage: String) async throws {
+        
+        // mon user_id
+        let AuthUser = try AuthManager.shared.getAuthenticatedUser()
+        let user_id = AuthUser.uid
+        print("user_id:\(user_id)")
+        
+        // user_id d'un contact
+        var contact_id: String = ""
+        
+        let contactId = try await ContactsManager.shared.searchContact(email: to_email) // Recherche du contact_id dans "users"
+        
+        print("contactId?:\(contactId)")
+        
+        if contactId != "" {
+            contact_id = contactId
+            print("createContact trouvé:\(contactId)") // contact existant dans "users"
+        } else {
+            contact_id = try await ContactsManager.shared.createUser(email: to_email) // Création du contact dans "users"
+            print("createContact retour:\(contact_id)")
         }
-
-        func scrollViewReaderId() {
-            if let id = self.messagesBubble.last?.id {
-                self.lastMessageId = id
-                print("id: \(id)")
-            }
+        
+        // TODO Virer le chien et mettre une image si existante
+        print("Avant url")
+        guard let url = URL(string: "https://picsum.photos/id/237/200/300") else { return }
+        print("Après url")
+        
+        // Renvoie le room_id du couple from/to ou to/from présent ou non dans membre
+        let room = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+        if (room == "") {
+            // Non -> créer un room
+            let room_id = try await ContactsManager.shared.createRoom(name: to_email)
+            // création d'un document membre
+            try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
+            // Créer un message avec le room
+            try await ContactsManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: textMessage, room_id: room_id, image_link: url.absoluteString)
+        } else {
+            // Si un room commun -> créer le message avec le room existant
+            try await ContactsManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: textMessage, room_id: room, image_link: url.absoluteString)
         }
     }
+    
+    func scrollViewReaderId() {
+        if let id = self.messagesBubble.last?.id {
+            self.lastMessageId = id
+            print("id: \(id)")
+        }
+    }
+    
     
     // Get tous les messages d'un contact existant ou rien si le contact n'existe pas encore
     func getContactMesssages(email: String) async throws {
@@ -154,6 +169,7 @@ final class ContactBubblesViewModel: ObservableObject {
             self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
         }
     }
+    
 }
 
 // -----------------------------------------------------
@@ -255,10 +271,10 @@ extension ContactBubblesView {
     // Sauvegarde du message "texte"
     func sendButton() {
         if textIsCorrect() {
-//            Task {
-//                try? await viewModel.saveMessage(message_text: messageText, room_id: value.room_id)
-//                messageText = ""
-//            }
+           Task {
+               try? await viewModel.saveMessage(to_email: "ee", textMessage: messageText)
+                messageText = ""
+            }
         }
     }
     

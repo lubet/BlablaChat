@@ -19,8 +19,6 @@ import PhotosUI
 @MainActor
 final class ContactBubblesViewModel: ObservableObject {
     
-    init() {}
-    
     @Published private(set) var messagesBubble: [MessageBubble] = []
     
     // ScrollViewReader
@@ -272,7 +270,7 @@ extension ContactBubblesView {
     func sendButton() {
         if textIsCorrect() {
            Task {
-               try? await viewModel.saveMessage(to_email: "ee", textMessage: messageText)
+               try? await viewModel.saveMessage(to_email: oneContact.email, textMessage: messageText)
                 messageText = ""
             }
         }

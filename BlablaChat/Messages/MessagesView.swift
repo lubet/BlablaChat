@@ -17,7 +17,7 @@ final class MessagesViewModel: ObservableObject {
     
     @Published private(set) var messagesBubble: [MessageBubble] = []
     
-    @Published var param: [String:Any] = [:] // pour récupérer le room_id utiliser dans setImage()
+    @Published var param: [String:String] = [:] // pour récupérer le room_id utiliser dans setImage()
     
     // ScrollViewReader
     @Published private(set) var lastMessageId = ""
@@ -46,7 +46,7 @@ final class MessagesViewModel: ObservableObject {
                     
                     guard let room_id = param["room_id"] else { return }
                     
-                    let toId =  try await MessagesManager.shared.getToId(room_id: room_id as! String, user_id: user_id)
+                    let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)
 
                     let lurl: URL
                     
@@ -57,11 +57,11 @@ final class MessagesViewModel: ObservableObject {
                     
                     lurl = try await StorageManager.shared.getUrlForImage(path: path)
                     
-                    try await ContactsManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: "", room_id: room_id as! String, image_link: lurl.absoluteString)
+                    try await ContactsManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: "", room_id: room_id, image_link: lurl.absoluteString)
                     
                     do {
                         // Rafraichissement de la view actuelle
-                        self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id as! String, user_id: AuthUser.uid)
+                        self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
                         
                         scrollViewReaderId()
                         
@@ -159,7 +159,7 @@ struct MessagesView: View {
             }
         .navigationTitle("Messages")
         .task {
-            viewModel.param = ["room_id":value] // pour passer le room à la photo - voir setImage() en haut
+            viewModel.param = ["room_id":value.room_id] // pour passer le room à la photo - voir setImage() en haut
             do {
                 try await viewModel.getRoomMessages(room_id: value.room_id) // Tous les messages d'un room
             } catch {

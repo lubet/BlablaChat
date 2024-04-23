@@ -62,6 +62,7 @@ final class MesContactsViewModel: ObservableObject {
         self.mesContacts = await ContactManager.shared.mockContacts()
     }
 
+    // Sauvegarde message "texte" avec avatar "personne" pour les nouveaux contacts
     func saveMessage(to_email: String, textMessage: String) async throws {
         // mon user_id
         let AuthUser = try AuthManager.shared.getAuthenticatedUser()
@@ -77,9 +78,9 @@ final class MesContactsViewModel: ObservableObject {
         
         if contactId != "" {
             contact_id = contactId
-            print("createContact trouvé:\(contactId)") // contact existant dans "users"
+            print("createContact trouvé:\(contactId)") // Ancien contact
         } else {
-            contact_id = try await ContactsManager.shared.createUser(email: to_email) // Création du contact dans "users"
+            contact_id = try await ContactsManager.shared.createUser(email: to_email) // Nouveau contact
             print("createContact retour:\(contact_id)")
         }
         
@@ -127,7 +128,7 @@ struct MesContactsView: View {
         }
         .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Rechercher un contact")
         bottomMessageBar
-            .navigationTitle("Contacts")
+            .navigationTitle("MesContactsView")
             .alert(isPresented: $showAlert) {
                 getAlert()
             }

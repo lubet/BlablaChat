@@ -82,7 +82,7 @@ struct ContactsView: View {
         .task { await viewModel.getContacts() }
         Spacer()
             .navigationDestination(for: Contact.self) { value in
-                ContactBubblesView(oneContact: value, path: $path)
+                MesContactsView(path: $path)
             }
     }
 }

@@ -148,9 +148,11 @@ extension MesContactsView {
     
     private var bottomMessageBar: some View {
         HStack(spacing: 16) {
+            
             Image(systemName: "photo.on.rectangle")
                 .font(.system(size: 24))
                 .foregroundColor(Color(.darkGray))
+            
             ZStack {
                 TextEditor(text: $messageTexte)
                     .opacity(messageTexte.isEmpty ? 0.5 : 1)

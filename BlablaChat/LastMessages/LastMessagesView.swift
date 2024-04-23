@@ -136,7 +136,7 @@ struct LastMessagesView: View {
             .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
             .task { await viewModel.getLastMessages() }
             // .listStyle()
-            .navigationTitle("Messages")
+            .navigationTitle("LastMessagesView")
             
             // -> BubbleMessages
             .navigationDestination(for: LastMessage.self) { value in

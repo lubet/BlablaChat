@@ -157,7 +157,7 @@ struct MessagesView: View {
             .alert(isPresented: $showAlert) {
                 getAlert()
             }
-        .navigationTitle("Messages")
+        .navigationTitle("MessagesView")
         .task {
             viewModel.param = ["room_id":value.room_id] // pour passer le room à la photo - voir setImage() en haut
             do {

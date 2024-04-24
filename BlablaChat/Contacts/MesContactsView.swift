@@ -60,6 +60,7 @@ final class MesContactsViewModel: ObservableObject {
     
     func getContacts() async {
         self.mesContacts = await ContactManager.shared.mockContacts()
+        print("MesContactsViewModel - getContacts")
     }
 
     // Sauvegarde message "texte" avec avatar "personne" pour les nouveaux contacts
@@ -118,8 +119,6 @@ struct MesContactsView: View {
     @State var alertTitle: String = ""
     @State var showAlert: Bool = false
     
-    @Binding var path: NavigationPath
-    
     var body: some View {
         List {
             ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts, id: \.self) { oneContact in
@@ -127,13 +126,9 @@ struct MesContactsView: View {
             }
         }
         .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Rechercher un contact")
-        bottomMessageBar
-            .navigationTitle("MesContactsView")
-            .alert(isPresented: $showAlert) {
-                getAlert()
-            }
-            .task { await viewModel.getContacts() }
-            // .searchable(text: $searchText, prompt: "Recherche d'un contact")
+        .task { await viewModel.getContacts() }
+        .navigationTitle("MesContactsView")
+        // .searchable(text: $searchText, prompt: "Recherche d'un contact")
     }
 }
 
@@ -143,61 +138,3 @@ struct MesContactsView: View {
 //    }
 //}
 
-// Barre de saisie et d'envoie du message
-extension MesContactsView {
-    
-    private var bottomMessageBar: some View {
-        HStack(spacing: 16) {
-            
-            Image(systemName: "photo.on.rectangle")
-                .font(.system(size: 24))
-                .foregroundColor(Color(.darkGray))
-            
-            ZStack {
-                TextEditor(text: $messageTexte)
-                    .opacity(messageTexte.isEmpty ? 0.5 : 1)
-            }
-            .frame(height: 40)
-            
-            Button {
-                    sendButtonPresses()
-            } label: {
-                Text("Send")
-                    .foregroundColor(.white)
-            }
-            .padding(.horizontal)
-            .padding(.vertical, 8)
-            .background(Color.blue)
-            .cornerRadius(4)
-        }
-        .padding(.horizontal)
-        .padding(.vertical, 8)
-    }
-    
-    func sendButtonPresses() {
-        if textIsCorrect() {
-            Task {
-                try? await viewModel.saveMessage(to_email: viewModel.filteredContacts[0].email, textMessage: messageTexte)
-                path.removeLast(path.count)
-            }
-        }
-    }
-    
-    func textIsCorrect() -> Bool {
-        if messageTexte.count < 3 {
-            alertTitle = "Saisir un message d'au moins 3 caractères"
-            showAlert.toggle()
-            return false
-        }
-        if viewModel.filteredContacts.count != 1 {
-            alertTitle = "Veuillez selectionner un contact"
-            showAlert.toggle()
-            return false
-        }
-        return true
-    }
-    
-    func getAlert() -> Alert {
-        return Alert(title: Text(alertTitle))
-    }
-}

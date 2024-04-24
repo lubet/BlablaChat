@@ -120,11 +120,9 @@ struct LastMessagesView: View {
     
     // @ObserverObject relaod si la vue is refresh contrairement à @StateObject
     @ObservedObject var viewModel: LastMessagesViewModel = LastMessagesViewModel()
-            
-    @State var path = NavigationPath()
     
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack() {
             List {
                 ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
                     NavigationLink(value: lastMessage.room_name) { // room_name = email
@@ -143,16 +141,23 @@ struct LastMessagesView: View {
                 MessagesView(email: value) // room_name = email
             }
             
-            .navigationBarItems(trailing:
-                NavigationLink(value: "❤️") {
-                    Label("Heart", systemImage: "heart.fill").symbolRenderingMode(.multicolor)
-                }
-                .navigationDestination(for: String.self) { stringValue in
-                    MesContactsView(path: $path)
-//                    Button("HOME") {
-//                        path.removeLast(path.count)
-//                    }
-                })
+            // On ne peut pas avoir deux destinations String
+//            .navigationBarItems(trailing:
+//                NavigationLink(value: "❤️") {
+//                    Label("Heart", systemImage: "heart.fill").symbolRenderingMode(.multicolor)
+//                }
+//                .navigationDestination(for: String.self) { stringValue in
+//                    MesContactsView()
+////                    Button("HOME") {
+////                        path.removeLast(path.count)
+////                    }
+//                })
+            
+            NavigationLink(destination: MesContactsView()) {
+                Label("", systemImage: "person.2.fill")
+                    .symbolRenderingMode(.multicolor)
+            }.padding(.top, 20)
+
             
             
             

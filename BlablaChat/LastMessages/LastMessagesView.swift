@@ -153,22 +153,19 @@ struct LastMessagesView: View {
 ////                    }
 //                })
             
-            NavigationLink(destination: MesContactsView()) {
-                Label("", systemImage: "person.2.fill")
-                    .symbolRenderingMode(.multicolor)
-            }.padding(.top, 20)
-
-            
-            
-            
+//            NavigationLink(destination: MesContactsView()) {
+//                Label("", systemImage: "person.2.fill")
+//                    .symbolRenderingMode(.multicolor)
+//            }.padding(.top, 20)
+  
             // -> Contacts
-//            .navigationBarItems(
-//                leading: Image(systemName: "person.fill"),
-//                trailing: NavigationLink(
-//                    destination: NewContactView(),
-//                    label: {Image(systemName: "square.and.pencil")}
-//                )
-//            )
+            .navigationBarItems(
+                leading: Image(systemName: "person.fill"),
+                trailing: NavigationLink(
+                    destination: MesContactsView(),
+                    label: {Image(systemName: "square.and.pencil")}
+                )
+            )
         }
     }
 }

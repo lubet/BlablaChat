@@ -76,18 +76,29 @@ final class MessagesViewModel: ObservableObject {
     }
         
     
-    // Tous les messages d'un room
-    func getRoomMessages(room_id: String) async throws {
+    // Tous mes messages d'un room
+    func getRoomMessages(email: String) async throws {
+        
+        // Recherche du room_id avec l'email
+        let room_id = try await MessagesManager.shared.getRoomId(email: email)
+        param["room_id"] = room_id // pour setImage
         
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
+        let user_id = AuthUser.uid
+        
+        self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
         
         scrollViewReaderId()
         
     }
      
     // Sauvegarde du message "texte" (la photo est traitée à part - voir setImage())
-    func saveMessage(message_text: String, room_id: String) async throws {
+    func saveMessage(message_text: String) async throws {
+        
+        guard let room_id = param["room_id"] else {
+            print("saveMessage - room_id nil")
+            return
+        }
 
         // user "envoyeur"
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
@@ -129,7 +140,7 @@ struct MessagesView: View {
     @State var showAlert: Bool = false
     
     // <- LastMessagesView
-    let value: LastMessage
+    let email: String
     
     var body: some View {
         
@@ -159,11 +170,11 @@ struct MessagesView: View {
             }
         .navigationTitle("MessagesView")
         .task {
-            viewModel.param = ["room_id":value.room_id] // pour passer le room à la photo - voir setImage() en haut
+            viewModel.param = ["email":email] // pour passer le room à la photo - voir setImage() en haut
             do {
-                try await viewModel.getRoomMessages(room_id: value.room_id) // Tous les messages d'un room
+                try await viewModel.getRoomMessages(email: email) // Tous les messages d'un room
             } catch {
-                print("RoomMessagesView - Error getting documents: \(error.localizedDescription)")
+                print("getRoomMessages - Error getting documents: \(error.localizedDescription)")
             }
         }
     }
@@ -171,7 +182,8 @@ struct MessagesView: View {
 
 struct MessagesView_Previews: PreviewProvider {
     static var previews: some View {
-        MessagesView(value: LastMessage(room_id: "1", room_name: "toto", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Hello", message_date: timeStampToString(dateMessage: Timestamp()), message_from: "tutu", message_to: "toto"))
+        MessagesView(email: "toto")
+//        MessagesView(value: LastMessage(room_id: "1", room_name: "toto", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Hello", message_date: timeStampToString(dateMessage: Timestamp()), message_from: "tutu", message_to: "toto"))
     }
 }
 
@@ -214,7 +226,7 @@ extension MessagesView {
     func sendButton() {
         if textIsCorrect() {
             Task {
-                try? await viewModel.saveMessage(message_text: messageText, room_id: value.room_id)
+                try? await viewModel.saveMessage(message_text: messageText)
                 messageText = ""
             }
         }

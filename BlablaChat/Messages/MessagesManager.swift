@@ -37,6 +37,8 @@ final class MessagesManager {
     
     // Membres
     private let memberCollection = db.collection("members")
+    
+    private let roomCollection = db.collection("rooms")
 
     // Tous les messages d'un room en ordre croissant pour affichage "bubble"
     func getRoomMessages(room_id: String, user_id: String) async throws -> [MessageBubble] {
@@ -95,5 +97,28 @@ final class MessagesManager {
             print("getToId - Error getting documents: \(error.localizedDescription)")
         }
         return to_id
+    }
+    
+    // Recherche du room_id dans rooms avec l'email(room_name)
+    func getRoomId(email: String) async throws -> String {
+        
+        let roomId: String = ""
+        
+        do {
+            let querySnapShot = try? await roomCollection
+                .whereField("room_name", isEqualTo: email)
+                .getDocuments()
+            if let snap = querySnapShot {
+                for doc in snap.documents {
+                    let room = try doc.data(as: Room.self)
+                    if room.room_name == email {
+                        return room.room_id
+                    }
+                }
+            }
+        } catch {
+            print("getRoomId- Error getting documents: \(error.localizedDescription)")
+        }
+        return roomId
     }
 }

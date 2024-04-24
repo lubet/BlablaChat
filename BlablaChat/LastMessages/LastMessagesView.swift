@@ -127,7 +127,7 @@ struct LastMessagesView: View {
         NavigationStack(path: $path) {
             List {
                 ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
-                    NavigationLink(value: lastMessage) {
+                    NavigationLink(value: lastMessage.room_name) { // room_name = email
                         LastMessagesCellView(lastMessage: lastMessage)
                     }
                 }
@@ -139,8 +139,8 @@ struct LastMessagesView: View {
             .navigationTitle("LastMessagesView")
             
             // -> BubbleMessages
-            .navigationDestination(for: LastMessage.self) { value in
-                MessagesView(value: value)
+            .navigationDestination(for: String.self) { value in
+                MessagesView(email: value) // room_name = email
             }
             
             .navigationBarItems(trailing:

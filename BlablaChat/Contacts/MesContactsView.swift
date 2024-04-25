@@ -120,14 +120,22 @@ struct MesContactsView: View {
     @State var showAlert: Bool = false
     
     var body: some View {
-        List {
-            ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts, id: \.self) { oneContact in
-                ContactCellView(lecontact: oneContact)
+        NavigationStack {
+            List {
+                ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts, id: \.self) { oneContact in
+                    NavigationLink(value: oneContact) {
+                        ContactCellView(lecontact: oneContact)
+                    }
+                }
+            }
+            .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Rechercher un contact")
+            .task { await viewModel.getContacts() }
+            .navigationTitle("MesContactsView")
+            .navigationDestination(for: Contact.self) {
+                value in
+                Essai4View()
             }
         }
-        .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Rechercher un contact")
-        .task { await viewModel.getContacts() }
-        .navigationTitle("MesContactsView")
     }
 }
 

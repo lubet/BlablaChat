@@ -139,12 +139,9 @@ struct MessagesView: View {
     @State var alertTitle: String = ""
     @State var showAlert: Bool = false
     
-    @Binding var path:[LastMessage]
-    
+    // from LastMessagesView:
+    @Binding var path:[LastMessage] // Uniquement pour le "Back to root" automatique
     let email: String
-    
-    // <- LastMessagesView
-    // let email: String
     
     var body: some View {
         

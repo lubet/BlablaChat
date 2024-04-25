@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C001E7252BDA9D0B0077663F /* Essai4View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C001E7242BDA9D0B0077663F /* Essai4View.swift */; };
 		C00CEF102BB55206004C7016 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C00CEF0F2BB55206004C7016 /* SDWebImageSwiftUI */; };
 		C00CEF122BB5538E004C7016 /* WebImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00CEF112BB5538E004C7016 /* WebImageView.swift */; };
 		C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */; };
@@ -53,6 +54,7 @@
 
 /* Begin PBXFileReference section */
 		C001E7212BDA85650077663F /* CodeSave.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CodeSave.md; sourceTree = "<group>"; };
+		C001E7242BDA9D0B0077663F /* Essai4View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Essai4View.swift; sourceTree = "<group>"; };
 		C00CEF112BB5538E004C7016 /* WebImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImageView.swift; sourceTree = "<group>"; };
 		C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchXavierView.swift; sourceTree = "<group>"; };
 		C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCellView.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				C048F1892BAF2C1200742CD2 /* ListeMessagesView.swift */,
 				C00CEF112BB5538E004C7016 /* WebImageView.swift */,
 				C001E7212BDA85650077663F /* CodeSave.md */,
+				C001E7242BDA9D0B0077663F /* Essai4View.swift */,
 			);
 			path = Essais;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				C09FFA972BD3BE20003E8FB9 /* MesContactsView.swift in Sources */,
 				C068CD3B2BCD769E0072A797 /* AuthenticationView.swift in Sources */,
 				C0476E812BB712A4000D860C /* MessagesCellView.swift in Sources */,
+				C001E7252BDA9D0B0077663F /* Essai4View.swift in Sources */,
 				C047E9E22B45880400C6D48F /* StorageManager.swift in Sources */,
 				C047E9C62B45625C00C6D48F /* LoginEmailView.swift in Sources */,
 				C02A0CFF2BD3C5FB000E58D4 /* ContactsView.swift in Sources */,

@@ -65,25 +65,26 @@ struct ContactsView: View {
     
     @State private var searchText: String = ""
     @State private var messageTexte: String = ""
-
-    @Binding var path: NavigationPath //
     
     var body: some View {
-        List {
-            ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts, id: \.self) { oneContact in
-                NavigationLink(value: oneContact) {
-                    ContactCellView(lecontact: oneContact)
+        NavigationStack {
+            List {
+                ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts, id: \.self) { oneContact in
+                    NavigationLink(value: oneContact) {
+                        ContactCellView(lecontact: oneContact)
+                    }
+                    
                 }
-
             }
         }
         .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Rechercher un contact")
         .navigationTitle("Contacts")
         .task { await viewModel.getContacts() }
-        Spacer()
-            .navigationDestination(for: Contact.self) { value in
-                MesContactsView()
-            }
+ 
+        .navigationDestination(for: Contact.self) { value in
+            MesContactsView()
+        }
+        // Spacer()
     }
 }
 

@@ -139,8 +139,12 @@ struct MessagesView: View {
     @State var alertTitle: String = ""
     @State var showAlert: Bool = false
     
-    // <- LastMessagesView
+    @Binding var path:[LastMessage]
+    
     let email: String
+    
+    // <- LastMessagesView
+    // let email: String
     
     var body: some View {
         
@@ -180,20 +184,17 @@ struct MessagesView: View {
     }
 }
 
-struct MessagesView_Previews: PreviewProvider {
-    static var previews: some View {
-        MessagesView(email: "toto")
-//        MessagesView(value: LastMessage(room_id: "1", room_name: "toto", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Hello", message_date: timeStampToString(dateMessage: Timestamp()), message_from: "tutu", message_to: "toto"))
-    }
-}
+//struct MessagesView_Previews: PreviewProvider {
+//    static var previews: some View {
+////        MessagesView(email: "toto")
+////        MessagesView(value: LastMessage(room_id: "1", room_name: "toto", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Hello", message_date: timeStampToString(dateMessage: Timestamp()), message_from: "tutu", message_to: "toto"))
+////    }
+//}
 
 // Barre de saisie du message ---------------------------------------------------
-
 extension MessagesView {
-    
     private var MessageBar: some View {
         HStack {
-           
             // Affichage des photos
             PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
                 Image(systemName: "photo")
@@ -225,6 +226,7 @@ extension MessagesView {
     // Sauvegarde du message "texte"
     func sendButton() {
         if textIsCorrect() {
+            path.removeAll()
             Task {
                 try? await viewModel.saveMessage(message_text: messageText)
                 messageText = ""

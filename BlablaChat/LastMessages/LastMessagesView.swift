@@ -121,11 +121,13 @@ struct LastMessagesView: View {
     // @ObserverObject relaod si la vue is refresh contrairement à @StateObject
     @ObservedObject var viewModel: LastMessagesViewModel = LastMessagesViewModel()
     
+    @State var path: [LastMessage] = []
+    
     var body: some View {
-        NavigationStack() {
+        NavigationStack(path: $path) {
             List {
                 ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
-                    NavigationLink(value: lastMessage.room_name) { // room_name = email
+                    NavigationLink(value: lastMessage) { // room_name = email
                         LastMessagesCellView(lastMessage: lastMessage)
                     }
                 }
@@ -134,8 +136,8 @@ struct LastMessagesView: View {
             .task { await viewModel.getLastMessages() }
             .navigationTitle("LastMessagesView")
             
-            .navigationDestination(for: String.self) { value in
-                MessagesView(email: value) // room_name = email
+            .navigationDestination(for: LastMessage.self) { value in
+                MessagesView(path: $path, email: value.room_name) // room_name = email
             }
         }
     }

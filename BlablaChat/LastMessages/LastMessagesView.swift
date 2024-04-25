@@ -129,43 +129,14 @@ struct LastMessagesView: View {
                         LastMessagesCellView(lastMessage: lastMessage)
                     }
                 }
-                // .onDelete(perform: viewModel.deleteLast) voir Nick remove favorites products
             }
             .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
             .task { await viewModel.getLastMessages() }
-            // .listStyle()
             .navigationTitle("LastMessagesView")
             
-            // -> BubbleMessages
             .navigationDestination(for: String.self) { value in
                 MessagesView(email: value) // room_name = email
             }
-            
-            // On ne peut pas avoir deux destinations String
-//            .navigationBarItems(trailing:
-//                NavigationLink(value: "❤️") {
-//                    Label("Heart", systemImage: "heart.fill").symbolRenderingMode(.multicolor)
-//                }
-//                .navigationDestination(for: String.self) { stringValue in
-//                    MesContactsView()
-////                    Button("HOME") {
-////                        path.removeLast(path.count)
-////                    }
-//                })
-            
-//            NavigationLink(destination: MesContactsView()) {
-//                Label("", systemImage: "person.2.fill")
-//                    .symbolRenderingMode(.multicolor)
-//            }.padding(.top, 20)
-  
-            // -> Contacts
-            .navigationBarItems(
-                leading: Image(systemName: "person.fill"),
-                trailing: NavigationLink(
-                    destination: MesContactsView(),
-                    label: {Image(systemName: "square.and.pencil")}
-                )
-            )
         }
     }
 }

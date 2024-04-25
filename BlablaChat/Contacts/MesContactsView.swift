@@ -128,13 +128,12 @@ struct MesContactsView: View {
         .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Rechercher un contact")
         .task { await viewModel.getContacts() }
         .navigationTitle("MesContactsView")
-        // .searchable(text: $searchText, prompt: "Recherche d'un contact")
     }
 }
 
-//struct MesContactsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MesContactsView(path: NavigationPath) TODO
-//    }
-//}
+struct MesContactsView_Previews: PreviewProvider {
+    static var previews: some View {
+        MesContactsView()
+    }
+}
 

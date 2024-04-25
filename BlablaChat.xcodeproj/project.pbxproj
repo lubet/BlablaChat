@@ -52,6 +52,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C001E7212BDA85650077663F /* CodeSave.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CodeSave.md; sourceTree = "<group>"; };
 		C00CEF112BB5538E004C7016 /* WebImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImageView.swift; sourceTree = "<group>"; };
 		C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchXavierView.swift; sourceTree = "<group>"; };
 		C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCellView.swift; sourceTree = "<group>"; };
@@ -138,6 +139,7 @@
 				C0326A122B6A2F4C005B8181 /* NavStackView.swift */,
 				C048F1892BAF2C1200742CD2 /* ListeMessagesView.swift */,
 				C00CEF112BB5538E004C7016 /* WebImageView.swift */,
+				C001E7212BDA85650077663F /* CodeSave.md */,
 			);
 			path = Essais;
 			sourceTree = "<group>";

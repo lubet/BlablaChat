@@ -76,9 +76,9 @@ final class ContactsViewModel: ObservableObject {
         // Charger les users dans le tableau des users
         self.users = try! await UserManager.shared.getAllUsers()
         
-        // Ajouter les contacts au tableau des users
+        // Ajouter les contacts et les users au tableau "ListeAllUsers" - trier sur le nom
         ForEach(mesContacts) { unContact in
-            //
+            // TODO
         }
         
     }

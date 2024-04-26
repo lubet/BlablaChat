@@ -123,6 +123,8 @@ struct LastMessagesView: View {
     
     @State var path: [LastMessage] = []
     
+    @State var showNewMessageScreen = false
+    
     var body: some View {
         NavigationStack(path: $path) {
             List {
@@ -132,6 +134,8 @@ struct LastMessagesView: View {
                     }
                 }
             }
+            NewMessageButton
+
             .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
             .task { await viewModel.getLastMessages() }
             .navigationTitle("LastMessagesView")
@@ -139,6 +143,31 @@ struct LastMessagesView: View {
             .navigationDestination(for: LastMessage.self) { value in
                 MessagesView(path: $path, email: value.room_name) // room_name = email
             }
+        }
+    }
+}
+
+extension LastMessagesView {
+    
+    private var NewMessageButton: some View {
+        Button {
+            showNewMessageScreen.toggle()
+        } label: {
+            HStack {
+                Spacer()
+                Text("Nouveau message")
+                    .font(.system(size: 16, weight: .bold))
+                Spacer()
+            }
+            .foregroundColor(.white)
+            .padding(.vertical)
+                .background(Color.blue)
+                .cornerRadius(32)
+                .padding(.horizontal)
+                .shadow(radius: 15)
+        }
+        .fullScreenCover(isPresented: $showNewMessageScreen) {
+            MesContactsView()
         }
     }
 }

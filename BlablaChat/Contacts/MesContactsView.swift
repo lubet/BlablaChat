@@ -4,6 +4,8 @@
 //
 //  Created by Lubet-Moncla Xavier on 30/01/2024.
 //
+// Liste des users compris les nuveaux contacts
+//
 // Choisir un contact, saisir un message et l'envoyer
 // 1) Vérifier si le contact choisit est présent dans "users"
 //       si il ne l'est pas -> le creer et prendre son user_id qui devient le contact_id)
@@ -119,6 +121,8 @@ struct MesContactsView: View {
     @State var alertTitle: String = ""
     @State var showAlert: Bool = false
     
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         NavigationStack {
             List {
@@ -131,6 +135,15 @@ struct MesContactsView: View {
             .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Rechercher un contact")
             .task { await viewModel.getContacts() }
             .navigationTitle("MesContactsView")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Cancel")
+                    }
+                }
+            }
             .navigationDestination(for: Contact.self) {
                 value in
                 Essai4View()

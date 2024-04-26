@@ -140,6 +140,7 @@ struct LastMessagesView: View {
             .task { await viewModel.getLastMessages() }
             .navigationTitle("LastMessagesView")
             
+            // Bubbles
             .navigationDestination(for: LastMessage.self) { value in
                 MessagesView(path: $path, email: value.room_name) // room_name = email
             }

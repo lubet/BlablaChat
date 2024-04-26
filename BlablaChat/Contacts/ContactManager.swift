@@ -10,7 +10,8 @@
 import Foundation
 import Contacts
 
-struct Contact: Hashable {
+struct Contact: Identifiable, Hashable {
+    let id = UUID().uuidString
     let nom: String
     let email: String
 

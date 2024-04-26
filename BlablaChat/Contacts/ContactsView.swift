@@ -12,11 +12,28 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Combine
 
+struct ListeAllUsers: Identifiable {
+    let id = UUID().uuidString
+    let nom: String
+    let email: String
+    
+    init (id: String, nom: String, email: String)
+    {
+        self.nom = nom
+        self.email = email
+    }
+}
+
 @MainActor
 final class ContactsViewModel: ObservableObject {
     
     @Published private(set) var mesContacts: [Contact] = []
     @Published private(set) var filteredContacts: [Contact] = []
+    private(set) var users: [DBUser] = []
+    
+    @Published private(set) var listAllUsers: [ListeAllUsers] = []
+    
+    
     @Published var searchText: String = ""
     
     private var cancellable = Set<AnyCancellable>()
@@ -52,9 +69,20 @@ final class ContactsViewModel: ObservableObject {
         })
     }
     
-    func getContacts() async {
+    // Fusionner contactsTel et users uniquement pour la présentation dans la liste
+    func getUsersAndContacts() async {
+        // ContactsTel nom, email
         self.mesContacts = await ContactManager.shared.mockContacts()
+        // Charger les users dans le tableau des users
+        self.users = try! await UserManager.shared.getAllUsers()
+        
+        // Ajouter les contacts au tableau des users
+        ForEach(mesContacts) { unContact in
+            //
+        }
+        
     }
+    
 }
 
 // ------------------------------------------------------------------
@@ -73,7 +101,9 @@ struct ContactsView: View {
             List {
                 ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts, id: \.self) { oneContact in
                     Button {
-                        presentationMode.wrappedValue.dismiss() // TODO
+                        // si le contact selectionné n'existe pas dans "users" il faut le créer et le remonter à LastMessageView
+                        
+                        presentationMode.wrappedValue.dismiss() // TODO si le contact n'est pas dans users le creer
                     } label: {
                         ContactCellView(lecontact: oneContact)
                     }
@@ -81,7 +111,7 @@ struct ContactsView: View {
             }
             .navigationTitle("ContactsView")
             .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Rechercher un contact")
-            .task { await viewModel.getContacts() }
+            .task { await viewModel.getUsersAndContacts() }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {

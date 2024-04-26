@@ -146,7 +146,7 @@ struct MesContactsView: View {
             }
             .navigationDestination(for: Contact.self) {
                 value in
-                Essai4View()
+                Essai4View(email: value.email)
             }
         }
     }

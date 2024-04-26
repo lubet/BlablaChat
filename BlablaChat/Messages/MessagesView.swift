@@ -4,7 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 29/03/2024.
 //
-// Messages Bubble
+// Messages Bubbles des conversations en cours (lastMessages)
 //
 
 import SwiftUI

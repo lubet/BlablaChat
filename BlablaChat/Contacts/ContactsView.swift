@@ -66,30 +66,37 @@ struct ContactsView: View {
     @State private var searchText: String = ""
     @State private var messageTexte: String = ""
     
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         NavigationStack {
             List {
                 ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts, id: \.self) { oneContact in
-                    NavigationLink(value: oneContact) {
+                    Button {
+                        presentationMode.wrappedValue.dismiss() // TODO
+                    } label: {
                         ContactCellView(lecontact: oneContact)
                     }
-                    
+                }
+            }
+            .navigationTitle("ContactsView")
+            .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Rechercher un contact")
+            .task { await viewModel.getContacts() }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Cancel")
+                    }
                 }
             }
         }
-        .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Rechercher un contact")
-        .navigationTitle("Contacts")
-        .task { await viewModel.getContacts() }
- 
-        .navigationDestination(for: Contact.self) { value in
-            MesContactsView()
-        }
-        // Spacer()
     }
 }
 
-//struct ContactsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContactsView(path:NavigationPath())
-//    }
-//}
+struct ContactsView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContactsView()
+    }
+}

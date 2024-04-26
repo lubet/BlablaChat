@@ -134,7 +134,7 @@ struct LastMessagesView: View {
                     }
                 }
             }
-            NewMessageButton
+            NewMessageButton // -> MesContactsView() liste des users ancien ou nouveau
 
             .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
             .task { await viewModel.getLastMessages() }
@@ -147,6 +147,8 @@ struct LastMessagesView: View {
     }
 }
 
+
+// Bouton nouveau contact ------------------
 extension LastMessagesView {
     
     private var NewMessageButton: some View {
@@ -167,7 +169,7 @@ extension LastMessagesView {
                 .shadow(radius: 15)
         }
         .fullScreenCover(isPresented: $showNewMessageScreen) {
-            MesContactsView()
+           ContactsView()
         }
     }
 }

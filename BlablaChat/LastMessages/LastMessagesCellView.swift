@@ -32,7 +32,7 @@ struct LastMessagesCellView: View {
                     //.multilineTextAlignment(.leading)
             }
             .frame(width: 200,alignment: .leading)
-            let myDate = lastMessage.message_date
+            let myDate = timeStampToString(dateMessage: lastMessage.message_date)
             Text("\(myDate)")
                 .font(.footnote)
                 .frame(width: 100,height: 20 ,alignment: .topTrailing)

@@ -223,7 +223,7 @@ extension MessagesView {
     // Sauvegarde du message "texte"
     func sendButton() {
         if textIsCorrect() {
-            path.removeAll()
+            path.removeAll() // back to root
             Task {
                 try? await viewModel.saveMessage(message_text: messageText)
                 messageText = ""

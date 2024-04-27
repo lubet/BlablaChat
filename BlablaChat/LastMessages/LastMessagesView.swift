@@ -13,25 +13,19 @@ import Combine
 // A mettre dans la View
 struct LastMessage: Identifiable, Codable, Hashable {
     let id = UUID().uuidString
-    let room_id: String
-    let room_name: String // nom du destinataire lors de la création du room
-    let room_date: String
+    let email: String // email du créateur du room
     let message_texte: String
-    let message_date: String
-    let message_from: String
-    let message_to: String
-
+    let message_date: Timestamp
+    
     enum CodingKeys: String, CodingKey {
         case id = "id"
-        case room_id = "room_id"
-        case room_name = "room_name"
-        case room_date = "room_date"
-        case message_texte = "messge_texte"
+        case email = "email"
+        case message_texte = "message_texte"
         case message_date = "message_date"
-        case message_from = "message_from"
-        case message_to = "message_to"
     }
 }
+
+
 
 @MainActor
 class LastMessagesViewModel: ObservableObject {
@@ -71,7 +65,7 @@ class LastMessagesViewModel: ObservableObject {
         
         let search = searchText.lowercased()
         filteredMessages = lastMessages.filter({ message in
-            let emailContainsSearch = message.room_name.lowercased().contains(search)
+            let emailContainsSearch = message.email.lowercased().contains(search)
             let messageContainsSearch = message.message_texte.lowercased().contains(search)
             return emailContainsSearch || messageContainsSearch
         })
@@ -95,9 +89,7 @@ class LastMessagesViewModel: ObservableObject {
             for member in members {
                 for room in rooms {
                     if member.room_id == room.room_id {
-                        lastMessages.append(LastMessage(room_id: member.room_id, room_name: room.room_name,
-                                                        room_date: timeStampToString(dateMessage: room.dateCreated), message_texte: room.last_message,
-                                                        message_date: timeStampToString(dateMessage:  room.date_message), message_from: room.from_message, message_to: member.to_id))
+                        lastMessages.append(LastMessage(email: room.room_name, message_texte: room.last_message, message_date: room.date_message))
                     }
                 }
                 
@@ -142,7 +134,7 @@ struct LastMessagesView: View {
             
             // Bubbles
             .navigationDestination(for: LastMessage.self) { value in
-                MessagesView(path: $path, email: value.room_name) // room_name = email
+                MessagesView(path: $path, email: value.email) // room_name = email
             }
         }
     }

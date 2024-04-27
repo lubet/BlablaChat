@@ -12,12 +12,12 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Combine
 
-struct ListeAllUsers: Identifiable {
+struct ListeAllUsers: Identifiable, Hashable {
     let id = UUID().uuidString
     let nom: String
     let email: String
     
-    init (id: String, nom: String, email: String)
+    init (nom: String, email: String)
     {
         self.nom = nom
         self.email = email
@@ -75,12 +75,6 @@ final class ContactsViewModel: ObservableObject {
         self.mesContacts = await ContactManager.shared.mockContacts()
         // Charger les users dans le tableau des users
         self.users = try! await UserManager.shared.getAllUsers()
-        
-        // Ajouter les contacts et les users au tableau "ListeAllUsers" - trier sur le nom
-        ForEach(mesContacts) { unContact in
-            // TODO
-        }
-        
     }
     
 }

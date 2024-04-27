@@ -15,9 +15,9 @@ struct Contact: Identifiable, Hashable {
     let nom: String
     let email: String
 
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(email)
-    }
+//    func hash(into hasher: inout Hasher) {
+//        hasher.combine(email)
+//    }
     
 }
 

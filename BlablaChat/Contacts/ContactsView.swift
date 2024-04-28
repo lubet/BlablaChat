@@ -69,14 +69,23 @@ final class ContactsViewModel: ObservableObject {
         })
     }
     
+    // TODO
     // Fusionner contactsTel et users uniquement pour la présentation dans la liste
     func getUsersAndContacts() async {
         // ContactsTel nom, email
         self.mesContacts = await ContactManager.shared.mockContacts()
+        for word in mesContacts {
+            listAllUsers.append(ListeAllUsers(nom: word.email, email: word.nom))
+        }
+        
         // Charger les users dans le tableau des users
         self.users = try! await UserManager.shared.getAllUsers()
+        for word in users {
+            if let email = word.email, let nom = word.email{
+                listAllUsers.append(ListeAllUsers(nom: email, email: nom))
+            }
+        }
     }
-    
 }
 
 // ------------------------------------------------------------------

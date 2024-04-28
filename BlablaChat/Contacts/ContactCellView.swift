@@ -10,15 +10,15 @@ import SwiftUI
 
 struct ContactCellView: View {
     
-    let lecontact: Contact
+    let oneItem: ListeAllUsers
     
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 10) {
-                Text(lecontact.nom)
+                Text(oneItem.nom)
                     .font(.headline)
                     .foregroundColor(.black)
-                Text(lecontact.email)
+                Text(oneItem.email)
                     .font(.headline)
                     .foregroundColor(.black)
             }
@@ -32,6 +32,6 @@ struct ContactCellView: View {
 
 struct ContactCellView_Previews: PreviewProvider {
     static var previews: some View {
-        ContactCellView(lecontact: Contact(nom: "toto", email: "maurice@test.com"))
+        ContactCellView(oneItem: ListeAllUsers(nom: "toto", email: "maurice@test.com"))
     }
 }

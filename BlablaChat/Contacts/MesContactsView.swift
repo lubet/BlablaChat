@@ -128,7 +128,7 @@ struct MesContactsView: View {
             List {
                 ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts, id: \.self) { oneContact in
                     NavigationLink(value: oneContact) {
-                        ContactCellView(lecontact: oneContact)
+                        // ContactCellView(lecontact: oneContact)
                     }
                 }
             }

@@ -28,7 +28,7 @@ struct ListeAllUsers: Identifiable, Hashable {
 final class ContactsViewModel: ObservableObject {
     
     @Published private(set) var mesContacts: [Contact] = []
-    @Published private(set) var filteredContacts: [Contact] = []
+    @Published private(set) var filteredContacts: [ListeAllUsers] = []
     private(set) var users: [DBUser] = []
     
     @Published private(set) var listAllUsers: [ListeAllUsers] = []
@@ -62,7 +62,7 @@ final class ContactsViewModel: ObservableObject {
         }
         
         let search = searchText.lowercased()
-        filteredContacts = mesContacts.filter({ contact in
+        filteredContacts = listAllUsers.filter({ contact in
             let emailContainsSearch = contact.nom.lowercased().contains(search)
             let messageContainsSearch = contact.email.lowercased().contains(search)
             return emailContainsSearch || messageContainsSearch
@@ -70,21 +70,24 @@ final class ContactsViewModel: ObservableObject {
     }
     
     // TODO
-    // Fusionner contactsTel et users uniquement pour la présentation dans la liste
+    // Constituer la liste des contacts (téléphone) + users
     func getUsersAndContacts() async {
-        // ContactsTel nom, email
-        self.mesContacts = await ContactManager.shared.mockContacts()
-        for word in mesContacts {
-            listAllUsers.append(ListeAllUsers(nom: word.email, email: word.nom))
-        }
         
-        // Charger les users dans le tableau des users
         self.users = try! await UserManager.shared.getAllUsers()
         for word in users {
-            if let email = word.email, let nom = word.email{
-                listAllUsers.append(ListeAllUsers(nom: email, email: nom))
+            if let email = word.email {
+                listAllUsers.append(ListeAllUsers(nom: email, email: ""))
             }
         }
+
+        self.mesContacts = await ContactManager.shared.mockContacts()
+        for word in mesContacts {
+            // N'ajouter le contact que si il n'existe pas déjà
+            if (listAllUsers.filter{$0.email == word.email}.count == 0) {
+                listAllUsers.append(ListeAllUsers(nom: word.email, email: word.nom))
+            }
+        }
+        listAllUsers.sort { $0.nom < $1.nom }
     }
 }
 
@@ -102,13 +105,11 @@ struct ContactsView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.mesContacts, id: \.self) { oneContact in
+                ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.listAllUsers, id: \.self) { oneItem in
                     Button {
-                        // si le contact selectionné n'existe pas dans "users" il faut le créer et le remonter à LastMessageView
-                        
                         presentationMode.wrappedValue.dismiss() // TODO si le contact n'est pas dans users le creer
                     } label: {
-                        ContactCellView(lecontact: oneContact)
+                        ContactCellView(oneItem: oneItem)
                     }
                 }
             }

@@ -161,6 +161,8 @@ extension LastMessagesView {
                 .padding(.horizontal)
                 .shadow(radius: 15)
         }
+        
+        // FullScreenCover ------------------------------------ TODO Callback dans ContactsView()
         .fullScreenCover(isPresented: $showNewMessageScreen) {
            ContactsView()
         }

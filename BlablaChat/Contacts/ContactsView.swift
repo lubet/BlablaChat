@@ -69,14 +69,13 @@ final class ContactsViewModel: ObservableObject {
         })
     }
     
-    // TODO
-    // Constituer la liste des contacts (téléphone) + users
+    // Constituer la liste des contacts du téléphone) + les users de Firestore
     func getUsersAndContacts() async {
         
         self.users = try! await UserManager.shared.getAllUsers()
         for word in users {
             if let email = word.email {
-                listAllUsers.append(ListeAllUsers(nom: email, email: ""))
+                listAllUsers.append(ListeAllUsers(nom: email, email: "")) // les users n'ont pas de nom (voir le login)
             }
         }
 

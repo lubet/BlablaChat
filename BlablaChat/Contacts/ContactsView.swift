@@ -81,7 +81,7 @@ final class ContactsViewModel: ObservableObject {
 
         self.mesContacts = await ContactManager.shared.mockContacts()
         for word in mesContacts {
-            // N'ajouter le contact que si il n'existe pas déjà
+            // N'ajouter le contact à la liste d'affichage
             if (listAllUsers.filter{$0.email == word.email}.count == 0) {
                 listAllUsers.append(ListeAllUsers(nom: word.email, email: word.nom))
             }
@@ -99,6 +99,8 @@ struct ContactsView: View {
     @State private var searchText: String = ""
     @State private var messageTexte: String = ""
     
+    let didSelectedNewUser: (String) -> ()
+    
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
@@ -107,6 +109,7 @@ struct ContactsView: View {
                 ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.listAllUsers, id: \.self) { oneItem in
                     Button {
                         presentationMode.wrappedValue.dismiss() // TODO si le contact n'est pas dans users le creer
+                        didSelectedNewUser(oneItem.nom)
                     } label: {
                         ContactCellView(oneItem: oneItem)
                     }
@@ -128,8 +131,8 @@ struct ContactsView: View {
     }
 }
 
-struct ContactsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContactsView()
-    }
-}
+//struct ContactsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContactsView()
+//    }
+//}

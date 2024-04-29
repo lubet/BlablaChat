@@ -159,9 +159,11 @@ extension LastMessagesView {
                 .shadow(radius: 15)
         }
         
-        // FullScreenCover ------------------------------------ TODO Callback dans ContactsView()
+        // FullScreenCover
         .fullScreenCover(isPresented: $showNewMessageScreen) {
-           ContactsView()
+            ContactsView(didSelectedNewUser: { email in
+                print(email) // Call Back - email de l'utilisateur que j'ai selectionné dans ContactsView 
+            })
         }
     }
 }

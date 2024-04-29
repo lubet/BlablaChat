@@ -115,7 +115,11 @@ struct LastMessagesView: View {
     
     @State var path: [LastMessage] = []
     
-    @State var showNewMessageScreen = false
+    @State var showNewMessageScreen = false // fullSreenCover ContactsView
+    
+    @State var emailSelected: String = ""
+    
+    @State var shouldNavigateToChatLogView = false
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -133,6 +137,10 @@ struct LastMessagesView: View {
             .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
             .task { await viewModel.getLastMessages() }
             .navigationTitle("LastMessagesView")
+            
+            .navigationDestination(isPresented: $shouldNavigateToChatLogView) {
+               MessagesView(path: $path, email:emailSelected)
+           }
         }
     }
 }
@@ -161,8 +169,9 @@ extension LastMessagesView {
         
         // FullScreenCover
         .fullScreenCover(isPresented: $showNewMessageScreen) {
-            ContactsView(didSelectedNewUser: { email in
-                print(email) // Call Back - email de l'utilisateur que j'ai selectionné dans ContactsView 
+            ContactsView(didSelectedNewUser: { emailSelected in
+                print(emailSelected) // Call Back - email de l'utilisateur que j'ai selectionné dans ContactsView
+                self.shouldNavigateToChatLogView.toggle()
             })
         }
     }
@@ -170,6 +179,6 @@ extension LastMessagesView {
 
 struct LastMessagesView_Previews: PreviewProvider {
     static var previews: some View {
-        LastMessagesView()
+        LastMessagesView(emailSelected: "https...")
     }
 }

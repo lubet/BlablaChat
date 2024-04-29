@@ -79,9 +79,13 @@ final class MessagesViewModel: ObservableObject {
     // Tous mes messages d'un room
     func getRoomMessages(email: String) async throws {
         
+        print("email:\(email)")
+        
         // Recherche du room_id avec l'email
         let room_id = try await MessagesManager.shared.getRoomId(email: email)
         param["room_id"] = room_id // pour setImage
+        
+        print("room_id: \(room_id)")
         
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = AuthUser.uid

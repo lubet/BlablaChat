@@ -117,9 +117,9 @@ struct LastMessagesView: View {
     
     @State var showNewMessageScreen = false // fullSreenCover ContactsView
     
-    @State var emailSelected: String = ""
+    @State var emailPassed: String = "" // email callback de ContactsView
     
-    @State var shouldNavigateToChatLogView = false
+    @State var shouldNavigateToChatLogView = false // call back
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -138,8 +138,9 @@ struct LastMessagesView: View {
             .task { await viewModel.getLastMessages() }
             .navigationTitle("LastMessagesView")
             
+            // CallBack MessagesView <- email de ContactsView
             .navigationDestination(isPresented: $shouldNavigateToChatLogView) {
-               MessagesView(path: $path, email:emailSelected)
+               MessagesView(path: $path, email:emailPassed)
            }
         }
     }
@@ -170,7 +171,8 @@ extension LastMessagesView {
         // FullScreenCover
         .fullScreenCover(isPresented: $showNewMessageScreen) {
             ContactsView(didSelectedNewUser: { emailSelected in
-                print(emailSelected) // Call Back - email de l'utilisateur que j'ai selectionné dans ContactsView
+                print(emailSelected) // email callback de l'utilisateur que j'ai selectionné dans ContactsView
+                self.emailPassed = emailSelected
                 self.shouldNavigateToChatLogView.toggle()
             })
         }
@@ -179,6 +181,6 @@ extension LastMessagesView {
 
 struct LastMessagesView_Previews: PreviewProvider {
     static var previews: some View {
-        LastMessagesView(emailSelected: "https...")
+        LastMessagesView(emailPassed: "https...")
     }
 }

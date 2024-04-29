@@ -121,7 +121,9 @@ struct LastMessagesView: View {
         NavigationStack(path: $path) {
             List {
                 ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
-                    NavigationLink(value: lastMessage) { // room_name = email
+                    NavigationLink {
+                        MessagesView(path: $path, email: lastMessage.email)
+                    } label: {
                         LastMessagesCellView(lastMessage: lastMessage)
                     }
                 }
@@ -131,11 +133,6 @@ struct LastMessagesView: View {
             .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
             .task { await viewModel.getLastMessages() }
             .navigationTitle("LastMessagesView")
-            
-            // Bubbles
-            .navigationDestination(for: LastMessage.self) { value in
-                MessagesView(path: $path, email: value.email) // room_name = email
-            }
         }
     }
 }

@@ -133,7 +133,9 @@ struct MesContactsView: View {
                 }
             }
             .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Rechercher un contact")
+            
             .task { await viewModel.getContacts() }
+            
             .navigationTitle("MesContactsView")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {

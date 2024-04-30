@@ -119,6 +119,7 @@ final class MessagesManager {
         } catch {
             print("getRoomId- Error getting documents: \(error.localizedDescription)")
         }
+        print("Ereur: getRoomId - pas de roomId")
         return roomId
     }
 }

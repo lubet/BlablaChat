@@ -76,21 +76,33 @@ final class MessagesViewModel: ObservableObject {
     }
         
     
-    // Tous mes messages d'un room
+    // Tous mes messages d'un room - TODO  si nouveau user le creer dans users, rooms et members
     func getRoomMessages(email: String) async throws {
         
-        print("email:\(email)")
-        
-        // Recherche du room_id avec l'email
-        let room_id = try await MessagesManager.shared.getRoomId(email: email)
-        param["room_id"] = room_id // pour setImage
-        
-        print("room_id: \(room_id)")
-        
+        // Moi
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = AuthUser.uid
         
-        self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
+        // Trouver dans users le contact_id à l'aide de son email
+        var contact_id  = try await ContactsManager.shared.searchContact(email: email)
+        
+        if contact_id == "" {
+            // créer le contact dans users et renvoyer son user_id
+            contact_id = try await ContactsManager.shared.createUser(email: email)
+        }
+        
+        // Recherche du couple user_id contact_id dans membre (il devrait en exister qu'une occurence ou pas)
+        let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+        
+        if room_id == "" {
+            // Pas encore de conversation
+            param["room_id"] = ""
+        } else {
+            // Déjà une conversation (Room)
+            param["room_id"] = room_id
+            self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
+        }
+        
         
         scrollViewReaderId()
         

@@ -136,6 +136,8 @@
 		C0326A112B6A2E6A005B8181 /* Essais */ = {
 			isa = PBXGroup;
 			children = (
+				C09FFA962BD3BE20003E8FB9 /* MesContactsView.swift */,
+				C02A0CFC2BD3C36B000E58D4 /* ContactBubblesView.swift */,
 				C0CB4BF32B68FD6600DCC6E9 /* ContactEssaiView.swift */,
 				C03B72D02B5FA2BB0050C524 /* EssaiView.swift */,
 				C0326A122B6A2F4C005B8181 /* NavStackView.swift */,
@@ -208,8 +210,6 @@
 			isa = PBXGroup;
 			children = (
 				C02A0CFE2BD3C5FB000E58D4 /* ContactsView.swift */,
-				C09FFA962BD3BE20003E8FB9 /* MesContactsView.swift */,
-				C02A0CFC2BD3C36B000E58D4 /* ContactBubblesView.swift */,
 				C07F56472B7F980200AF7577 /* ContactsManager.swift */,
 				C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */,
 				C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */,

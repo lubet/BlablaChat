@@ -76,58 +76,65 @@ final class MessagesViewModel: ObservableObject {
     }
         
     
-    // Tous mes messages d'un room - TODO  si nouveau user le creer dans users, rooms et members
+    // Afichage du dialogue ou blanc si le dialoque n'existe pas encore
     func getRoomMessages(email: String) async throws {
         
         // Moi
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = AuthUser.uid
         
-        // Trouver dans users le contact_id à l'aide de son email
-        var contact_id  = try await ContactsManager.shared.searchContact(email: email)
+        // Trouver dans "users" le contact_id à l'aide de son email
+        let contact_id  = try await ContactsManager.shared.searchContact(email: email)
         
-        if contact_id == "" {
-            // créer le contact dans users et renvoyer son user_id
-            contact_id = try await ContactsManager.shared.createUser(email: email)
-        }
-        
-        // Recherche du couple user_id contact_id dans membre (il devrait en exister qu'une occurence ou pas)
+        // Chercher le room_id du couple user_id/contact_id dans "members"
         let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
         
         if room_id == "" {
-            // Pas encore de conversation
-            param["room_id"] = ""
+             // Pas encore de conversation
+             param["room_id"] = ""
         } else {
-            // Déjà une conversation (Room)
-            param["room_id"] = room_id
+             // Déjà une conversation (Room)
+             param["room_id"] = room_id
             self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
         }
-        
-        
         scrollViewReaderId()
-        
     }
      
-    // Sauvegarde du message "texte" (la photo est traitée à part - voir setImage())
-    func saveMessage(message_text: String) async throws {
+    // Création du message suivant que le destinataire existe ou pas dans la base
+    func saveMessage(email: String, message_text: String) async throws {
         
-        guard let room_id = param["room_id"] else {
-            print("saveMessage - room_id nil")
-            return
-        }
-
-        // user "envoyeur"
+        // Moi
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = AuthUser.uid
+
+        guard let url = URL(string: "https://picsum.photos/id/237/200/300") else { return }
         
-        // user "destinatire" to_id à trouver dans member
-        let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)
+        var contact_id  = try await ContactsManager.shared.searchContact(email: email)
         
-        // Sauvegarde du message "texte"
-        try await ContactsManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: "")
-        
+        if contact_id == "" {
+            // créer le contact dans "users"
+            contact_id = try await ContactsManager.shared.createUser(email: email)
+
+            let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+            if (room_id == "") {
+                // créer son "room"
+                let room_id = try await ContactsManager.shared.createRoom(name: email)
+                // création d'un document membre
+                try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
+                // Créer un message avec le room
+                try await ContactsManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: message_text, room_id: room_id, image_link: url.absoluteString)
+            }
+        } else {
+            let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+
+            let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)
+            
+            try await ContactsManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: "")
+        }
+
+        // Rafraichissement de la view
         do {
-            // Rafraichissement de la view actuelle
+            let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
             self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
             
             scrollViewReaderId()
@@ -241,7 +248,7 @@ extension MessagesView {
         if textIsCorrect() {
             path.removeAll() // back to root
             Task {
-                try? await viewModel.saveMessage(message_text: messageText)
+                try? await viewModel.saveMessage(email: email, message_text: messageText)
                 messageText = ""
             }
         }

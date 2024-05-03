@@ -93,6 +93,7 @@ final class MessagesViewModel: ObservableObject {
             } else {
                 param["room_id"] = room_id
                 self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
+                
                 scrollViewReaderId()
             }
         } else {
@@ -100,31 +101,34 @@ final class MessagesViewModel: ObservableObject {
         }
     }
      
-    // Création du message suivant que le destinataire existe ou pas dans la base
+    // Création du message texte
+    // 1) le contact n'existe pas
+    // 2) le contact existe.ok.
     func saveMessage(email: String, message_text: String) async throws {
         
         // Moi
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = AuthUser.uid
-
-        guard let url = URL(string: "https://picsum.photos/id/237/200/300") else { return }
         
         var contact_id  = try await ContactsManager.shared.searchContact(email: email)
         
-        if contact_id == "" {
-            // créer le contact dans "users"
+        if contact_id == "" { // le contact n'existe pas dans "users"
+            
+            // créer "users"
             contact_id = try await ContactsManager.shared.createUser(email: email)
-
-            let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
-            if (room_id == "") {
-                // créer son "room"
-                let room_id = try await ContactsManager.shared.createRoom(name: email)
-                // création d'un document membre
-                try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
-                // Créer un message avec le room
-                try await ContactsManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: message_text, room_id: room_id, image_link: url.absoluteString)
-            }
+            
+            // créer "room"
+            let room_id = try await ContactsManager.shared.createRoom(name: email)
+            
+            // créer membre
+            try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
+            
+            // créer message
+            try await ContactsManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: message_text, room_id: room_id, image_link: "")
+            
         } else {
+            
+            // le contact existe dans "users"
             let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
 
             let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)

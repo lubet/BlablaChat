@@ -78,7 +78,6 @@ final class MessagesViewModel: ObservableObject {
     
     // Afichage du dialogue ou blanc si le dialoque n'existe pas encore
     func getRoomMessages(email: String) async throws {
-        
         // Moi
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = AuthUser.uid
@@ -86,18 +85,19 @@ final class MessagesViewModel: ObservableObject {
         // Trouver dans "users" le contact_id à l'aide de son email
         let contact_id  = try await ContactsManager.shared.searchContact(email: email)
         
-        // Chercher le room_id du couple user_id/contact_id dans "members"
-        let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
-        
-        if room_id == "" {
-             // Pas encore de conversation
-             param["room_id"] = ""
+        if contact_id != "" {
+            // Chercher le room_id du couple user_id/contact_id dans "members"
+            let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+            if room_id == "" {
+                param["room_id"] = ""
+            } else {
+                param["room_id"] = room_id
+                self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
+                scrollViewReaderId()
+            }
         } else {
-             // Déjà une conversation (Room)
-             param["room_id"] = room_id
-            self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
+            param["room_id"] = ""
         }
-        scrollViewReaderId()
     }
      
     // Création du message suivant que le destinataire existe ou pas dans la base
@@ -164,7 +164,7 @@ struct MessagesView: View {
     
     // from LastMessagesView:
     @Binding var path:[LastMessage] // Uniquement pour le "Back to root" automatique
-    let email: String
+    let email: String // <- LastMessagesView <- ContactsView
     
     var body: some View {
         
@@ -196,7 +196,7 @@ struct MessagesView: View {
         .task {
             viewModel.param = ["email":email] // pour passer le room à la photo - voir setImage() en haut
             do {
-                try await viewModel.getRoomMessages(email: email) // Tous les messages d'un room
+                try await viewModel.getRoomMessages(email: email) // Tous les messages relatif à un email
             } catch {
                 print("getRoomMessages - Error getting documents: \(error.localizedDescription)")
             }

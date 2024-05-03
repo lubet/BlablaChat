@@ -114,19 +114,27 @@ final class MessagesViewModel: ObservableObject {
         
         if contact_id == "" { // le contact n'existe pas dans "users"
             
+            print("saveMessage - le contact n'existe pas dans \"users\"")
+            
             // créer "users"
             contact_id = try await ContactsManager.shared.createUser(email: email)
+            print("contact_id: \(contact_id)")
             
             // créer "room"
             let room_id = try await ContactsManager.shared.createRoom(name: email)
+            print("room_id: \(room_id)")
             
             // créer membre
             try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
+            print("createMembers")
             
             // créer message
             try await ContactsManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: message_text, room_id: room_id, image_link: "")
+            print("createMessage")
             
         } else {
+
+            print("saveMessage - le contact existe dans \"users\"")
             
             // le contact existe dans "users"
             let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)

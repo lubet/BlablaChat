@@ -74,19 +74,19 @@ final class ContactsViewModel: ObservableObject {
         
         self.users = try! await UserManager.shared.getAllUsers()
         for word in users {
-            if let email = word.email {
-                listAllUsers.append(ListeAllUsers(nom: email, email: "")) // les users n'ont pas de nom (voir le login)
-            }
+            let email = word.email ?? ""
+            listAllUsers.append(ListeAllUsers(nom: email, email: "")) // dans "users" le nom contient l'email
         }
 
         self.mesContacts = await ContactManager.shared.mockContacts()
-        for word in mesContacts {
+        for oneContact in mesContacts {
             // N'ajouter le contact à la liste d'affichage
-            if (listAllUsers.filter{$0.email == word.email}.count == 0) {
-                listAllUsers.append(ListeAllUsers(nom: word.email, email: word.nom))
+            if (listAllUsers.filter{$0.nom == oneContact.email}.count == 0) {
+                listAllUsers.append(ListeAllUsers(nom: oneContact.email, email: oneContact.nom))
             }
         }
-        listAllUsers.sort { $0.nom < $1.nom }
+        listAllUsers.sort { $0.email < $1.email }
+        print("listAllUsers: \(listAllUsers)")
     }
 }
 

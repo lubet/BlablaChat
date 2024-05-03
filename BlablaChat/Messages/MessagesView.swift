@@ -25,12 +25,13 @@ final class MessagesViewModel: ObservableObject {
     // PhotoPicker
     @Published var imageSelection: PhotosPickerItem? = nil {
         didSet {
-            setImage(from: imageSelection)
+            guard let email = param["email"] else { print("Pas d'email pour la photo"); return}
+            setImage(from: imageSelection, email: email)
         }
     }
     
     // PhotoPickeritem -> UIImage + Sauvegarde de l'image dans Storage
-    private func setImage(from selection: PhotosPickerItem?) {
+    private func setImage(from selection: PhotosPickerItem?, email: String) {
         
         guard let selection else { return }
 
@@ -38,23 +39,27 @@ final class MessagesViewModel: ObservableObject {
 
         Task {
             if let data = try? await selection.loadTransferable(type: Data.self) {
+                
                 if let uiImage = UIImage(data: data) {
                     selectedImage = uiImage
 
                     guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
                     let user_id = AuthUser.uid
                     
-                    guard let room_id = param["room_id"] else { return }
+                    guard let room_id = param["room_id"] else { print("Pas de room_id"); return }
                     
+                    // TODO surement pas de room_id
                     let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)
+                    print("toId: \(toId)")
 
                     let lurl: URL
                     
-                    guard let image = selectedImage else { return }
+                    guard let image = selectedImage else { print("Pas de selectedImage"); return }
                     
                     // path = users/user_id/<nom du fichier.jpeg
                     let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: toId)
-                    
+                    print("saveImage - (path, _")
+                     
                     lurl = try await StorageManager.shared.getUrlForImage(path: path)
                     
                     try await ContactsManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: "", room_id: room_id, image_link: lurl.absoluteString)
@@ -227,7 +232,7 @@ struct MessagesView: View {
 extension MessagesView {
     private var MessageBar: some View {
         HStack {
-            // Affichage des photos
+            // Selection de la photo
             PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
                 Image(systemName: "photo")
                     .foregroundColor(Color.black)

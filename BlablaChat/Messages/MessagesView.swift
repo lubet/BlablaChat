@@ -30,7 +30,7 @@ final class MessagesViewModel: ObservableObject {
         }
     }
     
-    // PhotoPickeritem -> UIImage + Sauvegarde de l'image dans Storage
+    // Image d'un contact existant
     private func setImage(from selection: PhotosPickerItem?, email: String) {
         
         guard let selection else { return }
@@ -46,27 +46,31 @@ final class MessagesViewModel: ObservableObject {
                     guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
                     let user_id = AuthUser.uid
                     
-                    guard let room_id = param["room_id"] else { print("Pas de room_id"); return }
+                    guard let room_id = param["room_id"] else { print("****** Pas de room_id"); return }
                     
                     // TODO surement pas de room_id
-                    let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)
-                    print("toId: \(toId)")
+                    guard let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id) else {
+                        print("***** getToId - Pas de toId")
+                        return
+                    }
 
                     let lurl: URL
                     
-                    guard let image = selectedImage else { print("Pas de selectedImage"); return }
+                    guard let image = selectedImage else { print("****** Pas de selectedImage"); return }
                     
                     // path = users/user_id/<nom du fichier.jpeg
                     let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: toId)
-                    print("saveImage - (path, _")
+                    print("****** saveImage - (path, _")
                      
                     lurl = try await StorageManager.shared.getUrlForImage(path: path)
                     
                     try await ContactsManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: "", room_id: room_id, image_link: lurl.absoluteString)
+                    print("***** createMessage")
                     
                     do {
                         // Rafraichissement de la view actuelle
                         self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
+                        print("***** getRoomMessages")
                         
                         scrollViewReaderId()
                         
@@ -81,7 +85,7 @@ final class MessagesViewModel: ObservableObject {
     }
         
     
-    // Afichage du dialogue ou blanc si le dialoque n'existe pas encore
+    // Tous les messages d'un contact
     func getRoomMessages(email: String) async throws {
         // Moi
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
@@ -94,7 +98,7 @@ final class MessagesViewModel: ObservableObject {
             // Chercher le room_id du couple user_id/contact_id dans "members"
             let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
             if room_id == "" {
-                param["room_id"] = ""
+                param["room_id"] = "" // Un nouveau contact n'a pas de room_id
             } else {
                 param["room_id"] = room_id
                 self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
@@ -102,13 +106,13 @@ final class MessagesViewModel: ObservableObject {
                 scrollViewReaderId()
             }
         } else {
-            param["room_id"] = ""
+            param["room_id"] = "" // Si on n'a pas de contact_id -> pas de room_id
         }
     }
      
     // Création du message texte
     // 1) le contact n'existe pas
-    // 2) le contact existe.ok.
+    // 2) le contact existe
     func saveMessage(email: String, message_text: String) async throws {
         
         // Moi
@@ -144,7 +148,10 @@ final class MessagesViewModel: ObservableObject {
             // le contact existe dans "users"
             let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
 
-            let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)
+            guard let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id) else {
+                print("**** getToId - Pas de ToId")
+                return
+            }
             
             try await ContactsManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: "")
         }

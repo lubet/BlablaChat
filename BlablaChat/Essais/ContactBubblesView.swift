@@ -61,11 +61,17 @@ final class ContactBubblesViewModel: ObservableObject {
                         room_id = param["room_id"] ?? ""
                     }
                     
-                    let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id)
+                    guard let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id) else {
+                        print("getToId ***** Pas de toId")
+                        return
+                    }
                     
                     let lurl: URL
                     
-                    guard let image = selectedImage else { return }
+                    guard let image = selectedImage else {
+                        print("***** selectedImage - Pas d'image")
+                        return
+                    }
                     
                     // path = users/user_id/<nom du fichier.jpeg
                     let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: toId)

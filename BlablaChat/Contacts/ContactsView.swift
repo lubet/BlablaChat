@@ -86,7 +86,6 @@ final class ContactsViewModel: ObservableObject {
             }
         }
         listAllUsers.sort { $0.email < $1.email }
-        print("listAllUsers: \(listAllUsers)")
     }
 }
 

@@ -30,7 +30,7 @@ final class MessagesViewModel: ObservableObject {
         }
     }
     
-    // Image d'un contact existant
+    // TODO Image pour un existant et un non existant
     private func setImage(from selection: PhotosPickerItem?, email: String) {
         
         guard let selection else { return }
@@ -46,9 +46,22 @@ final class MessagesViewModel: ObservableObject {
                     guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
                     let user_id = AuthUser.uid
                     
-                    guard let room_id = param["room_id"] else { print("****** Pas de room_id"); return }
+                    var contact_id  = try await ContactsManager.shared.searchContact(email: email)
+                    if contact_id == "" {
+
+                        // créer user
+                        contact_id = try await ContactsManager.shared.createUser(email: email)
+
+                        // créer room
+                        let room_id = try await ContactsManager.shared.createRoom(name: email)
+
+                        // créer membre
+                        try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
+                    }
                     
-                    // TODO surement pas de room_id
+                    let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+                    
+                    // Recherche dans membre
                     guard let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id) else {
                         print("***** getToId - Pas de toId")
                         return
@@ -87,26 +100,22 @@ final class MessagesViewModel: ObservableObject {
     
     // Tous les messages d'un contact
     func getRoomMessages(email: String) async throws {
-        // Moi
-        guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        let user_id = AuthUser.uid
         
         // Trouver dans "users" le contact_id à l'aide de son email
         let contact_id  = try await ContactsManager.shared.searchContact(email: email)
-        
+
         if contact_id != "" {
+
+            guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+            let user_id = AuthUser.uid
+
             // Chercher le room_id du couple user_id/contact_id dans "members"
             let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
-            if room_id == "" {
-                param["room_id"] = "" // Un nouveau contact n'a pas de room_id
-            } else {
-                param["room_id"] = room_id
+
+            if room_id != "" {
                 self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
-                
                 scrollViewReaderId()
             }
-        } else {
-            param["room_id"] = "" // Si on n'a pas de contact_id -> pas de room_id
         }
     }
      
@@ -218,7 +227,7 @@ struct MessagesView: View {
             }
         .navigationTitle("MessagesView")
         .task {
-            viewModel.param = ["email":email] // pour passer le room à la photo - voir setImage() en haut
+            viewModel.param = ["email": email] // pour passer le room à la photo - voir setImage() en haut
             do {
                 try await viewModel.getRoomMessages(email: email) // Tous les messages relatif à un email
             } catch {

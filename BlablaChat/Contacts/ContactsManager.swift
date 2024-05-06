@@ -234,11 +234,16 @@ final class ContactsManager {
         
         let dateMessage = Timestamp()
         
+        var msg = message_text
+        if msg == "" {
+            msg = "Photo"
+        }
+        
         let data: [String:Any] = [
             "id": message_id,
             "from_id": from_id,
             "to_id": to_id,
-            "message_text": message_text,
+            "message_text": msg,
             "date_send": dateMessage,
             "room_id": room_id,
             "image_link": image_link
@@ -249,7 +254,7 @@ final class ContactsManager {
         let roomRef = roomDocument(room_id: room_id)
 
         let dataRoom: [String:Any] = [
-            "last_message": message_text,
+            "last_message": msg,
             "date_message": dateMessage,
             "from_message": from_id,
             "image_link": image_link

@@ -60,7 +60,6 @@ final class StorageManager {
         guard let path = returnMetaData.path, let name = returnMetaData.name else {
             throw URLError(.badServerResponse)
         }
-        print("saveImage: path=\(path) name=\(name)")
         return(path, name)
     }
     

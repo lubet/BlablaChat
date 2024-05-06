@@ -70,27 +70,20 @@ final class MesContactsViewModel: ObservableObject {
         // mon user_id
         let AuthUser = try AuthManager.shared.getAuthenticatedUser()
         let user_id = AuthUser.uid
-        print("user_id:\(user_id)")
         
         // user_id d'un contact
         var contact_id: String = ""
         
          let contactId = try await ContactsManager.shared.searchContact(email: to_email) // Recherche du contact_id dans "users"
         
-        print("contactId?:\(contactId)")
-        
         if contactId != "" {
             contact_id = contactId
-            print("createContact trouvé:\(contactId)") // Ancien contact
         } else {
             contact_id = try await ContactsManager.shared.createUser(email: to_email) // Nouveau contact
-            print("createContact retour:\(contact_id)")
         }
         
         // TODO Virer le chien et mettre une image si existante
-        print("Avant url")
         guard let url = URL(string: "https://picsum.photos/id/237/200/300") else { return }
-        print("Après url")
         
         // Renvoie le room_id du couple from/to ou to/from présent ou non dans membre
         let room = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)

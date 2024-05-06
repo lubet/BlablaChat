@@ -109,7 +109,6 @@ final class UserManager {
         
         for document in snapshot.documents {
             let user = try document.data(as: DBUser.self)
-            // print("user: \(user)")
             dbUsers.append(user)
         }
         return dbUsers

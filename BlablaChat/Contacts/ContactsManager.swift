@@ -139,14 +139,13 @@ final class ContactsManager {
             for document in querySnapshot.documents {
                 let user = try document.data(as: DBUser.self)
                 if (user.email == email) {
-                    print("searchContact trouvé:\(user.userId)")
                     return user.userId
                 }
             }
         } catch {
             print("searchContact - Error getting documents: \(error.localizedDescription)")
         }
-        print("searchContact non trouvé")
+        // print("searchContact non trouvé")
         return ""
     }
     
@@ -162,7 +161,6 @@ final class ContactsManager {
         ]
         try await userRef.setData(data, merge: false)
         
-        print("createUser user_id:\(user_id)")
         return user_id
     }
     
@@ -185,7 +183,6 @@ final class ContactsManager {
             for duo in memberSnapshot.documents {
                 let duo = try duo.data(as: Member.self)
                 let roomId = duo.room_id
-                print("searchDuo - room_id: \(roomId)")
                 return roomId
             }
         } catch {
@@ -208,7 +205,6 @@ final class ContactsManager {
         ]
         try await roomRef.setData(data, merge: false)
         
-        print("createRoom:\(room_id)")
         return room_id
     }
     

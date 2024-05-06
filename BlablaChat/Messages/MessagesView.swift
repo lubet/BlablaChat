@@ -25,7 +25,10 @@ final class MessagesViewModel: ObservableObject {
     // PhotoPicker
     @Published var imageSelection: PhotosPickerItem? = nil {
         didSet {
-            guard let email = param["email"] else { print("Pas d'email pour la photo"); return}
+            guard let email = param["email"] else {
+                print("Pas d'email pour la photo")
+                return
+            }
             setImage(from: imageSelection, email: email)
         }
     }
@@ -63,27 +66,25 @@ final class MessagesViewModel: ObservableObject {
                     
                     // Recherche dans membre
                     guard let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id) else {
-                        print("***** getToId - Pas de toId")
                         return
                     }
 
                     let lurl: URL
                     
-                    guard let image = selectedImage else { print("****** Pas de selectedImage"); return }
+                    guard let image = selectedImage else {
+                        return
+                    }
                     
                     // path = users/user_id/<nom du fichier.jpeg
                     let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: toId)
-                    print("****** saveImage - (path, _")
                      
                     lurl = try await StorageManager.shared.getUrlForImage(path: path)
                     
                     try await ContactsManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: "", room_id: room_id, image_link: lurl.absoluteString)
-                    print("***** createMessage")
                     
                     do {
                         // Rafraichissement de la view actuelle
                         self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
-                        print("***** getRoomMessages")
                         
                         scrollViewReaderId()
                         
@@ -132,33 +133,24 @@ final class MessagesViewModel: ObservableObject {
         
         if contact_id == "" { // le contact n'existe pas dans "users"
             
-            print("saveMessage - le contact n'existe pas dans \"users\"")
-            
             // créer "users"
             contact_id = try await ContactsManager.shared.createUser(email: email)
-            print("contact_id: \(contact_id)")
             
             // créer "room"
             let room_id = try await ContactsManager.shared.createRoom(name: email)
-            print("room_id: \(room_id)")
             
             // créer membre
             try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
-            print("createMembers")
             
             // créer message
             try await ContactsManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: message_text, room_id: room_id, image_link: "")
-            print("createMessage")
             
         } else {
-
-            print("saveMessage - le contact existe dans \"users\"")
             
             // le contact existe dans "users"
             let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
 
             guard let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id) else {
-                print("**** getToId - Pas de ToId")
                 return
             }
             
@@ -182,7 +174,6 @@ final class MessagesViewModel: ObservableObject {
     func scrollViewReaderId() {
         if let id = self.messagesBubble.last?.id {
             self.lastMessageId = id
-            print("id: \(id)")
         }
     }
 }

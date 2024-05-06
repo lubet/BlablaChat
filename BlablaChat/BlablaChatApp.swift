@@ -15,9 +15,13 @@ struct BlablaChatApp: App {
     
     var body: some Scene {
         WindowGroup {
+             RootView()
+                // LastMessagesView
+                //AuthenticationView()
+            
+
             // NewContactView()
-            // LoginView()
-            RootView()
+            // LoginEmailView()
             // RoomMessagesView(room_id)
             // MessagesView() obsoléte
         }

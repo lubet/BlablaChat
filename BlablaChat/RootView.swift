@@ -13,18 +13,8 @@ struct RootView: View {
     
     var body: some View {
         ZStack {
+            // SettingsView(showSignInView: $showSignInView) pour le logOut
             LastMessagesView()
-//            TabView {
-//                LastMessagesView()
-//                    .tabItem {
-//                        Image(systemName: "tray.full")
-//                    }
-//                MesContactsView()
-//                    .tabItem {
-//                        Image(systemName: "person.2.fill")
-//                    }
-//            }
-            // SettingsView(showSignInView: $showSignInView)
         }
         .onAppear {
             let authUser = try? AuthManager.shared.getAuthenticatedUser()

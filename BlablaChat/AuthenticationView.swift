@@ -13,7 +13,6 @@ struct AuthenticationView: View {
     
     var body: some View {
         VStack {
-            
             NavigationLink {
                 LoginEmailView(showSignInView: $showSignInView)
             } label: {

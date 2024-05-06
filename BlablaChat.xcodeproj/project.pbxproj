@@ -181,9 +181,9 @@
 			children = (
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
 				C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */,
-				C060FF8A2BCE6E060024B365 /* SettingsView.swift */,
 				C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */,
 				C047E9C52B45625C00C6D48F /* LoginEmailView.swift */,
+				C060FF8A2BCE6E060024B365 /* SettingsView.swift */,
 				C07564EA2BADEA4F00E8D7D9 /* LastMessages */,
 				C0476E7B2BB70FF9000D860C /* Messages */,
 				C06B1DDF2B74D4330016E8B6 /* Contacts */,

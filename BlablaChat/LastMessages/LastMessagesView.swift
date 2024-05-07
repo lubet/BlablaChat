@@ -144,15 +144,6 @@ struct LastMessagesView: View {
                MessagesView(path: $path, email:emailPassed)
            }
         }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    SettingsView(showSignInView: $showSignInView)
-                } label: {
-                    Image(systemName: "gear")
-                }
-            }
-        }
     }
 }
 

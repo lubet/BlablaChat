@@ -84,6 +84,6 @@ struct MonProfil: View {
 }
 struct ListeMessagesView_Previews: PreviewProvider {
     static var previews: some View {
-        LastMessagesView()
+        ListeMessagesView()
     }
 }

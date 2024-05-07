@@ -110,7 +110,8 @@ class LastMessagesViewModel: ObservableObject {
 
 struct LastMessagesView: View {
     
-    // @ObserverObject relaod si la vue is refresh contrairement à @StateObject
+    @Binding var showSignInView: Bool
+    
     @ObservedObject var viewModel: LastMessagesViewModel = LastMessagesViewModel()
     
     @State var path: [LastMessage] = []
@@ -181,6 +182,6 @@ extension LastMessagesView {
 
 struct LastMessagesView_Previews: PreviewProvider {
     static var previews: some View {
-        LastMessagesView(emailPassed: "https...")
+        LastMessagesView(showSignInView: .constant(false), emailPassed: "https...")
     }
 }

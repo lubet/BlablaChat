@@ -123,26 +123,38 @@ struct LastMessagesView: View {
     @State var shouldNavigateToChatLogView = false // call back
     
     var body: some View {
-        NavigationStack(path: $path) {
-            List {
-                ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
-                    NavigationLink {
-                        MessagesView(path: $path, email: lastMessage.email)
-                    } label: {
-                        LastMessagesCellView(lastMessage: lastMessage)
+        TabView {
+            NavigationStack(path: $path) {
+                List {
+                    ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
+                        NavigationLink {
+                            MessagesView(path: $path, email: lastMessage.email)
+                        } label: {
+                            LastMessagesCellView(lastMessage: lastMessage)
+                        }
                     }
                 }
+                NewMessageButton // -> MesContactsView() liste des users ancien ou nouveau
+                
+                    .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
+                    .task { await viewModel.getLastMessages() }
+                    .navigationTitle("LastMessagesView")
+                
+                // CallBack MessagesView <- email de ContactsView
+                    .navigationDestination(isPresented: $shouldNavigateToChatLogView) {
+                        MessagesView(path: $path, email:emailPassed)
+                    }
             }
-            NewMessageButton // -> MesContactsView() liste des users ancien ou nouveau
-
-            .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
-            .task { await viewModel.getLastMessages() }
-            .navigationTitle("LastMessagesView")
+            .tabItem {
+                Text("Messages")
+                Label("First", systemImage: "ellipsis.message")
+            }
             
-            // CallBack MessagesView <- email de ContactsView
-            .navigationDestination(isPresented: $shouldNavigateToChatLogView) {
-               MessagesView(path: $path, email:emailPassed)
-           }
+            SettingsView(showSignInView: $showSignInView)
+                .tabItem {
+                    Text("Paramètres")
+                    Label("First", systemImage: "gear")
+                }
         }
     }
 }

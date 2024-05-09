@@ -21,13 +21,18 @@ struct SettingsView: View {
     
     @Binding var showSignInView: Bool
     
+    @Binding var selectedTab: String
+    
     var body: some View {
         List {
             Button("Log out") {
                 Task {
+                    print("****** Logout")
                     do {
                         try viewModel.logOut()
                         showSignInView = true
+                        selectedTab = "1"
+                        return
                     } catch {
                         print(error)
                     }
@@ -37,8 +42,8 @@ struct SettingsView: View {
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView(showSignInView: .constant(false))
-    }
-}
+//struct SettingsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SettingsView(showSignInView: .constant(false), selectedTab: $selectedTab)
+//    }
+//}

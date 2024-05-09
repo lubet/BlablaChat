@@ -48,6 +48,10 @@ final class AuthManager {
     }
     
     func signOut() throws {
-        try Auth.auth().signOut()
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("**** signOut failed")
+        }
     }
 }

@@ -43,7 +43,7 @@ final class LoginEmailViewModel: ObservableObject {
             print("Pas d'email ni de password")
             return
         }
-        AuthManager.shared.signInUser(email: email, password: password)
+        try await AuthManager.shared.signInUser(email: email, password: password)
     }
 }
 
@@ -102,6 +102,7 @@ struct LoginEmailView: View {
                     Button {
                         Task {
                             do {
+                                // Nouveau compte
                                 // let mimage: UIImage = image ?? UIImage(named: "MaPhoto")!
                                 try await viewModel.signUp(image: image) // Création ou non (si il existe déjà)
                                 showSignInView = false
@@ -113,11 +114,13 @@ struct LoginEmailView: View {
                         
                         Task {
                             do {
+                                // Ancien compte
                                 try await viewModel.signIn() // Dans tous les cas le user existe (vient d'être créer ou existait déjà)
                                 showSignInView = false
                                 return
                             } catch {
-                                print("Existe déjà: ", error)
+                                showSignInView = false
+                                return
                             }
                         }                    } label: {
                         Text("Sign In/Up")

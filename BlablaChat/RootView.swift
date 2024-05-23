@@ -13,7 +13,7 @@ struct RootView: View {
     
     var body: some View {
         ZStack {
-            // SettingsView(showSignInView: $showSignInView)
+             // SettingsView(showSignInView: $showSignInView)
             LastMessagesView(showSignInView: $showSignInView)
         }
         .onAppear {

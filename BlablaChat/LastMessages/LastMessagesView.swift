@@ -121,10 +121,7 @@ struct LastMessagesView: View {
     
     @State var shouldNavigateToChatLogView = false // call back
     
-    @State private var selectedTab = "1"
-    
     var body: some View {
-        TabView(selection: $selectedTab) {
             NavigationStack(path: $path) {
                 List {
                     ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
@@ -150,15 +147,6 @@ struct LastMessagesView: View {
                 Text("Messages")
                 Label("First", systemImage: "ellipsis.message")
             }
-            .tag("1")
-            
-            SettingsView(showSignInView: $showSignInView, selectedTab: $selectedTab)
-                .tabItem {
-                    Text("Paramètres")
-                    Label("First", systemImage: "gear")
-                }
-                .tag("2")
-        }
     }
 }
 

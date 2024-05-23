@@ -24,8 +24,9 @@ final class AuthManager {
     
     init() {}
     
+    // Nouveau compte
     @discardableResult
-    func createUser(email:String, password:String) async throws -> AuthUser {
+    func createUser(email: String, password: String) async throws -> AuthUser {
         let AuthDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
         return AuthUser(user: AuthDataResult.user)
     }
@@ -37,14 +38,11 @@ final class AuthManager {
         return AuthUser(user: user)
     }
     
-    func signInUser(email:String, password:String) {
-        Auth.auth().signIn(withEmail: email, password: password) { result, err in
-            if let err = err {
-                print("Failed to login user:", err)
-                return
-            }
-            print("Successfully loginuser: \(result?.user.uid ?? "")")
-        }
+    // Déjà un compte
+    @discardableResult
+    func signInUser(email: String, password: String) async throws -> AuthUser {
+        let authDataResult = try await Auth.auth().signIn(withEmail: email, password: password)
+        return AuthUser(user: authDataResult.user)
     }
     
     func signOut() throws {

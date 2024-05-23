@@ -21,7 +21,6 @@ struct SettingsView: View {
     
     @Binding var showSignInView: Bool
     
-    @Binding var selectedTab: String
     
     var body: some View {
         List {
@@ -31,7 +30,6 @@ struct SettingsView: View {
                     do {
                         try viewModel.logOut()
                         showSignInView = true
-                        selectedTab = "1"
                         return
                     } catch {
                         print(error)

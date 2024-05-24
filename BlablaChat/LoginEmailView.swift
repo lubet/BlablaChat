@@ -58,83 +58,77 @@ struct LoginEmailView: View {
     @State var image: UIImage?
     
     var body: some View {
-        //NavigationView {
-            ScrollView {
+        VStack {
+            Button { // Avatar
+                showImagePicker.toggle()
+            } label: {
                 VStack {
-                    
-                    // Avatar
-                    Button {
-                        showImagePicker.toggle()
-                    } label: {
-                        VStack {
-                            if let image = image {
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 100, height: 100)
-                                    .clipShape(Circle())
-                            } else {
-                                Image(systemName: "person.fill")
-                                    .font(.system(size: 70))
-                                    .padding()
-                                    .foregroundColor(Color(.label))
-                            }
-                        }
-                        .overlay(RoundedRectangle(cornerRadius: 64)
-                            .stroke(Color.black,lineWidth: 2))
-                        
+                    if let image = image {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 100, height: 100)
+                            .clipShape(Circle())
+                    } else {
+                        Image(systemName: "person.fill")
+                            .font(.system(size: 70))
+                            .padding()
+                            .foregroundColor(Color(.label))
                     }
-                    .padding(40)
-                    
-                    Group {
-                        TextField("Email", text: $viewModel.email)
-                            .cornerRadius(10)
-                            .autocapitalization(.none)
-                            .keyboardType(.emailAddress)
-                        
-                        SecureField("Mot de passe", text: $viewModel.password)
-                            .cornerRadius(10)
-                    }
-                    .padding(15)
-                    .background(Color.gray.opacity(0.2))
-                    
-                    // Login
-                    Button {
-                        Task {
-                            do {
-                                // Nouveau compte
-                                // let mimage: UIImage = image ?? UIImage(named: "MaPhoto")!
-                                try await viewModel.signUp(image: image) // Création ou non (si il existe déjà)
-                                showSignInView = false
-                                return
-                            } catch {
-                                print(error)
-                            }
-                        }
-                        
-                        Task {
-                            do {
-                                // Ancien compte
-                                try await viewModel.signIn() // Dans tous les cas le user existe (vient d'être créer ou existait déjà)
-                                showSignInView = false
-                                return
-                            } catch {
-                                showSignInView = false
-                                return
-                            }
-                        }                    } label: {
-                        Text("Sign In/Up")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .frame(height: 55)
-                            .frame(maxWidth: .infinity)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                    } // Fin bouton
-                    
-                    Spacer()
                 }
+                .overlay(RoundedRectangle(cornerRadius: 64)
+                    .stroke(Color.black,lineWidth: 2))
+                
             }
+            .padding(40)
+            
+            Group {
+                TextField("Email", text: $viewModel.email)
+                    .cornerRadius(10)
+                    .autocapitalization(.none)
+                    .keyboardType(.emailAddress)
+                
+                SecureField("Mot de passe", text: $viewModel.password)
+                    .cornerRadius(10)
+            }
+            .padding(15)
+            .background(Color.gray.opacity(0.2))
+            
+            Button { // Trigger
+                Task {
+                    do {
+                        // Nouveau compte
+                        // let mimage: UIImage = image ?? UIImage(named: "MaPhoto")!
+                        try await viewModel.signUp(image: image) // Création ou non (si il existe déjà)
+                        showSignInView = false
+                        return
+                    } catch {
+                        print(error)
+                    }
+                }
+                
+                Task {
+                    do {
+                        // Ancien compte
+                        try await viewModel.signIn() // Dans tous les cas le user existe (vient d'être créer ou existait déjà)
+                        showSignInView = false
+                        return
+                    } catch {
+                        showSignInView = false
+                        return
+                    }
+                }                    } label: {
+                    Text("Sign In/Up")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(height: 55)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                } // Fin bouton
+            
+            Spacer()
+        }
         //}
         .background(Color(.init("GrisClair")))
         .padding()

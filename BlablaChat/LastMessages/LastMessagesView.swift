@@ -94,11 +94,9 @@ class LastMessagesViewModel: ObservableObject {
                         lastMessages.append(LastMessage(email: room.room_name, message_texte: room.last_message, message_date: room.date_message))
                     }
                 }
-                
             }
-            
+            print("lastMessages \(lastMessages)")
         }
-        print("lastMessages \(lastMessages)")
     }
     
     func deleteLast(index: IndexSet) {

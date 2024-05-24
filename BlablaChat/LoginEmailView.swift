@@ -96,7 +96,30 @@ struct LoginEmailView: View {
                 .background(Color.gray.opacity(0.2))
                 .cornerRadius(10)
             
-            Button { // Trigger
+            Button { // SignIn
+                Task {
+                    do {
+                        // Ancien compte
+                        try await viewModel.signIn() // Dans tous les cas le user existe (vient d'être créer ou existait déjà)
+                        showSignInView = false
+                        return
+                    } catch {
+                        print("Erreur signIn:", error)
+                    }
+                }
+            } label: {
+                    Text("Sign In")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(height: 55)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+            } // Fin bouton signIn
+            
+            Spacer()
+            
+            Button { // SignUp
                 Task {
                     do {
                         // Nouveau compte
@@ -108,27 +131,15 @@ struct LoginEmailView: View {
                         print(error)
                     }
                 }
-                
-                Task {
-                    do {
-                        // Ancien compte
-                        try await viewModel.signIn() // Dans tous les cas le user existe (vient d'être créer ou existait déjà)
-                        showSignInView = false
-                        return
-                    } catch {
-                        print(error)
-                    }
-                }                    } label: {
-                    Text("Sign In/Up")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(height: 55)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                } // Fin bouton
-            
-            Spacer()
+            } label: {
+                Text("Sign Up")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .frame(height: 55)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+            }
         }
         //}
         .background(Color(.init("GrisClair")))

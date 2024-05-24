@@ -56,31 +56,17 @@ struct LoginView: View {
     
     var body: some View {
         
-        Group {
-            TextField("Email", text: $viewModel.email)
-                .cornerRadius(10)
-                .autocapitalization(.none)
-                .keyboardType(.emailAddress)
-            
-            SecureField("Mot de passe", text: $viewModel.password)
-                .cornerRadius(10)
-        }
+        TextField("Email", text: $viewModel.email)
+            .cornerRadius(10)
+            .autocapitalization(.none)
+            .keyboardType(.emailAddress)
+        
+        TextField("Mot de passe", text: $viewModel.password)
+            .cornerRadius(10)
         .padding(15)
         .background(Color.gray.opacity(0.2))
         
         Button { // Trigger
-            Task {
-                do {
-                    // Nouveau compte
-                    // let mimage: UIImage = image ?? UIImage(named: "MaPhoto")!
-                    try await viewModel.signUp() // Création ou non (si il existe déjà)
-                    showSignInView = false
-                    return
-                } catch {
-                    print(error)
-                }
-            }
-            
             Task {
                 do {
                     // Ancien compte

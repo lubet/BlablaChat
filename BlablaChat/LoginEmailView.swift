@@ -82,17 +82,19 @@ struct LoginEmailView: View {
             }
             .padding(40)
             
-            Group {
-                TextField("Email", text: $viewModel.email)
-                    .cornerRadius(10)
-                    .autocapitalization(.none)
-                    .keyboardType(.emailAddress)
-                
-                SecureField("Mot de passe", text: $viewModel.password)
-                    .cornerRadius(10)
-            }
-            .padding(15)
-            .background(Color.gray.opacity(0.2))
+            TextField("Email", text: $viewModel.email)
+                .padding(15)
+                .frame(width: 300, height: 50)
+                .textInputAutocapitalization(.never)
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(10)
+
+            TextField("Mot de passe", text: $viewModel.password)
+                .padding(15)
+                .frame(width: 300, height: 50)
+                .textInputAutocapitalization(.never)
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(10)
             
             Button { // Trigger
                 Task {
@@ -114,8 +116,7 @@ struct LoginEmailView: View {
                         showSignInView = false
                         return
                     } catch {
-                        showSignInView = false
-                        return
+                        print(error)
                     }
                 }                    } label: {
                     Text("Sign In/Up")

@@ -79,6 +79,8 @@ class LastMessagesViewModel: ObservableObject {
             let AuthUser = try AuthManager.shared.getAuthenticatedUser()
             let user_id = AuthUser.uid
             
+            print("user_id: \(user_id)")
+            
             // Mes room_id dans membre
             self.members = try await LastMessagesManager.shared.getMyRoomsId(user_id: user_id)
 
@@ -96,7 +98,7 @@ class LastMessagesViewModel: ObservableObject {
             }
             
         }
-        
+        print("lastMessages \(lastMessages)")
     }
     
     func deleteLast(index: IndexSet) {
@@ -135,17 +137,18 @@ struct LastMessagesView: View {
                 NewMessageButton // extension -> MesContactsView() liste des users ancien ou nouveau
                 
                     .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
-                    .task { await viewModel.getLastMessages() }
+                
+                    .task {
+                        print("task 1")
+                        await viewModel.getLastMessages()
+                        print("task 2")
+                    }
                     .navigationTitle("LastMessagesView")
                 
                 // CallBack MessagesView <- email de ContactsView
                     .navigationDestination(isPresented: $shouldNavigateToChatLogView) {
                         MessagesView(path: $path, email:emailPassed)
                     }
-            }
-            .tabItem {
-                Text("Messages")
-                Label("First", systemImage: "ellipsis.message")
             }
     }
 }

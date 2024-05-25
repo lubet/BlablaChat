@@ -132,6 +132,15 @@ struct LastMessagesView: View {
                         }
                     }
                 }
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        NavigationLink {
+                                SettingsView(showSignInView: $showSignInView)
+                        } label: {
+                            Image(systemName: "gear")
+                        }
+                    }
+                }
                 NewMessageButton // extension -> MesContactsView() liste des users ancien ou nouveau
                 
                     .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")

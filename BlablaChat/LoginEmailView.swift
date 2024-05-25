@@ -96,11 +96,11 @@ struct LoginEmailView: View {
                 .background(Color.gray.opacity(0.2))
                 .cornerRadius(10)
             
-            Button { // SignIn
+            Button { // SignIn - le user existe
                 Task {
                     do {
                         // Ancien compte
-                        try await viewModel.signIn() // Dans tous les cas le user existe (vient d'être créer ou existait déjà)
+                        try await viewModel.signIn()
                         showSignInView = false
                         return
                     } catch {
@@ -119,7 +119,7 @@ struct LoginEmailView: View {
             
             Spacer()
             
-            Button { // SignUp
+            Button { // SignUp - Nouveau user
                 Task {
                     do {
                         // Nouveau compte

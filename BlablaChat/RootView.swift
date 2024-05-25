@@ -13,8 +13,10 @@ struct RootView: View {
     
     var body: some View {
         ZStack {
-            // SettingsView(showSignInView: $showSignInView)
-            LastMessagesView(showSignInView: $showSignInView)
+            if showSignInView == false {
+                // SettingsView(showSignInView: $showSignInView)
+                LastMessagesView(showSignInView: $showSignInView)
+            }
         }
         .onAppear {
             let authUser = try? AuthManager.shared.getAuthenticatedUser()

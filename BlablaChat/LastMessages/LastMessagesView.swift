@@ -95,7 +95,7 @@ class LastMessagesViewModel: ObservableObject {
                     }
                 }
             }
-            print("lastMessages \(lastMessages)")
+            // print("lastMessages \(lastMessages)")
         }
     }
     

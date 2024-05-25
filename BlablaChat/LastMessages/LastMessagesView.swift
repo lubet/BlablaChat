@@ -146,9 +146,7 @@ struct LastMessagesView: View {
                     .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
                 
                     .task {
-                        print("task 1")
                         await viewModel.getLastMessages()
-                        print("task 2")
                     }
                     .navigationTitle("LastMessagesView")
                 
@@ -159,7 +157,6 @@ struct LastMessagesView: View {
             }
     }
 }
-
 
 // Bouton nouveau contact ------------------
 extension LastMessagesView {

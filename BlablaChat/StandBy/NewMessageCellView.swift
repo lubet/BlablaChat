@@ -13,7 +13,7 @@ struct NewMessageCellView: View {
     
     var body: some View {
             HStack(spacing: 20) {
-                if let url = user.imageLink {
+                if let url = user.avatarLink {
                     AsyncImage(url: URL(string: url)) { image in
                         image
                             .resizable()

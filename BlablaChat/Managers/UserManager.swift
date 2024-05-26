@@ -13,7 +13,7 @@ struct DBUser: Codable, Identifiable {
     let userId: String
     let email : String?
     let dateCreated: Date?
-    let imageLink: String?
+    let avatarLink: String?
     
     var id: String {
         userId
@@ -24,7 +24,7 @@ struct DBUser: Codable, Identifiable {
         self.userId = auth.uid
         self.email = auth.email
         self.dateCreated = Date()
-        self.imageLink = nil
+        self.avatarLink = nil
     }
     
     init(
@@ -36,7 +36,7 @@ struct DBUser: Codable, Identifiable {
         self.userId = userId
         self.email = email
         self.dateCreated = dateCreated
-        self.imageLink = imageLink
+        self.avatarLink = imageLink
     }
     
     enum CodingKeys: String, CodingKey {
@@ -51,7 +51,7 @@ struct DBUser: Codable, Identifiable {
         try container.encode(self.userId, forKey: .userId)
         try container.encodeIfPresent(self.email, forKey: .email)
         try container.encodeIfPresent(self.dateCreated, forKey: .dateCreated)
-        try container.encodeIfPresent(self.imageLink, forKey: .imageLink)
+        try container.encodeIfPresent(self.avatarLink, forKey: .imageLink)
     }
     
     
@@ -60,7 +60,7 @@ struct DBUser: Codable, Identifiable {
         self.userId = try container.decode(String.self, forKey: .userId)
         self.email = try container.decodeIfPresent(String.self, forKey: .email)
         self.dateCreated = try container.decodeIfPresent(Date.self, forKey: .dateCreated)
-        self.imageLink = try container.decodeIfPresent(String.self, forKey: .imageLink)
+        self.avatarLink = try container.decodeIfPresent(String.self, forKey: .imageLink)
     }
 }
 

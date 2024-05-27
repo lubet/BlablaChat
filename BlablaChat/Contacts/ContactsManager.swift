@@ -193,12 +193,12 @@ final class ContactsManager {
     }
     
     // New Room
-    func createRoom(name: String) async throws -> String {
+    func createRoom(name: String, contact_id: String) async throws -> String {
         let roomRef = roomCollection.document()
         let room_id = roomRef.documentID
         
         let data: [String:Any] = [
-            "room_id" : room_id,
+            "room_id" : contact_id,
             "room_name": name,
             "date_created" : Timestamp(),
             "last_message" : ""

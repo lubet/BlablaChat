@@ -56,7 +56,7 @@ final class ContactBubblesViewModel: ObservableObject {
                     var room_id: String = ""
                     
                     if para == "" {
-                        room_id = try await ContactsManager.shared.createRoom(name: para)
+                        room_id = try await ContactsManager.shared.createRoom(name: para, contact_id: user_id)
                     } else {
                         room_id = param["room_id"] ?? ""
                     }
@@ -127,7 +127,7 @@ final class ContactBubblesViewModel: ObservableObject {
         let room = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
         if (room == "") {
             // Non -> créer un room
-            let room_id = try await ContactsManager.shared.createRoom(name: to_email)
+            let room_id = try await ContactsManager.shared.createRoom(name: to_email, contact_id: contact_id)
             // création d'un document membre
             try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
             // Créer un message avec le room

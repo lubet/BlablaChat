@@ -56,7 +56,7 @@ final class MessagesViewModel: ObservableObject {
                         contact_id = try await ContactsManager.shared.createUser(email: email)
 
                         // créer room
-                        let room_id = try await ContactsManager.shared.createRoom(name: email)
+                        let room_id = try await ContactsManager.shared.createRoom(name: email, contact_id: contact_id)
 
                         // créer membre
                         try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
@@ -137,7 +137,7 @@ final class MessagesViewModel: ObservableObject {
             contact_id = try await ContactsManager.shared.createUser(email: email)
             
             // créer "room"
-            let room_id = try await ContactsManager.shared.createRoom(name: email)
+            let room_id = try await ContactsManager.shared.createRoom(name: email, contact_id: contact_id)
             
             // créer membre
             try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)

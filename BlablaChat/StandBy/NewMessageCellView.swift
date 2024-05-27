@@ -45,6 +45,6 @@ struct NewMessageCellView: View {
 
 struct NewMessageCellView_Previews: PreviewProvider {
     static var previews: some View {
-        NewMessageCellView(user: DBUser(userId: "123456", email: "trte@test.com", dateCreated: Date(),imageLink: nil))
+        NewMessageCellView(user: DBUser(userId: "123456", email: "trte@test.com", dateCreated: Date(),avatarLink: nil))
     }
 }

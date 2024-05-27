@@ -31,19 +31,19 @@ struct DBUser: Codable, Identifiable {
         userId: String,
         email : String? = nil,
         dateCreated: Date? = nil,
-        imageLink: String? = nil
+        avatarLink: String? = nil
     ) {
         self.userId = userId
         self.email = email
         self.dateCreated = dateCreated
-        self.avatarLink = imageLink
+        self.avatarLink = avatarLink
     }
     
     enum CodingKeys: String, CodingKey {
         case userId = "user_id"
         case email = "email"
         case dateCreated = "date_created"
-        case imageLink = "image_link"
+        case avatarLink = "avatar_link"
     }
     
     func encode(to encoder: Encoder) throws {
@@ -51,7 +51,7 @@ struct DBUser: Codable, Identifiable {
         try container.encode(self.userId, forKey: .userId)
         try container.encodeIfPresent(self.email, forKey: .email)
         try container.encodeIfPresent(self.dateCreated, forKey: .dateCreated)
-        try container.encodeIfPresent(self.avatarLink, forKey: .imageLink)
+        try container.encodeIfPresent(self.avatarLink, forKey: .avatarLink)
     }
     
     
@@ -60,7 +60,7 @@ struct DBUser: Codable, Identifiable {
         self.userId = try container.decode(String.self, forKey: .userId)
         self.email = try container.decodeIfPresent(String.self, forKey: .email)
         self.dateCreated = try container.decodeIfPresent(Date.self, forKey: .dateCreated)
-        self.avatarLink = try container.decodeIfPresent(String.self, forKey: .imageLink)
+        self.avatarLink = try container.decodeIfPresent(String.self, forKey: .avatarLink)
     }
 }
 
@@ -95,7 +95,7 @@ final class UserManager {
     //
     func updateImagePath(userId: String, path: String) async throws {
         let data: [String:Any] = [
-            DBUser.CodingKeys.imageLink.rawValue : path,
+            DBUser.CodingKeys.avatarLink.rawValue : path,
         ]
         
         try await userDocument(userId: userId).updateData(data)

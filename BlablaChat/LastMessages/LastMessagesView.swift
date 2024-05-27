@@ -140,6 +140,9 @@ struct LastMessagesView: View {
                             Image(systemName: "gear")
                         }
                     }
+                    ToolbarItem(placement: .topBarLeading) {
+                        Image(systemName: "person.fill")
+                    }
                 }
                 NewMessageButton // extension -> MesContactsView() liste des users ancien ou nouveau
                 

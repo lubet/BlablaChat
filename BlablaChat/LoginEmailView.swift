@@ -123,8 +123,8 @@ struct LoginEmailView: View {
                 Task {
                     do {
                         // Nouveau compte
-                        // let mimage: UIImage = image ?? UIImage(named: "MaPhoto")!
-                        try await viewModel.signUp(image: image) // Création ou non (si il existe déjà)
+                        let mimage: UIImage = image ?? UIImage.init(systemName: "person.fill")!
+                        try await viewModel.signUp(image: mimage) // Création ou non (si il existe déjà)
                         showSignInView = false
                         return
                     } catch {

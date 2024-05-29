@@ -61,7 +61,7 @@ final class LastMessagesManager {
         var rooms = [Room]()
         do {
             let querySnapshot = try await roomCollection
-                // .whereField("from_id", isEqualTo: user_id)
+                .whereField("from_message", isEqualTo: user_id)
                 .order(by: "date_created")
                 .getDocuments()
             for document in querySnapshot.documents {
@@ -71,7 +71,6 @@ final class LastMessagesManager {
         } catch {
             print("getMyRooms - Error getting documents: \(error.localizedDescription)")
         }
-        print("getMyRooms \(rooms)")
         return rooms
     }
     
@@ -90,7 +89,7 @@ final class LastMessagesManager {
                 members.append(membre)
             }
         } catch {
-            print("getMyRooms - Error getting documents from members: \(error.localizedDescription)")
+            print("getMyRoomsId - Error getting documents from members: \(error.localizedDescription)")
         }
         return members
     }

@@ -81,11 +81,7 @@ class LastMessagesViewModel: ObservableObject {
             let AuthUser = try AuthManager.shared.getAuthenticatedUser()
             let user_id = AuthUser.uid
             
-            print("user_id: \(user_id)")
-            
             self.rooms = try await LastMessagesManager.shared.getMyRooms(user_id: user_id)
-            
-            print("self.rooms: \(self.rooms)")
             
             for room in self.rooms {
                 lastMessages.append(LastMessage(email: room.room_name, message_texte: room.last_message, message_date: room.date_message))
@@ -105,7 +101,6 @@ class LastMessagesViewModel: ObservableObject {
 //                    }
 //                }
 //            }
-            print("lastMessages \(lastMessages)")
         }
     }
     

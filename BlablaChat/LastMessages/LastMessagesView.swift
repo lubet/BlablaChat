@@ -71,6 +71,8 @@ class LastMessagesViewModel: ObservableObject {
         })
     }
     
+    
+    //
     func getLastMessages() async {
         
         Task {
@@ -81,21 +83,29 @@ class LastMessagesViewModel: ObservableObject {
             
             print("user_id: \(user_id)")
             
-            // Mes room_id dans membre
-            self.members = try await LastMessagesManager.shared.getMyRoomsId(user_id: user_id)
-
-            // Tous les rooms avec le dernier message (fait partie de la structure de Room)
-            self.rooms = try await LastMessagesManager.shared.getAllRooms()
+            self.rooms = try await LastMessagesManager.shared.getMyRooms(user_id: user_id)
             
-            // Mise en relation de mes member/rooms avec toutes les rooms pour extraire mes derniers messages (contenu dans room)
-            for member in members {
-                for room in rooms {
-                    if member.room_id == room.room_id {
-                        lastMessages.append(LastMessage(email: room.room_name, message_texte: room.last_message, message_date: room.date_message))
-                    }
-                }
+            print("self.rooms: \(self.rooms)")
+            
+            for room in self.rooms {
+                lastMessages.append(LastMessage(email: room.room_name, message_texte: room.last_message, message_date: room.date_message))
             }
-            // print("lastMessages \(lastMessages)")
+            
+//            // Mes room_id dans membre
+//            self.members = try await LastMessagesManager.shared.getMyRoomsId(user_id: user_id)
+//
+//            // Tous les rooms avec le dernier message (fait partie de la structure de Room)
+//            self.rooms = try await LastMessagesManager.shared.getAllRooms()
+//            
+//            // Mise en relation de mes member/rooms avec toutes les rooms pour extraire mes derniers messages (contenu dans room)
+//            for member in members {
+//                for room in rooms {
+//                    if member.room_id == room.room_id {
+//                        lastMessages.append(LastMessage(email: room.room_name, message_texte: room.last_message, message_date: room.date_message))
+//                    }
+//                }
+//            }
+            print("lastMessages \(lastMessages)")
         }
     }
     
@@ -149,7 +159,7 @@ struct LastMessagesView: View {
                     .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
                 
                     .task {
-                        await viewModel.getLastMessages()
+                        await viewModel.getLastMessages() // <-----------------
                     }
                     .navigationTitle("LastMessagesView")
                 

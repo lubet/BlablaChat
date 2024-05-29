@@ -138,15 +138,15 @@ struct LastMessagesView: View {
                     }
                 }
                 .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Image(systemName: "person.fill")
+                    }
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink {
                                 SettingsView(showSignInView: $showSignInView)
                         } label: {
                             Image(systemName: "gear")
                         }
-                    }
-                    ToolbarItem(placement: .topBarLeading) {
-                        Image(systemName: "person.fill")
                     }
                 }
                 NewMessageButton // extension -> MesContactsView() liste des users ancien ou nouveau

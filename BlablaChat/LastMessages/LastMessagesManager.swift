@@ -50,7 +50,7 @@ final class LastMessagesManager {
                 rooms.append(room)
             }
         } catch {
-            print("getAllRooms - Error getting documents: \(error.localizedDescription)")
+            print("getAllRooms - Error getting documents: \(error)")
         }
         return rooms
     }
@@ -69,7 +69,7 @@ final class LastMessagesManager {
                 rooms.append(room)
             }
         } catch {
-            print("getMyRooms - Error getting documents: \(error.localizedDescription)")
+            print("getMyRooms - Error getting documents: \(error)")
         }
         return rooms
     }
@@ -89,7 +89,7 @@ final class LastMessagesManager {
                 members.append(membre)
             }
         } catch {
-            print("getMyRoomsId - Error getting documents from members: \(error.localizedDescription)")
+            print("getMyRoomsId - Error getting documents from members: \(error)")
         }
         return members
     }

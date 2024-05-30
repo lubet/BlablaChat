@@ -145,7 +145,7 @@ final class ContactsManager {
                 }
             }
         } catch {
-            print("searchContact - Error getting documents: \(error.localizedDescription)")
+            print("searchContact - Error getting documents: \(error)")
         }
         // print("searchContact non trouvé")
         return ""
@@ -188,7 +188,7 @@ final class ContactsManager {
                 return roomId
             }
         } catch {
-            print("searchDuo - Error getting documents from members: \(error.localizedDescription)")
+            print("searchDuo - Error getting documents from members: \(error)")
         }
         print("searchDuo - La paire n'existe pas dans members")
         return ""

@@ -97,7 +97,7 @@ final class MessagesViewModel: ObservableObject {
                         scrollViewReaderId()
                         
                     } catch {
-                        print("Error saveMessage: \(error.localizedDescription)")
+                        print("Error saveMessage: \(error)")
                         return
                     }
                     
@@ -180,7 +180,7 @@ final class MessagesViewModel: ObservableObject {
             scrollViewReaderId()
             
         } catch {
-            print("Error saveMessage: \(error.localizedDescription)")
+            print("Error saveMessage: \(error)")
             return
         }
         
@@ -237,7 +237,7 @@ struct MessagesView: View {
             do {
                 try await viewModel.getRoomMessages(email: email) // Tous les messages relatif à un email
             } catch {
-                print("getRoomMessages - Error getting documents: \(error.localizedDescription)")
+                print("getRoomMessages - Error getting documents: \(error)")
             }
         }
     }

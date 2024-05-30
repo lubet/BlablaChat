@@ -8,36 +8,61 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import SDWebImageSwiftUI
 
 struct LastMessagesCellView: View {
     
     let lastMessage: LastMessage
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text("\(lastMessage.email)")
-                    .font(.body).bold()
-                    //.background(Color.white)
-                    //.frame(width: 200,alignment: .leading)
-                    //.foregroundColor(Color.black)
-                    //.multilineTextAlignment(.leading)
+        VStack(alignment: .leading){
+            HStack(alignment: .center){
+                WebImage(url: URL(string: lastMessage.avatar_link))
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .cornerRadius(10)
+
+                // email et message
+                VStack {
+                    Text("\(lastMessage.email)")
+                        .font(.body).bold()
+                    // texte du message
+                    Text("\(lastMessage.message_texte)")
+                        .font(.body)
+                        .foregroundColor(Color.black)
+                }
                 
-                Text("\(lastMessage.message_texte)")
-                    .font(.body)
-                    // .background(Color.white)
-                    //.frame(width: 200, height: 10)
-                    .foregroundColor(Color.black)
-                    //.padding()
-                    //.multilineTextAlignment(.leading)
+                // date
+                let myDate = timeStampToString(dateMessage: lastMessage.message_date)
+                Text("\(myDate)")
+                    .font(.footnote)
+                    .frame(width: 100,height: 20 ,alignment: .topTrailing)
             }
-            .frame(width: 200,alignment: .leading)
-            let myDate = timeStampToString(dateMessage: lastMessage.message_date)
-            Text("\(myDate)")
-                .font(.footnote)
-                .frame(width: 100,height: 20 ,alignment: .topTrailing)
-                //.background(Color.white)
         }
+//        HStack {
+//            VStack(alignment: .leading) {
+//                Text("\(lastMessage.email)")
+//                    .font(.body).bold()
+//                    //.background(Color.white)
+//                    //.frame(width: 200,alignment: .leading)
+//                    //.foregroundColor(Color.black)
+//                    //.multilineTextAlignment(.leading)
+//                
+//                Text("\(lastMessage.message_texte)")
+//                    .font(.body)
+//                    // .background(Color.white)
+//                    //.frame(width: 200, height: 10)
+//                    .foregroundColor(Color.black)
+//                    //.padding()
+//                    //.multilineTextAlignment(.leading)
+//            }
+//            .frame(width: 200,alignment: .leading)
+//            let myDate = timeStampToString(dateMessage: lastMessage.message_date)
+//            Text("\(myDate)")
+//                .font(.footnote)
+//                .frame(width: 100,height: 20 ,alignment: .topTrailing)
+//                //.background(Color.white)
+//        }
         .foregroundColor(Color.black)
         .frame(height: 40)
         .padding(.horizontal, 30)

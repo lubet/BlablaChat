@@ -64,7 +64,7 @@ final class MessagesManager {
                 }
             }
         } catch {
-            print("getMessages - Error getting documents: \(error.localizedDescription)")
+            print("getMessages - Error getting documents: \(error)")
         }
         return messagesBubble
     }
@@ -94,7 +94,7 @@ final class MessagesManager {
                 }
             }
         } catch {
-            print("getToId - Error getting documents: \(error.localizedDescription)")
+            print("getToId - Error getting documents: \(error)")
         }
         return to_id
     }
@@ -117,7 +117,7 @@ final class MessagesManager {
                 }
             }
         } catch {
-            print("getRoomId- Error getting documents: \(error.localizedDescription)")
+            print("getRoomId- Error getting documents: \(error)")
         }
         print("Ereur: getRoomId - pas de roomId")
         return roomId

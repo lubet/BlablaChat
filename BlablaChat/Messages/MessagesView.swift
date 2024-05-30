@@ -49,11 +49,19 @@ final class MessagesViewModel: ObservableObject {
                     guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
                     let user_id = AuthUser.uid
                     
+                    // Recherche de l'email dans "users"
                     var contact_id  = try await ContactsManager.shared.searchContact(email: email)
+                    
                     if contact_id == "" {
 
                         // créer user
                         contact_id = try await ContactsManager.shared.createUser(email: email)
+                        
+                        // créer l'avatar
+                        let mimage: UIImage = UIImage.init(systemName: "person.fill")!
+                        let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: contact_id)
+                        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
+                        try await UserManager.shared.updateImagePath(userId: contact_id, path: lurl.absoluteString) // maj Firestore
 
                         // créer room
                         let room_id = try await ContactsManager.shared.createRoom(name: email, contact_id: contact_id)
@@ -129,12 +137,19 @@ final class MessagesViewModel: ObservableObject {
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = AuthUser.uid
         
+        // Recherche de l'email dans "users"
         var contact_id  = try await ContactsManager.shared.searchContact(email: email)
         
         if contact_id == "" { // le contact n'existe pas dans "users"
             
             // créer "users"
             contact_id = try await ContactsManager.shared.createUser(email: email)
+            
+            // créer l'avatar
+            let mimage: UIImage = UIImage.init(systemName: "person.fill")!
+            let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: contact_id)
+            let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
+            try await UserManager.shared.updateImagePath(userId: contact_id, path: lurl.absoluteString) // maj Firestore
             
             // créer "room"
             let room_id = try await ContactsManager.shared.createRoom(name: email, contact_id: contact_id)

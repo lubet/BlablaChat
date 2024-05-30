@@ -64,7 +64,7 @@ final class MessagesViewModel: ObservableObject {
                         try await UserManager.shared.updateImagePath(userId: contact_id, path: lurl.absoluteString) // maj Firestore
 
                         // créer room
-                        let room_id = try await ContactsManager.shared.createRoom(name: email, contact_id: contact_id)
+                        let room_id = try await ContactsManager.shared.createRoom(name: email)
 
                         // créer membre
                         try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
@@ -152,7 +152,7 @@ final class MessagesViewModel: ObservableObject {
             try await UserManager.shared.updateImagePath(userId: contact_id, path: lurl.absoluteString) // maj Firestore
             
             // créer "room"
-            let room_id = try await ContactsManager.shared.createRoom(name: email, contact_id: contact_id)
+            let room_id = try await ContactsManager.shared.createRoom(name: email)
             
             // créer membre
             try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)

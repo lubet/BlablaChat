@@ -41,6 +41,7 @@ struct Room: Identifiable, Codable {
     let last_message: String
     let date_message: Timestamp
     let from_message: String
+    let avatar_link: String
     
     var id: String {
         room_id
@@ -53,6 +54,7 @@ struct Room: Identifiable, Codable {
         case last_message
         case date_message
         case from_message
+        case avatar_link
     }
 }
 
@@ -193,7 +195,7 @@ final class ContactsManager {
     }
     
     // New Room
-    func createRoom(name: String) async throws -> String {
+    func createRoom(name: String, avatar_link: String) async throws -> String {
         let roomRef = roomCollection.document()
         let room_id = roomRef.documentID
         
@@ -201,7 +203,8 @@ final class ContactsManager {
             "room_id" : room_id,
             "room_name": name,
             "date_created" : Timestamp(),
-            "last_message" : ""
+            "last_message" : "",
+            "avatar_link" : avatar_link
         ]
         try await roomRef.setData(data, merge: false)
         

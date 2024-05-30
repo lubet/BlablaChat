@@ -48,7 +48,7 @@ struct LastMessagesCellView: View {
 
 struct LastMessagesCellView_Previews: PreviewProvider {
     static var previews: some View {
-        LastMessagesCellView(lastMessage: LastMessage(email: "", message_texte: "", message_date: Timestamp()))
+        LastMessagesCellView(lastMessage: LastMessage(avatar_link: "", email: "", message_texte: "", message_date: Timestamp()))
     }
 //        LastMessagesCellView(lastMessage: LastMessage(room_id: "1", room_name: "My room B", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Salut les amis", message_date: timeStampToString(dateMessage: Timestamp())  , message_from: "Xavier", message_to: "Message to Alfred"))
 }

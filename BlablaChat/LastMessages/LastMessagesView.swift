@@ -13,18 +13,19 @@ import Combine
 // A mettre dans la View
 struct LastMessage: Identifiable, Codable, Hashable {
     let id = UUID().uuidString
+    let avatar_link: String
     let email: String // email du créateur du room
     let message_texte: String
     let message_date: Timestamp
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
+        case avatar_link = "avatar_link"
         case email = "email"
         case message_texte = "message_texte"
         case message_date = "message_date"
     }
 }
-
 
 
 @MainActor
@@ -84,7 +85,7 @@ class LastMessagesViewModel: ObservableObject {
             self.rooms = try await LastMessagesManager.shared.getMyRooms(user_id: user_id)
             
             for room in self.rooms {
-                lastMessages.append(LastMessage(email: room.room_name, message_texte: room.last_message, message_date: room.date_message))
+                lastMessages.append(LastMessage(avatar_link: room.avatar_link ,email: room.room_name, message_texte: room.last_message, message_date: room.date_message))
             }
             
 //            // Mes room_id dans membre

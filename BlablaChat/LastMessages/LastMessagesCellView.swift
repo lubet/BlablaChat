@@ -15,30 +15,33 @@ struct LastMessagesCellView: View {
     let lastMessage: LastMessage
     
     var body: some View {
-        VStack(alignment: .leading){
-            HStack(alignment: .center){
-                WebImage(url: URL(string: lastMessage.avatar_link))
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .cornerRadius(10)
-
-                // email et message
-                VStack {
-                    Text("\(lastMessage.email)")
-                        .font(.body).bold()
-                    // texte du message
-                    Text("\(lastMessage.message_texte)")
-                        .font(.body)
-                        .foregroundColor(Color.black)
-                }
-                
+        WebImage(url: URL(string: lastMessage.avatar_link))
+            .resizable()
+            .frame(width: 20, height: 20)
+            .cornerRadius(10)
+        
+        // email et message
+        VStack {
+            Text("\(lastMessage.email)")
+                .font(.body).bold()
+                .foregroundColor(Color.black)
+                .frame(width: 160,height: 20 , alignment: .topTrailing)
+            HStack{
+                // texte du message
+                Text("\(lastMessage.message_texte)")
+                    .font(.body)
+                    .foregroundColor(Color.black)
+                    .frame(width: 100,height: 20 , alignment: .topTrailing)
                 // date
+                Spacer()
                 let myDate = timeStampToString(dateMessage: lastMessage.message_date)
                 Text("\(myDate)")
                     .font(.footnote)
-                    .frame(width: 100,height: 20 ,alignment: .topTrailing)
+                    .foregroundColor(Color.black)
+                    .frame(width: 100,height: 20 , alignment: .topTrailing)
             }
         }
+                
 //        HStack {
 //            VStack(alignment: .leading) {
 //                Text("\(lastMessage.email)")

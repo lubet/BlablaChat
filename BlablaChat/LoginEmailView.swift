@@ -88,6 +88,7 @@ struct LoginEmailView: View {
                 .textInputAutocapitalization(.never)
                 .background(Color.gray.opacity(0.2))
                 .cornerRadius(10)
+                .disableAutocorrection(true)
 
             TextField("Mot de passe", text: $viewModel.password)
                 .padding(15)
@@ -95,6 +96,7 @@ struct LoginEmailView: View {
                 .textInputAutocapitalization(.never)
                 .background(Color.gray.opacity(0.2))
                 .cornerRadius(10)
+                .disableAutocorrection(true)
             
             Button { // SignIn - le user existe
                 Task {

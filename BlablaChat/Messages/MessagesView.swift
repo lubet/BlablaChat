@@ -140,15 +140,20 @@ final class MessagesViewModel: ObservableObject {
         // Recherche de l'email dans "users"
         var contact_id  = try await ContactsManager.shared.searchContact(email: email)
         
-        if contact_id == "" { // le contact n'existe pas dans "users"
+        // Tiers - non présent dans "users" - on créet tout: users, rooms, members, messages) avec un avatar
+        
+        if contact_id == "" {
             
             // créer "users"
             contact_id = try await ContactsManager.shared.createUser(email: email)
             
-            // créer l'avatar
+            // créer l'avatar par défaut
             let mimage: UIImage = UIImage.init(systemName: "person.fill")!
+            
             let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: contact_id)
+                        
             let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
+            
             try await UserManager.shared.updateImagePath(userId: contact_id, path: lurl.absoluteString) // maj Firestore
             
             // créer "room"
@@ -162,8 +167,10 @@ final class MessagesViewModel: ObservableObject {
             
         } else {
             
-            // le contact existe dans "users"
-            let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+            // SignUp présent dans "users" uniquement avec l'avatar - on créer le reste (rooms, members, message)
+            
+            // Recherche du room_id dans member -> renvoie soit le room_id soit ""
+            var room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
 
             guard let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id) else {
                 return

@@ -27,6 +27,7 @@ final class LoginEmailViewModel: ObservableObject {
         
         guard let image else { return }
         
+        // Avatar
         let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: user.userId)
 //        print("image path: \(path)") // chemin complet + nom du jpeg
 //        print("Image name: \(name)") // nom du jpeg

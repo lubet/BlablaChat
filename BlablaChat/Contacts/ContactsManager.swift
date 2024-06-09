@@ -190,11 +190,11 @@ final class ContactsManager {
         } catch {
             print("searchDuo - Error getting documents from members: \(error)")
         }
-        print("searchDuo - La paire n'existe pas dans members")
+        // print("searchDuo - La paire n'existe pas dans members")
         return ""
     }
     
-    // New Room
+    // New Room pour les contacts (avatar dans "rooms"
     func createRoom(name: String, avatar_link: String) async throws -> String {
         let roomRef = roomCollection.document()
         let room_id = roomRef.documentID

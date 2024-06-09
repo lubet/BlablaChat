@@ -114,6 +114,28 @@ final class UserManager {
         return dbUsers
     }
     
+    // Recherche de l'avatar dans "users".
+    // Cas des SignUP car leur avatar se trouve dans "users"
+    // mais pas dans "rooms" car ils n'ont pas encore de room qui n'est créer qu'à la création du premier message
+    func getAvatar(contact_id: String) async throws -> String {
+        do {
+            let querySnapshot = try await userCollection
+                .whereField("user_id", isEqualTo: contact_id)
+                .getDocuments()
+            
+            for document in querySnapshot.documents {
+                let user = try document.data(as: DBUser.self)
+                if (user.userId == contact_id) {
+                    return user.avatarLink ?? ""
+                }
+            }
+        } catch {
+            print("searchContact - Error getting documents: \(error)")
+        }
+        print("searchAvatar: non trouvé pour contact-id: \(contact_id)")
+
+        return ""
+    }
 }
 
 

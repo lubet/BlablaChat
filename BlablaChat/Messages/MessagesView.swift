@@ -136,12 +136,11 @@ final class MessagesViewModel: ObservableObject {
         // Moi
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = AuthUser.uid
-        
+
         // Recherche de l'email dans "users"
         var contact_id  = try await ContactsManager.shared.searchContact(email: email)
         
-        // Tiers - non présent dans "users" - on créet tout: users, rooms, members, messages) avec un avatar
-        
+        // Pas présent dans "users" - on créet tout: users, rooms, members, messages) avec un avatar
         if contact_id == "" {
             
             // créer "users"
@@ -166,11 +165,29 @@ final class MessagesViewModel: ObservableObject {
             try await ContactsManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: message_text, room_id: room_id, image_link: "")
             
         } else {
-            
-            // SignUp présent dans "users" uniquement avec l'avatar - on créer le reste (rooms, members, message)
-            
-            // Recherche du room_id dans member -> renvoie soit le room_id soit ""
+            // Présent dans "users"
+             
+            // Recherche du room_id dans member
             var room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+
+            // SignUp. Après le login ils ne sont pas présent dans "rooms" ni dans "members"
+            // C'est à l'envoi du premier message que se fait la création d'un item dans "rooms" et dans "members"
+            if (room_id == "") {
+                
+                let memberDuo = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+
+                if (memberDuo == "") {
+                    
+                    // Prendre l'avatar du SignUp dans "users"
+                    let avatar = try await UserManager.shared.getAvatar(contact_id: contact_id)
+                                        
+                    // Créer room
+                    room_id = try await ContactsManager.shared.createRoom(name: email, avatar_link: avatar)
+                    
+                    // Créer member
+                    try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
+               }
+            }
 
             guard let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id) else {
                 return
@@ -270,6 +287,7 @@ extension MessagesView {
             // Saisie du message
             TextField("Message", text: $messageText, axis: .vertical)
                 .foregroundColor(Color.black)
+                .disableAutocorrection(true)
             
             // Envoi du message
             Image(systemName: "paperplane.circle")

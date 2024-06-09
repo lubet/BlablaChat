@@ -29,11 +29,14 @@ struct LastMessagesCellView: View {
                 
                 VStack(alignment: .leading) {
                     Text("\(lastMessage.email)")
+                        .frame(width: 200,alignment: .leading)
                         .font(.system(size: 16, weight: .bold))
+                        .background(Color(.red))
                     Text("\(lastMessage.message_texte)")
                         .font(.system(size: 14))
                         .foregroundStyle(.black)
                         .multilineTextAlignment(.leading)
+                        .background(Color(.bleu))
                 }
                 Spacer()
                 let myDate = timeStampToString(dateMessage: lastMessage.message_date)
@@ -41,7 +44,7 @@ struct LastMessagesCellView: View {
                     .font(.system(size: 14, weight: .semibold))
             }
             .padding(.vertical,8)
-        }//.padding(.horizontal)
+        }.padding(.horizontal)
     }
 }
 

@@ -16,37 +16,74 @@ struct LastMessagesCellView: View {
     
     var body: some View {
         
-        // avatar
-        WebImage(url: URL(string: lastMessage.avatar_link))
-            .resizable()
-            .frame(width: 20, height: 20)
-            .cornerRadius(10)
-        
         VStack {
-            
-            Text("\(lastMessage.email)")
-                .font(.body).bold()
-                .foregroundColor(Color.black)
-                .frame(width: 160,height: 20 , alignment: .topTrailing)
-            
-            HStack{
+            HStack(spacing: 16) {
+                WebImage(url: URL(string: lastMessage.avatar_link))
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 40, height: 40)
+                    .clipped()
+                    .cornerRadius(40)
+                    .overlay(RoundedRectangle(cornerRadius: 44)
+                    .stroke(Color.black, lineWidth: 1))
+
                 
-                // texte du message
-                Text("\(lastMessage.message_texte)")
-                    .font(.body)
-                    .foregroundColor(Color.black)
-                    .frame(width: 100,height: 20 , alignment: .topTrailing)
-            
-                // date
+//                    .font(.system(size: 32))
+//                    .padding(8)
+//                    .overlay(RoundedRectangle(cornerRadius: 44)
+//                        .stroke(Color.black, lineWidth: 1))
+                
+                VStack(alignment: .leading) {
+                    Text("\(lastMessage.email)")
+                        .font(.system(size: 16, weight: .bold))
+                    Text("\(lastMessage.message_texte)")
+                        .font(.system(size: 14))
+                        .foregroundStyle(.black)
+                }
                 Spacer()
                 let myDate = timeStampToString(dateMessage: lastMessage.message_date)
                 Text("\(myDate)")
-                    .font(.footnote)
-                    .foregroundColor(Color.black)
-                    .frame(width: 100,height: 20 , alignment: .topTrailing)
+                    .font(.system(size: 14, weight: .semibold))
             }
-        }
-                
+            Divider()
+            .padding(.vertical,8)
+        }//.padding(.horizontal)
+    }
+}
+        
+        
+        
+        // avatar
+//        WebImage(url: URL(string: lastMessage.avatar_link))
+//            .resizable()
+//            .frame(width: 20, height: 20)
+//            .cornerRadius(10)
+//        
+//        VStack {
+//            
+//            Text("\(lastMessage.email)")
+//                .font(.body).bold()
+//                .foregroundColor(Color.black)
+//                .frame(width: 160,height: 20 , alignment: .topTrailing)
+//            
+//            HStack{
+//                
+//                // texte du message
+//                Text("\(lastMessage.message_texte)")
+//                    .font(.body)
+//                    .foregroundColor(Color.black)
+//                    .frame(width: 100,height: 20 , alignment: .topTrailing)
+//            
+//                // date
+//                Spacer()
+//                let myDate = timeStampToString(dateMessage: lastMessage.message_date)
+//                Text("\(myDate)")
+//                    .font(.footnote)
+//                    .foregroundColor(Color.black)
+//                    .frame(width: 100,height: 20 , alignment: .topTrailing)
+//            }
+//        }
+//                
 //        HStack {
 //            VStack(alignment: .leading) {
 //                Text("\(lastMessage.email)")
@@ -71,19 +108,18 @@ struct LastMessagesCellView: View {
 //                .frame(width: 100,height: 20 ,alignment: .topTrailing)
 //                //.background(Color.white)
 //        }
-        .foregroundColor(Color.black)
-        .frame(height: 40)
-        .padding(.horizontal, 30)
-        //.background(Color(UIColor.secondarySystemBackground))
-        .cornerRadius(10)
-    }
-}
+//        .foregroundColor(Color.black)
+//        .frame(height: 40)
+//        .padding(.horizontal, 30)
+//        //.background(Color(UIColor.secondarySystemBackground))
+//        .cornerRadius(10)
+//    }
+//}
 
 struct LastMessagesCellView_Previews: PreviewProvider {
     static var previews: some View {
         LastMessagesCellView(lastMessage: LastMessage(avatar_link: "", email: "xlubet-moncla@", message_texte: "Hello toto", message_date: Timestamp()))
     }
-//        LastMessagesCellView(lastMessage: LastMessage(room_id: "1", room_name: "My room B", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Salut les amis", message_date: timeStampToString(dateMessage: Timestamp())  , message_from: "Xavier", message_to: "Message to Alfred"))
 }
 
 

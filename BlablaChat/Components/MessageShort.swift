@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+func MessageShort(message: String) -> String {
+    
+    return ""
+}

@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+
+func EmailShort(email: String) -> String {
+    let index = email.firstIndex(of: "@") ?? email.endIndex
+    let debut = email[..<index]
+
+    return String(debut)
+}

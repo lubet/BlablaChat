@@ -135,7 +135,7 @@ struct LastMessagesView: View {
                             MessagesView(path: $path, email: lastMessage.email)
                         } label: {
                             LastMessagesCellView(lastMessage: lastMessage)
-                        }
+                        }.buttonStyle(PlainButtonStyle())
                     }
                 }
                 .toolbar {

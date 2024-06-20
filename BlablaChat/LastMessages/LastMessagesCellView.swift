@@ -26,22 +26,30 @@ struct LastMessagesCellView: View {
                     .cornerRadius(64)
                     .overlay(RoundedRectangle(cornerRadius: 44)
                     .stroke(Color.black, lineWidth: 1))
+                    .background(Color(.bleu))
                 
                 VStack(alignment: .leading) {
-                    Text("\(lastMessage.email)")
-                        .frame(width: 200,alignment: .leading)
+                    let emailShort = EmailShort(email: lastMessage.email)
+                    Text("\(emailShort)")
+                        .frame(width: 150,alignment: .leading)
                         .font(.system(size: 16, weight: .bold))
                         .background(Color(.red))
                     Text("\(lastMessage.message_texte)")
+                        .frame(width: 150, alignment: .leading)
                         .font(.system(size: 14))
                         .foregroundStyle(.black)
                         .multilineTextAlignment(.leading)
                         .background(Color(.bleu))
                 }
-                Spacer()
-                let myDate = timeStampToString(dateMessage: lastMessage.message_date)
-                Text("\(myDate)")
-                    .font(.system(size: 14, weight: .semibold))
+                //Spacer()
+                // let myDate = timeStampToString(dateMessage: lastMessage.message_date)
+                VStack(alignment: .leading) {
+                    let myDate = dateManager(dateMessage: lastMessage.message_date)
+                    Text("\(myDate)")
+                        .frame(width: 50, alignment: .leading)
+                        .font(.system(size: 8, weight: .semibold))
+                        .background(Color(.gray))
+                }
             }
             .padding(.vertical,8)
         }.padding(.horizontal)
@@ -50,7 +58,7 @@ struct LastMessagesCellView: View {
 
 struct LastMessagesCellView_Previews: PreviewProvider {
     static var previews: some View {
-        LastMessagesCellView(lastMessage: LastMessage(avatar_link: "", email: "xlubet-moncla@", message_texte: "Hello toto", message_date: Timestamp()))
+        LastMessagesCellView(lastMessage: LastMessage(avatar_link: "", email: "xlubet-moncla@wanadoo.fr", message_texte: "Hello toto, comment vas tu et toi cela va bien", message_date: Timestamp()))
     }
 }
 

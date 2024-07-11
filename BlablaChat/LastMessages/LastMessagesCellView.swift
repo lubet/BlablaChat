@@ -34,7 +34,7 @@ struct LastMessagesCellView: View {
                         .frame(width: 150,alignment: .leading)
                         .font(.system(size: 16, weight: .bold))
                         .background(Color(.red))
-                    var msg = MessageShort(message: lastMessage.message_texte)
+                    let msg = MessageShort(message: lastMessage.message_texte)
                     Text("\(msg)")
                         .frame(width: 150, alignment: .leading)
                         .font(.system(size: 14))

@@ -27,7 +27,7 @@ struct AuthenticationView: View {
             Spacer()
         }
         .padding()
-        .navigationTitle("Authentification")
+        .navigationTitle("Sign In")
     }
 }
 

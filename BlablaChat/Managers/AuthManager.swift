@@ -60,7 +60,7 @@ extension AuthManager {
     }
 }
 
-// MARK: SIGN IN SSO
+// MARK: SIGN IN SSO (Google, Apple)
 extension AuthManager {
     
     func signInWithGoogle(credential: AuthCredential) async throws -> AuthUser {

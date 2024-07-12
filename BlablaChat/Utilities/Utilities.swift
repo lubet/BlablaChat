@@ -4,6 +4,9 @@
 //
 //  Created by Lubet-Moncla Xavier on 12/07/2024.
 //
+// Utilisé pour sign in with Google
+//
+// ne pas tenir compte de l'avertissement 'keyWindow'
 
 import Foundation
 import UIKit

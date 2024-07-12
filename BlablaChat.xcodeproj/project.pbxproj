@@ -13,6 +13,7 @@
 		C01FE5AD2B67F7F70049B9EE /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */; };
 		C02A0CFF2BD3C5FB000E58D4 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02A0CFE2BD3C5FB000E58D4 /* ContactsView.swift */; };
 		C02A8C382BB1D62E005ECF0F /* LastMessagesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02A8C372BB1D62E005ECF0F /* LastMessagesCellView.swift */; };
+		C03763872C41210200A5602B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C03763862C41210200A5602B /* GoogleService-Info.plist */; };
 		C043F9A52C170D08002B3C59 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C043F9A42C170D08002B3C59 /* DateManager.swift */; };
 		C0476E7D2BB71033000D860C /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0476E7C2BB71033000D860C /* MessagesView.swift */; };
 		C0476E7F2BB71086000D860C /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0476E7E2BB71086000D860C /* MessagesManager.swift */; };
@@ -21,7 +22,7 @@
 		C047E9C62B45625C00C6D48F /* LoginEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C52B45625C00C6D48F /* LoginEmailView.swift */; };
 		C047E9C82B45625D00C6D48F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C047E9C72B45625D00C6D48F /* Assets.xcassets */; };
 		C047E9CB2B45625D00C6D48F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C047E9CA2B45625D00C6D48F /* Preview Assets.xcassets */; };
-		C047E9D22B45646A00C6D48F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C047E9D12B45646A00C6D48F /* GoogleService-Info.plist */; };
+		C047E9D22B45646A00C6D48F /* GoogleService-Info-old.plist in Resources */ = {isa = PBXBuildFile; fileRef = C047E9D12B45646A00C6D48F /* GoogleService-Info-old.plist */; };
 		C047E9D52B45652000C6D48F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C047E9D42B45652000C6D48F /* FirebaseAuth */; };
 		C047E9D72B45652000C6D48F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C047E9D62B45652000C6D48F /* FirebaseFirestore */; };
 		C047E9D92B45652000C6D48F /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C047E9D82B45652000C6D48F /* FirebaseFirestoreSwift */; };
@@ -56,6 +57,8 @@
 		C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		C02A0CFE2BD3C5FB000E58D4 /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		C02A8C372BB1D62E005ECF0F /* LastMessagesCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesCellView.swift; sourceTree = "<group>"; };
+		C03763852C411F3700A5602B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C03763862C41210200A5602B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C043F9A42C170D08002B3C59 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		C0476E7C2BB71033000D860C /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		C0476E7E2BB71086000D860C /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
@@ -65,7 +68,7 @@
 		C047E9C52B45625C00C6D48F /* LoginEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginEmailView.swift; sourceTree = "<group>"; };
 		C047E9C72B45625D00C6D48F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C047E9CA2B45625D00C6D48F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		C047E9D12B45646A00C6D48F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C047E9D12B45646A00C6D48F /* GoogleService-Info-old.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-old.plist"; sourceTree = "<group>"; };
 		C047E9DD2B45668800C6D48F /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		C047E9DF2B45767B00C6D48F /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		C047E9E12B45880400C6D48F /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
@@ -158,6 +161,7 @@
 		C047E9C22B45625C00C6D48F /* BlablaChat */ = {
 			isa = PBXGroup;
 			children = (
+				C03763852C411F3700A5602B /* Info.plist */,
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
 				C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */,
 				C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */,
@@ -171,7 +175,8 @@
 				C0B9DC842B5EB05B006C2B46 /* Components */,
 				C01FE5A72B67F0610049B9EE /* StandBy */,
 				C047E9C72B45625D00C6D48F /* Assets.xcassets */,
-				C047E9D12B45646A00C6D48F /* GoogleService-Info.plist */,
+				C047E9D12B45646A00C6D48F /* GoogleService-Info-old.plist */,
+				C03763862C41210200A5602B /* GoogleService-Info.plist */,
 				C047E9C92B45625D00C6D48F /* Preview Content */,
 			);
 			path = BlablaChat;
@@ -292,8 +297,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C047E9CB2B45625D00C6D48F /* Preview Assets.xcassets in Resources */,
+				C03763872C41210200A5602B /* GoogleService-Info.plist in Resources */,
 				C047E9C82B45625D00C6D48F /* Assets.xcassets in Resources */,
-				C047E9D22B45646A00C6D48F /* GoogleService-Info.plist in Resources */,
+				C047E9D22B45646A00C6D48F /* GoogleService-Info-old.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,6 +474,7 @@
 				DEVELOPMENT_TEAM = Z2D42B65AU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BlablaChat/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = BlablaChat;
 				INFOPLIST_KEY_NSContactsUsageDescription = "Merci d'autoriser l'accès à vos contacts";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -499,6 +506,7 @@
 				DEVELOPMENT_TEAM = Z2D42B65AU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BlablaChat/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = BlablaChat;
 				INFOPLIST_KEY_NSContactsUsageDescription = "Merci d'autoriser l'accès à vos contacts";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

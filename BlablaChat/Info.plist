@@ -9,6 +9,10 @@
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>Google Sign In</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.199388320465-gmhqsfindj0dp5dlfv8ivu05vi0kt036</string>
+			</array>
 		</dict>
 	</array>
 </dict>

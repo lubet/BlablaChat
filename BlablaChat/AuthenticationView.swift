@@ -10,6 +10,12 @@ import GoogleSignIn
 import GoogleSignInSwift
 import FirebaseAuth
 
+
+struct GoggleSignInResultModel {
+    let idToken: String
+    let accessToken: String
+}
+
 @MainActor
 final class AuthenticationViewModel: ObservableObject {
     
@@ -27,12 +33,15 @@ final class AuthenticationViewModel: ObservableObject {
         
         let accessToken = gidSignInResult.user.accessToken.tokenString
         
-        let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
+        let tokens = GoggleSignInResultModel.init(idToken: idToken, accessToken: accessToken)
+        try await AuthManager.shared.signInWithGoogle(tokens: tokens)
+        
     }
 }
 
 struct AuthenticationView: View {
     
+    @StateObject private var viewModel = AuthenticationViewModel()
     @Binding var showSignInView: Bool
     
     var body: some View {
@@ -51,7 +60,14 @@ struct AuthenticationView: View {
             
             GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide, state: .normal))
             {
-                
+                Task {
+                    do {
+                        try await viewModel.signInGoogle()
+                        showSignInView = false
+                    } catch {
+                        print(error)
+                    }
+                }
             }
             
             Spacer()

@@ -34,8 +34,22 @@ final class AuthenticationViewModel: ObservableObject {
         let accessToken = gidSignInResult.user.accessToken.tokenString
         
         let tokens = GoggleSignInResultModel.init(idToken: idToken, accessToken: accessToken)
-        try await AuthManager.shared.signInWithGoogle(tokens: tokens)
-        
+
+        // Recherche du user Google dans la base "users" avec son email
+        do {
+            let authUser = try await AuthManager.shared.signInWithGoogle(tokens: tokens) // Renvoi user: authDataResult.user
+            guard let email = authUser.email else {
+                print("L'email du user Google est égal à nil")
+                return
+            }
+             let contact_id  = try await ContactsManager.shared.searchContact(email: email)
+             if contact_id == "" {
+                let user = DBUser(auth: authUser) // Instanciation userId email
+                try await UserManager.shared.createDbUser(user: user) // Save in Firestore sans l'image
+             }
+        } catch {
+            print("Erreur Sign in with Google...")
+        }
     }
 }
 

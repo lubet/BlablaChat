@@ -8,16 +8,33 @@
 import SwiftUI
 import GoogleSignIn
 import GoogleSignInSwift
-import FirebaseAuth
-
+import AuthenticationServices
+import CryptoKit
 
 struct GoggleSignInResultModel {
     let idToken: String
     let accessToken: String
 }
 
+struct SignInWithAppleButtonViewRepresentable: UIViewRepresentable {
+    
+    let type: ASAuthorizationAppleIDButton.ButtonType
+    let style: ASAuthorizationAppleIDButton.Style
+    
+    func makeUIView(context: Context) -> ASAuthorizationAppleIDButton {
+        ASAuthorizationAppleIDButton(type: type, style: style)
+    }
+    
+    func updateUIView(_ uiView: ASAuthorizationAppleIDButton, context: Context) {
+        
+    }
+}
+
+
 @MainActor
-final class AuthenticationViewModel: ObservableObject {
+final class AuthenticationViewModel: NSObject, ObservableObject {
+    
+    private var currentNonce: String?
     
     func signInGoogle() async throws {
         
@@ -51,6 +68,92 @@ final class AuthenticationViewModel: ObservableObject {
             print("Erreur Sign in with Google...")
         }
     }
+    
+    func signInApple() async throws {
+//        let nonce = randomNonceString()
+//        
+//        let sha = sha256(nonce)
+    }
+    
+    func startSignInWithAppleFlow() {
+      let nonce = randomNonceString()
+      currentNonce = nonce
+      let appleIDProvider = ASAuthorizationAppleIDProvider()
+      let request = appleIDProvider.createRequest()
+      request.requestedScopes = [.fullName, .email]
+      request.nonce = sha256(nonce)
+
+      let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+      authorizationController.delegate = self
+      authorizationController.presentationContextProvider = self
+      authorizationController.performRequests()
+    }
+    
+    private func randomNonceString(length: Int = 32) -> String {
+        precondition(length > 0)
+        var randomBytes = [UInt8](repeating: 0, count: length)
+        let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
+        if errorCode != errSecSuccess {
+            fatalError(
+                "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
+            )
+        }
+        
+        let charset: [Character] =
+        Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        
+        let nonce = randomBytes.map { byte in
+            // Pick a random character from the set, wrapping around if needed.
+            charset[Int(byte) % charset.count]
+        }
+        
+        return String(nonce)
+    }
+    
+    @available(iOS 13, *)
+    private func sha256(_ input: String) -> String {
+      let inputData = Data(input.utf8)
+      let hashedData = SHA256.hash(data: inputData)
+      let hashString = hashedData.compactMap {
+        String(format: "%02x", $0)
+      }.joined()
+
+      return hashString
+    }
+
+}
+
+struct SignInWithAppleResult {
+    let token: String
+    let nonce: String
+}
+
+@available(iOS 13.0, *)
+extension AuthenticationViewModel: ASAuthorizationControllerDelegate {
+
+  func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+      
+    guard 
+        let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
+        let appleIDToken = appleIDCredential.identityToken,
+        let idTokenString = String(data: appleIDToken, encoding: .utf8),
+        let nonce = currentNonce else {
+            print("Erro")
+            return
+        }
+      
+      let tokens = SignInWithAppleResult(token: idTokenString, nonce: nonce)
+
+      Task {
+          try await AuthManager.shared.signInWithApple(tokens: tokens)
+      }
+  }
+
+  func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+    // Handle error.
+    print("Sign in with Apple errored: \(error)")
+  }
+
 }
 
 struct AuthenticationView: View {
@@ -83,6 +186,21 @@ struct AuthenticationView: View {
                     }
                 }
             }
+            
+            Button(action: {
+                Task {
+                    do {
+                        try await viewModel.signInApple()
+                        showSignInView = false
+                    } catch {
+                        print(error)
+                    }
+                }
+            }, label: {
+                SignInWithAppleButtonViewRepresentable(type: .default, style: .black)
+                    .allowsHitTesting(false)
+            })
+            .frame(height: 55)
             
             Spacer()
         }

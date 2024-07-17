@@ -35,6 +35,7 @@ struct SignInWithAppleButtonViewRepresentable: UIViewRepresentable {
 final class AuthenticationViewModel: NSObject, ObservableObject {
     
     private var currentNonce: String?
+    @Published var didSignInWithApple: Bool = false
     
     func signInGoogle() async throws {
         
@@ -70,12 +71,15 @@ final class AuthenticationViewModel: NSObject, ObservableObject {
     }
     
     func signInApple() async throws {
-//        let nonce = randomNonceString()
-//        
-//        let sha = sha256(nonce)
+        startSignInWithAppleFlow()
     }
     
     func startSignInWithAppleFlow() {
+      
+        guard let topVC = Utilities.shared.topViewController() else {
+            return
+        }
+        
       let nonce = randomNonceString()
       currentNonce = nonce
       let appleIDProvider = ASAuthorizationAppleIDProvider()
@@ -85,7 +89,7 @@ final class AuthenticationViewModel: NSObject, ObservableObject {
 
       let authorizationController = ASAuthorizationController(authorizationRequests: [request])
       authorizationController.delegate = self
-      authorizationController.presentationContextProvider = self
+      authorizationController.presentationContextProvider = topVC
       authorizationController.performRequests()
     }
     
@@ -138,14 +142,19 @@ extension AuthenticationViewModel: ASAuthorizationControllerDelegate {
         let appleIDToken = appleIDCredential.identityToken,
         let idTokenString = String(data: appleIDToken, encoding: .utf8),
         let nonce = currentNonce else {
-            print("Erro")
+            print("Error")
             return
         }
       
       let tokens = SignInWithAppleResult(token: idTokenString, nonce: nonce)
 
       Task {
-          try await AuthManager.shared.signInWithApple(tokens: tokens)
+          do {
+              try await AuthManager.shared.signInWithApple(tokens: tokens)
+              didSignInWithApple = true
+          } catch {
+                
+          }
       }
   }
 
@@ -154,6 +163,13 @@ extension AuthenticationViewModel: ASAuthorizationControllerDelegate {
     print("Sign in with Apple errored: \(error)")
   }
 
+}
+
+extension UIViewController: ASAuthorizationControllerPresentationContextProviding {
+    
+    public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
 }
 
 struct AuthenticationView: View {
@@ -191,7 +207,7 @@ struct AuthenticationView: View {
                 Task {
                     do {
                         try await viewModel.signInApple()
-                        showSignInView = false
+                        // showSignInView = false
                     } catch {
                         print(error)
                     }
@@ -201,6 +217,11 @@ struct AuthenticationView: View {
                     .allowsHitTesting(false)
             })
             .frame(height: 55)
+            .onChange(of: viewModel.didSignInWithApple) { newValue in
+                if newValue == true {
+                    showSignInView = false
+                }
+            }
             
             Spacer()
         }

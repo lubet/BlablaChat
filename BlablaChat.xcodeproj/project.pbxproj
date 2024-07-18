@@ -36,6 +36,7 @@
 		C05A4C392C00E00C006C65A7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A4C382C00E00C006C65A7 /* LoginView.swift */; };
 		C060FF8B2BCE6E060024B365 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C060FF8A2BCE6E060024B365 /* SettingsView.swift */; };
 		C068CD3B2BCD769E0072A797 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */; };
+		C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */; };
 		C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A8DB82BAEC5030007436C /* TimestampToString.swift */; };
 		C07564EC2BADEA8500E8D7D9 /* LastMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07564EB2BADEA8500E8D7D9 /* LastMessagesView.swift */; };
 		C07723242BC6877900AC0990 /* MessagesCellPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */; };
@@ -79,6 +80,7 @@
 		C05A4C382C00E00C006C65A7 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C060FF8A2BCE6E060024B365 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAppleHelper.swift; sourceTree = "<group>"; };
 		C06A8DB82BAEC5030007436C /* TimestampToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampToString.swift; sourceTree = "<group>"; };
 		C07564EB2BADEA8500E8D7D9 /* LastMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesView.swift; sourceTree = "<group>"; };
 		C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCellPhoto.swift; sourceTree = "<group>"; };
@@ -174,10 +176,7 @@
 				C03763852C411F3700A5602B /* Info.plist */,
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
 				C03763882C4128A500A5602B /* Utilities */,
-				C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */,
-				C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */,
-				C047E9C52B45625C00C6D48F /* LoginEmailView.swift */,
-				C05A4C382C00E00C006C65A7 /* LoginView.swift */,
+				C0695AEF2C49151400CEAA17 /* Authentication */,
 				C060FF8A2BCE6E060024B365 /* SettingsView.swift */,
 				C07564EA2BADEA4F00E8D7D9 /* LastMessages */,
 				C0476E7B2BB70FF9000D860C /* Messages */,
@@ -199,6 +198,18 @@
 				C047E9CA2B45625D00C6D48F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C0695AEF2C49151400CEAA17 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */,
+				C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */,
+				C047E9C52B45625C00C6D48F /* LoginEmailView.swift */,
+				C05A4C382C00E00C006C65A7 /* LoginView.swift */,
+				C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		C06B1DDF2B74D4330016E8B6 /* Contacts */ = {
@@ -341,6 +352,7 @@
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,
 				C0476E7F2BB71086000D860C /* MessagesManager.swift in Sources */,
 				C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */,
+				C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */,
 				C0D565F42B7CAF8E00EE0DA0 /* RootView.swift in Sources */,
 				C060FF8B2BCE6E060024B365 /* SettingsView.swift in Sources */,
 				C048F18C2BAF2E2400742CD2 /* LastMessagesManager.swift in Sources */,

@@ -79,5 +79,10 @@ extension AuthManager {
         let authDataResult = try await Auth.auth().signIn(with: credential)
         return AuthUser(user: authDataResult.user)
     }
+    
+    func resetPassword(email: String) async throws {
+        try await Auth.auth().sendPasswordReset(withEmail: email)
+        print("resetPAssword **********************************")
+    }
 }
 

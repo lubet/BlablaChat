@@ -87,6 +87,7 @@ struct LoginEmailView: View {
                 .padding(15)
                 .frame(width: 300, height: 50)
                 .textInputAutocapitalization(.never)
+                .disableAutocorrection(true)
                 .background(Color.gray.opacity(0.2))
                 .cornerRadius(10)
                 .disableAutocorrection(true)

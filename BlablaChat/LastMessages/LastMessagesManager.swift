@@ -61,7 +61,7 @@ final class LastMessagesManager {
         var rooms = [Room]()
         do {
             let querySnapshot = try await roomCollection
-                .whereField("from_message", isEqualTo: user_id)
+                .whereField("user_id", isEqualTo: user_id)
                 .order(by: "date_created")
                 .getDocuments()
             for document in querySnapshot.documents {

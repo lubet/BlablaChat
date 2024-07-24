@@ -40,7 +40,7 @@ struct Room: Identifiable, Codable {
     let dateCreated: Timestamp
     let last_message: String
     let date_message: Timestamp
-    let from_message: String
+    let user_id: String
     let avatar_link: String
     
     var id: String {
@@ -53,7 +53,7 @@ struct Room: Identifiable, Codable {
         case dateCreated = "date_created"
         case last_message
         case date_message
-        case from_message
+        case user_id
         case avatar_link
     }
 }
@@ -255,7 +255,7 @@ final class ContactsManager {
         let dataRoom: [String:Any] = [
             "last_message": msg,
             "date_message": dateMessage,
-            "from_message": from_id,
+            "user_id": from_id,
             "image_link": image_link
         ]
         

@@ -91,10 +91,11 @@ struct AuthenticationView: View {
                 Text("S'authentifié avec l'email")
                     .font(.headline)
                     .foregroundColor(.white)
-                    .frame(height: 55)
+                    .frame(height: 45)
                     .frame(maxWidth: .infinity)
                     .background(Color.blue)
                     .cornerRadius(10)
+                    .padding(.bottom, 10)
             }
             
             GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide, state: .normal))
@@ -108,6 +109,7 @@ struct AuthenticationView: View {
                     }
                 }
             }
+            .padding(.bottom, 10)
             
             Button(action: {
                 Task {
@@ -132,7 +134,7 @@ struct AuthenticationView: View {
             Spacer()
         }
         .padding()
-        .navigationTitle("Sign In")
+        .navigationTitle("S'authentifier:")
     }
 }
 

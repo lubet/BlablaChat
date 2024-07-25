@@ -8,7 +8,6 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-import SDWebImageSwiftUI
 
 struct LastMessagesCellView: View {
     

@@ -34,7 +34,8 @@ class LastMessagesViewModel: ObservableObject {
     @Published private(set) var lastMessages: [LastMessage] = []
     @Published private(set) var filteredMessages: [LastMessage] = []
     @Published var searchText: String = ""
-    @Published var essai: String = ""
+    @Published var monEmail: String = ""
+    @Published var httpAvatar: String = ""
     
     private var members: [Member] = []
     
@@ -98,10 +99,11 @@ class LastMessagesViewModel: ObservableObject {
     func getMoi() async {
         guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = authUser.uid
-        essai = authUser.email ?? ""
+        monEmail = EmailShort(email: authUser.email ?? "")
         
         // Recherche de l'avatar
-        let httpAvatar = try! await UserManager.shared.getAvatar(contact_id: user_id)
+        httpAvatar = try! await UserManager.shared.getAvatar(contact_id: user_id)
+        // print("\(httpAvatar)")
     }
 }
 
@@ -121,7 +123,7 @@ struct LastMessagesView: View {
     
     @State var shouldNavigateToChatLogView = false // call back
     
-   // @State var essai:String = ""
+   // @State var monEmail:String = ""
 
     
     var body: some View {
@@ -142,8 +144,10 @@ struct LastMessagesView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        Text("\(viewModel.essai)")
-                        Image(systemName: "person.fill")
+                        SDWebImageLoader(url: viewModel.httpAvatar, size: 30)
+                    }
+                    ToolbarItem(placement: .topBarLeading) {
+                        Text("\(viewModel.monEmail)")
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink {

@@ -18,16 +18,10 @@ struct LastMessagesCellView: View {
         
         VStack {
             HStack(spacing: 16) {
-                WebImage(url: URL(string: lastMessage.avatar_link))
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 64, height: 64)
-                    .clipped()
-                    .cornerRadius(64)
-                    .overlay(RoundedRectangle(cornerRadius: 44)
-                    .stroke(Color.black, lineWidth: 1))
-                    .background(Color(.bleu))
                 
+                SDWebImageLoader(url: lastMessage.avatar_link, size: 40)
+                
+                // WebImage(url: URL(string: lastMessage.avatar_link))
                 VStack(alignment: .leading) {
                     let emailShort = EmailShort(email: lastMessage.email)
                     Text("\(emailShort)")

@@ -42,6 +42,7 @@
 		C07723242BC6877900AC0990 /* MessagesCellPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */; };
 		C07F38B72C15A4F300B481B5 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07F38B62C15A4F300B481B5 /* CellView.swift */; };
 		C07F56482B7F980200AF7577 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07F56472B7F980200AF7577 /* ContactsManager.swift */; };
+		C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */; };
 		C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B8555B2BBBFD5900B3956A /* TextBarView.swift */; };
 		C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */; };
 		C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C1A9482B62ACC400646851 /* SearchNick.swift */; };
@@ -86,6 +87,7 @@
 		C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCellPhoto.swift; sourceTree = "<group>"; };
 		C07F38B62C15A4F300B481B5 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		C07F56472B7F980200AF7577 /* ContactsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
+		C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDWebImageLoader.swift; sourceTree = "<group>"; };
 		C0B8555B2BBBFD5900B3956A /* TextBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBarView.swift; sourceTree = "<group>"; };
 		C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleSendView.swift; sourceTree = "<group>"; };
 		C0C1A9482B62ACC400646851 /* SearchNick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNick.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				C03763892C4128D000A5602B /* Utilities.swift */,
+				C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 			files = (
 				C07723242BC6877900AC0990 /* MessagesCellPhoto.swift in Sources */,
 				C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */,
+				C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */,
 				C0476E7D2BB71033000D860C /* MessagesView.swift in Sources */,
 				C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */,
 				C07F56482B7F980200AF7577 /* ContactsManager.swift in Sources */,

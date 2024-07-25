@@ -34,6 +34,7 @@ class LastMessagesViewModel: ObservableObject {
     @Published private(set) var lastMessages: [LastMessage] = []
     @Published private(set) var filteredMessages: [LastMessage] = []
     @Published var searchText: String = ""
+    @Published var essai: String = ""
     
     private var members: [Member] = []
     
@@ -87,21 +88,6 @@ class LastMessagesViewModel: ObservableObject {
             for room in self.rooms {
                 lastMessages.append(LastMessage(avatar_link: room.avatar_link ,email: room.room_name, message_texte: room.last_message, message_date: room.date_message))
             }
-            
-//            // Mes room_id dans membre
-//            self.members = try await LastMessagesManager.shared.getMyRoomsId(user_id: user_id)
-//
-//            // Tous les rooms avec le dernier message (fait partie de la structure de Room)
-//            self.rooms = try await LastMessagesManager.shared.getAllRooms()
-//            
-//            // Mise en relation de mes member/rooms avec toutes les rooms pour extraire mes derniers messages (contenu dans room)
-//            for member in members {
-//                for room in rooms {
-//                    if member.room_id == room.room_id {
-//                        lastMessages.append(LastMessage(email: room.room_name, message_texte: room.last_message, message_date: room.date_message))
-//                    }
-//                }
-//            }
         }
     }
     
@@ -109,6 +95,14 @@ class LastMessagesViewModel: ObservableObject {
         lastMessages.remove(atOffsets: index)
     }
 
+    func getMoi() async {
+        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+        let user_id = authUser.uid
+        essai = authUser.email ?? ""
+        
+        // Recherche de l'avatar
+        let httpAvatar = try! await UserManager.shared.getAvatar(contact_id: user_id)
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -127,6 +121,9 @@ struct LastMessagesView: View {
     
     @State var shouldNavigateToChatLogView = false // call back
     
+   // @State var essai:String = ""
+
+    
     var body: some View {
             NavigationStack(path: $path) {
                 List {
@@ -138,8 +135,14 @@ struct LastMessagesView: View {
                         }.buttonStyle(PlainButtonStyle())
                     }
                 }
+                .onAppear {
+                    Task {
+                        await viewModel.getMoi()
+                    }
+                }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
+                        Text("\(viewModel.essai)")
                         Image(systemName: "person.fill")
                     }
                     ToolbarItem(placement: .topBarTrailing) {

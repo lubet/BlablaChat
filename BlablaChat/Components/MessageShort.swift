@@ -14,7 +14,7 @@ func MessageShort(message: String) -> String {
     while (msg.count > 20) {
         if msg.lastIndex(of: " ") == nil {
                 // extraire les 20 premiers caractères
-            msg = String(msg.prefix(20))
+            msg = String(msg.prefix(20)) + "..."
                 print("Les 20 premiers")
                 break
         }

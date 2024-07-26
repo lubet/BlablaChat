@@ -29,7 +29,7 @@ struct LastMessagesCellView: View {
                         //.frame(width: 150,alignment: .leading)
                         .foregroundColor(Color.theme.accent)
                         .font(.system(size: 16, weight: .bold))
-                        .background(Color(.red))
+                        // .background(Color(.red))
                         .padding(.leading, 20)
                     
                     let msg = MessageShort(message: lastMessage.message_texte)
@@ -39,7 +39,7 @@ struct LastMessagesCellView: View {
                         .foregroundStyle(.black)
                         .foregroundColor(Color.theme.accent)
                         .multilineTextAlignment(.leading)
-                        .background(Color(.bleu))
+                        // .background(Color(.bleu))
                         .padding(.leading, 20)
                 }
                 Spacer()
@@ -48,8 +48,8 @@ struct LastMessagesCellView: View {
                 Text("\(myDate)")
                     //.frame(width: 50, alignment: .leading)
                     .foregroundColor(Color.theme.accent)
-                    .font(.system(size: 8, weight: .semibold))
-                    .background(Color.theme.button)
+                    .font(.system(size: 10, weight: .semibold))
+                    //.background(Color.theme.button)
                     //.padding(.trailing,1)
             }
         }

@@ -158,6 +158,8 @@ struct LastMessagesView: View {
                         }
                     }
                 }
+                .listStyle(PlainListStyle())
+                
                 NewMessageButton // extension -> MesContactsView() liste des users ancien ou nouveau
                 
                     .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")

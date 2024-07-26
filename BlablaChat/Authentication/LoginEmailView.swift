@@ -59,59 +59,62 @@ struct LoginEmailView: View {
     @State var image: UIImage?
     
     var body: some View {
-        VStack {
-            Button { // Avatar
-                showImagePicker.toggle()
-            } label: {
-                VStack {
-                    if let image = image {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 100, height: 100)
-                            .clipShape(Circle())
-                    } else {
-                        Image(systemName: "person.fill")
-                            .font(.system(size: 70))
-                            .padding()
-                            .foregroundColor(Color(.label))
+        ZStack {
+            Color.theme.background
+                .ignoresSafeArea()
+            VStack {
+                Button { // Avatar
+                    showImagePicker.toggle()
+                } label: {
+                    VStack {
+                        if let image = image {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 100, height: 100)
+                                .clipShape(Circle())
+                        } else {
+                            Image(systemName: "person.fill")
+                                .font(.system(size: 70))
+                                .padding()
+                                .foregroundColor(Color(.label))
+                        }
                     }
+                    .overlay(RoundedRectangle(cornerRadius: 64)
+                        .stroke(Color.black,lineWidth: 2))
+                    
                 }
-                .overlay(RoundedRectangle(cornerRadius: 64)
-                    .stroke(Color.black,lineWidth: 2))
+                .padding(40)
                 
-            }
-            .padding(40)
-            
-            TextField("Email", text: $viewModel.email)
-                .padding(15)
-                .frame(width: 300, height: 50)
-                .textInputAutocapitalization(.never)
-                .disableAutocorrection(true)
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(10)
-                .disableAutocorrection(true)
-
-            TextField("Mot de passe", text: $viewModel.password)
-                .padding(15)
-                .frame(width: 300, height: 50)
-                .textInputAutocapitalization(.never)
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(10)
-                .disableAutocorrection(true)
-            
-            Button { // SignIn - le user existe
-                Task {
-                    do {
-                        // Ancien compte
-                        try await viewModel.signIn()
-                        showSignInView = false
-                        return
-                    } catch {
-                        print("Erreur signIn:", error)
+                TextField("Email", text: $viewModel.email)
+                    .padding(15)
+                    .frame(width: 300, height: 50)
+                    .textInputAutocapitalization(.never)
+                    .disableAutocorrection(true)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(10)
+                    .disableAutocorrection(true)
+                
+                TextField("Mot de passe", text: $viewModel.password)
+                    .padding(15)
+                    .frame(width: 300, height: 50)
+                    .textInputAutocapitalization(.never)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(10)
+                    .disableAutocorrection(true)
+                
+                Button { // SignIn - le user existe
+                    Task {
+                        do {
+                            // Ancien compte
+                            try await viewModel.signIn()
+                            showSignInView = false
+                            return
+                        } catch {
+                            print("Erreur signIn:", error)
+                        }
                     }
-                }
-            } label: {
+                } label: {
                     Text("Sign In")
                         .font(.headline)
                         .foregroundColor(.white)
@@ -119,41 +122,39 @@ struct LoginEmailView: View {
                         .frame(maxWidth: .infinity)
                         .background(Color.blue)
                         .cornerRadius(10)
-            } // Fin bouton signIn
-            
-            Spacer()
-            
-            Button { // SignUp - Nouveau user
-                Task {
-                    do {
-                        // Nouveau compte
-                        let mimage: UIImage = image ?? UIImage.init(systemName: "person.fill")!
-                        try await viewModel.signUp(image: mimage) // Création ou non (si il existe déjà)
-                        showSignInView = false
-                        return
-                    } catch {
-                        print(error)
+                } // Fin bouton signIn
+                
+                Spacer()
+                
+                Button { // SignUp - Nouveau user
+                    Task {
+                        do {
+                            // Nouveau compte
+                            let mimage: UIImage = image ?? UIImage.init(systemName: "person.fill")!
+                            try await viewModel.signUp(image: mimage) // Création ou non (si il existe déjà)
+                            showSignInView = false
+                            return
+                        } catch {
+                            print(error)
+                        }
                     }
+                } label: {
+                    Text("Sign Up")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(height: 55)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .cornerRadius(10)
                 }
-            } label: {
-                Text("Sign Up")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(height: 55)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                    .cornerRadius(10)
+            }
+            .padding()
+            // Image
+            .fullScreenCover(isPresented: $showImagePicker, onDismiss: nil) {
+                ImagePicker(image: $image) // Utilities/ImagePicker
             }
         }
-        //}
-        .background(Color(.init("GrisClair")))
-        .padding()
-        // Image
-        .fullScreenCover(isPresented: $showImagePicker, onDismiss: nil) {
-            ImagePicker(image: $image) // Utilities/ImagePicker
-        }
     }
-    
 }
 
 struct ContentView_Previews: PreviewProvider {

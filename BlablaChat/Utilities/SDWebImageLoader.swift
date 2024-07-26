@@ -22,6 +22,5 @@ struct SDWebImageLoader: View {
             .cornerRadius(size)
             .overlay(RoundedRectangle(cornerRadius: 44)
             .stroke(Color.black, lineWidth: 0.5))
-            // .background(Color(.red))
     }
 }

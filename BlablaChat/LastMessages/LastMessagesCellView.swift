@@ -20,6 +20,7 @@ struct LastMessagesCellView: View {
                 .ignoresSafeArea()
             HStack(spacing: 0) {
                 SDWebImageLoader(url: lastMessage.avatar_link, size: 40)
+                    //.padding(.leading,1)
                 
                 VStack(alignment: .leading) {
                     
@@ -48,43 +49,10 @@ struct LastMessagesCellView: View {
                     //.frame(width: 50, alignment: .leading)
                     .foregroundColor(Color.theme.accent)
                     .font(.system(size: 8, weight: .semibold))
-                    .background(Color(.gray))
+                    .background(Color.theme.button)
+                    //.padding(.trailing,1)
             }
         }
-        
-//        VStack {
-//            HStack(spacing: 16) {
-//                
-//                SDWebImageLoader(url: lastMessage.avatar_link, size: 40)
-//                
-//                // WebImage(url: URL(string: lastMessage.avatar_link))
-//                VStack(alignment: .leading) {
-//                    let emailShort = EmailShort(email: lastMessage.email)
-//                    Text("\(emailShort)")
-//                        .frame(width: 150,alignment: .leading)
-//                        .font(.system(size: 16, weight: .bold))
-//                        .background(Color(.red))
-//                    let msg = MessageShort(message: lastMessage.message_texte)
-//                    Text("\(msg)")
-//                        .frame(width: 150, alignment: .leading)
-//                        .font(.system(size: 14))
-//                        .foregroundStyle(.black)
-//                        .multilineTextAlignment(.leading)
-//                        .background(Color(.bleu))
-//                }
-//                //Spacer()
-//                // let myDate = timeStampToString(dateMessage: lastMessage.message_date)
-//                VStack(alignment: .leading) {
-//                    let myDate = dateManager(dateMessage: lastMessage.message_date)
-//                    Text("\(myDate)")
-//                        .frame(width: 50, alignment: .leading)
-//                        .font(.system(size: 8, weight: .semibold))
-//                        .background(Color(.gray))
-//                }
-//            }
-//            .padding(.vertical,8)
-//        }
-//        .padding(.horizontal)
     }
 }
 

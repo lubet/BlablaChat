@@ -128,6 +128,7 @@ struct LastMessagesView: View {
     
     var body: some View {
             NavigationStack(path: $path) {
+                
                 List {
                     ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
                         NavigationLink {

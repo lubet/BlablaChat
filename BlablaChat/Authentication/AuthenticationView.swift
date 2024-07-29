@@ -117,7 +117,7 @@ struct AuthenticationView: View {
                 }
                 .padding(.bottom, 10)
                 
-                // SignIn with Apple TODO Problème constraint
+                // SignIn with Apple
                 Button(action: {
                     Task {
                         do {

@@ -88,6 +88,8 @@ struct AuthenticationView: View {
             Color.theme.background
                 .ignoresSafeArea()
             VStack {
+                
+                // Sign In/Up with email/password
                 NavigationLink {
                     LoginEmailView(showSignInView: $showSignInView)
                 } label: {
@@ -101,6 +103,7 @@ struct AuthenticationView: View {
                         .padding(.bottom, 10)
                 }
                 
+                // SignIn with Goggle
                 GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide, state: .normal))
                 {
                     Task {
@@ -114,6 +117,7 @@ struct AuthenticationView: View {
                 }
                 .padding(.bottom, 10)
                 
+                // SignIn with Apple TODO Problème constraint
                 Button(action: {
                     Task {
                         do {

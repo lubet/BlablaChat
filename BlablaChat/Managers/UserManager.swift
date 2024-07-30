@@ -81,18 +81,10 @@ final class UserManager {
         return userCollection
     }
     
-    
-    //
     func createDbUser(user: DBUser) async throws {
         try userDocument(userId: user.userId).setData(from: user, merge: false)
     }
     
-    //
-    //    func getUser(userId: String) async throws -> DBUser {
-    //        return try await userDocument(userId: userId).getDocument(as: DBUser.self)
-    //    }
-    
-    //
     func updateImagePath(userId: String, path: String) async throws {
         let data: [String:Any] = [
             DBUser.CodingKeys.avatarLink.rawValue : path,

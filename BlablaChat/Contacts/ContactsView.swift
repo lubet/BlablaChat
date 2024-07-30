@@ -72,13 +72,14 @@ final class ContactsViewModel: ObservableObject {
     // Constituer la liste des contacts du téléphone) + les users de Firestore
     func getUsersAndContacts() async {
         
-        self.users = try! await UserManager.shared.getAllUsers()
+        self.users = try! await UserManager.shared.getAllUsers() // all users dans "users"
         for word in users {
             let email = word.email ?? ""
             listAllUsers.append(ListeAllUsers(nom: email, email: "")) // dans "users" le nom contient l'email
         }
 
-        self.mesContacts = await ContactManager.shared.mockContacts()
+        // Non authentifiés
+        self.mesContacts = await ContactManager.shared.mockContacts() // contact du repertoire telephonique, isauth = false
         for oneContact in mesContacts {
             // N'ajouter le contact à la liste d'affichage
             if (listAllUsers.filter{$0.nom == oneContact.email}.count == 0) {
@@ -107,7 +108,7 @@ struct ContactsView: View {
             List {
                 ForEach(viewModel.isSearching ? viewModel.filteredContacts : viewModel.listAllUsers, id: \.self) { oneItem in
                     Button {
-                        presentationMode.wrappedValue.dismiss() // TODO si le contact n'est pas dans users le creer
+                        presentationMode.wrappedValue.dismiss()
                         didSelectedNewUser(oneItem.nom)
                     } label: {
                         ContactCellView(oneItem: oneItem)

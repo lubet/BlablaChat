@@ -19,11 +19,12 @@ final class LoginEmailViewModel: ObservableObject {
             return
         }
         
+        // Création de l'authetification de Firebase
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
         
-        let user = DBUser(auth: authUser) // Instanciation userId email
-        
-        try await UserManager.shared.createDbUser(user: user) // Save in Firestore sans l'image
+        // Création d'un profil de base dans "users"
+        let user = DBUser(auth: authUser) // userId, email
+        try await UserManager.shared.createDbUser(user: user) // sans l'image
         
         guard let image else { return }
         

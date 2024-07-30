@@ -131,6 +131,8 @@ final class MessagesViewModel: ObservableObject {
     // Création du message texte
     // 1) le contact n'existe pas
     // 2) le contact existe
+    // on peut avoir des contacts authentifiés et des non authentifiés
+    
     func saveMessage(email: String, message_text: String) async throws {
         
         // Moi
@@ -143,7 +145,7 @@ final class MessagesViewModel: ObservableObject {
         // Pas présent dans "users" - on créet tout: users, rooms, members, messages) avec un avatar
         if contact_id == "" {
             
-            // créer "users"
+            // créer un user dans "users" (authentifié ou non)
             contact_id = try await ContactsManager.shared.createUser(email: email)
             
             // créer l'avatar par défaut
@@ -227,6 +229,7 @@ struct MessagesView: View {
     
     // from LastMessagesView:
     @Binding var path:[LastMessage] // Uniquement pour le "Back to root" automatique
+    
     let email: String // <- LastMessagesView <- ContactsView
     
     var body: some View {
@@ -276,6 +279,7 @@ struct MessagesView: View {
 
 // Barre de saisie du message ---------------------------------------------------
 extension MessagesView {
+    
     private var MessageBar: some View {
         HStack {
             // Selection de la photo

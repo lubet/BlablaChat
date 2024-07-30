@@ -147,7 +147,6 @@ final class ContactsManager {
         } catch {
             print("searchContact - Error getting documents: \(error)")
         }
-        // print("searchContact non trouvé")
         return ""
     }
     

@@ -14,6 +14,7 @@ struct Contact: Identifiable, Hashable {
     let id = UUID().uuidString
     let nom: String
     let email: String
+    let isauth: Bool = false
 
 //    func hash(into hasher: inout Hasher) {
 //        hasher.combine(email)

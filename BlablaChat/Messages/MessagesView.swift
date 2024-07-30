@@ -230,7 +230,7 @@ struct MessagesView: View {
     // from LastMessagesView:
     @Binding var path:[LastMessage] // Uniquement pour le "Back to root" automatique
     
-    let email: String // <- LastMessagesView <- ContactsView
+    let email: String // ContactsView -> MessagesView -> LastMessagesView
     
     var body: some View {
         

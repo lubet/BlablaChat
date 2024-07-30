@@ -78,7 +78,7 @@ final class ContactsViewModel: ObservableObject {
             listAllUsers.append(ListeAllUsers(nom: email, email: "")) // dans "users" le nom contient l'email
         }
 
-        // Non authentifiés
+        // mock contacts - non authentifiés
         self.mesContacts = await ContactManager.shared.mockContacts() // contact du repertoire telephonique, isauth = false
         for oneContact in mesContacts {
             // N'ajouter le contact à la liste d'affichage

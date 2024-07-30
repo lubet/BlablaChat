@@ -198,7 +198,7 @@ extension LastMessagesView {
                 .shadow(radius: 15)
         }
         
-        // FullScreenCover
+        // Callback de ContactsView
         .fullScreenCover(isPresented: $showNewMessageScreen) {
             ContactsView(didSelectedNewUser: { emailSelected in
                 print(emailSelected) // email callback de l'utilisateur que j'ai selectionné dans ContactsView

@@ -7,12 +7,31 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct UsersCellView: View {
+    
+    let email: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            VStack(alignment: .leading, spacing: 10) {
+                Text(EmailShort(email: email))
+                    .font(.headline)
+                    .foregroundColor(.black)
+                Text(email)
+                    .font(.headline)
+                    .foregroundColor(.black)
+            }
+            .frame(width: 200, alignment: .center)
+            .padding()
+            // .background(Color.black.opacity(0.05))
+        }
+        .padding(.horizontal,10)
     }
 }
 
 #Preview {
-    UsersCellView()
+    UsersCellView(email: "maurice@test.com")
 }
+

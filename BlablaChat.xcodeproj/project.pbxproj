@@ -15,6 +15,8 @@
 		C02A8C382BB1D62E005ECF0F /* LastMessagesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02A8C372BB1D62E005ECF0F /* LastMessagesCellView.swift */; };
 		C03763872C41210200A5602B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C03763862C41210200A5602B /* GoogleService-Info.plist */; };
 		C037638A2C4128D000A5602B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03763892C4128D000A5602B /* Utilities.swift */; };
+		C03C39962C5A2BC900A23D33 /* UsersCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03C39952C5A2BC900A23D33 /* UsersCellView.swift */; };
+		C03C39982C5A2CD500A23D33 /* toto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03C39972C5A2CD500A23D33 /* toto.swift */; };
 		C043F9A52C170D08002B3C59 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C043F9A42C170D08002B3C59 /* DateManager.swift */; };
 		C0476E7D2BB71033000D860C /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0476E7C2BB71033000D860C /* MessagesView.swift */; };
 		C0476E7F2BB71086000D860C /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0476E7E2BB71086000D860C /* MessagesManager.swift */; };
@@ -42,6 +44,7 @@
 		C07F38B72C15A4F300B481B5 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07F38B62C15A4F300B481B5 /* CellView.swift */; };
 		C07F56482B7F980200AF7577 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07F56472B7F980200AF7577 /* ContactsManager.swift */; };
 		C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */; };
+		C0AF17C72C5A1BD700B27376 /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AF17C62C5A1BD700B27376 /* UsersView.swift */; };
 		C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B8555B2BBBFD5900B3956A /* TextBarView.swift */; };
 		C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */; };
 		C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C1A9482B62ACC400646851 /* SearchNick.swift */; };
@@ -62,6 +65,8 @@
 		C03763852C411F3700A5602B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C03763862C41210200A5602B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C03763892C4128D000A5602B /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		C03C39952C5A2BC900A23D33 /* UsersCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCellView.swift; sourceTree = "<group>"; };
+		C03C39972C5A2CD500A23D33 /* toto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toto.swift; sourceTree = "<group>"; };
 		C043F9A42C170D08002B3C59 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		C0476E7C2BB71033000D860C /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		C0476E7E2BB71086000D860C /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
@@ -86,6 +91,7 @@
 		C07F38B62C15A4F300B481B5 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		C07F56472B7F980200AF7577 /* ContactsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
 		C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDWebImageLoader.swift; sourceTree = "<group>"; };
+		C0AF17C62C5A1BD700B27376 /* UsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersView.swift; sourceTree = "<group>"; };
 		C0B8555B2BBBFD5900B3956A /* TextBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBarView.swift; sourceTree = "<group>"; };
 		C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleSendView.swift; sourceTree = "<group>"; };
 		C0C1A9482B62ACC400646851 /* SearchNick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNick.swift; sourceTree = "<group>"; };
@@ -174,6 +180,7 @@
 		C047E9C22B45625C00C6D48F /* BlablaChat */ = {
 			isa = PBXGroup;
 			children = (
+				C0AF17C52C5A1BB500B27376 /* Users */,
 				C03763852C411F3700A5602B /* Info.plist */,
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
 				C03763882C4128A500A5602B /* Utilities */,
@@ -239,6 +246,16 @@
 				C02A8C372BB1D62E005ECF0F /* LastMessagesCellView.swift */,
 			);
 			path = LastMessages;
+			sourceTree = "<group>";
+		};
+		C0AF17C52C5A1BB500B27376 /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				C0AF17C62C5A1BD700B27376 /* UsersView.swift */,
+				C03C39952C5A2BC900A23D33 /* UsersCellView.swift */,
+				C03C39972C5A2CD500A23D33 /* toto.swift */,
+			);
+			path = Users;
 			sourceTree = "<group>";
 		};
 		C0B9DC842B5EB05B006C2B46 /* Components */ = {
@@ -342,8 +359,11 @@
 				C07723242BC6877900AC0990 /* MessagesCellPhoto.swift in Sources */,
 				C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */,
 				C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */,
+				C03C39962C5A2BC900A23D33 /* UsersCellView.swift in Sources */,
 				C0476E7D2BB71033000D860C /* MessagesView.swift in Sources */,
 				C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */,
+				C0AF17C72C5A1BD700B27376 /* UsersView.swift in Sources */,
+				C03C39982C5A2CD500A23D33 /* toto.swift in Sources */,
 				C07F56482B7F980200AF7577 /* ContactsManager.swift in Sources */,
 				C0EE66AC2B62654A002F13EB /* MessageBarView.swift in Sources */,
 				C037638A2C4128D000A5602B /* Utilities.swift in Sources */,

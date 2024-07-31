@@ -25,7 +25,6 @@ struct UsersCellView: View {
             }
             .frame(width: 200, alignment: .center)
             .padding()
-            // .background(Color.black.opacity(0.05))
         }
         .padding(.horizontal,10)
     }

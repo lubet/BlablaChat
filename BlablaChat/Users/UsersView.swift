@@ -13,16 +13,14 @@ import Combine
 @MainActor
 final class UsersViewModel: ObservableObject {
     
-    private(set) var users: [DBUser] = []
+    @Published private(set) var users: [DBUser] = []
     
     func loadUsers() async {
         self.users = try! await UserManager.shared.getAllUsers()
     }
-    
-    
 }
 
-
+// ---------------------
 struct UsersView: View {
     
     @StateObject var viewModel = UsersViewModel()
@@ -42,6 +40,7 @@ struct UsersView: View {
                     }
                 }
             }
+            .navigationTitle("UsersView")
             .task {
                 await viewModel.loadUsers()
             }

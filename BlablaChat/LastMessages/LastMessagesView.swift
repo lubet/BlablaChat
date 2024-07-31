@@ -200,7 +200,7 @@ extension LastMessagesView {
         
         // Callback de ContactsView
         .fullScreenCover(isPresented: $showNewMessageScreen) {
-            ContactsView(didSelectedNewUser: { emailSelected in
+            UsersView(didSelectedNewUser: { emailSelected in
                 print(emailSelected) // email callback de l'utilisateur que j'ai selectionné dans ContactsView
                 self.emailPassed = emailSelected
                 self.shouldNavigateToChatLogView.toggle()

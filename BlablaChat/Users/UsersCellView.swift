@@ -7,22 +7,22 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct UsersCellView: View {
     
-    let email: String
+    let oneUser: DBUser
     
     var body: some View {
-        HStack {
+        HStack(alignment: .center) {
+            SDWebImageLoader(url: oneUser.avatarLink!, size: 40)
             VStack(alignment: .leading, spacing: 5) {
-                Text(EmailShort(email: email))
+                Text(EmailShort(email: oneUser.email!))
                     .font(.headline)
                     .foregroundColor(.black)
-                Text(email)
+                Text(oneUser.email!)
                     .font(.headline)
                     .foregroundColor(.black)
             }
+            .padding(.leading,20)
 //            .frame(width: 200, alignment: .center)
 //            .padding()
         }
@@ -30,7 +30,7 @@ struct UsersCellView: View {
     }
 }
 
-#Preview {
-    UsersCellView(email: "maurice@test.com")
-}
+//#Preview {
+//    UsersCellView(email: "maurice@test.com")
+//}
 

@@ -94,7 +94,6 @@ struct LoginEmailView: View {
                     .disableAutocorrection(true)
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(10)
-                    .disableAutocorrection(true)
                 
                 TextField("Mot de passe", text: $viewModel.password)
                     .padding(15)

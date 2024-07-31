@@ -49,11 +49,14 @@ struct UsersView: View {
                                 presentationMode.wrappedValue.dismiss()
                                 didSelectedNewUser(oneUser.email!)
                             } label: {
-                                UsersCellView(email: oneUser.email!)
+                                UsersCellView(oneUser: oneUser)
                             }
                         }
                     }
                     .searchable(text: $searchTerm, prompt: "Recherche")
+                    .autocorrectionDisabled(true)
+                    .textInputAutocapitalization(.never)
+                    .disableAutocorrection(true)
                     .task {
                         await viewModel.loadUsers()
                     }

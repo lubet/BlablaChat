@@ -15,7 +15,7 @@ struct UsersCellView: View {
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 5) {
                 Text(EmailShort(email: email))
                     .font(.headline)
                     .foregroundColor(.black)
@@ -23,10 +23,10 @@ struct UsersCellView: View {
                     .font(.headline)
                     .foregroundColor(.black)
             }
-            .frame(width: 200, alignment: .center)
-            .padding()
+//            .frame(width: 200, alignment: .center)
+//            .padding()
         }
-        .padding(.horizontal,10)
+//        .padding(.horizontal,10)
     }
 }
 

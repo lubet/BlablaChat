@@ -27,23 +27,33 @@ struct UsersView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    let didSelectedNewUser: (String) -> ()
+    let didSelectedNewUser: (String) -> () // call back
+    
+    @State private var searchTerm: String = ""
     
     var body: some View {
-            List {
-                ForEach(viewModel.users) { oneUser in
-                    Button {
-                        presentationMode.wrappedValue.dismiss()
-                        didSelectedNewUser(oneUser.email!)
-                    } label: {
-                        UsersCellView(email: oneUser.email!)
+        NavigationStack {
+            ZStack {
+                Color.theme.background
+                    .ignoresSafeArea()
+                List {
+                    ForEach(viewModel.users) { oneUser in
+                        Button {
+                            presentationMode.wrappedValue.dismiss()
+                            didSelectedNewUser(oneUser.email!)
+                        } label: {
+                            UsersCellView(email: oneUser.email!)
+                        }
                     }
                 }
+                .task {
+                    await viewModel.loadUsers()
+                }
+                .listStyle(PlainListStyle())
             }
-            .navigationTitle("UsersView")
-            .task {
-                await viewModel.loadUsers()
-            }
+            .navigationTitle("Utilisateurs")
+            .padding(.top,10)
+        }
     }
 }
 

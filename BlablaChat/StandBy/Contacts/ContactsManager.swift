@@ -12,89 +12,11 @@ import FirebaseFirestoreSwift
 
 private let dbFS = Firestore.firestore()
 
-struct Member: Identifiable, Codable {
-    let id: String
-    let from_id: String
-    let to_id: String
-    let room_id: String
-    let date_created: Timestamp
-    
-    init(
-        id: String,
-        from_id: String,
-        to_id: String,
-        room_id: String,
-        date_created:Timestamp
-    ) {
-        self.id = id
-        self.from_id = from_id
-        self.to_id = to_id
-        self.room_id = room_id
-        self.date_created = Timestamp()
-    }
-}
 
-struct Room: Identifiable, Codable {
-    let room_id: String
-    let room_name: String
-    let dateCreated: Timestamp
-    let last_message: String
-    let date_message: Timestamp
-    let user_id: String
-    let avatar_link: String
-    
-    var id: String {
-        room_id
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case room_id
-        case room_name
-        case dateCreated = "date_created"
-        case last_message
-        case date_message
-        case user_id
-        case avatar_link
-    }
-}
 
-struct Message: Identifiable, Codable {
-    let id:String
-    let from_id:String
-    let to_id: String
-    let message_text:String
-    let date_send:Timestamp
-    let room_id:String
-    let image_link:String?
-    
-    enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case from_id = "from_id"
-        case to_id = "to_id"
-        case message_text = "message_text"
-        case date_send = "date_send"
-        case room_id = "room_id"
-        case image_link = "image_link"
-    }
-    
-    init(
-        id: String,
-        from_id: String,
-        to_id: String,
-        message_text: String,
-        date_send: Timestamp,
-        room_id: String,
-        image_link: String?
-    ) {
-        self.id = id
-        self.from_id = from_id
-        self.to_id = to_id
-        self.message_text = message_text
-        self.date_send = date_send
-        self .room_id = room_id
-        self.image_link = image_link
-    }
-}
+
+
+
 
 final class ContactsManager {
     

@@ -51,7 +51,7 @@ struct UsersView: View {
                         }
                     }
                 }
-                .searchable(text: $searchTerm, prompt: "Recherche")
+                .searchable(text: $searchTerm, prompt: "Recherche d'un contact")
                 .autocorrectionDisabled(true)
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)

@@ -100,7 +100,7 @@ class LastMessagesViewModel: ObservableObject {
         let user_id = authUser.uid
         monEmail = EmailShort(email: authUser.email ?? "")
         
-        // Recherche de l'avatar
+        // Recherche de l'avatar dans users
         httpAvatar = try! await UserManager.shared.getAvatar(contact_id: user_id)
         // print("\(httpAvatar)")
     }
@@ -163,12 +163,12 @@ struct LastMessagesView: View {
                 
                 NewMessageButton // -> UsersView
                 
-                    .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
+                    .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un message")
                 
                     .task {
                         await viewModel.getLastMessages() // Les derniers messages
                     }
-                    .navigationTitle("Mes derniers messages")
+                    .navigationTitle("Derniers messages")
                 
                 // CallBack MessagesView <- email de ContactsView
                     .navigationDestination(isPresented: $shouldNavigateToChatLogView) {

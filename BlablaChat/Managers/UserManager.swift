@@ -127,9 +127,9 @@ final class UserManager {
                 }
             }
         } catch {
-            print("searchContact - Error getting documents: \(error)")
+            print("getAvatar - Error getting documents: \(error)")
         }
-        print("searchAvatar: non trouvé pour contact-id: \(contact_id)")
+        print("getAvatar: non trouvé pour contact-id: \(contact_id)")
 
         return ""
     }

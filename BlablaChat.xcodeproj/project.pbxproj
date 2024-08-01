@@ -186,11 +186,11 @@
 		C047E9C22B45625C00C6D48F /* BlablaChat */ = {
 			isa = PBXGroup;
 			children = (
-				C0D84B6F2C5B889400AE9B21 /* Models */,
 				C03763852C411F3700A5602B /* Info.plist */,
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
 				C03763882C4128A500A5602B /* Utilities */,
 				C070D6402C53809E006170E3 /* Extensions */,
+				C0D84B6F2C5B889400AE9B21 /* Models */,
 				C0695AEF2C49151400CEAA17 /* Authentication */,
 				C060FF8A2BCE6E060024B365 /* SettingsView.swift */,
 				C07564EA2BADEA4F00E8D7D9 /* LastMessages */,

@@ -127,7 +127,6 @@ struct LastMessagesView: View {
     
     var body: some View {
             NavigationStack(path: $path) {
-                
                 List {
                     ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
                         NavigationLink {
@@ -137,6 +136,7 @@ struct LastMessagesView: View {
                         }.buttonStyle(PlainButtonStyle())
                     }
                 }
+                .padding(.top,20)
                 .onAppear {
                     Task {
                         await viewModel.getMoi() // Pour l'entête
@@ -168,7 +168,7 @@ struct LastMessagesView: View {
                     .task {
                         await viewModel.getLastMessages() // Les derniers messages
                     }
-                    .navigationTitle("LastMessagesView")
+                    .navigationTitle("Mes derniers messages")
                 
                 // CallBack MessagesView <- email de ContactsView
                     .navigationDestination(isPresented: $shouldNavigateToChatLogView) {

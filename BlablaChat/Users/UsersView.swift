@@ -38,33 +38,30 @@ struct UsersView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color.theme.background
-                    .ignoresSafeArea()
-                VStack {
-                    List {
-                        ForEach(filteredUsers) { oneUser in
-                            Button {
-                                presentationMode.wrappedValue.dismiss()
-                                didSelectedNewUser(oneUser.email!)
-                            } label: {
-                                UsersCellView(oneUser: oneUser)
-                            }
+        ZStack {
+            Color.theme.background
+            NavigationStack {
+                List {
+                    ForEach(filteredUsers) { oneUser in
+                        Button {
+                            presentationMode.wrappedValue.dismiss()
+                            didSelectedNewUser(oneUser.email!)
+                        } label: {
+                            UsersCellView(oneUser: oneUser)
                         }
                     }
-                    .searchable(text: $searchTerm, prompt: "Recherche")
-                    .autocorrectionDisabled(true)
-                    .textInputAutocapitalization(.never)
-                    .disableAutocorrection(true)
-                    .task {
-                        await viewModel.loadUsers()
-                    }
-                    .listStyle(PlainListStyle())
                 }
+                .searchable(text: $searchTerm, prompt: "Recherche")
+                .autocorrectionDisabled(true)
+                .textInputAutocapitalization(.never)
+                .disableAutocorrection(true)
+                .task {
+                    await viewModel.loadUsers()
+                }
+                .listStyle(PlainListStyle())
+                .navigationTitle("Participants")
+                .padding(.top,10)
             }
-            .navigationTitle("Participants")
-            .padding(.top,10)
         }
     }
 }

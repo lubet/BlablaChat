@@ -4,7 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 29/03/2024.
 //
-// Messages Bubbles des conversations en cours (lastMessages)
+// Ajout d'un nouveau message
 //
 
 import SwiftUI
@@ -228,9 +228,9 @@ struct MessagesView: View {
     @State var showAlert: Bool = false
     
     // from LastMessagesView:
-    @Binding var path:[LastMessage] // Uniquement pour le "Back to root" automatique
+    @Binding var path:[LastMessage] // Uniquement pour revenir au NavigationStack de LastMessagesView
     
-    let email: String // ContactsView -> MessagesView -> LastMessagesView
+    let email: String // vient de LastMessagesView
     
     var body: some View {
         

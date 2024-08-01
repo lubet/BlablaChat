@@ -95,13 +95,18 @@ final class UserManager {
     
     //
     func getAllUsers() async throws -> [DBUser] {
+        let authUser = try AuthManager.shared.getAuthenticatedUser()
+        let user_id = authUser.uid
+        
         let snapshot = try await Firestore.firestore().collection("users").getDocuments()
         
         var dbUsers = [DBUser]()
         
         for document in snapshot.documents {
             let user = try document.data(as: DBUser.self)
-            dbUsers.append(user)
+            if user.userId != user_id {
+                dbUsers.append(user)
+            }
         }
         return dbUsers
     }

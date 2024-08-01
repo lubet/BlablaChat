@@ -101,7 +101,7 @@ class LastMessagesViewModel: ObservableObject {
         monEmail = EmailShort(email: authUser.email ?? "")
         
         // Recherche de l'avatar dans users
-        httpAvatar = try! await UserManager.shared.getAvatar(contact_id: user_id)
+        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
         // print("\(httpAvatar)")
     }
 }

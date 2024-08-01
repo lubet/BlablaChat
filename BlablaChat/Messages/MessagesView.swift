@@ -61,7 +61,7 @@ final class MessagesViewModel: ObservableObject {
                         let mimage: UIImage = UIImage.init(systemName: "person.fill")!
                         let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: contact_id)
                         let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-                        try await UserManager.shared.updateImagePath(userId: contact_id, path: lurl.absoluteString) // maj Firestore
+                        try await UsersManager.shared.updateImagePath(userId: contact_id, path: lurl.absoluteString) // maj Firestore
 
                         // créer room
                         let room_id = try await ContactsManager.shared.createRoom(name: email, avatar_link: lurl.absoluteString)
@@ -155,7 +155,7 @@ final class MessagesViewModel: ObservableObject {
                         
             let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
             
-            try await UserManager.shared.updateImagePath(userId: contact_id, path: lurl.absoluteString) // maj Firestore
+            try await UsersManager.shared.updateImagePath(userId: contact_id, path: lurl.absoluteString) // maj Firestore
             
             // créer "room"
             let room_id = try await ContactsManager.shared.createRoom(name: email, avatar_link: lurl.absoluteString)
@@ -181,7 +181,7 @@ final class MessagesViewModel: ObservableObject {
                 if (memberDuo == "") {
                     
                     // Prendre l'avatar du SignUp dans "users"
-                    let avatar = try await UserManager.shared.getAvatar(contact_id: contact_id)
+                    let avatar = try await UsersManager.shared.getAvatar(contact_id: contact_id)
                                         
                     // Créer room
                     room_id = try await ContactsManager.shared.createRoom(name: email, avatar_link: avatar)

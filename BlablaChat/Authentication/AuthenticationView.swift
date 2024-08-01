@@ -52,7 +52,7 @@ final class AuthenticationViewModel: ObservableObject {
              let contact_id  = try await ContactsManager.shared.searchContact(email: email)
              if contact_id == "" {
                 let user = DBUser(auth: authUser) // Instanciation userId email
-                try await UserManager.shared.createDbUser(user: user) // Save in Firestore sans l'image
+                try await UsersManager.shared.createDbUser(user: user) // Save in Firestore sans l'image
              }
         } catch {
             print("Erreur Sign in with Google...")

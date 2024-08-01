@@ -24,7 +24,7 @@ final class LoginEmailViewModel: ObservableObject {
         
         // Création d'un profil de base dans "users"
         let user = DBUser(auth: authUser) // userId, email
-        try await UserManager.shared.createDbUser(user: user) // sans l'image
+        try await UsersManager.shared.createDbUser(user: user) // sans l'image
         
         guard let image else { return }
         
@@ -36,7 +36,7 @@ final class LoginEmailViewModel: ObservableObject {
         let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
         // print("image url: \(lurl)")
 
-        try await UserManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
+        try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
         
      }
     

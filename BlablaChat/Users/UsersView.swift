@@ -17,7 +17,7 @@ final class UsersViewModel: ObservableObject {
     @Published private(set) var usersfiltered : [DBUser] = []
     
     func loadUsers() async {
-        self.users = try! await UserManager.shared.getAllUsers()
+        self.users = try! await UsersManager.shared.getAllUsers()
     }
 }
 

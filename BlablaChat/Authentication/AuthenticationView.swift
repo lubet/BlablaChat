@@ -49,7 +49,7 @@ final class AuthenticationViewModel: ObservableObject {
                 print("L'email du user Google est égal à nil")
                 return
             }
-             let contact_id  = try await ContactsManager.shared.searchContact(email: email)
+             let contact_id  = try await UsersManager.shared.searchContact(email: email)
              if contact_id == "" {
                 let user = DBUser(auth: authUser) // Instanciation userId email
                 try await UsersManager.shared.createDbUser(user: user) // Save in Firestore sans l'image
@@ -82,7 +82,7 @@ final class AuthenticationViewModel: ObservableObject {
                             return
                         }
 
-                        let contact_id  = try await ContactsManager.shared.searchContact(email: email)
+                        let contact_id  = try await UsersManager.shared.searchContact(email: email)
                         
                         if contact_id == "" {
                             

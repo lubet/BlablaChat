@@ -50,12 +50,12 @@ final class MessagesViewModel: ObservableObject {
                     let user_id = AuthUser.uid
                     
                     // Recherche de l'email dans "users"
-                    var contact_id  = try await ContactsManager.shared.searchContact(email: email)
+                    var contact_id  = try await UsersManager.shared.searchContact(email: email)
                     
                     if contact_id == "" {
 
                         // créer user
-                        contact_id = try await ContactsManager.shared.createUser(email: email)
+                        contact_id = try await UsersManager.shared.createUser(email: email)
                         
                         // créer l'avatar
                         let mimage: UIImage = UIImage.init(systemName: "person.fill")!
@@ -64,13 +64,13 @@ final class MessagesViewModel: ObservableObject {
                         try await UsersManager.shared.updateImagePath(userId: contact_id, path: lurl.absoluteString) // maj Firestore
 
                         // créer room
-                        let room_id = try await ContactsManager.shared.createRoom(name: email, avatar_link: lurl.absoluteString)
+                        let room_id = try await UsersManager.shared.createRoom(name: email, avatar_link: lurl.absoluteString)
 
                         // créer membre
-                        try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
+                        try await UsersManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
                     }
                     
-                    let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+                    let room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
                     
                     // Recherche dans membre
                     guard let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id) else {
@@ -88,7 +88,7 @@ final class MessagesViewModel: ObservableObject {
                      
                     lurl = try await StorageManager.shared.getUrlForImage(path: path)
                     
-                    try await ContactsManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: "", room_id: room_id, image_link: lurl.absoluteString)
+                    try await UsersManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: "", room_id: room_id, image_link: lurl.absoluteString)
                     
                     do {
                         // Rafraichissement de la view actuelle
@@ -111,7 +111,7 @@ final class MessagesViewModel: ObservableObject {
     func getRoomMessages(email: String) async throws {
         
         // Trouver dans "users" le contact_id à l'aide de son email
-        let contact_id  = try await ContactsManager.shared.searchContact(email: email)
+        let contact_id  = try await UsersManager.shared.searchContact(email: email)
 
         if contact_id != "" {
 
@@ -119,7 +119,7 @@ final class MessagesViewModel: ObservableObject {
             let user_id = AuthUser.uid
 
             // Chercher le room_id du couple user_id/contact_id dans "members"
-            let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+            let room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
 
             if room_id != "" {
                 self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
@@ -140,13 +140,13 @@ final class MessagesViewModel: ObservableObject {
         let user_id = AuthUser.uid
 
         // Recherche de l'email dans "users"
-        var contact_id  = try await ContactsManager.shared.searchContact(email: email)
+        var contact_id  = try await UsersManager.shared.searchContact(email: email)
         
         // Pas présent dans "users" - on créet tout: users, rooms, members, messages) avec un avatar
         if contact_id == "" {
             
             // créer un user dans "users" (authentifié ou non)
-            contact_id = try await ContactsManager.shared.createUser(email: email)
+            contact_id = try await UsersManager.shared.createUser(email: email)
             
             // créer l'avatar par défaut
             let mimage: UIImage = UIImage.init(systemName: "person.fill")!
@@ -158,25 +158,25 @@ final class MessagesViewModel: ObservableObject {
             try await UsersManager.shared.updateImagePath(userId: contact_id, path: lurl.absoluteString) // maj Firestore
             
             // créer "room"
-            let room_id = try await ContactsManager.shared.createRoom(name: email, avatar_link: lurl.absoluteString)
+            let room_id = try await UsersManager.shared.createRoom(name: email, avatar_link: lurl.absoluteString)
             
             // créer membre
-            try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
+            try await UsersManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
             
             // créer message
-            try await ContactsManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: message_text, room_id: room_id, image_link: "")
+            try await UsersManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: message_text, room_id: room_id, image_link: "")
             
         } else {
             // Présent dans "users"
              
             // Recherche du room_id dans member
-            var room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+            var room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
 
             // SignUp. Après le login ils ne sont pas présent dans "rooms" ni dans "members"
             // C'est à l'envoi du premier message que se fait la création d'un item dans "rooms" et dans "members"
             if (room_id == "") {
                 
-                let memberDuo = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+                let memberDuo = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
 
                 if (memberDuo == "") {
                     
@@ -184,10 +184,10 @@ final class MessagesViewModel: ObservableObject {
                     let avatar = try await UsersManager.shared.getAvatar(contact_id: contact_id)
                                         
                     // Créer room
-                    room_id = try await ContactsManager.shared.createRoom(name: email, avatar_link: avatar)
+                    room_id = try await UsersManager.shared.createRoom(name: email, avatar_link: avatar)
                     
                     // Créer member
-                    try await ContactsManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
+                    try await UsersManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
                }
             }
 
@@ -195,12 +195,12 @@ final class MessagesViewModel: ObservableObject {
                 return
             }
             
-            try await ContactsManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: "")
+            try await UsersManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: "")
         }
 
         // Rafraichissement de la view
         do {
-            let room_id = try await ContactsManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+            let room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
             self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
             
             scrollViewReaderId()

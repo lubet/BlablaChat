@@ -53,6 +53,16 @@ final class AuthenticationViewModel: ObservableObject {
              if contact_id == "" {
                 let user = DBUser(auth: authUser) // Instanciation userId email
                 try await UsersManager.shared.createDbUser(user: user) // Save in Firestore sans l'image
+                 
+                 let mimage: UIImage = UIImage.init(systemName: "person.fill")!
+                 
+                 let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: user.userId)
+
+                 let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
+                 // print("image url: \(lurl)")
+
+                 try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
+
              }
         } catch {
             print("Erreur Sign in with Google...")
@@ -65,10 +75,33 @@ final class AuthenticationViewModel: ObservableObject {
             case .success(let signInAppleResult):
                 Task {
                     do {
-                        try await AuthManager.shared.signInWithApple(tokens: signInAppleResult)
+                        let authUser = try await AuthManager.shared.signInWithApple(tokens: signInAppleResult)
+
+                        guard let email = authUser.email else {
+                            print("L'email du user Apple est égal à nil")
+                            return
+                        }
+
+                        let contact_id  = try await ContactsManager.shared.searchContact(email: email)
+                        
+                        if contact_id == "" {
+                            
+                            let user = DBUser(auth: authUser) // Instanciation userId email
+                            try await UsersManager.shared.createDbUser(user: user) // Save in Firestore sans l'image
+                            
+                            let mimage: UIImage = UIImage.init(systemName: "person.fill")!
+                            
+                            let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: user.userId)
+                            
+                            let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
+                            // print("image url: \(lurl)")
+                            
+                            try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
+                            
+                        }
                         self.didSignInWithApple = true
                     } catch {
-                        
+                        print("Erreur Sign in with Apple...")
                     }
                 }
             case .failure(let error):

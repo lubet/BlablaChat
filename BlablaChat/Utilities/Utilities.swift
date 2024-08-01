@@ -4,7 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 12/07/2024.
 //
-// Utilisé pour sign in with Google
+// Utilisé pour sign in with Google et sign in with Apple
 //
 // ne pas tenir compte de l'avertissement 'keyWindow'
 

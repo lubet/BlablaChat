@@ -75,12 +75,10 @@ class LastMessagesViewModel: ObservableObject {
     }
     
     
-    //
+    // Mes derniers messages
     func getLastMessages() async {
-        
         Task {
             lastMessages = []
-            
             let AuthUser = try AuthManager.shared.getAuthenticatedUser()
             let user_id = AuthUser.uid
             
@@ -96,6 +94,7 @@ class LastMessagesViewModel: ObservableObject {
         lastMessages.remove(atOffsets: index)
     }
 
+    // Entête
     func getMoi() async {
         guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = authUser.uid
@@ -117,9 +116,9 @@ struct LastMessagesView: View {
     
     @State var path: [LastMessage] = []
     
-    @State var showNewMessageScreen = false // fullSreenCover ContactsView
+    @State var showNewMessageScreen = false // fullSreenCover UsersView
     
-    @State var emailPassed: String = "" // email callback de ContactsView
+    @State var emailPassed: String = "" // email callback de UsersView
     
     @State var shouldNavigateToChatLogView = false // call back
     
@@ -132,17 +131,19 @@ struct LastMessagesView: View {
                 List {
                     ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
                         NavigationLink {
-                            MessagesView(path: $path, email: lastMessage.email)
+                            MessagesView(path: $path, email: lastMessage.email) // Détail de la conversation
                         } label: {
-                            LastMessagesCellView(lastMessage: lastMessage)
+                            LastMessagesCellView(lastMessage: lastMessage) // derniers messages envoyés ou reçus
                         }.buttonStyle(PlainButtonStyle())
                     }
                 }
                 .onAppear {
                     Task {
-                        await viewModel.getMoi()
+                        await viewModel.getMoi() // Pour l'entête
                     }
                 }
+                
+                // Entête
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         SDWebImageLoader(url: viewModel.httpAvatar, size: 30)
@@ -160,12 +161,12 @@ struct LastMessagesView: View {
                 }
                 .listStyle(PlainListStyle())
                 
-                NewMessageButton // extension -> MesContactsView() liste des users ancien ou nouveau
+                NewMessageButton // -> UsersView
                 
                     .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un correspondant")
                 
                     .task {
-                        await viewModel.getLastMessages() // <-----------------
+                        await viewModel.getLastMessages() // Les derniers messages
                     }
                     .navigationTitle("LastMessagesView")
                 

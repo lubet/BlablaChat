@@ -61,6 +61,15 @@ struct UsersView: View {
                 .listStyle(PlainListStyle())
                 .navigationTitle("Participants")
                 .padding(.top,10)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            presentationMode.wrappedValue.dismiss()
+                        } label: {
+                            Image(systemName: "xmark")
+                        }
+                    }
+                }
             }
         }
     }

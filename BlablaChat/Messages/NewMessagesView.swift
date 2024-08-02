@@ -133,7 +133,7 @@ final class NewMessagesViewModel: ObservableObject {
      
     // A la création du message:
     
-    // L'auth et le selectioné sont déjà dans "users" car ce sont des authentifiés (automatiquement créer dans users)
+    // L'auth et le selectioné et leur avatar sont déjà dans "users" car ce sont des authentifiés (automatiquement créer dans users)
     
     // Si il n'y pas de room existant dans "members" pour l'auth et le selectioné:
         // Création d'un enreg dans "rooms"
@@ -141,6 +141,7 @@ final class NewMessagesViewModel: ObservableObject {
         // Création de deux enregs dans "members" un pour l'auth l'autre pour celui selectionné ave le room créer au début
     
     // Si il y a un room existant dans "members" pour l'auth et le selectionné:
+       // Rattaché le message à cette room
        // Créer le message pour cette room
     
     func saveMessage(email: String, message_text: String) async throws {
@@ -149,83 +150,29 @@ final class NewMessagesViewModel: ObservableObject {
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = AuthUser.uid
 
-        // Chercher le user_id du selectionné avec son email dans "users"
+        // Chercher le user_id du selectionné avec son email dans "users" (il a été créer dans "users" quand il s'est loggé
         var select_id  = try await UsersManager.shared.searchContact(email: email)
         
-        var room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: select_id)
+        // Recherche du room_id dans "members" avec le user_id
+        var room_id = try await UsersManager.shared.searchRoomId(user_id: user_id)
+        
+        // Pas de room existant
         if room_id == "" {
             // Création d'un enreg "rooms"
             let room_id = try await UsersManager.shared.createRoom()
-            //Création du message pour cette room
+            // Création du message pour cette room
             try await UsersManager.shared.createMessage(from_id: user_id, to_id: select_id, message_text: message_text, room_id: room_id, image_link: "")
-
-            
-        }
-
-        
-        
-        // Recherche de l'email dans "users"
-        var contact_id  = try await UsersManager.shared.searchContact(email: email)
-        
-        // Pas présent dans "users" - on créet tout: users, rooms, members, messages) avec un avatar
-        if contact_id == "" {
-            
-            // créer un user dans "users" (authentifié ou non)
-            contact_id = try await UsersManager.shared.createUser(email: email)
-            
-            // créer l'avatar par défaut
-            let mimage: UIImage = UIImage.init(systemName: "person.fill")!
-            
-            let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: contact_id)
-                        
-            let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-            
-            try await UsersManager.shared.updateImagePath(userId: contact_id, path: lurl.absoluteString) // maj Firestore
-            
-            // créer "room"
-            let room_id = try await UsersManager.shared.createRoom(name: email, avatar_link: lurl.absoluteString)
-            
-            // créer membre
-            try await UsersManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
-            
-            // créer message
-            try await UsersManager.shared.createMessage(from_id: user_id, to_id: contact_id, message_text: message_text, room_id: room_id, image_link: "")
-            
+            // Création de deux enregs dans "members" un pour l'auth l'autre pour celui selectionné ave le room créer au début
+            try await UsersManager.shared.createMembers(user_id: user_id, room_id: room_id)
+            try await UsersManager.shared.createMembers(user_id: select_id, room_id: room_id)
         } else {
-            // Présent dans "users"
-             
-            // Recherche du room_id dans member
-            var room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
-
-            // SignUp. Après le login ils ne sont pas présent dans "rooms" ni dans "members"
-            // C'est à l'envoi du premier message que se fait la création d'un item dans "rooms" et dans "members"
-            if (room_id == "") {
-                
-                let memberDuo = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
-
-                if (memberDuo == "") {
-                    
-                    // Prendre l'avatar du SignUp dans "users"
-                    let avatar = try await UsersManager.shared.getAvatar(contact_id: contact_id)
-                                        
-                    // Créer room
-                    room_id = try await UsersManager.shared.createRoom(name: email, avatar_link: avatar)
-                    
-                    // Créer member
-                    try await UsersManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
-               }
-            }
-
-            guard let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id) else {
-                return
-            }
-            
-            try await UsersManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: message_text, room_id: room_id, image_link: "")
+        // Room existant
+            try await UsersManager.shared.createMessage(from_id: user_id, to_id: select_id, message_text: message_text, room_id: room_id, image_link: "")
         }
 
         // Rafraichissement de la view
         do {
-            let room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+            let room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: select_id)
             self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
             
             scrollViewReaderId()

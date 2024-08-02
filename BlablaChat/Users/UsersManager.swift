@@ -222,6 +222,18 @@ final class UsersManager {
             try await memberRef.setData(data, merge: false)
     }
     
+    func createMembers(user_id:String, room_id:String) async throws {
+            let memberRef = MemberCollection.document()
+            let member_id = memberRef.documentID
+
+        let data: [String:Any] = [
+                "id": member_id,
+                "user_id": user_id,
+                "room_id": room_id
+            ]
+            try await memberRef.setData(data, merge: false)
+    }
+
     // Création du message et maj du dernier message de Room avec le message
     func createMessage(from_id: String, to_id: String, message_text: String, room_id: String, image_link: String) async throws {
         let messageRef = roomDocument(room_id: room_id).collection("messages").document()
@@ -258,41 +270,26 @@ final class UsersManager {
         try await roomRef.setData(dataRoom, merge: true)
     }
 
-    func createMessage(from_id: String, to_id: String, message_text: String, room_id: String, image_link: St) async throws {
-        let messageRef = roomDocument(room_id: room_id).collection("messages").document()
-        let message_id = messageRef.documentID
-        
-        let dateMessage = Timestamp()
-        
-        var msg = message_text
-        if msg == "" {
-            msg = "Photo"
+    // Recherche du room_id dans "members"
+    func searchRoomId(user_id: String) async throws -> String{
+        do {
+            let memberSnapshot = try await MemberCollection
+                .whereField("user_id", isEqualTo: user_id)
+                .getDocuments()
+            
+            for duo in memberSnapshot.documents {
+                let duo = try duo.data(as: Member.self)
+                let roomId = duo.room_id
+                return roomId
+            }
+        } catch {
+            print("searchDuo - Error getting documents from members: \(error)")
         }
-        
-        let data: [String:Any] = [
-            "id": message_id,
-            "from_id": from_id,
-            "to_id": to_id,
-            "message_text": msg,
-            "date_send": dateMessage,
-            "room_id": room_id,
-            "image_link": image_link
-        ]
-        try await messageRef.setData(data, merge: false)
-        
-        // Maj dernier message dans Room
-        let roomRef = roomDocument(room_id: room_id)
+        // print("searchDuo - La paire n'existe pas dans members")
+        return ""
 
-        let dataRoom: [String:Any] = [
-            "last_message": msg,
-            "date_message": dateMessage,
-            "user_id": from_id,
-            "image_link": image_link
-        ]
         
-        try await roomRef.setData(dataRoom, merge: true)
     }
-
     
 }
 

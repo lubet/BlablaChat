@@ -191,6 +191,22 @@ final class UsersManager {
         return room_id
     }
     
+    // New Room pour les contacts (avatar dans "rooms"
+    func createRoom() async throws -> String {
+        let roomRef = roomCollection.document()
+        let room_id = roomRef.documentID
+        
+        let data: [String:Any] = [
+            "room_id" : room_id,
+            "date_created" : Timestamp(),
+            "last_message" : "",
+        ]
+        try await roomRef.setData(data, merge: false)
+        
+        return room_id
+    }
+
+    
     func createMembers(room_id: String, user_id:String, contact_id:String) async throws {
             let memberRef = MemberCollection.document()
             let member_id = memberRef.documentID
@@ -208,6 +224,41 @@ final class UsersManager {
     
     // Création du message et maj du dernier message de Room avec le message
     func createMessage(from_id: String, to_id: String, message_text: String, room_id: String, image_link: String) async throws {
+        let messageRef = roomDocument(room_id: room_id).collection("messages").document()
+        let message_id = messageRef.documentID
+        
+        let dateMessage = Timestamp()
+        
+        var msg = message_text
+        if msg == "" {
+            msg = "Photo"
+        }
+        
+        let data: [String:Any] = [
+            "id": message_id,
+            "from_id": from_id,
+            "to_id": to_id,
+            "message_text": msg,
+            "date_send": dateMessage,
+            "room_id": room_id,
+            "image_link": image_link
+        ]
+        try await messageRef.setData(data, merge: false)
+        
+        // Maj dernier message dans Room
+        let roomRef = roomDocument(room_id: room_id)
+
+        let dataRoom: [String:Any] = [
+            "last_message": msg,
+            "date_message": dateMessage,
+            "user_id": from_id,
+            "image_link": image_link
+        ]
+        
+        try await roomRef.setData(dataRoom, merge: true)
+    }
+
+    func createMessage(from_id: String, to_id: String, message_text: String, room_id: String, image_link: St) async throws {
         let messageRef = roomDocument(room_id: room_id).collection("messages").document()
         let message_id = messageRef.documentID
         

@@ -11,22 +11,16 @@ import FirebaseFirestoreSwift
 
 struct NewMemberModel: Identifiable, Codable {
     let id: String
-    let from_id: String
-    let to_id: String
+    let user_id: String
     let room_id: String
-    let date_created: Timestamp
     
     init(
         id: String,
-        from_id: String,
-        to_id: String,
-        room_id: String,
-        date_created:Timestamp
+        user_id: String,
+        room_id: String
     ) {
         self.id = id
-        self.from_id = from_id
-        self.to_id = to_id
+        self.user_id = user_id
         self.room_id = room_id
-        self.date_created = Timestamp()
     }
 }

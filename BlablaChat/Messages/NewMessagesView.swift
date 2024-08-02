@@ -113,21 +113,18 @@ final class NewMessagesViewModel: ObservableObject {
     // Tous les messages d'un contact
     func getRoomMessages(email: String) async throws {
         
-        // Trouver dans "users" le contact_id à l'aide de son email
-        let contact_id  = try await UsersManager.shared.searchContact(email: email)
-
-        if contact_id != "" {
-
-            guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-            let user_id = AuthUser.uid
-
-            // Chercher le room_id du couple user_id/contact_id dans "members"
-            let room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
-
-            if room_id != "" {
-                self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
-                scrollViewReaderId()
-            }
+        guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return
+        }
+        let user_id = AuthUser.uid
+        
+        // Chercher le room_id à l'aide du user_id
+        let room_id = try await UsersManager.shared.searchRoomId(user_id: user_id)
+        
+        if room_id != "" {
+            self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
+            scrollViewReaderId()
+        } else {
+            print("getRoomMessages - Pas de room_id")
         }
     }
      
@@ -151,10 +148,10 @@ final class NewMessagesViewModel: ObservableObject {
         let user_id = AuthUser.uid
 
         // Chercher le user_id du selectionné avec son email dans "users" (il a été créer dans "users" quand il s'est loggé
-        var select_id  = try await UsersManager.shared.searchContact(email: email)
+        let select_id  = try await UsersManager.shared.searchContact(email: email)
         
         // Recherche du room_id dans "members" avec le user_id
-        var room_id = try await UsersManager.shared.searchRoomId(user_id: user_id)
+        let room_id = try await UsersManager.shared.searchRoomId(user_id: user_id)
         
         // Pas de room existant
         if room_id == "" {
@@ -172,8 +169,8 @@ final class NewMessagesViewModel: ObservableObject {
 
         // Rafraichissement de la view
         do {
-            let room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: select_id)
-            self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: AuthUser.uid)
+            let room_id = try await UsersManager.shared.searchRoomId(user_id: user_id)
+            self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
             
             scrollViewReaderId()
             

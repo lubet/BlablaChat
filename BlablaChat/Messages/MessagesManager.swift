@@ -68,7 +68,7 @@ final class MessagesManager {
         }
         return messagesBubble
     }
-    
+        
     // Recherche avec room_id et user_id d'un seul enreg dans membres afin d'obtenir le to_id
     func getToId(room_id: String, user_id: String) async throws -> String? {
 

@@ -130,7 +130,7 @@ struct LastMessagesView: View {
                 List {
                     ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
                         NavigationLink {
-                            MessagesView(path: $path, email: lastMessage.email) // Détail de la conversation
+                            NewMessagesView(path: $path, email: lastMessage.email) // Détail de la conversation
                         } label: {
                             LastMessagesCellView(lastMessage: lastMessage) // derniers messages envoyés ou reçus
                         }.buttonStyle(PlainButtonStyle())

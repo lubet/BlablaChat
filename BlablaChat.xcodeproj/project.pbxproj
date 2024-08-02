@@ -34,6 +34,8 @@
 		C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9DF2B45767B00C6D48F /* AuthManager.swift */; };
 		C047E9E22B45880400C6D48F /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9E12B45880400C6D48F /* StorageManager.swift */; };
 		C048F18C2BAF2E2400742CD2 /* LastMessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C048F18B2BAF2E2400742CD2 /* LastMessagesManager.swift */; };
+		C05D4E3C2C5CB2DD00270938 /* NewMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D4E3B2C5CB2DD00270938 /* NewMessagesView.swift */; };
+		C05D4E3E2C5CB30F00270938 /* NewMemberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D4E3D2C5CB30F00270938 /* NewMemberModel.swift */; };
 		C060FF8B2BCE6E060024B365 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C060FF8A2BCE6E060024B365 /* SettingsView.swift */; };
 		C068CD3B2BCD769E0072A797 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */; };
 		C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */; };
@@ -84,6 +86,8 @@
 		C047E9DF2B45767B00C6D48F /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		C047E9E12B45880400C6D48F /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		C048F18B2BAF2E2400742CD2 /* LastMessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesManager.swift; sourceTree = "<group>"; };
+		C05D4E3B2C5CB2DD00270938 /* NewMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessagesView.swift; sourceTree = "<group>"; };
+		C05D4E3D2C5CB30F00270938 /* NewMemberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMemberModel.swift; sourceTree = "<group>"; };
 		C060FF8A2BCE6E060024B365 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAppleHelper.swift; sourceTree = "<group>"; };
@@ -163,6 +167,7 @@
 				C0476E7E2BB71086000D860C /* MessagesManager.swift */,
 				C0476E802BB712A4000D860C /* MessagesCellView.swift */,
 				C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */,
+				C05D4E3B2C5CB2DD00270938 /* NewMessagesView.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -284,6 +289,7 @@
 				C0D84B722C5B898A00AE9B21 /* MessageModel.swift */,
 				C0D84B742C5B8A2900AE9B21 /* MemberModel.swift */,
 				C0027F472C5BDD59009DABF3 /* DBUserModel.swift */,
+				C05D4E3D2C5CB30F00270938 /* NewMemberModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -385,9 +391,11 @@
 				C0027F482C5BDD59009DABF3 /* DBUserModel.swift in Sources */,
 				C037638A2C4128D000A5602B /* Utilities.swift in Sources */,
 				C02A8C382BB1D62E005ECF0F /* LastMessagesCellView.swift in Sources */,
+				C05D4E3E2C5CB30F00270938 /* NewMemberModel.swift in Sources */,
 				C07564EC2BADEA8500E8D7D9 /* LastMessagesView.swift in Sources */,
 				C0027F4A2C5BE073009DABF3 /* totoView.swift in Sources */,
 				C043F9A52C170D08002B3C59 /* DateManager.swift in Sources */,
+				C05D4E3C2C5CB2DD00270938 /* NewMessagesView.swift in Sources */,
 				C01FE5AD2B67F7F70049B9EE /* ContactManager.swift in Sources */,
 				C01FE5AB2B67F47E0049B9EE /* ContactCellView.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,

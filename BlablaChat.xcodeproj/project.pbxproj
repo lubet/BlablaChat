@@ -19,7 +19,6 @@
 		C037638A2C4128D000A5602B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03763892C4128D000A5602B /* Utilities.swift */; };
 		C03C39962C5A2BC900A23D33 /* UsersCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03C39952C5A2BC900A23D33 /* UsersCellView.swift */; };
 		C043F9A52C170D08002B3C59 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C043F9A42C170D08002B3C59 /* DateManager.swift */; };
-		C0476E7D2BB71033000D860C /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0476E7C2BB71033000D860C /* MessagesView.swift */; };
 		C0476E7F2BB71086000D860C /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0476E7E2BB71086000D860C /* MessagesManager.swift */; };
 		C0476E812BB712A4000D860C /* MessagesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0476E802BB712A4000D860C /* MessagesCellView.swift */; };
 		C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */; };
@@ -54,7 +53,6 @@
 		C0D70C322C3FDB9300DA0069 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = C0D70C312C3FDB9300DA0069 /* GoogleSignIn */; };
 		C0D70C342C3FDB9300DA0069 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C0D70C332C3FDB9300DA0069 /* GoogleSignInSwift */; };
 		C0D84B6E2C5B846A00AE9B21 /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D84B6D2C5B846A00AE9B21 /* UsersManager.swift */; };
-		C0D84B712C5B88CB00AE9B21 /* RoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D84B702C5B88CB00AE9B21 /* RoomModel.swift */; };
 		C0D84B732C5B898A00AE9B21 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D84B722C5B898A00AE9B21 /* MessageModel.swift */; };
 		C0D84B752C5B8A2900AE9B21 /* MemberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D84B742C5B8A2900AE9B21 /* MemberModel.swift */; };
 		C0EE66AC2B62654A002F13EB /* MessageBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE66AB2B62654A002F13EB /* MessageBarView.swift */; };
@@ -75,7 +73,6 @@
 		C03763892C4128D000A5602B /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		C03C39952C5A2BC900A23D33 /* UsersCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCellView.swift; sourceTree = "<group>"; };
 		C043F9A42C170D08002B3C59 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
-		C0476E7C2BB71033000D860C /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		C0476E7E2BB71086000D860C /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
 		C0476E802BB712A4000D860C /* MessagesCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCellView.swift; sourceTree = "<group>"; };
 		C047E9C02B45625C00C6D48F /* BlablaChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlablaChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,7 +102,6 @@
 		C0C1A9482B62ACC400646851 /* SearchNick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNick.swift; sourceTree = "<group>"; };
 		C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		C0D84B6D2C5B846A00AE9B21 /* UsersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
-		C0D84B702C5B88CB00AE9B21 /* RoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomModel.swift; sourceTree = "<group>"; };
 		C0D84B722C5B898A00AE9B21 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		C0D84B742C5B8A2900AE9B21 /* MemberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberModel.swift; sourceTree = "<group>"; };
 		C0EE66AB2B62654A002F13EB /* MessageBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBarView.swift; sourceTree = "<group>"; };
@@ -165,7 +161,6 @@
 		C0476E7B2BB70FF9000D860C /* Messages */ = {
 			isa = PBXGroup;
 			children = (
-				C0476E7C2BB71033000D860C /* MessagesView.swift */,
 				C0476E7E2BB71086000D860C /* MessagesManager.swift */,
 				C0476E802BB712A4000D860C /* MessagesCellView.swift */,
 				C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */,
@@ -287,7 +282,6 @@
 		C0D84B6F2C5B889400AE9B21 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C0D84B702C5B88CB00AE9B21 /* RoomModel.swift */,
 				C0D84B722C5B898A00AE9B21 /* MessageModel.swift */,
 				C0D84B742C5B8A2900AE9B21 /* MemberModel.swift */,
 				C0027F472C5BDD59009DABF3 /* DBUserModel.swift */,
@@ -386,7 +380,6 @@
 				C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */,
 				C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */,
 				C03C39962C5A2BC900A23D33 /* UsersCellView.swift in Sources */,
-				C0476E7D2BB71033000D860C /* MessagesView.swift in Sources */,
 				C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */,
 				C0AF17C72C5A1BD700B27376 /* UsersView.swift in Sources */,
 				C0EE66AC2B62654A002F13EB /* MessageBarView.swift in Sources */,
@@ -403,7 +396,6 @@
 				C01FE5AD2B67F7F70049B9EE /* ContactManager.swift in Sources */,
 				C01FE5AB2B67F47E0049B9EE /* ContactCellView.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
-				C0D84B712C5B88CB00AE9B21 /* RoomModel.swift in Sources */,
 				C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */,
 				C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */,
 				C0FAA0922C241DD90009DFF7 /* EmailShort.swift in Sources */,

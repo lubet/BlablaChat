@@ -39,7 +39,7 @@ class LastMessagesViewModel: ObservableObject {
     
     private var members: [NewMemberModel] = []
     
-    private var rooms: [Room] = []
+    private var rooms: [NewRoomModel] = []
     
     private var cancellable = Set<AnyCancellable>()
     
@@ -82,10 +82,23 @@ class LastMessagesViewModel: ObservableObject {
             let AuthUser = try AuthManager.shared.getAuthenticatedUser()
             let user_id = AuthUser.uid
             
-            self.rooms = try await LastMessagesManager.shared.getMyRooms(user_id: user_id)
+            // cherher le room_id dans "members" avec le user_id
+            let room_id = try await UsersManager.shared.searchRoomId(user_id: user_id)
+            
+            self.rooms = try await LastMessagesManager.shared.getMyRooms(room_id: room_id)
             
             for room in self.rooms {
-                lastMessages.append(LastMessage(avatar_link: room.avatar_link ,email: room.room_name, message_texte: room.last_message, message_date: room.date_message))
+                
+                // Chercher le user_id (lequel ?) dans "members" avec le room_id
+                let user_id = try await LastMessagesManager.shared.getUserId(room_id: room_id)
+                
+                // Rechercher l'avatar_link dans "rooms" avec le room_id
+                let avatarLink = try await LastMessagesManager.shared.getAvatarLink(user_id: user_id)
+                
+                // Recherche de l'email dans "users" avec le user_id
+                let email = try await LastMessagesManager.shared.getEmail(user_id: user_id)
+                
+                lastMessages.append(LastMessage(avatar_link: avatarLink ,email: email, message_texte: room.last_message, message_date: room.date_message))
             }
         }
     }

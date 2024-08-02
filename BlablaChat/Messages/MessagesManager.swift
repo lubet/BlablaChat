@@ -101,26 +101,26 @@ final class MessagesManager {
     }
     
     // Recherche du room_id dans rooms avec l'email(room_name)
-    func getRoomId(email: String) async throws -> String {
-        
-        let roomId: String = ""
-        
-        do {
-            let querySnapShot = try? await roomCollection
-                .whereField("room_name", isEqualTo: email)
-                .getDocuments()
-            if let snap = querySnapShot {
-                for doc in snap.documents {
-                    let room = try doc.data(as: Room.self)
-                    if room.room_name == email {
-                        return room.room_id
-                    }
-                }
-            }
-        } catch {
-            print("getRoomId- Error getting documents: \(error)")
-        }
-        print("Ereur: getRoomId - pas de roomId")
-        return roomId
-    }
+//    func getRoomId(email: String) async throws -> String {
+//        
+//        let roomId: String = ""
+//        
+//        do {
+//            let querySnapShot = try? await roomCollection
+//                .whereField("room_name", isEqualTo: email)
+//                .getDocuments()
+//            if let snap = querySnapShot {
+//                for doc in snap.documents {
+//                    let room = try doc.data(as: NewRoomModel.self)
+//                    if room.room_name == email {
+//                        return room.room_id
+//                    }
+//                }
+//            }
+//        } catch {
+//            print("getRoomId- Error getting documents: \(error)")
+//        }
+//        print("Ereur: getRoomId - pas de roomId")
+//        return roomId
+//    }
 }

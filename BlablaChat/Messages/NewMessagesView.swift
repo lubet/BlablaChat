@@ -77,7 +77,8 @@ final class NewMessagesViewModel: ObservableObject {
                         try await UsersManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: select_id)
                     }
                     
-                    let room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: select_id)
+                    // Recherche du room_id dans "members" avec le user_id
+                    let room_id = try await UsersManager.shared.searchRoomId(user_id: user_id)
                     
                     // Recherche dans membre
                     guard let toId =  try await MessagesManager.shared.getUserId(user_id: user_id) else {
@@ -117,6 +118,8 @@ final class NewMessagesViewModel: ObservableObject {
     // Tous les messages d'un contact
     func getRoomMessages(email: String) async throws {
         
+        print("getRoomMessages")
+        
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return
         }
         let user_id = AuthUser.uid
@@ -147,17 +150,19 @@ final class NewMessagesViewModel: ObservableObject {
     
     func saveMessage(email: String, message_text: String) async throws {
         
-        print("saveMessage")
+        print("**** saveMessage ****")
         
         // Si il n'y pas de room existant dans "members" pour l'auth et le selectioné
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = AuthUser.uid
 
         // Chercher le user_id du selectionné avec son email dans "users" (il a été créer dans "users" quand il s'est loggé
-        let select_id  = try await UsersManager.shared.searchContact(email: email)
+        let select_id = try await UsersManager.shared.searchContact(email: email)
+        print("select_id: \(select_id)")
         
         // Recherche du room_id dans "members" avec le user_id
-        let room_id = try await UsersManager.shared.searchRoomId(user_id: user_id)
+        let room_id = try await UsersManager.shared.searchRoomId(user_id: select_id)
+        print("room_id: \(room_id)")
         
         // Pas de room existant
         if room_id == "" {
@@ -168,7 +173,9 @@ final class NewMessagesViewModel: ObservableObject {
             // Création de deux enregs dans "members" un pour l'auth l'autre pour celui selectionné ave le room créer au début
             try await UsersManager.shared.createMembers(user_id: user_id, room_id: room_id)
             try await UsersManager.shared.createMembers(user_id: select_id, room_id: room_id)
+            
             print("room_id=blanc")
+            
         } else {
         // Room existant
             try await UsersManager.shared.createMessage(from_id: user_id, to_id: select_id, message_text: message_text, room_id: room_id, image_link: "")
@@ -199,7 +206,7 @@ final class NewMessagesViewModel: ObservableObject {
 // View ---------------------------------------------------
 
 struct NewMessagesView: View {
-    @StateObject private var viewModel = MessagesViewModel()
+    @StateObject private var viewModel = NewMessagesViewModel()
     @State private var messageText: String = ""
     @State var alertTitle: String = ""
     @State var showAlert: Bool = false

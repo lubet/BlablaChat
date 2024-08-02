@@ -13,6 +13,7 @@ struct NewRoomModel: Identifiable, Codable {
     let room_id: String
     let dateCreated: Timestamp
     let last_message: String
+    let date_message: Timestamp
     
     var id: String {
         room_id
@@ -22,5 +23,6 @@ struct NewRoomModel: Identifiable, Codable {
         case room_id
         case dateCreated = "date_created"
         case last_message
+        case date_message
     }
 }

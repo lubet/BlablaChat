@@ -3,4 +3,52 @@
    uuid = "1A727C8A-D5A0-46EB-AA13-91645711EE7E"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C154F561-44C7-4CEF-80EC-8DBCF8E1C1A4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlablaChat/Users/UsersManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  uuid = "C154F561-44C7-4CEF-80EC-8DBCF8E1C1A4 - 7ab51d3aab04375c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BlablaChat.UsersManager.deinit"
+                  moduleName = "BlablaChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lubet-monclaxavier/Documents/Xavier/BlablaChat/BlablaChat/Users/UsersManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "C154F561-44C7-4CEF-80EC-8DBCF8E1C1A4 - 7d699829f130f34b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BlablaChat.UsersManager.__deallocating_deinit"
+                  moduleName = "BlablaChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lubet-monclaxavier/Documents/Xavier/BlablaChat/BlablaChat/Users/UsersManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

@@ -40,6 +40,7 @@ final class UsersManager {
         try await userDocument(userId: userId).updateData(data)
     }
     
+    
     //
     func getAllUsers() async throws -> [DBUser] {
         let authUser = try AuthManager.shared.getAuthenticatedUser()
@@ -92,6 +93,10 @@ final class UsersManager {
     
     // ---------------------------------------------------------------
     private let MemberCollection = dbFS.collection("members")
+    
+    private func memberDocument(user_id: String) -> DocumentReference {
+        return MemberCollection.document(user_id)
+    }
     
     // -----------------------------------------------------------------
     private let roomCollection = dbFS.collection("rooms")
@@ -147,32 +152,32 @@ final class UsersManager {
     }
     
     // Renvoie le room_id du duo from/to ou to/fom si existant dans members
-    func searchDuo(user_id: String, contact_id: String) async throws -> String {
-
-        do {
-            let memberSnapshot = try await MemberCollection.whereFilter(Filter.orFilter([
-                Filter.andFilter([
-                    Filter.whereField("from_id", isEqualTo: user_id),
-                    Filter.whereField("to_id", isEqualTo: contact_id)
-                ]),
-                Filter.andFilter([
-                    Filter.whereField("from_id", isEqualTo: contact_id),
-                    Filter.whereField("to_id", isEqualTo: user_id)
-                ])
-            ])
-            ).getDocuments()
-            
-            for duo in memberSnapshot.documents {
-                let duo = try duo.data(as: Member.self)
-                let roomId = duo.room_id
-                return roomId
-            }
-        } catch {
-            print("searchDuo - Error getting documents from members: \(error)")
-        }
-        // print("searchDuo - La paire n'existe pas dans members")
-        return ""
-    }
+//    func searchDuo(user_id: String, contact_id: String) async throws -> String {
+//
+//        do {
+//            let memberSnapshot = try await MemberCollection.whereFilter(Filter.orFilter([
+//                Filter.andFilter([
+//                    Filter.whereField("from_id", isEqualTo: user_id),
+//                    Filter.whereField("to_id", isEqualTo: contact_id)
+//                ]),
+//                Filter.andFilter([
+//                    Filter.whereField("from_id", isEqualTo: contact_id),
+//                    Filter.whereField("to_id", isEqualTo: user_id)
+//                ])
+//            ])
+//            ).getDocuments()
+//            
+//            for duo in memberSnapshot.documents {
+//                let duo = try duo.data(as: Member.self)
+//                let roomId = duo.room_id
+//                return roomId
+//            }
+//        } catch {
+//            print("searchDuo - Error getting documents from members: \(error)")
+//        }
+//        // print("searchDuo - La paire n'existe pas dans members")
+//        return ""
+//    }
     
     // New Room pour les contacts (avatar dans "rooms"
     func createRoom(name: String, avatar_link: String) async throws -> String {
@@ -270,7 +275,7 @@ final class UsersManager {
         try await roomRef.setData(dataRoom, merge: true)
     }
 
-    // Recherche du room_id dans "members"
+    // Recherche du room_id dans "members" avec le user_id
     func searchRoomId(user_id: String) async throws -> String{
         do {
             let memberSnapshot = try await MemberCollection
@@ -278,12 +283,12 @@ final class UsersManager {
                 .getDocuments()
             
             for duo in memberSnapshot.documents {
-                let duo = try duo.data(as: Member.self)
+                let duo = try duo.data(as: NewMemberModel.self)
                 let roomId = duo.room_id
                 return roomId
             }
         } catch {
-            print("searchDuo - Error getting documents from members: \(error)")
+            print("searchRoomId - Error getting documents from members: \(error)")
         }
         // print("searchDuo - La paire n'existe pas dans members")
         return ""

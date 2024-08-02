@@ -75,8 +75,8 @@ final class LastMessagesManager {
     }
     
     // Récupérer de member les room_id pour lequelles je suis membre
-    func getMyRoomsId(user_id: String) async throws -> [Member] {
-        var members = [Member]()
+    func getMyRoomsId(user_id: String) async throws -> [NewMemberModel] {
+        var members = [NewMemberModel]()
         do {
             let querySnapshot = try await memberCollection.whereFilter(Filter.orFilter([
                     Filter.whereField("from_id", isEqualTo: user_id),
@@ -85,7 +85,7 @@ final class LastMessagesManager {
                 .order(by: "date_created")
                 .getDocuments()
             for document in querySnapshot.documents {
-                let membre = try document.data(as: Member.self)
+                let membre = try document.data(as: NewMemberModel.self)
                 members.append(membre)
             }
         } catch {

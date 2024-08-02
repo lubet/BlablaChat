@@ -36,6 +36,8 @@ final class MessagesViewModel: ObservableObject {
     // TODO Image pour un existant et un non existant
     private func setImage(from selection: PhotosPickerItem?, email: String) {
         
+        print("MessagesManager - setImage")
+        
         guard let selection else { return }
 
         var selectedImage: UIImage? = nil
@@ -73,7 +75,7 @@ final class MessagesViewModel: ObservableObject {
                     let room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
                     
                     // Recherche dans membre
-                    guard let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id) else {
+                    guard let toId =  try await MessagesManager.shared.getUserId(user_id: user_id) else {
                         return
                     }
 
@@ -135,6 +137,8 @@ final class MessagesViewModel: ObservableObject {
     
     func saveMessage(email: String, message_text: String) async throws {
         
+        print("MessageView - saveMessage")
+        
         // Moi
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = AuthUser.uid
@@ -191,7 +195,7 @@ final class MessagesViewModel: ObservableObject {
                }
             }
 
-            guard let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id) else {
+            guard let toId =  try await MessagesManager.shared.getUserId(user_id: user_id) else {
                 return
             }
             

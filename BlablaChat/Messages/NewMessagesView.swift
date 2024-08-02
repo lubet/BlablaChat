@@ -39,6 +39,8 @@ final class NewMessagesViewModel: ObservableObject {
     // TODO Image pour un existant et un non existant
     private func setImage(from selection: PhotosPickerItem?, email: String) {
         
+        print(("setImage"))
+        
         guard let selection else { return }
 
         var selectedImage: UIImage? = nil
@@ -52,31 +54,33 @@ final class NewMessagesViewModel: ObservableObject {
                     guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
                     let user_id = AuthUser.uid
                     
-                    // Recherche de l'email dans "users"
-                    var contact_id  = try await UsersManager.shared.searchContact(email: email)
+                    // Recherche du select_id dans "users" à l'aide de l'email (existe forcemment)
+                    var select_id  = try await UsersManager.shared.searchContact(email: email)
                     
-                    if contact_id == "" {
+                    
+                    
+                    if select_id == "" {
 
                         // créer user
-                        contact_id = try await UsersManager.shared.createUser(email: email)
+                        select_id = try await UsersManager.shared.createUser(email: email)
                         
                         // créer l'avatar
                         let mimage: UIImage = UIImage.init(systemName: "person.fill")!
-                        let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: contact_id)
+                        let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: select_id)
                         let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-                        try await UsersManager.shared.updateImagePath(userId: contact_id, path: lurl.absoluteString) // maj Firestore
+                        try await UsersManager.shared.updateImagePath(userId: select_id, path: lurl.absoluteString) // maj Firestore
 
                         // créer room
                         let room_id = try await UsersManager.shared.createRoom(name: email, avatar_link: lurl.absoluteString)
 
                         // créer membre
-                        try await UsersManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: contact_id)
+                        try await UsersManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: select_id)
                     }
                     
-                    let room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: contact_id)
+                    let room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: select_id)
                     
                     // Recherche dans membre
-                    guard let toId =  try await MessagesManager.shared.getToId(room_id: room_id, user_id: user_id) else {
+                    guard let toId =  try await MessagesManager.shared.getUserId(user_id: user_id) else {
                         return
                     }
 
@@ -143,6 +147,8 @@ final class NewMessagesViewModel: ObservableObject {
     
     func saveMessage(email: String, message_text: String) async throws {
         
+        print("saveMessage")
+        
         // Si il n'y pas de room existant dans "members" pour l'auth et le selectioné
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = AuthUser.uid
@@ -162,9 +168,11 @@ final class NewMessagesViewModel: ObservableObject {
             // Création de deux enregs dans "members" un pour l'auth l'autre pour celui selectionné ave le room créer au début
             try await UsersManager.shared.createMembers(user_id: user_id, room_id: room_id)
             try await UsersManager.shared.createMembers(user_id: select_id, room_id: room_id)
+            print("room_id=blanc")
         } else {
         // Room existant
             try await UsersManager.shared.createMessage(from_id: user_id, to_id: select_id, message_text: message_text, room_id: room_id, image_link: "")
+            print("room_id= \(room_id)")
         }
 
         // Rafraichissement de la view

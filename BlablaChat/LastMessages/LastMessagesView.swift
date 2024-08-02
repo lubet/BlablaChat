@@ -37,7 +37,7 @@ class LastMessagesViewModel: ObservableObject {
     @Published var monEmail: String = ""
     @Published var httpAvatar: String = ""
     
-    private var members: [Member] = []
+    private var members: [NewMemberModel] = []
     
     private var rooms: [Room] = []
     
@@ -172,7 +172,7 @@ struct LastMessagesView: View {
                 
                 // CallBack MessagesView <- email de ContactsView
                     .navigationDestination(isPresented: $shouldNavigateToChatLogView) {
-                        MessagesView(path: $path, email:emailPassed)
+                        NewMessagesView(path: $path, email:emailPassed)
                     }
             }
     }

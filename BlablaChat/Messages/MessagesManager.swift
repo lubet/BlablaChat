@@ -69,22 +69,23 @@ final class MessagesManager {
         return messagesBubble
     }
         
-    // Recherche avec room_id et user_id d'un seul enreg dans membres afin d'obtenir le to_id
-    func getToId(room_id: String, user_id: String) async throws -> String? {
+    // Recherche du user_id dans membre
+    func getUserId(user_id: String) async throws -> String? {
 
         var to_id: String?
         
+        print("getUserId \(user_id)")
+        
         do {
             let querySnapshot = try? await memberCollection
-                .whereField("room_id", isEqualTo: room_id)
-                .whereField("from_id", isEqualTo: user_id)
+                .whereField("user_id", isEqualTo: user_id)
                 // OU .whereField("to_id", isEqualTo: user_id)
                 .getDocuments()
             
             let nbMembre = querySnapshot?.count
             
             if (nbMembre != 1) {
-                print("getToId - Erreur nbre membres différend de un: \(nbMembre ?? 0)")
+                print("getUserId - Erreur nbre membres différend de un: \(nbMembre ?? 0)")
             } else {
                 if let snap = querySnapshot {
                     for doc in snap.documents {

@@ -85,20 +85,26 @@ class LastMessagesViewModel: ObservableObject {
             // cherher le room_id dans "members" avec le user_id
             let room_id = try await UsersManager.shared.searchRoomId(user_id: user_id)
             
+            // Les rooms du user_id (auth)
             self.rooms = try await LastMessagesManager.shared.getMyRooms(room_id: room_id)
             
+            // Balayer les rooms pour l'auth et valorise les messages avec le select_id
             for room in self.rooms {
                 
+                // TODO ici utiliser le select_id mais où il est ? faire une recherche avec email call back ?
+                 
                 // Chercher le user_id (lequel ?) dans "members" avec le room_id
                 let user_id = try await LastMessagesManager.shared.getUserId(room_id: room_id)
                 
-                // Rechercher l'avatar_link dans "rooms" avec le room_id
+                // Rechercher l'avatar_link dans "users" avec le user_id
                 let avatarLink = try await LastMessagesManager.shared.getAvatarLink(user_id: user_id)
                 
                 // Recherche de l'email dans "users" avec le user_id
                 let email = try await LastMessagesManager.shared.getEmail(user_id: user_id)
                 
                 lastMessages.append(LastMessage(avatar_link: avatarLink ,email: email, message_texte: room.last_message, message_date: room.date_message))
+                print("user_id: \(user_id)")
+                print("avatarLink: \(avatarLink)")
             }
         }
     }

@@ -39,14 +39,14 @@ final class LastMessagesManager {
     }
     
     // Tous les rooms triés par date
-    func getAllRooms() async throws -> [NewRoomModel] {
-        var rooms = [NewRoomModel]()
+    func getAllRooms() async throws -> [Room] {
+        var rooms = [Room]()
         do {
             let querySnapshot = try await roomCollection
                 .order(by: "date_created")
                 .getDocuments()
             for document in querySnapshot.documents {
-                let room = try document.data(as: NewRoomModel.self)
+                let room = try document.data(as: Room.self)
                 rooms.append(room)
             }
         } catch {
@@ -56,16 +56,16 @@ final class LastMessagesManager {
     }
     
     // Tous mes rooms
-    func getMyRooms(room_id: String) async throws -> [NewRoomModel] {
+    func getMyRooms(room_id: String) async throws -> [Room] {
         
-        var rooms = [NewRoomModel]()
+        var rooms = [Room]()
         do {
             let querySnapshot = try await roomCollection
                 .whereField("room_id", isEqualTo: room_id)
                 .order(by: "date_created")
                 .getDocuments()
             for document in querySnapshot.documents {
-                let room = try document.data(as: NewRoomModel.self)
+                let room = try document.data(as: Room.self)
                 rooms.append(room)
             }
         } catch {
@@ -75,8 +75,8 @@ final class LastMessagesManager {
     }
     
     // Récupérer de member les room_id pour lequelles je suis membre
-    func getMyRoomsId(user_id: String) async throws -> [NewMemberModel] {
-        var members = [NewMemberModel]()
+    func getMyRoomsId(user_id: String) async throws -> [Member] {
+        var members = [Member]()
         do {
             let querySnapshot = try await memberCollection.whereFilter(Filter.orFilter([
                     Filter.whereField("user_id", isEqualTo: user_id)
@@ -84,7 +84,7 @@ final class LastMessagesManager {
                 .order(by: "date_created")
                 .getDocuments()
             for document in querySnapshot.documents {
-                let membre = try document.data(as: NewMemberModel.self)
+                let membre = try document.data(as: Member.self)
                 members.append(membre)
             }
         } catch {
@@ -114,26 +114,46 @@ final class LastMessagesManager {
 
     }
     
-    // Chercher le user_id (lequel ?) dans "members" avec le room_id
-    func getUserId(room_id: String) async throws -> String {
+    func getAvatarLink(email: String) async throws -> String {
         
-        var user_id: String = ""
+        var avatarLink: String = ""
         
         do {
-            let querySnapshot = try await memberCollection.whereFilter(Filter.orFilter([
-                    Filter.whereField("room_id", isEqualTo: user_id)
+            let querySnapshot = try await userCollection.whereFilter(Filter.orFilter([
+                    Filter.whereField("email", isEqualTo: email)
                 ]))
                 .getDocuments()
             for document in querySnapshot.documents {
-                let membre = try document.data(as: NewMemberModel.self)
-                user_id = membre.user_id
+                let membre = try document.data(as: DBUser.self)
+                avatarLink = membre.avatarLink ?? ""
             }
         } catch {
-            print("getUserId - Error getting documents from members: \(error)")
+            print("getAvatarLink - Error getting documents from members: \(error)")
         }
-        return user_id
+        return avatarLink
 
     }
+
+    // Chercher le user_id (lequel ?) dans "members" avec le room_id
+//    func getUserId(room_id: String) async throws -> String {
+//        
+//        var user_id: String = ""
+//        
+//        do {
+//            let querySnapshot = try await memberCollection.whereFilter(Filter.orFilter([
+//                    Filter.whereField("room_id", isEqualTo: user_id)
+//                ]))
+//                .getDocuments()
+//            for document in querySnapshot.documents {
+//                let membre = try document.data(as: Member.self)
+//                user_id = membre.user_id
+//            }
+//        } catch {
+//            print("getUserId - Error getting documents from members: \(error)")
+//        }
+//        return user_id
+//
+//    }
     
     // Recherche de l'email dans "users" avec le user_id
     func getEmail(user_id: String) async throws -> String {

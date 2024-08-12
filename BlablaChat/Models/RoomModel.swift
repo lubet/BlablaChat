@@ -9,11 +9,12 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct NewRoomModel: Identifiable, Codable {
+struct Room: Identifiable, Codable {
     let room_id: String
     let dateCreated: Timestamp
     let last_message: String
     let date_message: Timestamp
+    let avatar_link: String
     
     var id: String {
         room_id
@@ -24,5 +25,6 @@ struct NewRoomModel: Identifiable, Codable {
         case dateCreated = "date_created"
         case last_message
         case date_message
+        case avatar_link
     }
 }

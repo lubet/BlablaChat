@@ -152,34 +152,63 @@ final class UsersManager {
     }
     
     // Renvoie le room_id du duo from/to ou to/fom si existant dans members
-//    func searchDuo(user_id: String, contact_id: String) async throws -> String {
-//
-//        do {
-//            let memberSnapshot = try await MemberCollection.whereFilter(Filter.orFilter([
-//                Filter.andFilter([
-//                    Filter.whereField("from_id", isEqualTo: user_id),
-//                    Filter.whereField("to_id", isEqualTo: contact_id)
-//                ]),
-//                Filter.andFilter([
-//                    Filter.whereField("from_id", isEqualTo: contact_id),
-//                    Filter.whereField("to_id", isEqualTo: user_id)
-//                ])
-//            ])
-//            ).getDocuments()
-//            
-//            for duo in memberSnapshot.documents {
-//                let duo = try duo.data(as: Member.self)
-//                let roomId = duo.room_id
-//                return roomId
-//            }
-//        } catch {
-//            print("searchDuo - Error getting documents from members: \(error)")
-//        }
-//        // print("searchDuo - La paire n'existe pas dans members")
-//        return ""
-//    }
+    func searchDuo(user_id: String, contact_id: String) async throws -> String {
+
+        do {
+            let memberSnapshot = try await MemberCollection.whereFilter(Filter.orFilter([
+                Filter.andFilter([
+                    Filter.whereField("from_id", isEqualTo: user_id),
+                    Filter.whereField("to_id", isEqualTo: contact_id)
+                ]),
+                Filter.andFilter([
+                    Filter.whereField("from_id", isEqualTo: contact_id),
+                    Filter.whereField("to_id", isEqualTo: user_id)
+                ])
+            ])
+            ).getDocuments()
+            
+            for duo in memberSnapshot.documents {
+                let duo = try duo.data(as: Member.self)
+                let roomId = duo.room_id
+                return roomId
+            }
+        } catch {
+            print("searchDuo - Error getting documents from members: \(error)")
+        }
+        // print("searchDuo - La paire n'existe pas dans members")
+        return ""
+    }
+
+    // Recherche de l'id de mon interlocuteur dans "members"
+    func searchDuo(from_id: String, room_id: String) async throws -> String {
+
+        do {
+            let memberSnapshot = try await MemberCollection.whereFilter(Filter.orFilter([
+                Filter.andFilter([
+                    Filter.whereField("from_id", isEqualTo: from_id),
+                    Filter.whereField("room_id", isEqualTo: room_id)
+                ]),
+                Filter.andFilter([
+                    Filter.whereField("to_id", isEqualTo: from_id),
+                    Filter.whereField("room_id", isEqualTo: room_id)
+                ])
+            ])
+            ).getDocuments()
+            
+            for duo in memberSnapshot.documents {
+                let duo = try duo.data(as: Member.self)
+                let roomId = duo.to_id
+                return roomId
+            }
+        } catch {
+            print("searchDuo - Error getting documents from members: \(error)")
+        }
+        // print("searchDuo - La paire n'existe pas dans members")
+        return ""
+    }
+
     
-    // New Room pour les contacts (avatar dans "rooms"
+    // New Room pour les contacts (avatar dans "rooms")
     func createRoom(name: String, avatar_link: String) async throws -> String {
         let roomRef = roomCollection.document()
         let room_id = roomRef.documentID
@@ -197,19 +226,19 @@ final class UsersManager {
     }
     
     // New Room pour les contacts (avatar dans "rooms"
-    func createRoom() async throws -> String {
-        let roomRef = roomCollection.document()
-        let room_id = roomRef.documentID
-        
-        let data: [String:Any] = [
-            "room_id" : room_id,
-            "date_created" : Timestamp(),
-            "last_message" : "",
-        ]
-        try await roomRef.setData(data, merge: false)
-        
-        return room_id
-    }
+//    func createRoom() async throws -> String {
+//        let roomRef = roomCollection.document()
+//        let room_id = roomRef.documentID
+//        
+//        let data: [String:Any] = [
+//            "room_id" : room_id,
+//            "date_created" : Timestamp(),
+//            "last_message" : "",
+//        ]
+//        try await roomRef.setData(data, merge: false)
+//        
+//        return room_id
+//    }
 
     
     func createMembers(room_id: String, user_id:String, contact_id:String) async throws {
@@ -283,7 +312,7 @@ final class UsersManager {
                 .getDocuments()
             
             for duo in memberSnapshot.documents {
-                let duo = try duo.data(as: NewMemberModel.self)
+                let duo = try duo.data(as: Member.self)
                 let roomId = duo.room_id
                 return roomId
             }
@@ -294,6 +323,26 @@ final class UsersManager {
         return ""
 
         
+    }
+    
+    // Recherhe de l'email dans "users"
+    func searchEmail(user_id: String) async throws -> String {
+        do {
+            let querySnapshot = try await DBUserCollection
+                .whereField("userId", isEqualTo: user_id)
+                .getDocuments()
+            
+            for document in querySnapshot.documents {
+                let user = try document.data(as: DBUser.self)
+                if (user.userId == user_id) {
+                    return user.email ?? ""
+                }
+            }
+        } catch {
+            print("searchContact - Error getting documents: \(error)")
+        }
+        return ""
+
     }
     
 }

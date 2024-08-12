@@ -37,9 +37,9 @@ class LastMessagesViewModel: ObservableObject {
     @Published var monEmail: String = ""
     @Published var httpAvatar: String = ""
     
-    private var members: [NewMemberModel] = []
+    private var members: [Member] = []
     
-    private var rooms: [NewRoomModel] = []
+    private var rooms: [Room] = []
     
     private var cancellable = Set<AnyCancellable>()
     
@@ -76,35 +76,33 @@ class LastMessagesViewModel: ObservableObject {
     
     
     // Mes derniers messages
+    // mon room_id m'est donné par members avec mon user_id
     func getLastMessages() async {
         Task {
             lastMessages = []
             let AuthUser = try AuthManager.shared.getAuthenticatedUser()
             let user_id = AuthUser.uid
             
+            // Tous mes rooms
+            
             // cherher le room_id dans "members" avec le user_id
             let room_id = try await UsersManager.shared.searchRoomId(user_id: user_id)
             
-            // Les rooms du user_id (auth)
+            // Tous mes enregs de "rooms"
             self.rooms = try await LastMessagesManager.shared.getMyRooms(room_id: room_id)
             
             // Balayer les rooms pour l'auth et valorise les messages avec le select_id
             for room in self.rooms {
                 
-                // TODO ici utiliser le select_id mais où il est ? faire une recherche avec email call back ?
-                 
-                // Chercher le user_id (lequel ?) dans "members" avec le room_id
-                let user_id = try await LastMessagesManager.shared.getUserId(room_id: room_id)
+                // Rechercher dans "members" l'enregistrement qui a le même user_id et le même room.room_id -> select_id
+                let to_id = try await UsersManager.shared.searchDuo(from_id: user_id, room_id: room.room_id)
                 
-                // Rechercher l'avatar_link dans "users" avec le user_id
-                let avatarLink = try await LastMessagesManager.shared.getAvatarLink(user_id: user_id)
+                // Recherche de l'email dans "users" avec le to_id
+                let email = try await UsersManager.shared.searchEmail(user_id: to_id)
                 
-                // Recherche de l'email dans "users" avec le user_id
-                let email = try await LastMessagesManager.shared.getEmail(user_id: user_id)
-                
-                lastMessages.append(LastMessage(avatar_link: avatarLink ,email: email, message_texte: room.last_message, message_date: room.date_message))
+                lastMessages.append(LastMessage(avatar_link: room.avatar_link, email: email, message_texte: room.last_message, message_date: room.date_message))
+
                 print("user_id: \(user_id)")
-                print("avatarLink: \(avatarLink)")
             }
         }
     }

@@ -114,6 +114,7 @@ final class LastMessagesManager {
 
     }
     
+    // Recherche de l'avatar dans "users" avec l'mail
     func getAvatarLink(email: String) async throws -> String {
         
         var avatarLink: String = ""

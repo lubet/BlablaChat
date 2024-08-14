@@ -38,11 +38,12 @@ final class LastMessagesManager {
         return memberCollection.document(user_id)
     }
     
-    // Tous les rooms triés par date
-    func getAllRooms() async throws -> [Room] {
+    // Tous mes rooms triés par date
+    func getAllRooms(user_id: String) async throws -> [Room] {
         var rooms = [Room]()
         do {
             let querySnapshot = try await roomCollection
+                .whereField("user_id", isEqualTo: user_id)
                 .order(by: "date_created")
                 .getDocuments()
             for document in querySnapshot.documents {

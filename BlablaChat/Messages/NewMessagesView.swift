@@ -203,7 +203,7 @@ final class NewMessagesViewModel: ObservableObject {
         do {
             self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
             scrollViewReaderId()
-            
+            print("messagesBubble: \(messagesBubble)")
         } catch {
             print("Error saveMessage: \(error)")
             return
@@ -260,6 +260,7 @@ struct NewMessagesView: View {
         .navigationTitle("MessagesView")
         .task {
             viewModel.param = ["email": email] // pour passer le room à la photo - voir setImage() en haut
+            print("email: \(email)")
             do {
                 try await viewModel.getRoomMessages(email: email) // Tous les messages relatif à un email
             } catch {

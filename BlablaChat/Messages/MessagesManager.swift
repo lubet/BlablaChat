@@ -52,7 +52,7 @@ final class MessagesManager {
         } catch {
             print("getMessages - Error getting documents: \(error)")
         }
-        // print("getRoomMessages MessageBubble: \(messagesBubble)")
+        print("getRoomMessages MessageBubble: \(messagesBubble)")
         return messagesBubble
     }
         

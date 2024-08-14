@@ -78,30 +78,31 @@ class LastMessagesViewModel: ObservableObject {
     // Mes derniers messages
     // mon room_id m'est donné par members avec mon user_id
     func getLastMessages() async {
+        
+        print("getLastMessages")
+        
         Task {
             lastMessages = []
+            
             let AuthUser = try AuthManager.shared.getAuthenticatedUser()
             let user_id = AuthUser.uid
             
-            // Tous mes rooms
+            // Tous les rooms dont le user_id et égal à user_id
+            //
+            self.rooms = try await LastMessagesManager.shared.getAllRooms(user_id: user_id)
             
-            // cherher le room_id dans "members" avec le user_id
-            let room_id = try await UsersManager.shared.searchRoomId(user_id: user_id)
-            
-            // Tous mes enregs de "rooms"
-            self.rooms = try await LastMessagesManager.shared.getMyRooms(room_id: room_id)
-            
-            // Balayer les rooms pour l'auth et valorise les messages avec le select_id
+            // Balayer mes rooms
             for room in self.rooms {
                 
                 // Rechercher dans "members" l'enregistrement qui a le même user_id et le même room.room_id -> select_id
                 let to_id = try await UsersManager.shared.searchDuo(from_id: user_id, room_id: room.room_id)
+                print("to_id: \(to_id)")
                 
                 // Recherche de l'email dans "users" avec le to_id
                 let email = try await UsersManager.shared.searchEmail(user_id: to_id)
                 
                 lastMessages.append(LastMessage(avatar_link: room.avatar_link, email: email, message_texte: room.last_message, message_date: room.date_message))
-
+                print("getLastMessages email: \(email)") // TODO email vide ?
                 print("user_id: \(user_id)")
             }
         }

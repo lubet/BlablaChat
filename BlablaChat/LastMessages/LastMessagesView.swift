@@ -100,6 +100,7 @@ class LastMessagesViewModel: ObservableObject {
                 
                 // Recherche de l'email dans "users" avec le to_id
                 let email = try await UsersManager.shared.searchEmail(user_id: to_id)
+                print("2 email:\(email)")
                 
                 lastMessages.append(LastMessage(avatar_link: room.avatar_link, email: email, message_texte: room.last_message, message_date: room.date_message))
                 print("getLastMessages email: \(email)") // TODO email vide ?

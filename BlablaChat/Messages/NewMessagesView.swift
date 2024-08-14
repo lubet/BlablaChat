@@ -120,7 +120,7 @@ final class NewMessagesViewModel: ObservableObject {
     // searchDuo
     func getRoomMessages(email: String) async throws {
         
-        print("getRoomMessages - email; \(email)")
+        print("getRoomMessages - email; \(email)") // vide ! TODO
         
         // user_id
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { 

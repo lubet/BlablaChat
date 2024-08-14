@@ -329,7 +329,7 @@ final class UsersManager {
     func searchEmail(user_id: String) async throws -> String {
         do {
             let querySnapshot = try await DBUserCollection
-                .whereField("userId", isEqualTo: user_id)
+                .whereField("user_id", isEqualTo: user_id)
                 .getDocuments()
             
             for document in querySnapshot.documents {

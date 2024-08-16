@@ -173,7 +173,7 @@ final class NewMessagesViewModel: ObservableObject {
         print("select_id: \(select_id)")
         
         // Recherche du room_id dans "members" avec le user_id et le select_id
-        let room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: select_id)
+        var room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: select_id)
         print("room_id: \(room_id)")
         
         // Pas de room existant
@@ -183,7 +183,7 @@ final class NewMessagesViewModel: ObservableObject {
             let avatarLink = try await LastMessagesManager.shared.getAvatarLink(email: email)
             
             // Création d'un enreg "rooms" avec le "user_id" de son créateur
-            let room_id = try await UsersManager.shared.createRoom(name: user_id, avatar_link: avatarLink)
+            room_id = try await UsersManager.shared.createRoom(name: user_id, avatar_link: avatarLink)
             
             // Création du message pour cette room
             try await UsersManager.shared.createMessage(from_id: user_id, to_id: select_id, message_text: message_text, room_id: room_id, image_link: "")

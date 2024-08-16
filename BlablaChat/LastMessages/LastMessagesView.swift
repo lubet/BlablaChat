@@ -103,7 +103,7 @@ class LastMessagesViewModel: ObservableObject {
                 print("2 email:\(email)")
                 
                 lastMessages.append(LastMessage(avatar_link: room.avatar_link, email: email, message_texte: room.last_message, message_date: room.date_message))
-                print("getLastMessages email: \(email)") // TODO email vide ?
+                print("getLastMessages email: \(email)")
                 print("user_id: \(user_id)")
             }
         }

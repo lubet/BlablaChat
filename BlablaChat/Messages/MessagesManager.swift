@@ -28,6 +28,10 @@ final class MessagesManager {
 
     // Tous les messages d'un room en ordre croissant pour affichage "bubble"
     func getRoomMessages(room_id: String, user_id: String) async throws -> [MessageBubble] {
+        
+        print("getRoomMessages-room_id:\(room_id)")
+        print("getRoomMessages-user_id:\(user_id)")
+        
         var messagesBubble = [MessageBubble]()
         var received: Bool = false
         

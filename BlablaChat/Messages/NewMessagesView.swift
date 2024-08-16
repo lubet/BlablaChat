@@ -120,7 +120,7 @@ final class NewMessagesViewModel: ObservableObject {
     // searchDuo
     func getRoomMessages(email: String) async throws {
         
-        print("getRoomMessages - email; \(email)") // vide ! TODO
+        print("getRoomMessages - email; \(email)")
         
         // user_id
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { 
@@ -177,7 +177,7 @@ final class NewMessagesViewModel: ObservableObject {
         print("room_id: \(room_id)")
         
         // Pas de room existant
-        if room_id == "" {
+        if (room_id) == "" {
             
             // Recherche de l'avatar dans "users" avec l'email
             let avatarLink = try await LastMessagesManager.shared.getAvatarLink(email: email)
@@ -191,24 +191,18 @@ final class NewMessagesViewModel: ObservableObject {
             // Création d'un enreg dans "members" avec le user_id, le select_id et le room_id
             try await UsersManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: select_id)
             
-            print("room_id nouveau:\(room_id)")
+            // print("room_id nouveau:\(room_id)")
             
         } else {
             // Room existant
             try await UsersManager.shared.createMessage(from_id: user_id, to_id: select_id, message_text: message_text, room_id: room_id, image_link: "")
-            print("room_id existant:\(room_id)")
-        }
-
-        // Rafraichissement de la view
-        do {
-            self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
-            scrollViewReaderId()
-            print("messagesBubble: \(messagesBubble)")
-        } catch {
-            print("Error saveMessage: \(error)")
-            return
+            // print("room_id existant:\(room_id)")
         }
         
+        // Rafraichissement de la view
+        self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
+        scrollViewReaderId()
+        print("self.messagesBubble-room_id:\(room_id)")
     }
     
     func scrollViewReaderId() {

@@ -95,23 +95,27 @@ class LastMessagesViewModel: ObservableObject {
                 self.rooms = try await LastMessagesManager.shared.getMyRooms(room_id: member.room_id)
             }
             
-            print("user_id*:\(user_id)")
-            print("members*:\(members)")
-            print("rooms*:\(self.rooms)")
+//            print("user_id*:\(user_id)")
+//            print("members*:\(members)")
+//            print("rooms*:\(self.rooms)")
             
             // Balayer mes rooms
+            var x_id: String = ""
             for room in self.rooms {
-                // Rechercher dans "members" l'enregistrement qui a le même user_id et le même room.room_id -> select_id
-                let to_id = try await UsersManager.shared.searchDuo(from_id: user_id, room_id: room.room_id)
-                print("to_id: \(to_id)")
+                
+                // Dans "members" ramener l'id du contact
+                let (from_id, to_id) = try await LastMessagesManager.shared.getFromId(room_id: room.room_id)
+
+                if (from_id == user_id) {
+                    x_id = to_id
+                } else {
+                    x_id = from_id
+                }
                 
                 // Recherche de l'email dans "users" avec le to_id
-                let email = try await UsersManager.shared.searchEmail(user_id: to_id)
-                print("2 email:\(email)")
+                let email = try await UsersManager.shared.searchEmail(user_id: x_id)
                 
                 lastMessages.append(LastMessage(avatar_link: room.avatar_link, email: email, message_texte: room.last_message, message_date: room.date_message))
-                print("getLastMessages email: \(email)")
-                print("user_id: \(user_id)")
             }
         }
     }

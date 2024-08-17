@@ -179,4 +179,23 @@ final class LastMessagesManager {
 
     }
     
+    // Retourne le "from_id" de "members" pour un room_id donné
+    func getFromId(room_id: String) async throws -> (String, String) {
+        var from_id: String = ""
+        var to_id: String = ""
+        do {
+            let querySnapshot = try await memberCollection
+                .whereField("room_id", isEqualTo: room_id)
+                .getDocuments()
+            for document in querySnapshot.documents {
+                let membre = try document.data(as: Member.self)
+                from_id = membre.from_id
+                to_id = membre.to_id
+            }
+        } catch {
+            print("getMyRoomsId - Error getting documents from members: \(error)")
+        }
+        return (from_id, to_id)
+    }
+    
 }

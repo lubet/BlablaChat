@@ -188,10 +188,12 @@ final class NewMessagesViewModel: ObservableObject {
             // Création du message pour cette room
             try await UsersManager.shared.createMessage(from_id: user_id, to_id: select_id, message_text: message_text, room_id: room_id, image_link: "")
             
-            // Création d'un enreg dans "members" avec le user_id, le select_id et le room_id
-            try await UsersManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: select_id)
+            // Création d'un enreg dans "members" avec le user_id, le select_id et le room_id si il n'existe pas déjà
+            let dejaMembre = try await UsersManager.shared.dejaMembre(room_id: room_id, user_id: user_id, contact_id: select_id)
             
-            // print("room_id nouveau:\(room_id)")
+            if !dejaMembre {
+                try await UsersManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: select_id)
+            }
             
         } else {
             // Room existant

@@ -267,6 +267,36 @@ final class UsersManager {
             ]
             try await memberRef.setData(data, merge: false)
     }
+    
+    // retourne vrai si le tryptique combiné existe dans "members"
+    func dejaMembre(room_id: String, user_id: String, contact_id: String) async throws -> Bool {
+        
+        do {
+            let memberSnapshot = try await MemberCollection.whereFilter(Filter.orFilter([
+                Filter.andFilter([
+                    Filter.whereField("from_id", isEqualTo: user_id),
+                    Filter.whereField("to_id", isEqualTo: contact_id),
+                    Filter.whereField("room_id", isEqualTo: room_id),
+                ]),
+                Filter.andFilter([
+                    Filter.whereField("from_id", isEqualTo: contact_id),
+                    Filter.whereField("to_id", isEqualTo: user_id),
+                    Filter.whereField("room_id", isEqualTo: room_id),
+                ])
+            ])
+            ).getDocuments()
+            
+            for duo in memberSnapshot.documents {
+                let duo = try duo.data(as: Member.self)
+                let roomId = duo.room_id
+                return true
+            }
+        } catch {
+            print("searchDuo - Error getting documents from members: \(error)")
+        }
+        return false
+    }
+    
 
     // Création du message et maj du dernier message de Room avec le message
     func createMessage(from_id: String, to_id: String, message_text: String, room_id: String, image_link: String) async throws {

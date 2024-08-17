@@ -38,23 +38,23 @@ final class LastMessagesManager {
         return memberCollection.document(user_id)
     }
     
-    // Tous mes rooms triés par date
-    func getAllRooms(user_id: String) async throws -> [Room] {
-        var rooms = [Room]()
-        do {
-            let querySnapshot = try await roomCollection
-                .whereField("user_id", isEqualTo: user_id)
-                .order(by: "date_created")
-                .getDocuments()
-            for document in querySnapshot.documents {
-                let room = try document.data(as: Room.self)
-                rooms.append(room)
-            }
-        } catch {
-            print("getAllRooms - Error getting documents: \(error)")
-        }
-        return rooms
-    }
+    // Tous les rooms de l'auth triès par date
+//    func getAllRooms(room_id: String) async throws -> [Room] {
+//        var rooms = [Room]()
+//        do {
+//            let querySnapshot = try await roomCollection
+//                .whereField("room_id", isEqualTo: room_id)
+//                .order(by: "date_created")
+//                .getDocuments()
+//            for document in querySnapshot.documents {
+//                let room = try document.data(as: Room.self)
+//                rooms.append(room)
+//            }
+//        } catch {
+//            print("getAllRooms - Error getting documents: \(error)")
+//        }
+//        return rooms
+//    }
     
     // Tous mes rooms
     func getMyRooms(room_id: String) async throws -> [Room] {
@@ -75,12 +75,13 @@ final class LastMessagesManager {
         return rooms
     }
     
-    // Récupérer de member les room_id pour lequelles je suis membre
+    // Extraire de "members" l'enreg de l'auth (contient le room_id) - un seul retourné ou 0
     func getMyRoomsId(user_id: String) async throws -> [Member] {
         var members = [Member]()
         do {
             let querySnapshot = try await memberCollection.whereFilter(Filter.orFilter([
-                    Filter.whereField("user_id", isEqualTo: user_id)
+                    Filter.whereField("from_id", isEqualTo: user_id),
+                    Filter.whereField("to_id", isEqualTo: user_id)
                 ]))
                 .order(by: "date_created")
                 .getDocuments()

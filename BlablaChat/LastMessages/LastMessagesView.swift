@@ -87,13 +87,20 @@ class LastMessagesViewModel: ObservableObject {
             let AuthUser = try AuthManager.shared.getAuthenticatedUser()
             let user_id = AuthUser.uid
             
+            // Tous les enregs de "members" où l'auth est présent (permet de récupérer tous ses room_id's).
+            members = try await LastMessagesManager.shared.getMyRoomsId(user_id: user_id)
+            
             // Tous les rooms dont le user_id et égal à user_id
-            //
-            self.rooms = try await LastMessagesManager.shared.getAllRooms(user_id: user_id)
+            for member in members {
+                self.rooms = try await LastMessagesManager.shared.getMyRooms(room_id: member.room_id)
+            }
+            
+            print("user_id*:\(user_id)")
+            print("members*:\(members)")
+            print("rooms*:\(self.rooms)")
             
             // Balayer mes rooms
             for room in self.rooms {
-                
                 // Rechercher dans "members" l'enregistrement qui a le même user_id et le même room.room_id -> select_id
                 let to_id = try await UsersManager.shared.searchDuo(from_id: user_id, room_id: room.room_id)
                 print("to_id: \(to_id)")

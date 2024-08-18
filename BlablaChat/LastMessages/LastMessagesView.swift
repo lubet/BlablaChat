@@ -90,7 +90,7 @@ class LastMessagesViewModel: ObservableObject {
             // Tous les enregs de "members" où l'auth est présent (permet de récupérer tous ses room_id's).
             members = try await LastMessagesManager.shared.getMyRoomsId(user_id: user_id)
             
-            // Tous les rooms dont le user_id et égal à user_id
+            // Tous les rooms de l'auth
             for member in members {
                 self.rooms = try await LastMessagesManager.shared.getMyRooms(room_id: member.room_id)
             }
@@ -99,20 +99,20 @@ class LastMessagesViewModel: ObservableObject {
 //            print("members*:\(members)")
 //            print("rooms*:\(self.rooms)")
             
-            // Balayer mes rooms
+            // Balayer les rooms de l'auth
             var x_id: String = ""
             for room in self.rooms {
                 
-                // Dans "members" ramener l'id du contact
-                let (from_id, to_id) = try await LastMessagesManager.shared.getFromId(room_id: room.room_id)
+                // Dans "members", raméne les deux user_id ayant le même room_id
+                let (user_id1, user_id2) = try await LastMessagesManager.shared.getFromId(room_id: room.room_id)
 
-                if (from_id == user_id) {
-                    x_id = to_id
+                if (user_id1 == user_id) {
+                    x_id = user_id2
                 } else {
-                    x_id = from_id
+                    x_id = user_id1
                 }
                 
-                // Recherche de l'email dans "users" avec le to_id
+                // Recherche de l'email dans "users" avec un user_id
                 let email = try await UsersManager.shared.searchEmail(user_id: x_id)
                 
                 lastMessages.append(LastMessage(avatar_link: room.avatar_link, email: email, message_texte: room.last_message, message_date: room.date_message))

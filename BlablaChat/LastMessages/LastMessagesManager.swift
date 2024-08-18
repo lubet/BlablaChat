@@ -75,7 +75,7 @@ final class LastMessagesManager {
         return rooms
     }
     
-    // Extraire de "members" l'enreg de l'auth (contient le room_id) - un seul retourné ou 0
+    // Ensemble de tous les enregs de "members" où l'auth est présent soit dans from_id ou soit dans to_id
     func getMyRoomsId(user_id: String) async throws -> [Member] {
         var members = [Member]()
         do {
@@ -179,7 +179,7 @@ final class LastMessagesManager {
 
     }
     
-    // Retourne le "from_id" de "members" pour un room_id donné
+    // Dans "members", retourne le "from_id" et le "to_id" d'un room_id
     func getFromId(room_id: String) async throws -> (String, String) {
         var from_id: String = ""
         var to_id: String = ""

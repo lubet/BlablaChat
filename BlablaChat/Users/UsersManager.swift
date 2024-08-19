@@ -104,15 +104,12 @@ final class UsersManager {
     private func roomDocument(room_id: String) -> DocumentReference {
         return roomCollection.document(room_id)
     }
-           
-    // Collection messages - sous collection de rooms
-    private func messageCollection(room_id: String) -> CollectionReference {
-        roomDocument(room_id: room_id).collection("messages")
-    }
     
-    // Document message
-    private func messageDocument(room_id: String, message_id: String) -> DocumentReference {
-        messageCollection(room_id: room_id).document(message_id)
+    // ---------------------------------------------------------------
+    private let messageCollection = dbFS.collection("messages")
+    
+    private func messageDocument(user_id: String) -> DocumentReference {
+        return messageCollection.document(user_id)
     }
     
     //-----------------------------------------------------------------
@@ -225,22 +222,6 @@ final class UsersManager {
         return room_id
     }
     
-    // New Room pour les contacts (avatar dans "rooms"
-//    func createRoom() async throws -> String {
-//        let roomRef = roomCollection.document()
-//        let room_id = roomRef.documentID
-//        
-//        let data: [String:Any] = [
-//            "room_id" : room_id,
-//            "date_created" : Timestamp(),
-//            "last_message" : "",
-//        ]
-//        try await roomRef.setData(data, merge: false)
-//        
-//        return room_id
-//    }
-
-    
     func createMembers(room_id: String, user_id:String, contact_id:String) async throws {
             let memberRef = MemberCollection.document()
             let member_id = memberRef.documentID
@@ -299,7 +280,7 @@ final class UsersManager {
 
     // Création du message et maj du dernier message de Room avec le message
     func createMessage(from_id: String, to_id: String, message_text: String, room_id: String, image_link: String) async throws {
-        let messageRef = roomDocument(room_id: room_id).collection("messages").document()
+        let messageRef = messageCollection.document()
         let message_id = messageRef.documentID
         
         let dateMessage = Timestamp()
@@ -320,7 +301,7 @@ final class UsersManager {
         ]
         try await messageRef.setData(data, merge: false)
         
-        // Maj dernier message dans Room
+        // Ajout/replace du dernier message dans "rooms"
         let roomRef = roomDocument(room_id: room_id)
 
         let dataRoom: [String:Any] = [

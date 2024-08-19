@@ -57,46 +57,44 @@ final class NewMessagesViewModel: ObservableObject {
                     // Recherche du select_id dans "users" à l'aide de l'email (existe forcemment)
                     var select_id  = try await UsersManager.shared.searchContact(email: email)
                     
-                    
-                    
-                    if select_id == "" {
+                    // Recherche du room_id dans "members" avec le user_id et le select_id
+                    var room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: select_id)
+                    print("room_id: \(room_id)")
 
-                        // créer user
-                        select_id = try await UsersManager.shared.createUser(email: email)
+                    
+                    if (room_id) == "" {
                         
-                        // créer l'avatar
-                        let mimage: UIImage = UIImage.init(systemName: "person.fill")!
-                        let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: select_id)
-                        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-                        try await UsersManager.shared.updateImagePath(userId: select_id, path: lurl.absoluteString) // maj Firestore
+                        // Recherche de l'avatar dans "users" avec l'email
+                        let avatarLink = try await LastMessagesManager.shared.getAvatarLink(email: email)
+                        
+                        // Création d'un enreg "rooms" avec le "user_id" de son créateur
+                        room_id = try await UsersManager.shared.createRoom(name: user_id, avatar_link: avatarLink)
 
-                        // créer room
-                        let room_id = try await UsersManager.shared.createRoom(name: email, avatar_link: lurl.absoluteString)
-
-                        // créer membre
+                        // Création d'un enreg dans "members"
                         try await UsersManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: select_id)
                     }
                     
-                    // Recherche du room_id dans "members" avec le user_id
-                    let room_id = try await UsersManager.shared.searchRoomId(user_id: user_id)
-                    
-                    // Recherche dans membre
-                    guard let toId =  try await MessagesManager.shared.getUserId(user_id: user_id) else {
-                        return
-                    }
-
+                    // Sauvegarde de l'image
                     let lurl: URL
-                    
-                    guard let image = selectedImage else {
-                        return
-                    }
+                    guard let image = selectedImage else { return }
                     
                     // path = users/user_id/<nom du fichier.jpeg
-                    let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: toId)
-                     
+                    let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: user_id)
+
                     lurl = try await StorageManager.shared.getUrlForImage(path: path)
                     
-                    try await UsersManager.shared.createMessage(from_id: user_id, to_id: toId, message_text: "", room_id: room_id, image_link: lurl.absoluteString)
+                    // TODO Chercher dans "members" le user qui n'est pas le auth user
+                    // Dans "members", raméne les deux user_id ayant le même room_id
+                    let (user_id1, user_id2) = try await LastMessagesManager.shared.getFromId(room_id: room_id)
+
+                    var x_id = ""
+                    if (user_id1 == user_id) {
+                        x_id = user_id2
+                    } else {
+                        x_id = user_id1
+                    }
+                    
+                    try await UsersManager.shared.createMessage(from_id: user_id, to_id: x_id, message_text: "", room_id: room_id, image_link: lurl.absoluteString)
                     
                     do {
                         // Rafraichissement de la view actuelle

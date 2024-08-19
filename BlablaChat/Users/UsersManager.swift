@@ -266,7 +266,7 @@ final class UsersManager {
             ])
             ).getDocuments()
             
-            for duo in memberSnapshot.documents {
+            for _ in memberSnapshot.documents {
                 return true
             }
         } catch {
@@ -277,7 +277,7 @@ final class UsersManager {
     
 
     // Création du message et maj du dernier message de Room avec le message
-    func createMessage(from_id: String, to_id: String, message_text: String, room_id: String, image_link: String) async throws {
+    func createMessage(from_id: String, message_text: String, room_id: String, image_link: String) async throws {
         let messageRef = messageCollection.document()
         let message_id = messageRef.documentID
         
@@ -291,7 +291,6 @@ final class UsersManager {
         let data: [String:Any] = [
             "id": message_id,
             "from_id": from_id,
-            "to_id": to_id,
             "message_text": msg,
             "date_send": dateMessage,
             "room_id": room_id,

@@ -83,18 +83,10 @@ final class NewMessagesViewModel: ObservableObject {
 
                     lurl = try await StorageManager.shared.getUrlForImage(path: path)
                     
-                    // TODO Chercher dans "members" le user qui n'est pas le auth user
                     // Dans "members", raméne les deux user_id ayant le même room_id
-                    let (user_id1, user_id2) = try await LastMessagesManager.shared.getFromId(room_id: room_id)
-
-                    var x_id = ""
-                    if (user_id1 == user_id) {
-                        x_id = user_id2
-                    } else {
-                        x_id = user_id1
-                    }
+                    // let (user_id1, user_id2) = try await LastMessagesManager.shared.getFromId(room_id: room_id)
                     
-                    try await UsersManager.shared.createMessage(from_id: user_id, to_id: x_id, message_text: "", room_id: room_id, image_link: lurl.absoluteString)
+                    try await UsersManager.shared.createMessage(from_id: user_id, message_text: "", room_id: room_id, image_link: lurl.absoluteString)
                     
                     do {
                         // Rafraichissement de la view actuelle
@@ -184,7 +176,7 @@ final class NewMessagesViewModel: ObservableObject {
             room_id = try await UsersManager.shared.createRoom(avatar_link: avatarLink)
             
             // Création du message pour cette room
-            try await UsersManager.shared.createMessage(from_id: user_id, to_id: select_id, message_text: message_text, room_id: room_id, image_link: "")
+            try await UsersManager.shared.createMessage(from_id: user_id, message_text: message_text, room_id: room_id, image_link: "")
             
             // Création d'un enreg dans "members" avec le user_id, le select_id et le room_id si il n'existe pas déjà
             let dejaMembre = try await UsersManager.shared.dejaMembre(room_id: room_id, user_id: user_id, contact_id: select_id)
@@ -195,7 +187,7 @@ final class NewMessagesViewModel: ObservableObject {
             
         } else {
             // Room existant
-            try await UsersManager.shared.createMessage(from_id: user_id, to_id: select_id, message_text: message_text, room_id: room_id, image_link: "")
+            try await UsersManager.shared.createMessage(from_id: user_id, message_text: message_text, room_id: room_id, image_link: "")
             // print("room_id existant:\(room_id)")
         }
         

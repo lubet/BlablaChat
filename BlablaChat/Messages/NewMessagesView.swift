@@ -68,7 +68,7 @@ final class NewMessagesViewModel: ObservableObject {
                         let avatarLink = try await LastMessagesManager.shared.getAvatarLink(email: email)
                         
                         // Création d'un enreg "rooms" avec le "user_id" de son créateur
-                        room_id = try await UsersManager.shared.createRoom(name: user_id, avatar_link: avatarLink)
+                        room_id = try await UsersManager.shared.createRoom(avatar_link: avatarLink)
 
                         // Création d'un enreg dans "members"
                         try await UsersManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: select_id)
@@ -181,7 +181,7 @@ final class NewMessagesViewModel: ObservableObject {
             let avatarLink = try await LastMessagesManager.shared.getAvatarLink(email: email)
             
             // Création d'un enreg "rooms" avec le "user_id" de son créateur
-            room_id = try await UsersManager.shared.createRoom(name: user_id, avatar_link: avatarLink)
+            room_id = try await UsersManager.shared.createRoom(avatar_link: avatarLink)
             
             // Création du message pour cette room
             try await UsersManager.shared.createMessage(from_id: user_id, to_id: select_id, message_text: message_text, room_id: room_id, image_link: "")

@@ -206,13 +206,12 @@ final class UsersManager {
 
     
     // New Room pour les contacts (avatar dans "rooms")
-    func createRoom(name: String, avatar_link: String) async throws -> String {
+    func createRoom(avatar_link: String) async throws -> String {
         let roomRef = roomCollection.document()
         let room_id = roomRef.documentID
         
         let data: [String:Any] = [
             "room_id" : room_id,
-            "room_name": name,
             "date_created" : Timestamp(),
             "last_message" : "",
             "avatar_link" : avatar_link
@@ -268,7 +267,6 @@ final class UsersManager {
             ).getDocuments()
             
             for duo in memberSnapshot.documents {
-                let duo = try duo.data(as: Member.self)
                 return true
             }
         } catch {

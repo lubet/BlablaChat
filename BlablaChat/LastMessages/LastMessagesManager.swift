@@ -37,25 +37,7 @@ final class LastMessagesManager {
     private func memberDocument(user_id: String) -> DocumentReference {
         return memberCollection.document(user_id)
     }
-    
-    // Tous les rooms de l'auth triès par date
-//    func getAllRooms(room_id: String) async throws -> [Room] {
-//        var rooms = [Room]()
-//        do {
-//            let querySnapshot = try await roomCollection
-//                .whereField("room_id", isEqualTo: room_id)
-//                .order(by: "date_created")
-//                .getDocuments()
-//            for document in querySnapshot.documents {
-//                let room = try document.data(as: Room.self)
-//                rooms.append(room)
-//            }
-//        } catch {
-//            print("getAllRooms - Error getting documents: \(error)")
-//        }
-//        return rooms
-//    }
-    
+
     // Tous mes rooms
     func getMyRooms(room_id: String) async throws -> [Room] {
         

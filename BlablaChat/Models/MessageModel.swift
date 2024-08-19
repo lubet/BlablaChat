@@ -10,22 +10,22 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct Message: Identifiable, Codable {
-    let id:String
-    let from_id:String
+    let id: String
+    let from_id: String
     let to_id: String
     let message_text:String
-    let date_send:Timestamp
-    let room_id:String
-    let image_link:String?
+    let date_send: Timestamp
+    let room_id: String
+    let image_link: String?
     
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case from_id = "from_id"
-        case to_id = "to_id"
-        case message_text = "message_text"
-        case date_send = "date_send"
-        case room_id = "room_id"
-        case image_link = "image_link"
+        case id
+        case from_id
+        case to_id
+        case message_text
+        case date_send
+        case room_id
+        case image_link
     }
     
     init(

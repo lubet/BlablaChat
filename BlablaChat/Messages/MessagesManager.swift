@@ -26,7 +26,7 @@ final class MessagesManager {
     
     private let roomCollection = db.collection("rooms")
 
-    // Tous les messages d'un room en ordre croissant pour affichage "bubble"
+    // Tous les messages d'un room en ordre croissant pour affichage bubble
     func getRoomMessages(room_id: String, user_id: String) async throws -> [MessageBubble] {
         
         print("getRoomMessages-room_id:\(room_id)")
@@ -45,9 +45,9 @@ final class MessagesManager {
                 for doc in snap.documents {
                     let msg = try doc.data(as: Message.self)
                     if (msg.from_id == user_id) {
-                        received.toggle() // received = true
+                        received.toggle() // received = true TODO
                     } else {
-                        received.toggle() // received = false
+                        received.toggle() // received = false TODO
                     }
                     let oneBubble = MessageBubble(id: UUID().uuidString, message_text: msg.message_text, message_date: timeStampToString(dateMessage: msg.date_send), received: received, imageLink: msg.image_link ?? "")
                     messagesBubble.append(oneBubble)

@@ -191,7 +191,7 @@ final class NewMessagesViewModel: ObservableObject {
             // print("room_id existant:\(room_id)")
         }
         
-        // Rafraichissement de la view
+        // Rafraichissement de la view bubble
         self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
         scrollViewReaderId()
         print("self.messagesBubble-room_id:\(room_id)")

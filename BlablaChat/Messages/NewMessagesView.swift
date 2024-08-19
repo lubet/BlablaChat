@@ -55,7 +55,7 @@ final class NewMessagesViewModel: ObservableObject {
                     let user_id = AuthUser.uid
                     
                     // Recherche du select_id dans "users" à l'aide de l'email (existe forcemment)
-                    var select_id  = try await UsersManager.shared.searchContact(email: email)
+                    let select_id  = try await UsersManager.shared.searchContact(email: email)
                     
                     // Recherche du room_id dans "members" avec le user_id et le select_id
                     var room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: select_id)

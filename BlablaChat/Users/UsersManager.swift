@@ -288,7 +288,6 @@ final class UsersManager {
             
             for duo in memberSnapshot.documents {
                 let duo = try duo.data(as: Member.self)
-                let roomId = duo.room_id
                 return true
             }
         } catch {

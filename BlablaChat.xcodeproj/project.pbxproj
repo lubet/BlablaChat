@@ -144,7 +144,6 @@
 			isa = PBXGroup;
 			children = (
 				C047E9E12B45880400C6D48F /* StorageManager.swift */,
-				C047E9DF2B45767B00C6D48F /* AuthManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -221,6 +220,7 @@
 			children = (
 				C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */,
 				C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */,
+				C047E9DF2B45767B00C6D48F /* AuthManager.swift */,
 				C047E9C52B45625C00C6D48F /* LoginEmailView.swift */,
 				C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */,
 			);

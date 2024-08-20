@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 final class LoginEmailViewModel: ObservableObject {
     
     @Published var email: String = ""
@@ -95,7 +96,7 @@ struct LoginEmailView: View {
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(10)
                 
-                TextField("Mot de passe", text: $viewModel.password)
+                SecureField("Mot de passe", text: $viewModel.password)
                     .padding(15)
                     .frame(width: 300, height: 50)
                     .textInputAutocapitalization(.never)

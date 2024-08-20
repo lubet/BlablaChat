@@ -14,7 +14,6 @@ struct RootView: View {
     var body: some View {
         ZStack {
             if showSignInView == false {
-                // SettingsView(showSignInView: $showSignInView)
                 LastMessagesView(showSignInView: $showSignInView)
             }
         }

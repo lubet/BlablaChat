@@ -31,11 +31,8 @@ final class LoginEmailViewModel: ObservableObject {
         
         // Avatar
         let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: user.userId)
-//        print("image path: \(path)") // chemin complet + nom du jpeg
-//        print("Image name: \(name)") // nom du jpeg
 
         let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-        // print("image url: \(lurl)")
 
         try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
         

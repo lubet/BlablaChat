@@ -312,7 +312,7 @@ final class UsersManager {
     }
 
     // Recherche du room_id dans "members" avec le user_id
-    func searchRoomId(user_id: String) async throws -> String{
+    func searchRoomId(user_id: String) async throws -> String {
         do {
             let memberSnapshot = try await MemberCollection
                 .whereField("user_id", isEqualTo: user_id)
@@ -333,7 +333,7 @@ final class UsersManager {
     }
     
     // Recherhe de l'email dans "users"
-    func searchEmail(user_id: String) async throws -> String {
+    func searchEmail(user_id: String) async throws -> (String, String) {
         do {
             let querySnapshot = try await DBUserCollection
                 .whereField("user_id", isEqualTo: user_id)
@@ -342,13 +342,13 @@ final class UsersManager {
             for document in querySnapshot.documents {
                 let user = try document.data(as: DBUser.self)
                 if (user.userId == user_id) {
-                    return user.email ?? ""
+                    return (user.email ?? "", user.avatarLink ?? "")
                 }
             }
         } catch {
             print("searchContact - Error getting documents: \(error)")
         }
-        return ""
+        return ("","")
 
     }
     

@@ -113,9 +113,9 @@ class LastMessagesViewModel: ObservableObject {
                 }
                 
                 // Recherche de l'email dans "users" avec un user_id
-                let email = try await UsersManager.shared.searchEmail(user_id: x_id)
+                let (email, avatar_link) = try await UsersManager.shared.searchEmail(user_id: x_id)
                 
-                lastMessages.append(LastMessage(avatar_link: room.avatar_link, email: email, message_texte: room.last_message, message_date: room.date_message))
+                lastMessages.append(LastMessage(avatar_link: avatar_link, email: email, message_texte: room.last_message, message_date: room.date_message))
             }
         }
     }

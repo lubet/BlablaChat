@@ -44,8 +44,8 @@ struct UsersView: View {
                 List {
                     ForEach(filteredUsers) { oneUser in
                         Button {
-                            presentationMode.wrappedValue.dismiss()
-                            didSelectedNewUser(oneUser.email!)
+                            presentationMode.wrappedValue.dismiss() // Fermeture de la vue
+                            didSelectedNewUser(oneUser.email!)      // Ouverture de la vue précédente "NewMessagesView" avec passage de l'email selectionné
                         } label: {
                             UsersCellView(oneUser: oneUser)
                         }

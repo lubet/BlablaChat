@@ -1,14 +1,15 @@
 //
-//  MessagesView.swift
+//  NewMessagesView.swift
 //  BlablaChat
 //
 //  Created by Lubet-Moncla Xavier on 29/03/2024.
 //
-// Création d'un message de A pour B
-// A la création du message:
-//  créer deux enregs dans "members" (si n'existe pas) - un por A, un pour B avec le même numéro de room
-//  création un enreg correspodant dans "rooms"
-//  création un enreg dans "messages" avec le même numéro de room
+// L'email du destinataire est transmis par "UsersView" (call back)
+// Liste des messages du destinataire (bubble)
+// Si pas de "room"
+//      création d'un room
+//      création d'un enreg membre envoyeur/destinataire/room_id
+// Création du message texte ou photo avec un room_id (créer ci-dessus ou existant)
 
 import SwiftUI
 import FirebaseFirestore
@@ -137,19 +138,6 @@ final class NewMessagesViewModel: ObservableObject {
         }
     }
      
-    // A la création du message:
-    
-    // L'auth et le selectioné et leur avatar sont déjà dans "users" car ce sont des authentifiés (automatiquement créer dans users)
-    
-    // Si il n'y pas de room existant dans "members" pour l'auth et le selectioné:
-        // Création d'un enreg dans "rooms"
-        // Création du message pour cette room
-        // Création de deux enregs dans "members" un pour l'auth l'autre pour celui selectionné ave le room créer au début
-    
-    // Si il y a un room existant dans "members" pour l'auth et le selectionné:
-       // Rattaché le message à cette room
-       // Créer le message pour cette room
-    
     func saveMessage(email: String, message_text: String) async throws {
         
         print("**** saveMessage ****")
@@ -175,21 +163,17 @@ final class NewMessagesViewModel: ObservableObject {
             // Création d'un enreg "rooms" avec le "user_id" de son créateur
             room_id = try await UsersManager.shared.createRoom(avatar_link: avatarLink)
             
-            // Création du message pour cette room
-            try await UsersManager.shared.createMessage(from_id: user_id, message_text: message_text, room_id: room_id, image_link: "")
-            
             // Création d'un enreg dans "members" avec le user_id, le select_id et le room_id si il n'existe pas déjà
             let dejaMembre = try await UsersManager.shared.dejaMembre(room_id: room_id, user_id: user_id, contact_id: select_id)
             
             if !dejaMembre {
                 try await UsersManager.shared.createMembers(room_id: room_id, user_id: user_id, contact_id: select_id)
             }
-            
-        } else {
-            // Room existant
-            try await UsersManager.shared.createMessage(from_id: user_id, message_text: message_text, room_id: room_id, image_link: "")
-            // print("room_id existant:\(room_id)")
         }
+
+        // Message
+        try await UsersManager.shared.createMessage(from_id: user_id, message_text: message_text, room_id: room_id, image_link: "")
+        // print("room_id existant:\(room_id)")
         
         // Rafraichissement de la view bubble
         self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)

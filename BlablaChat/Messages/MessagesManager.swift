@@ -29,9 +29,6 @@ final class MessagesManager {
     // Tous les messages d'un room en ordre croissant pour affichage bubble
     func getRoomMessages(room_id: String, user_id: String) async throws -> [MessageBubble] {
         
-        print("getRoomMessages-room_id:\(room_id)")
-        print("getRoomMessages-user_id:\(user_id)")
-        
         var messagesBubble = [MessageBubble]()
         var received: Bool = false
         
@@ -63,8 +60,6 @@ final class MessagesManager {
     func getUserId(user_id: String) async throws -> String? {
 
         var to_id: String?
-        
-        print("getUserId \(user_id)")
         
         do {
             let querySnapshot = try? await memberCollection

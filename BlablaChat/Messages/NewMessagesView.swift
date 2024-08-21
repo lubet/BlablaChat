@@ -40,8 +40,6 @@ final class NewMessagesViewModel: ObservableObject {
     // TODO Image pour un existant et un non existant
     private func setImage(from selection: PhotosPickerItem?, email: String) {
         
-        print(("setImage"))
-        
         guard let selection else { return }
 
         var selectedImage: UIImage? = nil
@@ -60,8 +58,6 @@ final class NewMessagesViewModel: ObservableObject {
                     
                     // Recherche du room_id dans "members" avec le user_id et le select_id
                     var room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: select_id)
-                    print("room_id: \(room_id)")
-
                     
                     if (room_id) == "" {
                         
@@ -111,8 +107,6 @@ final class NewMessagesViewModel: ObservableObject {
     // searchDuo
     func getRoomMessages(email: String) async throws {
         
-        print("getRoomMessages - email; \(email)")
-        
         // user_id
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { 
             return
@@ -121,14 +115,9 @@ final class NewMessagesViewModel: ObservableObject {
         
         // Recherche du selected_id avec son email dans "members"
         let selected_id = try await UsersManager.shared.searchContact(email: email)
-        print("getRoomMessages - selected_id: \(selected_id)")
         
         // Recherche du room_id dans "members" avec le from_id et le to_id
         let room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: selected_id)
-        
-        print("getRoomMessages - user_id \(user_id)")
-        
-        print("getRoomMessages - room_id \(room_id)")
         
         if room_id != "" {
             self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
@@ -140,19 +129,15 @@ final class NewMessagesViewModel: ObservableObject {
      
     func saveMessage(email: String, message_text: String) async throws {
         
-        print("**** saveMessage ****")
-        
         // user_id (auth)
         guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = AuthUser.uid
 
         // Recherche du select_id dans la base "users" avec l'email du select
         let select_id = try await UsersManager.shared.searchContact(email: email)
-        print("select_id: \(select_id)")
         
         // Recherche du room_id dans "members" avec le user_id et le select_id
         var room_id = try await UsersManager.shared.searchDuo(user_id: user_id, contact_id: select_id)
-        print("room_id: \(room_id)")
         
         // Pas de room existant
         if (room_id) == "" {
@@ -173,12 +158,10 @@ final class NewMessagesViewModel: ObservableObject {
 
         // Message
         try await UsersManager.shared.createMessage(from_id: user_id, message_text: message_text, room_id: room_id, image_link: "")
-        // print("room_id existant:\(room_id)")
         
         // Rafraichissement de la view bubble
         self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)
         scrollViewReaderId()
-        print("self.messagesBubble-room_id:\(room_id)")
     }
     
     func scrollViewReaderId() {
@@ -230,7 +213,6 @@ struct NewMessagesView: View {
         .navigationTitle("MessagesView")
         .task {
             viewModel.param = ["email": email] // pour passer le room à la photo - voir setImage() en haut
-            print("email: \(email)")
             do {
                 try await viewModel.getRoomMessages(email: email) // Tous les messages relatif à un email
             } catch {

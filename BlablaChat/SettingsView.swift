@@ -21,7 +21,6 @@ final class SettingsViewModel: ObservableObject {
             throw URLError(.fileDoesNotExist)
         }
         
-        print("email:\(email)")
         try await AuthManager.shared.resetPassword(email: email)
     }
 }
@@ -37,7 +36,6 @@ struct SettingsView: View {
         List {
             Button("Log out") {
                 Task {
-                    print("****** Logout")
                     do {
                         try viewModel.logOut()
                         showSignInView = true
@@ -50,10 +48,8 @@ struct SettingsView: View {
             
             Button("Reset du mot de passe") {
                 Task {
-                    print("****** Reset mot de passe")
                     do {
                         try await viewModel.resetPassword()
-                        print("PAssword resset")
                     } catch {
                         print(error)
                     }

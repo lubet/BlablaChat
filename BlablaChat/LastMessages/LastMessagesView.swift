@@ -4,6 +4,8 @@
 //
 //  Created by Lubet-Moncla Xavier on 23/03/2024.
 //
+// Liste de derniers messages par room
+
 
 import SwiftUI
 import FirebaseFirestore
@@ -95,10 +97,6 @@ class LastMessagesViewModel: ObservableObject {
                 self.rooms = try await LastMessagesManager.shared.getMyRooms(room_id: member.room_id)
             }
             
-//            print("user_id*:\(user_id)")
-//            print("members*:\(members)")
-//            print("rooms*:\(self.rooms)")
-            
             // Balayer les rooms de l'auth
             var x_id: String = ""
             for room in self.rooms {
@@ -132,7 +130,6 @@ class LastMessagesViewModel: ObservableObject {
         
         // Recherche de l'avatar dans users
         httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
-        // print("\(httpAvatar)")
     }
 }
 
@@ -232,7 +229,6 @@ extension LastMessagesView {
         // Callback de UsersView
         .fullScreenCover(isPresented: $showNewMessageScreen) {
             UsersView(didSelectedNewUser: { emailSelected in
-                print(emailSelected) // email callback de l'utilisateur que j'ai selectionné dans ContactsView
                 self.emailPassed = emailSelected
                 self.shouldNavigateToChatLogView.toggle()
             })

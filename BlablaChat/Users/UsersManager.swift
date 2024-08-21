@@ -172,7 +172,7 @@ final class UsersManager {
         } catch {
             print("searchDuo - Error getting documents from members: \(error)")
         }
-        // print("searchDuo - La paire n'existe pas dans members")
+        print("searchDuo - La paire n'existe pas dans members")
         return ""
     }
 
@@ -200,7 +200,7 @@ final class UsersManager {
         } catch {
             print("searchDuo - Error getting documents from members: \(error)")
         }
-        // print("searchDuo - La paire n'existe pas dans members")
+        print("searchDuo - La paire n'existe pas dans members")
         return ""
     }
 
@@ -326,7 +326,7 @@ final class UsersManager {
         } catch {
             print("searchRoomId - Error getting documents from members: \(error)")
         }
-        // print("searchDuo - La paire n'existe pas dans members")
+        print("searchDuo - La paire n'existe pas dans members")
         return ""
 
         

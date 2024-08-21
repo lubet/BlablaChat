@@ -59,7 +59,6 @@ final class AuthenticationViewModel: ObservableObject {
                  let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: user.userId)
 
                  let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-                 // print("image url: \(lurl)")
 
                  try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
 
@@ -94,7 +93,6 @@ final class AuthenticationViewModel: ObservableObject {
                             let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: user.userId)
                             
                             let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-                            // print("image url: \(lurl)")
                             
                             try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
                             

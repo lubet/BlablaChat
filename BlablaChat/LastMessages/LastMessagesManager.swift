@@ -118,27 +118,6 @@ final class LastMessagesManager {
         return avatarLink
 
     }
-
-    // Chercher le user_id (lequel ?) dans "members" avec le room_id
-//    func getUserId(room_id: String) async throws -> String {
-//        
-//        var user_id: String = ""
-//        
-//        do {
-//            let querySnapshot = try await memberCollection.whereFilter(Filter.orFilter([
-//                    Filter.whereField("room_id", isEqualTo: user_id)
-//                ]))
-//                .getDocuments()
-//            for document in querySnapshot.documents {
-//                let membre = try document.data(as: Member.self)
-//                user_id = membre.user_id
-//            }
-//        } catch {
-//            print("getUserId - Error getting documents from members: \(error)")
-//        }
-//        return user_id
-//
-//    }
     
     // Recherche de l'email dans "users" avec le user_id
     func getEmail(user_id: String) async throws -> String {

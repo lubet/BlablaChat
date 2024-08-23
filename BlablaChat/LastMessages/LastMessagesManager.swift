@@ -158,5 +158,24 @@ final class LastMessagesManager {
         }
         return (from_id, to_id)
     }
+     
+    func getAllRooms() async throws -> [Room] {
+        
+        var rooms = [Room]()
+        
+        do {
+            let querySnapshot = try await roomCollection
+                .order(by: "date_created")
+                .getDocuments()
+            for document in querySnapshot.documents {
+                let room = try document.data(as: Room.self)
+                rooms.append(room)
+            }
+        } catch {
+            print("getMyRooms - Error getting documents: \(error)")
+        }
+        return rooms
+
+    }
     
 }

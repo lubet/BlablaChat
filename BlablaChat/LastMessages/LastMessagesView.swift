@@ -39,10 +39,6 @@ class LastMessagesViewModel: ObservableObject {
     @Published var monEmail: String = ""
     @Published var httpAvatar: String = ""
     
-    private var members: [Member] = []
-    
-    private var rooms: [Room] = []
-    
     private var cancellable = Set<AnyCancellable>()
     
     var isSearching: Bool {
@@ -80,11 +76,17 @@ class LastMessagesViewModel: ObservableObject {
     // Mes derniers messages
     // mon room_id m'est donné par members avec mon user_id
     func getLastMessages() async {
-        
         print("getLastMessages")
         
         Task {
             lastMessages = []
+            
+           var members: [Member] = []
+            
+            var myrooms: [Room] = []
+            
+            var allrooms: [Room] = []
+
             
             let AuthUser = try AuthManager.shared.getAuthenticatedUser()
             let user_id = AuthUser.uid
@@ -92,14 +94,21 @@ class LastMessagesViewModel: ObservableObject {
             // Tous les enregs de "members" où l'auth est présent (permet de récupérer tous ses room_id's).
             members = try await LastMessagesManager.shared.getMyRoomsId(user_id: user_id)
             
-            // Tous les rooms de l'auth
+            // All rooms
+            allrooms = try await LastMessagesManager.shared.getAllRooms()
+            
+            // Rooms de l'auth
             for member in members {
-                self.rooms = try await LastMessagesManager.shared.getMyRooms(room_id: member.room_id)
+                for oneroom in allrooms {
+                    if member.room_id == oneroom.room_id {
+                        myrooms.append(oneroom)
+                    }
+                }
             }
             
             // Balayer les rooms de l'auth
             var x_id: String = ""
-            for room in self.rooms {
+            for room in myrooms {
                 
                 // Dans "members", raméne les deux user_id ayant le même room_id
                 let (user_id1, user_id2) = try await LastMessagesManager.shared.getFromId(room_id: room.room_id)

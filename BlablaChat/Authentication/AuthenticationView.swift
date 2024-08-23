@@ -171,7 +171,7 @@ struct AuthenticationView: View {
                 
                 Spacer()
             }
-            .padding()
+            .padding(.horizontal, 20)
             .navigationTitle("S'authentifier:")
         }
     }

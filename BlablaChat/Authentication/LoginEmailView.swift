@@ -62,6 +62,7 @@ struct LoginEmailView: View {
             Color.theme.background
                 .ignoresSafeArea()
             VStack {
+                
                 Button { // Avatar
                     showImagePicker.toggle()
                 } label: {
@@ -83,7 +84,7 @@ struct LoginEmailView: View {
                         .stroke(Color.black,lineWidth: 2))
                     
                 }
-                .padding(40)
+                .padding(.bottom,20)
                 
                 TextField("Email", text: $viewModel.email)
                     .padding(15)
@@ -101,8 +102,22 @@ struct LoginEmailView: View {
                     .cornerRadius(10)
                     .disableAutocorrection(true)
                 
-                Button { // SignIn - le user existe
+                    .padding(10)
+                
+                    .padding(.bottom,40)
+                
+                Button { // Entrée
                     Task {
+                        do {
+                            // Le compte existe déjà ?
+                            let mimage: UIImage = image ?? UIImage.init(systemName: "person.fill")!
+                            try await viewModel.signUp(image: mimage)
+                            showSignInView = false
+                            return
+                        } catch {
+                            // erreur veut dire Oui, on va en-dessous
+                        }
+                        // Le compte existe déjà -> login avec le compte existant
                         do {
                             // Ancien compte
                             try await viewModel.signIn()
@@ -113,7 +128,7 @@ struct LoginEmailView: View {
                         }
                     }
                 } label: {
-                    Text("Sign In")
+                    Text("Entrée")
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(height: 55)
@@ -121,32 +136,9 @@ struct LoginEmailView: View {
                         .background(Color.blue)
                         .cornerRadius(10)
                 } // Fin bouton signIn
-                
-                Spacer()
-                
-                Button { // SignUp - Nouveau user
-                    Task {
-                        do {
-                            // Nouveau compte
-                            let mimage: UIImage = image ?? UIImage.init(systemName: "person.fill")!
-                            try await viewModel.signUp(image: mimage) // Création ou non (si il existe déjà)
-                            showSignInView = false
-                            return
-                        } catch {
-                            print(error)
-                        }
-                    }
-                } label: {
-                    Text("Sign Up")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(height: 55)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                }
             }
             .padding()
+            
             // Image
             .fullScreenCover(isPresented: $showImagePicker, onDismiss: nil) {
                 ImagePicker(image: $image) // Utilities/ImagePicker

@@ -133,6 +133,7 @@ struct AuthenticationView: View {
                         .cornerRadius(10)
                         .padding(.bottom, 10)
                 }
+                .padding(.top,30)
                 
                 // SignIn with Goggle
                 GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide, state: .normal))
@@ -172,7 +173,7 @@ struct AuthenticationView: View {
                 Spacer()
             }
             .padding(.horizontal, 20)
-            .navigationTitle("S'authentifier:")
+            .navigationTitle("Au choix:")
         }
     }
 }

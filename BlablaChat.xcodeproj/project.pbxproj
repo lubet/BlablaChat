@@ -68,6 +68,7 @@
 		C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		C02A0CFE2BD3C5FB000E58D4 /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		C02A8C372BB1D62E005ECF0F /* LastMessagesCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesCellView.swift; sourceTree = "<group>"; };
+		C02F63DB2C8778F10032A0CD /* BlablaChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlablaChat.entitlements; sourceTree = "<group>"; };
 		C03763852C411F3700A5602B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C03763862C41210200A5602B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C03763892C4128D000A5602B /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -188,6 +189,7 @@
 		C047E9C22B45625C00C6D48F /* BlablaChat */ = {
 			isa = PBXGroup;
 			children = (
+				C02F63DB2C8778F10032A0CD /* BlablaChat.entitlements */,
 				C03763852C411F3700A5602B /* Info.plist */,
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
 				C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */,
@@ -546,6 +548,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BlablaChat/BlablaChat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BlablaChat/Preview Content\"";
@@ -578,6 +581,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BlablaChat/BlablaChat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BlablaChat/Preview Content\"";

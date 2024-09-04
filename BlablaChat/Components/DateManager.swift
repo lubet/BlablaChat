@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 
 func dateManager(dateMessage: Timestamp) -> String {
     
-    let date = dateMessage.dateValue() // Timestamp -> date 
+    let _ = dateMessage.dateValue() // Timestamp -> date 
     
     let first = Date.now
     

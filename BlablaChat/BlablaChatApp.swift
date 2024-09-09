@@ -4,9 +4,17 @@
 //
 //  Created by Lubet-Moncla Xavier on 03/01/2024.
 //
+/*
+Name:My Apple Key
+Key ID:6T9B4Y3RT9
+Services:Apple Push Notifications service (APNs)
+AuthKey_6T9B4Y3RT9.p8 dans telechargement et dans Document/Apple Key
+Team ID: Z2D42B65AU
+*/
 
 import SwiftUI
 import Firebase
+import UserNotifications
 
 @main
 struct BlablaChatApp: App {

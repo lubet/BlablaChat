@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+
+struct MyVariables {
+    static var FCMtoken: String = ""
+}

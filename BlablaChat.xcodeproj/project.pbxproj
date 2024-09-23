@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C0027F482C5BDD59009DABF3 /* DBUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0027F472C5BDD59009DABF3 /* DBUserModel.swift */; };
 		C0027F4A2C5BE073009DABF3 /* totoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0027F492C5BE073009DABF3 /* totoView.swift */; };
+		C00C31432CA1B5BA00E5F962 /* MyVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00C31422CA1B5BA00E5F962 /* MyVariables.swift */; };
 		C00CEF102BB55206004C7016 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C00CEF0F2BB55206004C7016 /* SDWebImageSwiftUI */; };
 		C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */; };
 		C01FE5AB2B67F47E0049B9EE /* ContactCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */; };
@@ -65,6 +66,7 @@
 /* Begin PBXFileReference section */
 		C0027F472C5BDD59009DABF3 /* DBUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUserModel.swift; sourceTree = "<group>"; };
 		C0027F492C5BE073009DABF3 /* totoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = totoView.swift; sourceTree = "<group>"; };
+		C00C31422CA1B5BA00E5F962 /* MyVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyVariables.swift; sourceTree = "<group>"; };
 		C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchXavierView.swift; sourceTree = "<group>"; };
 		C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCellView.swift; sourceTree = "<group>"; };
 		C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 		C0D84B6F2C5B889400AE9B21 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C00C31422CA1B5BA00E5F962 /* MyVariables.swift */,
 				C0D84B722C5B898A00AE9B21 /* MessageModel.swift */,
 				C0D84B742C5B8A2900AE9B21 /* MemberModel.swift */,
 				C0027F472C5BDD59009DABF3 /* DBUserModel.swift */,
@@ -405,6 +408,7 @@
 				C0D84B6E2C5B846A00AE9B21 /* UsersManager.swift in Sources */,
 				C0027F482C5BDD59009DABF3 /* DBUserModel.swift in Sources */,
 				C05D4E402C5CBF7900270938 /* RoomModel.swift in Sources */,
+				C00C31432CA1B5BA00E5F962 /* MyVariables.swift in Sources */,
 				C037638A2C4128D000A5602B /* Utilities.swift in Sources */,
 				C02A8C382BB1D62E005ECF0F /* LastMessagesCellView.swift in Sources */,
 				C07564EC2BADEA8500E8D7D9 /* LastMessagesView.swift in Sources */,

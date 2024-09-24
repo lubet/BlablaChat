@@ -45,6 +45,15 @@ final class LoginEmailViewModel: ObservableObject {
         }
         try await AuthManager.shared.signInUser(email: email, password: password)
     }
+    
+    func FCMtoken() async throws {
+        // Maj du FCMtoken
+        let authUser = try! AuthManager.shared.getAuthenticatedUser()
+        let user_id = authUser.uid
+
+        try await UsersManager.shared.updateFCMtoken(userId: user_id, FCMtoken: MyVariables.FCMtoken)
+    }
+    
 }
 
 // -----------------------------------------------------
@@ -112,6 +121,7 @@ struct LoginEmailView: View {
                             // Le compte existe déjà ?
                             let mimage: UIImage = image ?? UIImage.init(systemName: "person.fill")!
                             try await viewModel.signUp(image: mimage)
+                            try await viewModel.FCMtoken()
                             showSignInView = false
                             return
                         } catch {
@@ -121,6 +131,7 @@ struct LoginEmailView: View {
                         do {
                             // Ancien compte
                             try await viewModel.signIn()
+                            try await viewModel.FCMtoken()
                             showSignInView = false
                             return
                         } catch {

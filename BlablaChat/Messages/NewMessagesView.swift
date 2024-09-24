@@ -127,6 +127,7 @@ final class NewMessagesViewModel: ObservableObject {
         }
     }
      
+    // Sauvegarde du nouveau message avec le FCMtoken du destinaire
     func saveMessage(email: String, message_text: String) async throws {
         
         // user_id (auth)

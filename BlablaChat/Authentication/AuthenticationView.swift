@@ -107,6 +107,15 @@ final class AuthenticationViewModel: ObservableObject {
             }
         }
     }
+    
+    func FCMtoken() async throws {
+        // Maj du FCMtoken
+        let authUser = try! AuthManager.shared.getAuthenticatedUser()
+        let user_id = authUser.uid
+
+        try await UsersManager.shared.updateFCMtoken(userId: user_id, FCMtoken: MyVariables.FCMtoken)
+    }
+
 }
 
 struct AuthenticationView: View {
@@ -141,6 +150,7 @@ struct AuthenticationView: View {
                     Task {
                         do {
                             try await viewModel.signInGoogle()
+                            try await viewModel.FCMtoken()
                             showSignInView = false
                         } catch {
                             print(error)
@@ -154,6 +164,7 @@ struct AuthenticationView: View {
                     Task {
                         do {
                             try await viewModel.signInApple()
+                            try await viewModel.FCMtoken()
                             // showSignInView = false
                         } catch {
                             print(error)

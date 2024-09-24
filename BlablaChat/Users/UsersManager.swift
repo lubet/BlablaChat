@@ -36,10 +36,16 @@ final class UsersManager {
         let data: [String:Any] = [
             DBUser.CodingKeys.avatarLink.rawValue : path,
         ]
-        
         try await userDocument(userId: userId).updateData(data)
     }
-    
+
+    // Maj du token FCM (Firebase Cloud Messaging - Notificatons) qui identifie le device
+    func updateFCMtoken(userId: String, FCMtoken: String) async throws {
+        let data: [String:Any] = [
+            DBUser.CodingKeys.FCMtoken.rawValue : FCMtoken,
+        ]
+        try await userDocument(userId: userId).updateData(data)
+    }
     
     //
     func getAllUsers() async throws -> [DBUser] {

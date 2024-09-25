@@ -283,7 +283,7 @@ final class UsersManager {
     
 
     // Création du message et maj du dernier message de Room avec le message
-    func createMessage(from_id: String, message_text: String, room_id: String, image_link: String) async throws {
+    func createMessage(from_id: String, message_text: String, room_id: String, image_link: String, to_id: String) async throws {
         let messageRef = messageCollection.document()
         let message_id = messageRef.documentID
         
@@ -300,7 +300,8 @@ final class UsersManager {
             "message_text": msg,
             "date_send": dateMessage,
             "room_id": room_id,
-            "image_link": image_link
+            "image_link": image_link,
+            "to_id": to_id
         ]
         try await messageRef.setData(data, merge: false)
         
@@ -311,7 +312,8 @@ final class UsersManager {
             "last_message": msg,
             "date_message": dateMessage,
             "user_id": from_id,
-            "image_link": image_link
+            "image_link": image_link,
+            "to_id": to_id
         ]
         
         try await roomRef.setData(dataRoom, merge: true)

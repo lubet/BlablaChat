@@ -13,12 +13,14 @@ struct MessageBubble: Identifiable{
     let message_date: String
     let received: Bool
     let imageLink: String
+    let to_id: String
     
-    init(id: String, message_text: String, message_date: String, received: Bool, imageLink: String) {
+    init(id: String, message_text: String, message_date: String, received: Bool, imageLink: String, to_id: String) {
         self.id = id
         self.message_text = message_text
         self.message_date = message_date
         self.received = received
         self.imageLink = imageLink
+        self.to_id = to_id
     }
 }

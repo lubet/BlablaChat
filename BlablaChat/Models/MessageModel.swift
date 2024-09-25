@@ -16,6 +16,7 @@ struct Message: Identifiable, Codable {
     let date_send: Timestamp
     let room_id: String
     let image_link: String?
+    let to_id: String
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -24,6 +25,7 @@ struct Message: Identifiable, Codable {
         case date_send
         case room_id
         case image_link
+        case to_id
     }
     
     init(
@@ -32,7 +34,8 @@ struct Message: Identifiable, Codable {
         message_text: String,
         date_send: Timestamp,
         room_id: String,
-        image_link: String?
+        image_link: String?,
+        to_id: String
     ) {
         self.id = id
         self.from_id = from_id
@@ -40,5 +43,6 @@ struct Message: Identifiable, Codable {
         self.date_send = date_send
         self .room_id = room_id
         self.image_link = image_link
+        self.to_id = to_id
     }
 }

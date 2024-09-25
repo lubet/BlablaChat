@@ -83,7 +83,7 @@ final class NewMessagesViewModel: ObservableObject {
                     // Dans "members", raméne les deux user_id ayant le même room_id
                     // let (user_id1, user_id2) = try await LastMessagesManager.shared.getFromId(room_id: room_id)
                     
-                    try await UsersManager.shared.createMessage(from_id: user_id, message_text: "", room_id: room_id, image_link: lurl.absoluteString)
+                    try await UsersManager.shared.createMessage(from_id: user_id, message_text: "", room_id: room_id, image_link: lurl.absoluteString, to_id: select_id)
                     
                     do {
                         // Rafraichissement de la view actuelle
@@ -158,7 +158,8 @@ final class NewMessagesViewModel: ObservableObject {
         }
 
         // Message
-        try await UsersManager.shared.createMessage(from_id: user_id, message_text: message_text, room_id: room_id, image_link: "")
+        try await UsersManager.shared.createMessage(from_id: user_id, message_text: message_text, room_id: room_id,
+                                                    image_link: "", to_id: select_id)
         
         // Rafraichissement de la view bubble
         self.messagesBubble = try await MessagesManager.shared.getRoomMessages(room_id: room_id, user_id: user_id)

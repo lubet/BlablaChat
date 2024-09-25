@@ -44,6 +44,6 @@ struct MessagesCellView: View {
 
 struct MessagesCellView_Previews: PreviewProvider {
     static var previews: some View {
-        MessagesCellView(message: MessageBubble(id: "123456", message_text: "Coucou, ceci est un exemple de message qui est envoyé à quelqu'un por qu'il puisse me répondre dans les plus brefs délais", message_date: "12/01/2024", received: true, imageLink: ""))
+        MessagesCellView(message: MessageBubble(id: "123456", message_text: "Coucou, ceci est un exemple de message qui est envoyé à quelqu'un por qu'il puisse me répondre dans les plus brefs délais", message_date: "12/01/2024", received: true, imageLink: "", to_id: "123456"))
     }
 }

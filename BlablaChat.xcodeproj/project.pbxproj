@@ -40,6 +40,7 @@
 		C068CD3B2BCD769E0072A797 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */; };
 		C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */; };
 		C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A8DB82BAEC5030007436C /* TimestampToString.swift */; };
+		C06A93782CAC4B2A004B68AC /* MessageBigImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A93772CAC4B2A004B68AC /* MessageBigImage.swift */; };
 		C070D6422C5380C4006170E3 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = C070D6412C5380C4006170E3 /* Color.swift */; };
 		C07564EC2BADEA8500E8D7D9 /* LastMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07564EB2BADEA8500E8D7D9 /* LastMessagesView.swift */; };
 		C07723242BC6877900AC0990 /* MessagesCellPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */; };
@@ -96,6 +97,7 @@
 		C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAppleHelper.swift; sourceTree = "<group>"; };
 		C06A8DB82BAEC5030007436C /* TimestampToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampToString.swift; sourceTree = "<group>"; };
+		C06A93772CAC4B2A004B68AC /* MessageBigImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBigImage.swift; sourceTree = "<group>"; };
 		C070D6412C5380C4006170E3 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		C07564EB2BADEA8500E8D7D9 /* LastMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesView.swift; sourceTree = "<group>"; };
 		C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCellPhoto.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				C0476E802BB712A4000D860C /* MessagesCellView.swift */,
 				C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */,
 				C05D4E3B2C5CB2DD00270938 /* NewMessagesView.swift */,
+				C06A93772CAC4B2A004B68AC /* MessageBigImage.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
 				C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */,
 				C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */,
+				C06A93782CAC4B2A004B68AC /* MessageBigImage.swift in Sources */,
 				C0FAA0922C241DD90009DFF7 /* EmailShort.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,
 				C0476E7F2BB71086000D860C /* MessagesManager.swift in Sources */,

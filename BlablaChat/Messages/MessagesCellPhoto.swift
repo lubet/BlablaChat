@@ -16,6 +16,8 @@ struct MessagesCellPhoto: View {
     
     @State private var showTime: Bool = false
     
+    @State private var showScreenCover: Bool = false
+    
     var body: some View {
         VStack(alignment: message.received ? .leading : .trailing) {
             HStack {
@@ -27,9 +29,18 @@ struct MessagesCellPhoto: View {
                     //.shadow(radius: 10)
             }
             .frame(maxWidth: 300, alignment: message.received ? .leading : .trailing)
-            .onTapGesture {
-                showTime.toggle()
+
+//            .onTapGesture {
+//                showTime.toggle()
+//            }
+            
+            .onTapGesture(count: 2) {
+                showScreenCover.toggle()
             }
+            
+            .fullScreenCover(isPresented: $showScreenCover, content: {
+                MessageBigImage(image: message.imageLink)
+            })
             
             if showTime {
                 Text("\(message.message_date)")

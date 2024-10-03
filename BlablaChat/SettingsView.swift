@@ -78,6 +78,7 @@ struct SettingsView: View {
                 // Recherche l'avatar du user
                 // L'afficher
                 Button { // Avatar
+                    // TODO
                     showImagePicker.toggle()
                 } label: {
                     VStack {
@@ -87,9 +88,6 @@ struct SettingsView: View {
                             .clipShape(Circle())
                             .overlay(Circle().stroke(Color.black, lineWidth: 1))
                             .padding()
-
-//                           .overlay(RoundedRectangle(cornerRadius: 64))
-//                         .stroke(Color.black,lineWidth: 2)
                     }
                 }
                 Spacer()

@@ -48,7 +48,7 @@ final class MessagesManager {
                     }
                     let oneBubble = MessageBubble(id: UUID().uuidString, message_text: msg.message_text, message_date: timeStampToString(dateMessage: msg.date_send), received: send, imageLink: msg.image_link ?? "", to_id: msg.to_id)
                     messagesBubble.append(oneBubble)
-                    print(oneBubble)
+                    // print(oneBubble)
                 }
             }
         } catch {

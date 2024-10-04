@@ -86,6 +86,7 @@ final class AuthenticationViewModel: ObservableObject {
                         if contact_id == "" {
                             
                             let user = DBUser(auth: authUser) // Instanciation userId email
+                            
                             try await UsersManager.shared.createDbUser(user: user) // Save in Firestore sans l'image
                             
                             let mimage: UIImage = UIImage.init(systemName: "person.fill")!
@@ -95,6 +96,8 @@ final class AuthenticationViewModel: ObservableObject {
                             let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
                             
                             try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
+                            
+                            try await UsersManager.shared.updateFCMtoken(userId: authUser.uid, FCMtoken: MyVariables.FCMtoken)
                             
                         }
                         self.didSignInWithApple = true
@@ -164,7 +167,6 @@ struct AuthenticationView: View {
                     Task {
                         do {
                             try await viewModel.signInApple()
-                            try await viewModel.FCMtoken()
                             // showSignInView = false
                         } catch {
                             print(error)

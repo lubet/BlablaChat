@@ -94,6 +94,11 @@ struct SettingsView: View {
                         .frame(width: 120, height: 120)
                         .clipShape(Circle())
                         .overlay(Circle().stroke(Color.black, lineWidth: 1))
+                } else {
+                    Image(systemName: "person.fill")
+                        .font(.system(size: 70))
+                        .padding()
+                        .foregroundColor(Color(.label))
                 }
                 
                 PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {

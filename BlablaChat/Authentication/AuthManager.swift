@@ -82,7 +82,7 @@ extension AuthManager {
     
     func resetPassword(email: String) async throws {
         try await Auth.auth().sendPasswordReset(withEmail: email)
-        print("resetPAssword **********************************")
+        // print("resetPAssword **********************************")
     }
 }
 

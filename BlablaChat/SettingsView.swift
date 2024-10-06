@@ -62,11 +62,13 @@ final class SettingsViewModel: ObservableObject {
         let user_id = authUser.uid
         guard let selectedImage else { return }
         
-        // TODO Supprimer l'ancien avatar et créer le nouveau dans "Storage" et maj l'url dans users
-        // ci-dessous on créer un deuxième avatar, à revoir
-        let (path, _) = try await StorageManager.shared.saveImage(image: selectedImage, userId: user_id)
+        // Supprimer l'ancien avatar dans "Storage"
+        try await StorageManager.shared.deleteAvatar(user_id: user_id, httpAvatar: httpAvatar)
+        
+        // Créer le nouvel avatar
+        let (path, _) = try await StorageManager.shared.saveImage(image: selectedImage, userId: user_id) // "Storage"
         let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-        try await UsersManager.shared.updateImagePath(userId: user_id, path: lurl.absoluteString) // maj Firestore
+        try await UsersManager.shared.updateImagePath(userId: user_id, path: lurl.absoluteString) // maj "Users"
     }
 }
 

@@ -7,11 +7,12 @@
 
 import SwiftUI
 import PhotosUI
+import SDWebImageSwiftUI
 
 @MainActor
 final class SettingsViewModel: ObservableObject {
     
-    // @Published var httpAvatar: String = ""
+    @Published var httpAvatar: String = ""
     
     @Published private(set) var selectedImage: UIImage? = nil
     @Published var imageSelection: PhotosPickerItem? = nil {
@@ -47,12 +48,13 @@ final class SettingsViewModel: ObservableObject {
         try await AuthManager.shared.resetPassword(email: email)
     }
     
-//    func getAvatar() async {
-//        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-//        let user_id = authUser.uid
-//        // Recherche de l'avatar dans users
-//        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
-//    }
+    func getAvatar() async {
+        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+        let user_id = authUser.uid
+        // Recherche de l'avatar dans users
+        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
+        // print("\(httpAvatar)")
+    }
 }
 
 struct SettingsView: View {
@@ -95,21 +97,21 @@ struct SettingsView: View {
                         .clipShape(Circle())
                         .overlay(Circle().stroke(Color.black, lineWidth: 1))
                 } else {
-                    Image(systemName: "person.fill")
-                        .font(.system(size: 70))
-                        .padding()
-                        .foregroundColor(Color(.label))
+                    WebImage(url: URL(string: viewModel.httpAvatar))
+                        .frame(width: 120, height: 120)
+                        .clipShape(Circle())
+                        .overlay(Circle().stroke(Color.black, lineWidth: 1))
                 }
                 
                 PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
                     Text("Changer d'avatar")
                 }
             }
-//            .onAppear {
-//                Task {
-//                    await viewModel.getAvatar()
-//                }
-//            }
+            .onAppear {
+                Task {
+                    await viewModel.getAvatar()
+                }
+            }
         }
     }
     

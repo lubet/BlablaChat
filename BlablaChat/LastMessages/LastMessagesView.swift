@@ -76,7 +76,7 @@ class LastMessagesViewModel: ObservableObject {
     // Mes derniers messages
     // mon room_id m'est donné par members avec mon user_id
     func getLastMessages() async {
-        print("getLastMessages")
+        // print("getLastMessages")
         
         Task {
             lastMessages = []

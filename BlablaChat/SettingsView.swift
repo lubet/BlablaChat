@@ -55,6 +55,19 @@ final class SettingsViewModel: ObservableObject {
         httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
         // print("\(httpAvatar)")
     }
+    
+    // Mise à jour de l'avatar dans "Storage" et dans "users"
+    func updateAvatar() async throws {
+        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+        let user_id = authUser.uid
+        guard let selectedImage else { return }
+        
+        // TODO Supprimer l'ancien avatar et créer le nouveau dans "Storage" et maj l'url dans users
+        // ci-dessous on créer un deuxième avatar, à revoir
+        let (path, _) = try await StorageManager.shared.saveImage(image: selectedImage, userId: user_id)
+        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
+        try await UsersManager.shared.updateImagePath(userId: user_id, path: lurl.absoluteString) // maj Firestore
+    }
 }
 
 struct SettingsView: View {
@@ -98,6 +111,7 @@ struct SettingsView: View {
                         .overlay(Circle().stroke(Color.black, lineWidth: 1))
                 } else {
                     WebImage(url: URL(string: viewModel.httpAvatar))
+                        .resizable()
                         .frame(width: 120, height: 120)
                         .clipShape(Circle())
                         .overlay(Circle().stroke(Color.black, lineWidth: 1))
@@ -110,6 +124,11 @@ struct SettingsView: View {
             .onAppear {
                 Task {
                     await viewModel.getAvatar()
+                }
+            }
+            .onDisappear {
+                Task {
+                    try await viewModel.updateAvatar()
                 }
             }
         }

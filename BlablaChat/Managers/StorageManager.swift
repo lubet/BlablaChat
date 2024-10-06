@@ -18,10 +18,6 @@ final class StorageManager {
     // Réferences ------------------------------------
 
     private let storage = Storage.storage().reference()
-    
-    private var imageReference : StorageReference {
-        return storage.child("images")
-    }
 
     private func userReference(userId: String) -> StorageReference {
         return storage.child("users").child(userId)
@@ -74,8 +70,8 @@ final class StorageManager {
     
     // Supprimer l'avatar dans "Storage"
     func deleteAvatar(user_id: String, httpAvatar: String) async throws {
-        // Obtenir la reference de l'avatar dans storage
-        let refAvatar = userReference(userId: user_id).child(httpAvatar)
+       //  print("httpAvatar: \(httpAvatar)")
+        let refAvatar = storage.storage.reference(forURL: httpAvatar)
         do {
             try await refAvatar.delete()
         } catch {

@@ -69,7 +69,7 @@ final class StorageManager {
     }
     
     // Supprimer l'avatar dans "Storage"
-    func deleteAvatar(user_id: String, httpAvatar: String) async throws {
+    func deleteAvatar(httpAvatar: String) async throws {
        //  print("httpAvatar: \(httpAvatar)")
         let refAvatar = storage.storage.reference(forURL: httpAvatar)
         do {

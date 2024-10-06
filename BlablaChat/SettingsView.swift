@@ -63,7 +63,7 @@ final class SettingsViewModel: ObservableObject {
         guard let selectedImage else { return }
         
         // Supprimer l'ancien avatar dans "Storage"
-        try await StorageManager.shared.deleteAvatar(user_id: user_id, httpAvatar: httpAvatar)
+        try await StorageManager.shared.deleteAvatar(httpAvatar: httpAvatar)
         
         // Créer le nouvel avatar
         let (path, _) = try await StorageManager.shared.saveImage(image: selectedImage, userId: user_id) // "Storage"

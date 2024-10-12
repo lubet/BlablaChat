@@ -47,13 +47,12 @@ final class LoginEmailViewModel: ObservableObject {
     }
     
     func FCMtoken() async throws {
-        // Maj du FCMtoken
-        let authUser = try! AuthManager.shared.getAuthenticatedUser()
+        // Sauvegarde du FCMtoken dans Firestore
+        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = authUser.uid
-
-        try await UsersManager.shared.updateFCMtoken(userId: user_id, FCMtoken: MyVariables.FCMtoken)
+        
+        try await TokensManager.shared.addToken(user_id: user_id, FCMtoken: MyVariables.FCMtoken)
     }
-    
 }
 
 // -----------------------------------------------------
@@ -118,20 +117,20 @@ struct LoginEmailView: View {
                 Button { // Entrée
                     Task {
                         do {
-                            // Le compte existe déjà ?
+                            // On essaie de créer le compte
                             let mimage: UIImage = image ?? UIImage.init(systemName: "person.fill")!
                             try await viewModel.signUp(image: mimage)
                             try await viewModel.FCMtoken()
                             showSignInView = false
                             return
                         } catch {
-                            // erreur veut dire Oui, on va en-dessous
+                            // erreur
+                            // Le compte existe déjà -> on passe à la suite
                         }
-                        // Le compte existe déjà -> login avec le compte existant
+                        // Le compte existe déjà
                         do {
                             // Ancien compte
                             try await viewModel.signIn()
-                            try await viewModel.FCMtoken()
                             showSignInView = false
                             return
                         } catch {

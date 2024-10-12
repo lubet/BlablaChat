@@ -24,16 +24,14 @@ final class TokensManager {
         return tokensCollection.document(token_id)
     }
 
-    // Ajouter le token
-    func addToken(user_id: String, token: String) async throws {
-        
+    // Ajouter le FCMtoken à "tokens"
+    func addToken(user_id: String, FCMtoken: String) async throws {
         do {
-            let docRef = tokensCollection.document()
-            let user_id = docRef.documentID
+            let docRef = tokensCollection.document(user_id)
             
             let data: [String:Any] = [
                 "user_id" : user_id,
-                "token" : token,
+                "token" : FCMtoken,
                 "time_stamp" : Timestamp(),
             ]
             try await docRef.setData(data, merge: false)

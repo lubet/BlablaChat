@@ -97,7 +97,7 @@ final class AuthenticationViewModel: ObservableObject {
                             
                             try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
                             
-                            try await UsersManager.shared.updateFCMtoken(userId: authUser.uid, FCMtoken: MyVariables.FCMtoken)
+                            try await TokensManager.shared.addToken(user_id: authUser.uid, FCMtoken: MyVariables.FCMtoken)
                             
                         }
                         self.didSignInWithApple = true
@@ -116,7 +116,7 @@ final class AuthenticationViewModel: ObservableObject {
         let authUser = try! AuthManager.shared.getAuthenticatedUser()
         let user_id = authUser.uid
 
-        try await UsersManager.shared.updateFCMtoken(userId: user_id, FCMtoken: MyVariables.FCMtoken)
+        try await TokensManager.shared.addToken(user_id: user_id, FCMtoken: MyVariables.FCMtoken)
     }
 
 }

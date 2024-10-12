@@ -199,6 +199,8 @@ struct LastMessagesView: View {
                 
                 NewMessageButton // -> UsersView
                 
+                    .padding(.bottom,10)
+                
                     .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Rechercher un message")
                 
                     .task {
@@ -232,7 +234,7 @@ extension LastMessagesView {
                 .background(Color.blue)
                 .cornerRadius(32)
                 .padding(.horizontal)
-                .shadow(radius: 15)
+                //.shadow(radius: 15)
         }
         
         // Callback de UsersView

@@ -20,6 +20,7 @@ final class SettingsViewModel: ObservableObject {
             setImage(from: imageSelection)
         }
     }
+    @Published var nom: String = ""
     
     private func setImage(from selection: PhotosPickerItem?) {
         guard let selection else { return }
@@ -69,6 +70,10 @@ final class SettingsViewModel: ObservableObject {
         let (path, _) = try await StorageManager.shared.saveImage(image: selectedImage, userId: user_id) // "Storage"
         let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
         try await UsersManager.shared.updateImagePath(userId: user_id, path: lurl.absoluteString) // maj "Users"
+    }
+    
+    func addnom() async throws {
+        print("")
     }
 }
 
@@ -122,6 +127,34 @@ struct SettingsView: View {
                 PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
                     Text("Changer d'avatar")
                 }
+                
+                // Update du nom
+                TextField("Nom", text: $viewModel.nom)
+                    .padding(15)
+                    .frame(width: 150, height: 50)
+                    .textInputAutocapitalization(.never)
+                    .disableAutocorrection(true)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(10)
+                    //.padding(10)
+                
+                Button { // Entrée
+                    Task {
+                        do {
+                            try await viewModel.addnom()
+                        } catch {
+                            print(error)
+                        }
+                    }
+                } label: {
+                    Text("Entrée")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(width: 70, height: 50)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                } // Fin bouton signIn
+                // .padding(40)
             }
             .onAppear {
                 Task {

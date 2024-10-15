@@ -212,7 +212,7 @@ struct NewMessagesView: View {
             .alert(isPresented: $showAlert) {
                 getAlert()
             }
-        .navigationTitle("MessagesView")
+        .navigationTitle("Dialogue")
         .task {
             viewModel.param = ["email": email] // pour passer le room à la photo - voir setImage() en haut
             do {

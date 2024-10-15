@@ -23,6 +23,7 @@ struct MessagesCellView: View {
                     .padding()
                     .background(message.received ? Color("Gris") : Color("BleuMauve"))
                     .cornerRadius(30)
+                    .foregroundColor(Color.black)
             }
             .frame(maxWidth: 300, alignment: message.received ? .leading : .trailing)
             .onTapGesture {

@@ -200,7 +200,7 @@ struct NewMessagesView: View {
                     }
                 }
                 .padding(.top, 10)
-                .background(.white)
+                //.background(.white)
                 .onChange(of: viewModel.lastMessageId) { id in
                     withAnimation {
                         proxy.scrollTo(id, anchor: .bottom)
@@ -239,12 +239,12 @@ extension NewMessagesView {
             // Selection de la photo
             PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
                 Image(systemName: "photo")
-                    .foregroundColor(Color.black)
+                    //.foregroundColor(Color.black)
             }
             
             // Saisie du message
             TextField("Message", text: $messageText, axis: .vertical)
-                .foregroundColor(Color.black)
+                .foregroundColor(Color.theme.accent)
                 .disableAutocorrection(true)
             
             // Envoi du message

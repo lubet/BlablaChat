@@ -72,8 +72,14 @@ final class SettingsViewModel: ObservableObject {
         try await UsersManager.shared.updateImagePath(userId: user_id, path: lurl.absoluteString) // maj "Users"
     }
     
-    func addnom() async throws {
-        print("")
+    func saveNom() async throws {
+        if nom.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+            return
+        } else {
+            guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+            let user_id = authUser.uid
+            try await UsersManager.shared.saveNom(user_id: user_id, nom: nom)
+        }
     }
 }
 
@@ -85,7 +91,7 @@ struct SettingsView: View {
     
     var body: some View {
         ZStack() {
-            VStack(spacing: 20) {
+            VStack(spacing: 40) {
                 Button("Log out") {
                     Task {
                         do {
@@ -97,7 +103,7 @@ struct SettingsView: View {
                         }
                     }
                 }
-                .padding(.top,20)
+                .padding(.top,10)
                 
                 Button("Reset du mot de passe") {
                     Task {
@@ -108,7 +114,11 @@ struct SettingsView: View {
                         }
                     }
                 }
-                .padding(.bottom,20)
+                .padding(.bottom,10)
+
+                PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
+                    Text("Changer d'avatar")
+                }
                 
                 if let image = viewModel.selectedImage {
                     Image(uiImage: image)
@@ -124,37 +134,16 @@ struct SettingsView: View {
                         .overlay(Circle().stroke(Color.black, lineWidth: 1))
                 }
                 
-                PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
-                    Text("Changer d'avatar")
-                }
-                
                 // Update du nom
                 TextField("Nom", text: $viewModel.nom)
-                    .padding(15)
-                    .frame(width: 150, height: 50)
-                    .textInputAutocapitalization(.never)
+                    .frame(width: 100, height: 25)
+                   .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(10)
-                    //.padding(10)
+                    .padding(.top,40)
                 
-                Button { // Entrée
-                    Task {
-                        do {
-                            try await viewModel.addnom()
-                        } catch {
-                            print(error)
-                        }
-                    }
-                } label: {
-                    Text("Entrée")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(width: 70, height: 50)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                } // Fin bouton signIn
-                // .padding(40)
+                Spacer()
             }
             .onAppear {
                 Task {
@@ -164,6 +153,7 @@ struct SettingsView: View {
             .onDisappear {
                 Task {
                     try await viewModel.updateAvatar()
+                    try await viewModel.saveNom()
                 }
             }
         }

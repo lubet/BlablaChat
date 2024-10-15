@@ -97,6 +97,10 @@ final class UsersManager {
         return DBUserCollection.document(email)
     }
     
+    private func userDocument(user_id:String) -> DocumentReference {
+        return DBUserCollection.document(user_id)
+    }
+    
     // ---------------------------------------------------------------
     private let MemberCollection = dbFS.collection("members")
     
@@ -359,7 +363,14 @@ final class UsersManager {
         return ("","")
 
     }
-    
+   
+    // SettingsView
+    func saveNom(user_id: String, nom: String) async throws {
+        do {
+            let docRef = userDocument(userId: user_id)
+            try await docRef.setData([ "nom":nom ] , merge: true)
+        } catch {
+            print("searchContact - Error getting documents: \(error)")
+        }
+    }
 }
-
-

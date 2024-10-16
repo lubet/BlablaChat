@@ -365,12 +365,12 @@ final class UsersManager {
     }
    
     // SettingsView TODO ajouter le champ nom dans "users"
-    func saveNom(user_id: String, nom: String) async throws {
-        do {
-            let docRef = userDocument(userId: user_id)
-            try await docRef.setData([ "nom":nom ] , merge: true)
-        } catch {
-            print("searchContact - Error getting documents: \(error)")
-        }
-    }
+//    func saveNom(user_id: String, nom: String) async throws {
+//        do {
+//            let docRef = userDocument(userId: user_id)
+//            try await docRef.setData([ "nom":nom ] , merge: true)
+//        } catch {
+//            print("searchContact - Error getting documents: \(error)")
+//        }
+//    }
 }

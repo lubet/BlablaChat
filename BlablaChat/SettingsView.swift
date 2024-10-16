@@ -78,7 +78,7 @@ final class SettingsViewModel: ObservableObject {
         } else {
             guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
             let user_id = authUser.uid
-            try await UsersManager.shared.saveNom(user_id: user_id, nom: nom)
+            try await TokensManager.shared.saveNom(user_id: user_id, nom: nom)
         }
     }
 }

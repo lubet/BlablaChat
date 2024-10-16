@@ -33,10 +33,22 @@ final class TokensManager {
                 "user_id" : user_id,
                 "token" : FCMtoken,
                 "time_stamp" : Timestamp(),
+                "nom": "",
             ]
             try await docRef.setData(data, merge: false)
         } catch {
-            print(error)
+            print("addToken Pas de document pour ce user_id: \(error)")
+        }
+    }
+    
+    // Sauvegarde du nom taper dans SettingsView dans "tokens"
+    func saveNom(user_id: String, nom: String) async throws {
+        do {
+            let docRef = tokensCollection.document(user_id)
+            let data: [String:Any] = ["nom": nom]
+            try await docRef.setData(data, merge: true)
+        } catch {
+            print("saveNom Pas de document pour ce user_id: \(error)")
         }
     }
 }

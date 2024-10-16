@@ -57,7 +57,7 @@ final class SettingsViewModel: ObservableObject {
         // print("\(httpAvatar)")
     }
     
-    // Mise à jour de l'avatar dans "Storage" et dans "users"
+    // Mise à jour de l'avatar dans "Storage" et dans "users" TODO voir si on peut mettre à jour au lieu de supprimer/ajouter
     func updateAvatar() async throws {
         guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
         let user_id = authUser.uid

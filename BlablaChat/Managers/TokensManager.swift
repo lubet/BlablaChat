@@ -20,14 +20,14 @@ final class TokensManager {
     
     private let tokensCollection = db.collection("tokens")
     
-    private func tokenDocument(token_id: String) -> DocumentReference {
-        return tokensCollection.document(token_id)
+    private func tokenDocument(user_id: String) -> DocumentReference {
+        return tokensCollection.document(user_id)
     }
 
     // Ajouter le FCMtoken à "tokens"
     func addToken(user_id: String, FCMtoken: String) async throws {
         do {
-            let docRef = tokensCollection.document(user_id)
+            let docRef = tokenDocument(user_id: user_id)
             
             let data: [String:Any] = [
                 "user_id" : user_id,
@@ -44,7 +44,7 @@ final class TokensManager {
     // Sauvegarde du nom taper dans SettingsView dans "tokens"
     func saveNom(user_id: String, nom: String) async throws {
         do {
-            let docRef = tokensCollection.document(user_id)
+            let docRef = tokenDocument(user_id: user_id)
             let data: [String:Any] = ["nom": nom]
             try await docRef.setData(data, merge: true)
         } catch {

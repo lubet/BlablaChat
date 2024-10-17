@@ -117,7 +117,7 @@ struct SettingsView: View {
                 .padding(.bottom,10)
 
                 PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
-                    Text("Changer d'avatar")
+                    Text("Changer d'avatar: ⬇")
                 }
                 
                 if let image = viewModel.selectedImage {
@@ -135,12 +135,11 @@ struct SettingsView: View {
                 }
                 
                 // Update du nom
-                TextField("Nom", text: $viewModel.nom)
-                    .frame(width: 100, height: 25)
+                TextField("Nom notifications", text: $viewModel.nom)
+                    .frame(width: 150, height: 25)
                    .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
                     .background(Color.gray.opacity(0.2))
-                    .cornerRadius(10)
                     .padding(.top,40)
                 
                 Spacer()

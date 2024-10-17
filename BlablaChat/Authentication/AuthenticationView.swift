@@ -128,7 +128,7 @@ struct AuthenticationView: View {
     
     var body: some View {
         ZStack {
-            Color.theme.background
+            Color.theme.background // voir "extension Color"
                 .ignoresSafeArea()
             VStack {
                 

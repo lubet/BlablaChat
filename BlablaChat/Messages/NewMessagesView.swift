@@ -212,7 +212,7 @@ struct NewMessagesView: View {
             .alert(isPresented: $showAlert) {
                 getAlert()
             }
-        .navigationTitle("Echanges")
+        .navigationTitle("Echanges 📝")
         .task {
             viewModel.param = ["email": email] // pour passer le room à la photo - voir setImage() en haut
             do {
@@ -223,13 +223,6 @@ struct NewMessagesView: View {
         }
     }
 }
-
-//struct MessagesView_Previews: PreviewProvider {
-//    static var previews: some View {
-////        MessagesView(email: "toto")
-////        MessagesView(value: LastMessage(room_id: "1", room_name: "toto", room_date: timeStampToString(dateMessage: Timestamp()), message_texte: "Hello", message_date: timeStampToString(dateMessage: Timestamp()), message_from: "tutu", message_to: "toto"))
-////    }
-//}
 
 // Barre de saisie du message ---------------------------------------------------
 extension NewMessagesView {
@@ -244,7 +237,6 @@ extension NewMessagesView {
             
             // Saisie du message
             TextField("Message", text: $messageText, axis: .vertical)
-                .foregroundColor(Color.theme.accent)
                 .disableAutocorrection(true)
             
             // Envoi du message

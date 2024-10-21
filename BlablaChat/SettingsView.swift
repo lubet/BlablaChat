@@ -12,6 +12,8 @@ import SDWebImageSwiftUI
 @MainActor
 final class SettingsViewModel: ObservableObject {
     
+    @Published var authProviders: [AuthProviderOption] = []
+    
     @Published var httpAvatar: String = ""
     
     @Published private(set) var selectedImage: UIImage? = nil
@@ -21,6 +23,12 @@ final class SettingsViewModel: ObservableObject {
         }
     }
     @Published var nom: String = ""
+    
+    func loadAuthProviders() {
+        if let providers = try? AuthManager.shared.getProviders() {
+            authProviders = providers
+        }
+    }
     
     private func setImage(from selection: PhotosPickerItem?) {
         guard let selection else { return }
@@ -105,17 +113,19 @@ struct SettingsView: View {
                 }
                 .padding(.top,10)
                 
-                Button("Reset du mot de passe") {
-                    Task {
-                        do {
-                            try await viewModel.resetPassword()
-                        } catch {
-                            print(error)
+                if viewModel.authProviders.contains(.email) {
+                    Button("Reset du mot de passe") {
+                        Task {
+                            do {
+                                try await viewModel.resetPassword()
+                            } catch {
+                                print(error)
+                            }
                         }
                     }
+                    .padding(.bottom,10)
                 }
-                .padding(.bottom,10)
-
+                
                 PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
                     Text("Changer d'avatar: ⬇")
                 }
@@ -148,6 +158,7 @@ struct SettingsView: View {
                 Task {
                     await viewModel.getAvatar()
                 }
+                viewModel.loadAuthProviders()
             }
             .onDisappear {
                 Task {

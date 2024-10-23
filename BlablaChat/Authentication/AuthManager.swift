@@ -120,19 +120,31 @@ extension AuthManager {
     }
     
     func linkEmail(email: String, password: String) async throws -> AuthUser {
-        
+        let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+        return try await linkCredential(credential: credential)
+    }
+    
+    func linkGoogle(tokens: GoggleSignInResultModel) async throws -> AuthUser {
+        let credential = GoogleAuthProvider.credential(withIDToken: tokens.idToken, accessToken: tokens.accessToken)
+        return try await linkCredential(credential: credential)
+    }
+
+    func linkApple(tokens: SignInWithAppleResult) async throws -> AuthUser {
+        let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokens.token, rawNonce: tokens.nonce)
+        return try await linkCredential(credential: credential)
+    }
+    
+    private func linkCredential(credential: AuthCredential) async throws -> AuthUser {
         // Authentification invisible ayant été faite de manière anonyme
         guard let user = Auth.auth().currentUser else {
             throw URLError(.badURL)
         }
-
-        // Authentifcation visible en tant qu'email/password
-        let credential = EmailAuthProvider.credential(withEmail: email, password: password)
         
         // lien entre email/password et l'anonyme
         let authDataResult = try await user.link(with: credential)
         return AuthUser(user: authDataResult.user)
-        
+
     }
+
 }
 

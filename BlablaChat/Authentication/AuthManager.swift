@@ -105,3 +105,12 @@ extension AuthManager {
     }
 }
 
+extension AuthManager {
+    
+    @discardableResult
+    func signInAnonymous() async throws -> AuthUser {
+        let authDataResult = try await Auth.auth().signInAnonymously()
+        return AuthUser(user: authDataResult.user)
+    }
+}
+

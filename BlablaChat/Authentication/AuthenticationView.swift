@@ -118,6 +118,10 @@ final class AuthenticationViewModel: ObservableObject {
 
         try await TokensManager.shared.addToken(user_id: user_id, FCMtoken: MyVariables.FCMtoken)
     }
+    
+    func signInAnonymous() async throws {
+        try await AuthManager.shared.signInAnonymous()
+    }
 
 }
 
@@ -131,6 +135,27 @@ struct AuthenticationView: View {
             Color.theme.background // voir "extension Color"
                 .ignoresSafeArea()
             VStack {
+                
+                Button {
+                    Task {
+                        do {
+                            try await viewModel.signInAnonymous()
+//                            try await viewModel.FCMtoken()
+//                            showSignInView = false
+                        } catch {
+                            print(error)
+                        }
+                    }
+                } label: {
+                    Text("Sign in Anonymous")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(height: 45)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.orange)
+                        .cornerRadius(10)
+                        .padding(.bottom, 10)
+                }
                 
                 // Sign In/Up with email/password
                 NavigationLink {

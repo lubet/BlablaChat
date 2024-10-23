@@ -140,8 +140,8 @@ struct AuthenticationView: View {
                     Task {
                         do {
                             try await viewModel.signInAnonymous()
-//                            try await viewModel.FCMtoken()
-//                            showSignInView = false
+                            showSignInView = false
+//                          try await viewModel.FCMtoken()
                         } catch {
                             print(error)
                         }

@@ -11,10 +11,12 @@ import FirebaseAuth
 struct AuthUser {
     let uid: String
     let email: String?
+    let isAnonymous: Bool
     
     init(user: User) { // User est un type FireAuth
         self.uid = user.uid
         self.email = user.email
+        self.isAnonymous = user.isAnonymous
     }
 }
 
@@ -63,6 +65,7 @@ final class AuthManager {
 }
 
 // MARK: SIGN IN EMAIL
+
 extension AuthManager {
     // Nouveau compte
     @discardableResult
@@ -80,6 +83,7 @@ extension AuthManager {
 }
 
 // MARK: SIGN IN SSO (Google, Apple)
+
 extension AuthManager {
     
     @discardableResult
@@ -105,12 +109,30 @@ extension AuthManager {
     }
 }
 
+// MARK: SIGN IN ANONYMOUS
+
 extension AuthManager {
     
     @discardableResult
     func signInAnonymous() async throws -> AuthUser {
         let authDataResult = try await Auth.auth().signInAnonymously()
         return AuthUser(user: authDataResult.user)
+    }
+    
+    func linkEmail(email: String, password: String) async throws -> AuthUser {
+        
+        // Authentification invisible ayant été faite de manière anonyme
+        guard let user = Auth.auth().currentUser else {
+            throw URLError(.badURL)
+        }
+
+        // Authentifcation visible en tant qu'email/password
+        let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+        
+        // lien entre email/password et l'anonyme
+        let authDataResult = try await user.link(with: credential)
+        return AuthUser(user: authDataResult.user)
+        
     }
 }
 

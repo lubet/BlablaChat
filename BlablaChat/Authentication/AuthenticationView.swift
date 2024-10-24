@@ -135,8 +135,7 @@ struct AuthenticationView: View {
             Color.theme.background // voir "extension Color"
                 .ignoresSafeArea()
             VStack {
-                
-                Button {
+                Button { // TODO Anonymous
                     Task {
                         do {
                             try await viewModel.signInAnonymous()

@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseAuth
 
+// TODO anonymous
 struct AuthUser {
     let uid: String
     let email: String?
@@ -109,6 +110,7 @@ extension AuthManager {
     }
 }
 
+// TODO
 // MARK: SIGN IN ANONYMOUS
 
 extension AuthManager {
@@ -134,13 +136,12 @@ extension AuthManager {
         return try await linkCredential(credential: credential)
     }
     
+    // Appler par les link ci-dessus
     private func linkCredential(credential: AuthCredential) async throws -> AuthUser {
-        // Authentification invisible ayant été faite de manière anonyme
         guard let user = Auth.auth().currentUser else {
             throw URLError(.badURL)
         }
         
-        // lien entre email/password et l'anonyme
         let authDataResult = try await user.link(with: credential)
         return AuthUser(user: authDataResult.user)
 

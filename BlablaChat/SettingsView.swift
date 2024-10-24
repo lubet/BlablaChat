@@ -15,6 +15,7 @@ final class SettingsViewModel: ObservableObject {
     @Published var authProviders: [AuthProviderOption] = []
     
     @Published var httpAvatar: String = ""
+    @Published var imageAvatar: UIImage? = nil
     
     @Published private(set) var selectedImage: UIImage? = nil
     @Published var imageSelection: PhotosPickerItem? = nil {
@@ -22,6 +23,7 @@ final class SettingsViewModel: ObservableObject {
             setImage(from: imageSelection)
         }
     }
+    
     @Published var nom: String = ""
     
     func loadAuthProviders() {
@@ -57,14 +59,6 @@ final class SettingsViewModel: ObservableObject {
         try await AuthManager.shared.resetPassword(email: email)
     }
     
-    func getAvatar() async {
-        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        let user_id = authUser.uid
-        // Recherche de l'avatar dans users
-        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
-        // print("\(httpAvatar)")
-    }
-    
     // Mise à jour de l'avatar dans "Storage" et dans "users" TODO voir si on peut mettre à jour au lieu de supprimer/ajouter
     func updateAvatar() async throws {
         guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
@@ -88,6 +82,15 @@ final class SettingsViewModel: ObservableObject {
             let user_id = authUser.uid
             try await TokensManager.shared.saveNom(user_id: user_id, nom: nom)
         }
+    }
+    
+    func getAvatar() async {
+        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+        let user_id = authUser.uid
+        // Recherche de l'avatar dans users
+        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
+        // print("\(httpAvatar)")
+        imageAvatar = try? await StorageManager.shared.getImage(userId: user_id, path: httpAvatar)
     }
 }
 

@@ -11,7 +11,7 @@ import PhotosUI
 @MainActor
 final class NewSettingsModel: ObservableObject {
     
-    @Published var monImage: UIImage = UIImage(resource: .mon)
+    @Published var monImage: UIImage = UIImage(resource: .autre)
     
     func addImage() async {
         // self.monImage = UIImage(resource: .autre)
@@ -20,13 +20,17 @@ final class NewSettingsModel: ObservableObject {
         let user_id = authUser.uid
         
         guard let httpAvatar = try? await UsersManager.shared.getAvatar(contact_id: user_id) else {
+            print("httpAvatar = nil")
             return
         }
         
         guard let imageAvatar = try? await StorageManager.shared.getImage(userId: user_id, path: httpAvatar) else {
             self.monImage = UIImage(resource: .mon)
+            print("imageAvatar = nil")
             return
         }
+        
+        print("imageAvatar: \(imageAvatar)")
         self.monImage = imageAvatar
     }
 
@@ -77,6 +81,11 @@ struct NewSettings: View {
                             }
                         }
                         photosPickerItem = nil
+                    }
+                }
+                .onAppear {
+                    Task {
+                        try await viewModel.addImage()
                     }
                 }
                 

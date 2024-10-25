@@ -201,11 +201,20 @@ struct AuthenticationView: View {
                         .allowsHitTesting(false)
                 })
                 .frame(height: 55)
-                .onChange(of: viewModel.didSignInWithApple) { newValue in
+                
+                // iOS 17.0
+                .onChange(of: viewModel.didSignInWithApple, { newValue,_ in
                     if newValue == true {
                         showSignInView = false
                     }
-                }
+                })
+
+                // Avant iOS 17.0 TODO : fait voir au dessus
+//                .onChange(of: viewModel.didSignInWithApple) { newValue in
+//                    if newValue == true {
+//                        showSignInView = false
+//                    }
+//                }
                 
                 Spacer()
             }

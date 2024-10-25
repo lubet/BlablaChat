@@ -189,7 +189,7 @@ struct LastMessagesView: View {
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink {
-                                SettingsView(showSignInView: $showSignInView)
+                                NewSettings(showSignInView: $showSignInView)
                         } label: {
                             Image(systemName: "gear")
                         }

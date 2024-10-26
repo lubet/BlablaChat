@@ -6,53 +6,39 @@
 //
 
 import SwiftUI
-import PhotosUI
+//import PhotosUI
+import SDWebImage
+import SDWebImageSwiftUI
 
 @MainActor
 final class NewSettingsModel: ObservableObject {
     
-    @Published var monImage: UIImage = UIImage(resource: .autre)
-    
-    func addImage() async {
-        // self.monImage = UIImage(resource: .autre)
-        
-        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        let user_id = authUser.uid
-        
-        guard let httpAvatar = try? await UsersManager.shared.getAvatar(contact_id: user_id) else {
-            print("httpAvatar = nil")
-            return
-        }
-        
-        guard let imageAvatar = try? await StorageManager.shared.getImage(userId: user_id, path: httpAvatar) else {
-            self.monImage = UIImage(resource: .mon)
-            print("imageAvatar = nil")
-            return
-        }
-        
-        print("imageAvatar: \(imageAvatar)")
-        self.monImage = imageAvatar
-    }
+    @Published var httpAvatar: String = ""
+    @Published var imageAvatar: UIImage? = nil
 
     func logOut() throws {
         try AuthManager.shared.signOut()
     }
-
     
+    func loadAvatar() async throws {
+        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+        let user_id = authUser.uid
+        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
+    }
 }
-
 
 struct NewSettings: View {
     @Binding var showSignInView: Bool
     
     @StateObject private var viewModel = NewSettingsModel()
     
-    @State private var avatarImage: UIImage?
-    @State private var photosPickerItem: PhotosPickerItem?
-    
+    @State var showImagePicker: Bool = false
+    @State var image: UIImage?
+
     var body: some View {
         ZStack() {
             VStack(spacing: 40) {
+                
                 Button("Log out") {
                     Task {
                         do {
@@ -65,33 +51,45 @@ struct NewSettings: View {
                     }
                 }
                 
-                PhotosPicker(selection: $photosPickerItem, matching: .images) {
-                    Image(uiImage: avatarImage ?? viewModel.monImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 200, height: 200)
-                        .clipShape(.circle)
-                }
-                .onChange(of: photosPickerItem) { _, _ in
-                    Task {
-                        if let photosPickerItem,
-                           let data = try await photosPickerItem.loadTransferable(type: Data.self) {
-                            if let image = UIImage(data: data) {
-                                avatarImage = image
-                            }
+                Button { // Avatar
+                    showImagePicker.toggle()
+                } label: {
+                    VStack {
+                        if let image = image {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 100, height: 100)
+                                .clipShape(Circle())
+                        } else {
+                            WebImage(url: URL(string: viewModel.httpAvatar))
+                                .resizable()
+                                .frame(width: 120, height: 120)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(Color.black, lineWidth: 1))
+                            //
+                            //                            Image(uiImage: viewModel.imageAvatar ?? UIImage(resource: .mon))
+                            //                                .resizable()
+                            //                                .scaledToFill()
+                            //                                .frame(width: 100, height: 100)
+                            //                                .clipShape(Circle())
                         }
-                        photosPickerItem = nil
                     }
+                    .overlay(RoundedRectangle(cornerRadius: 64)
+                        .stroke(Color.black,lineWidth: 2))
                 }
-                .onAppear {
-                    Task {
-                        try await viewModel.addImage()
-                    }
-                }
-                
-                
-                
             } // VStack
+
+            // Image
+            .fullScreenCover(isPresented: $showImagePicker, onDismiss: nil) {
+                ImagePicker(image: $image) // Utilities/ImagePicker
+            }
+            .onAppear {
+                Task {
+                    try await viewModel.loadAvatar()
+                }
+            }
+
         } // ZStack
     }
     

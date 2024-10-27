@@ -97,6 +97,7 @@ struct NewSettings: View {
                 Task {
                     try await viewModel.loadAvatar()
                 }
+                viewModel.loadAuthProviders()
             }
 
         } // ZStack

@@ -52,7 +52,6 @@ final class AuthManager {
                 assertionFailure("Provider option not found: \(provider.providerID)")
             }
         }
-        print(providers)
         return providers
     }
     
@@ -111,8 +110,8 @@ extension AuthManager {
     }
 }
 
-// TODO
-// MARK: SIGN IN ANONYMOUS
+// TODO 
+// MARK: PROVIDERS LINKS ON CURRENT USER
 
 extension AuthManager {
     
@@ -137,7 +136,7 @@ extension AuthManager {
         return try await linkCredential(credential: credential)
     }
     
-    // Appler par les link ci-dessus
+    // Appler par les link ci-dessus - link du provider sur le user courant
     private func linkCredential(credential: AuthCredential) async throws -> AuthUser {
         guard let user = Auth.auth().currentUser else {
             throw URLError(.badURL)

@@ -15,6 +15,8 @@ final class NewSettingsModel: ObservableObject {
     
     @Published var httpAvatar: String = ""
     @Published var imageAvatar: UIImage? = nil
+    
+    @Published var authProviders: [AuthProviderOption] = []
 
     func logOut() throws {
         try AuthManager.shared.signOut()
@@ -25,9 +27,22 @@ final class NewSettingsModel: ObservableObject {
         let user_id = authUser.uid
         httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
     }
+    
+    // TODO
+    func updateAvatar() async throws {
+        
+    }
+    
+    func loadAuthProviders() {
+        if let providers = try? AuthManager.shared.getProviders() {
+            authProviders = providers
+        }
+    }
 }
 
+// -----------------------
 struct NewSettings: View {
+    
     @Binding var showSignInView: Bool
     
     @StateObject private var viewModel = NewSettingsModel()
@@ -67,12 +82,6 @@ struct NewSettings: View {
                                 .frame(width: 120, height: 120)
                                 .clipShape(Circle())
                                 .overlay(Circle().stroke(Color.black, lineWidth: 1))
-                            //
-                            //                            Image(uiImage: viewModel.imageAvatar ?? UIImage(resource: .mon))
-                            //                                .resizable()
-                            //                                .scaledToFill()
-                            //                                .frame(width: 100, height: 100)
-                            //                                .clipShape(Circle())
                         }
                     }
                     .overlay(RoundedRectangle(cornerRadius: 64)
@@ -92,10 +101,10 @@ struct NewSettings: View {
 
         } // ZStack
     }
-    
-    struct NewSettings_Previews: PreviewProvider {
-        static var previews: some View {
-            NewSettings(showSignInView: .constant(false))
-        }
+}
+
+struct NewSettings_Previews: PreviewProvider {
+    static var previews: some View {
+        NewSettings(showSignInView: .constant(false))
     }
 }

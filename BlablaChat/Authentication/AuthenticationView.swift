@@ -16,9 +16,6 @@ struct GoggleSignInResultModel {
     let accessToken: String
 }
 
-
-
-
 @MainActor
 final class AuthenticationViewModel: ObservableObject {
     
@@ -140,7 +137,6 @@ struct AuthenticationView: View {
                         do {
                             try await viewModel.signInAnonymous()
                             showSignInView = false
-//                          try await viewModel.FCMtoken()
                         } catch {
                             print(error)
                         }

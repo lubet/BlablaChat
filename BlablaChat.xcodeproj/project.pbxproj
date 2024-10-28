@@ -39,7 +39,6 @@
 		C048F18C2BAF2E2400742CD2 /* LastMessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C048F18B2BAF2E2400742CD2 /* LastMessagesManager.swift */; };
 		C05D4E3C2C5CB2DD00270938 /* NewMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D4E3B2C5CB2DD00270938 /* NewMessagesView.swift */; };
 		C05D4E402C5CBF7900270938 /* RoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D4E3F2C5CBF7900270938 /* RoomModel.swift */; };
-		C060FF8B2BCE6E060024B365 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C060FF8A2BCE6E060024B365 /* SettingsView.swift */; };
 		C068CD3B2BCD769E0072A797 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */; };
 		C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */; };
 		C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A8DB82BAEC5030007436C /* TimestampToString.swift */; };
@@ -100,7 +99,6 @@
 		C04C3A7A2C85C7CD0044B21B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		C05D4E3B2C5CB2DD00270938 /* NewMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessagesView.swift; sourceTree = "<group>"; };
 		C05D4E3F2C5CBF7900270938 /* RoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomModel.swift; sourceTree = "<group>"; };
-		C060FF8A2BCE6E060024B365 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAppleHelper.swift; sourceTree = "<group>"; };
 		C06A8DB82BAEC5030007436C /* TimestampToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampToString.swift; sourceTree = "<group>"; };
@@ -216,7 +214,6 @@
 				C070D6402C53809E006170E3 /* Extensions */,
 				C0D84B6F2C5B889400AE9B21 /* Models */,
 				C0695AEF2C49151400CEAA17 /* Authentication */,
-				C060FF8A2BCE6E060024B365 /* SettingsView.swift */,
 				C0839E0C2CCBF6AF001F5706 /* NewSettings.swift */,
 				C07564EA2BADEA4F00E8D7D9 /* LastMessages */,
 				C0476E7B2BB70FF9000D860C /* Messages */,
@@ -447,7 +444,6 @@
 				C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */,
 				C0D565F42B7CAF8E00EE0DA0 /* RootView.swift in Sources */,
 				C0839E0D2CCBF6AF001F5706 /* NewSettings.swift in Sources */,
-				C060FF8B2BCE6E060024B365 /* SettingsView.swift in Sources */,
 				C048F18C2BAF2E2400742CD2 /* LastMessagesManager.swift in Sources */,
 				C07F38B72C15A4F300B481B5 /* CellView.swift in Sources */,
 				C068CD3B2BCD769E0072A797 /* AuthenticationView.swift in Sources */,

@@ -39,7 +39,7 @@ final class NewSettingsModel: ObservableObject {
         let helper = SignInGoogleHelper()
         let tokens = try await helper.signIn()
         let authDataResult = try await AuthManager.shared.linkGoogle(tokens: tokens)
-        authUser = authDataResult
+        AuthUser = authDataResult.
     }
     
     func linkAppleAccount() async throws {

@@ -36,22 +36,25 @@ final class NewSettingsModel: ObservableObject {
     }
     
     func linkGoogleAccount() async throws {
-            let helper = SignInGoogleHelper()
-            let tokens = try await helper.signIn()
-            try await AuthManager.shared.linkGoogle(tokens: tokens)
+        let helper = SignInGoogleHelper()
+        let tokens = try await helper.signIn()
+        let authDataResult = try await AuthManager.shared.linkGoogle(tokens: tokens)
+        authUser = authDataResult
     }
-
+    
     func linkAppleAccount() async throws {
-            let helper = SignInAppleHelper()
-            let tokens = try await helper.startSignInWithAppleFlow()
-            try await AuthManager.shared.linkApple(tokens: tokens)
+        let helper = SignInAppleHelper()
+        let tokens = try await helper.startSignInWithAppleFlow()
+        let authDataResult = try await AuthManager.shared.linkApple(tokens: tokens)
+        self.authUser = authDataResult
     }
     
     // TODO ecran de login
     func linkEmailAccount() async throws {
         let email = "hello@test.com"
         let password = "azerty"
-        try await AuthManager.shared.linkEmail(email: email, password: password)
+        let authDataResult = try await AuthManager.shared.linkEmail(email: email, password: password)
+        self.authUser = authDataResult
     }
 }
 

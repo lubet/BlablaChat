@@ -34,6 +34,10 @@ final class NewSettingsModel: ObservableObject {
             authProviders = providers
         }
     }
+    
+    func linkGoogleAccount() async throws {
+            let helper = SignInGoogleHelper
+    }
 }
 
 // -----------------------
@@ -50,10 +54,10 @@ struct NewSettings: View {
         List {
             Section (
                 header: Text("Avatar")
+                    .frame(maxWidth: .infinity, alignment: .center)
                     .font(.largeTitle)
-                    .fontWeight(.heavy)
-                
-            ) {
+                    .fontWeight(.heavy))
+            {
                 Button { // Avatar
                     showImagePicker.toggle()
                 } label: {
@@ -75,14 +79,15 @@ struct NewSettings: View {
                     .overlay(RoundedRectangle(cornerRadius: 64)
                         .stroke(Color.black,lineWidth: 2))
                 }
+                .frame(maxWidth: .infinity, alignment: .center)
             }
             
             Section (
                 header: Text("Logins")
+                    .frame(maxWidth: .infinity, alignment: .center)
                     .font(.largeTitle)
-                    .fontWeight(.heavy)
-                
-            ) {
+                    .fontWeight(.heavy))
+            {
                 // Current user = email
                 // if viewModel.authProviders.contains(.email) {
                 emailSection
@@ -114,7 +119,6 @@ struct NewSettings_Previews: PreviewProvider {
 extension NewSettings {
     private var emailSection: some View {
         Section {
-            
                 Button("Login Google") { // TODO Anonymous
                     Task {
                         do {

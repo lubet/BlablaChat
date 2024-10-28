@@ -10,12 +10,6 @@ import GoogleSignIn
 import GoogleSignInSwift
 import AuthenticationServices
 
-
-struct GoggleSignInResultModel {
-    let idToken: String
-    let accessToken: String
-}
-
 @MainActor
 final class AuthenticationViewModel: ObservableObject {
     
@@ -24,20 +18,8 @@ final class AuthenticationViewModel: ObservableObject {
     let signInAppleHelper = SignInAppleHelper()
     
     func signInGoogle() async throws {
-        
-        guard let topVC = Utilities.shared.topViewController() else {
-            throw URLError(.cannotFindHost)
-        }
-        
-        let gidSignInResult = try await GIDSignIn.sharedInstance.signIn(withPresenting: topVC)
-        
-        guard let idToken = gidSignInResult.user.idToken?.tokenString else {
-            throw URLError(.badServerResponse)
-        }
-        
-        let accessToken = gidSignInResult.user.accessToken.tokenString
-        
-        let tokens = GoggleSignInResultModel.init(idToken: idToken, accessToken: accessToken)
+        let helper = SignInGoogleHelper()
+        let tokens = try await helper.signIn()
 
         // Recherche du user Google dans la base "users" avec son email
         do {

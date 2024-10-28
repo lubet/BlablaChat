@@ -17,10 +17,6 @@ final class NewSettingsModel: ObservableObject {
     @Published var imageAvatar: UIImage? = nil
     
     @Published var authProviders: [AuthProviderOption] = []
-
-    func logOut() throws {
-        try AuthManager.shared.signOut()
-    }
     
     func loadAvatar() async throws {
         guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
@@ -49,23 +45,15 @@ struct NewSettings: View {
     
     @State var showImagePicker: Bool = false
     @State var image: UIImage?
-
+    
     var body: some View {
-        ZStack() {
-            VStack(spacing: 40) {
+        List {
+            Section (
+                header: Text("Avatar")
+                    .font(.largeTitle)
+                    .fontWeight(.heavy)
                 
-                Button("Log out") {
-                    Task {
-                        do {
-                            try viewModel.logOut()
-                            showSignInView = true
-                            return
-                        } catch {
-                            print(error)
-                        }
-                    }
-                }
-                
+            ) {
                 Button { // Avatar
                     showImagePicker.toggle()
                 } label: {
@@ -87,25 +75,80 @@ struct NewSettings: View {
                     .overlay(RoundedRectangle(cornerRadius: 64)
                         .stroke(Color.black,lineWidth: 2))
                 }
-            } // VStack
-
-            // Image
-            .fullScreenCover(isPresented: $showImagePicker, onDismiss: nil) {
-                ImagePicker(image: $image) // Utilities/ImagePicker
             }
-            .onAppear {
-                Task {
-                    try await viewModel.loadAvatar()
-                }
-                viewModel.loadAuthProviders()
+            
+            Section (
+                header: Text("Logins")
+                    .font(.largeTitle)
+                    .fontWeight(.heavy)
+                
+            ) {
+                // Current user = email
+                // if viewModel.authProviders.contains(.email) {
+                emailSection
+                //}
             }
-
-        } // ZStack
+            
+        }
+        
+        // Image
+        .fullScreenCover(isPresented: $showImagePicker, onDismiss: nil) {
+            ImagePicker(image: $image) // Utilities/ImagePicker
+        }
+        .onAppear {
+            Task {
+                try await viewModel.loadAvatar()
+            }
+            viewModel.loadAuthProviders()
+        }
+        .navigationBarTitle("Paramètres")
     }
 }
 
 struct NewSettings_Previews: PreviewProvider {
     static var previews: some View {
         NewSettings(showSignInView: .constant(false))
+    }
+}
+
+extension NewSettings {
+    private var emailSection: some View {
+        Section {
+            
+                Button("Login Google") { // TODO Anonymous
+                    Task {
+                        do {
+                            // try await viewModel.signInAnonymous()
+                            showSignInView = false
+                        } catch {
+                            print(error)
+                        }
+                    }
+                }
+                .padding(.horizontal,40)
+                Button("Login Apple") { // TODO Anonymous
+                    Task {
+                        do {
+                            // try await viewModel.signInAnonymous()
+                            showSignInView = false
+                        } catch {
+                            print(error)
+                        }
+                    }
+                }
+                .padding(.horizontal,40)
+                Button("Login email/mot de passe") { // TODO Anonymous
+                    Task {
+                        do {
+                            // try await viewModel.signInAnonymous()
+                            showSignInView = false
+                        } catch {
+                            print(error)
+                        }
+                    }
+                }
+                .padding(.horizontal,40)
+        }
+        
     }
 }

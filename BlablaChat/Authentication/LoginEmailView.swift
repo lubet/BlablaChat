@@ -53,6 +53,10 @@ final class LoginEmailViewModel: ObservableObject {
         
         try await TokensManager.shared.addToken(user_id: user_id, FCMtoken: MyVariables.FCMtoken)
     }
+    
+    
+    // Lier le provider email au user en cours (si c'est aussi un email ?)
+    
 }
 
 // -----------------------------------------------------

@@ -12,12 +12,12 @@ import FirebaseAuth
 struct AuthUser {
     let uid: String
     let email: String?
-    let isAnonymous: Bool
+    // let isAnonymous: Bool
     
     init(user: User) { // User est un type FireAuth
         self.uid = user.uid
         self.email = user.email
-        self.isAnonymous = user.isAnonymous
+        //self.isAnonymous = user.isAnonymous
     }
 }
 
@@ -110,42 +110,42 @@ extension AuthManager {
     }
 }
 
-// TODO 
-// MARK: PROVIDERS LINKS ON CURRENT USER
+// TODO Providers linking on anonymous account
+// MARK: PROVIDERS LINKS ON CURRENT USER ANONYME
 
-extension AuthManager {
+// extension AuthManager {
     
-    @discardableResult
-    func signInAnonymous() async throws -> AuthUser {
-        let authDataResult = try await Auth.auth().signInAnonymously()
-        return AuthUser(user: authDataResult.user)
-    }
+//    @discardableResult
+//    func signInAnonymous() async throws -> AuthUser {
+//        let authDataResult = try await Auth.auth().signInAnonymously()
+//        return AuthUser(user: authDataResult.user)
+//    }
     
-    func linkEmail(email: String, password: String) async throws -> AuthUser {
-        let credential = EmailAuthProvider.credential(withEmail: email, password: password)
-        return try await linkCredential(credential: credential)
-    }
-    
-    func linkGoogle(tokens: GoggleSignInResultModel) async throws -> AuthUser {
-        let credential = GoogleAuthProvider.credential(withIDToken: tokens.idToken, accessToken: tokens.accessToken)
-        return try await linkCredential(credential: credential)
-    }
+//    func linkEmail(email: String, password: String) async throws -> AuthUser {
+//        let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+//        return try await linkCredential(credential: credential)
+//    }
+//    
+//    func linkGoogle(tokens: GoggleSignInResultModel) async throws -> AuthUser {
+//        let credential = GoogleAuthProvider.credential(withIDToken: tokens.idToken, accessToken: tokens.accessToken)
+//        return try await linkCredential(credential: credential)
+//    }
+//
+//    func linkApple(tokens: SignInWithAppleResult) async throws -> AuthUser {
+//        let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokens.token, rawNonce: tokens.nonce)
+//        return try await linkCredential(credential: credential)
+//    }
+//    
+//    // Appler par les link ci-dessus - link du provider sur le user courant
+//    private func linkCredential(credential: AuthCredential) async throws -> AuthUser {
+//        guard let user = Auth.auth().currentUser else {
+//            throw URLError(.badURL)
+//        }
+//        
+//        let authDataResult = try await user.link(with: credential)
+//        return AuthUser(user: authDataResult.user)
+//
+//    }
 
-    func linkApple(tokens: SignInWithAppleResult) async throws -> AuthUser {
-        let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokens.token, rawNonce: tokens.nonce)
-        return try await linkCredential(credential: credential)
-    }
-    
-    // Appler par les link ci-dessus - link du provider sur le user courant
-    private func linkCredential(credential: AuthCredential) async throws -> AuthUser {
-        guard let user = Auth.auth().currentUser else {
-            throw URLError(.badURL)
-        }
-        
-        let authDataResult = try await user.link(with: credential)
-        return AuthUser(user: authDataResult.user)
-
-    }
-
-}
+// }
 

@@ -364,7 +364,14 @@ final class UsersManager {
 
     }
    
-    // SettingsView TODO ajouter le champ nom dans "users"
+    // Maj de l'avatar dans "user" à partir de NewSettings
+    func updateAvatar(userId: String, mimage: UIImage) async throws {
+        let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: userId)
+        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
+        try await UsersManager.shared.updateImagePath(userId: userId, path: lurl.absoluteString) // maj Firestore
+    }
+    
+    // NewSettings TODO ajouter le champ nom dans "users"
 //    func saveNom(user_id: String, nom: String) async throws {
 //        do {
 //            let docRef = userDocument(userId: user_id)

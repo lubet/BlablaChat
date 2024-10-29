@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C0027F482C5BDD59009DABF3 /* DBUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0027F472C5BDD59009DABF3 /* DBUserModel.swift */; };
-		C0027F4A2C5BE073009DABF3 /* totoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0027F492C5BE073009DABF3 /* totoView.swift */; };
 		C00C31432CA1B5BA00E5F962 /* MyVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00C31422CA1B5BA00E5F962 /* MyVariables.swift */; };
 		C00CEF102BB55206004C7016 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C00CEF0F2BB55206004C7016 /* SDWebImageSwiftUI */; };
 		C0180A342CBA6A35009E9163 /* TokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0180A332CBA6A35009E9163 /* TokenModel.swift */; };
@@ -69,7 +68,6 @@
 
 /* Begin PBXFileReference section */
 		C0027F472C5BDD59009DABF3 /* DBUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUserModel.swift; sourceTree = "<group>"; };
-		C0027F492C5BE073009DABF3 /* totoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = totoView.swift; sourceTree = "<group>"; };
 		C00C31422CA1B5BA00E5F962 /* MyVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyVariables.swift; sourceTree = "<group>"; };
 		C0180A332CBA6A35009E9163 /* TokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenModel.swift; sourceTree = "<group>"; };
 		C0180A352CBA6FF5009E9163 /* TokensManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensManager.swift; sourceTree = "<group>"; };
@@ -283,7 +281,6 @@
 				C0AF17C62C5A1BD700B27376 /* UsersView.swift */,
 				C03C39952C5A2BC900A23D33 /* UsersCellView.swift */,
 				C0D84B6D2C5B846A00AE9B21 /* UsersManager.swift */,
-				C0027F492C5BE073009DABF3 /* totoView.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -426,7 +423,6 @@
 				C037638A2C4128D000A5602B /* Utilities.swift in Sources */,
 				C02A8C382BB1D62E005ECF0F /* LastMessagesCellView.swift in Sources */,
 				C07564EC2BADEA8500E8D7D9 /* LastMessagesView.swift in Sources */,
-				C0027F4A2C5BE073009DABF3 /* totoView.swift in Sources */,
 				C043F9A52C170D08002B3C59 /* DateManager.swift in Sources */,
 				C05D4E3C2C5CB2DD00270938 /* NewMessagesView.swift in Sources */,
 				C01FE5AD2B67F7F70049B9EE /* ContactManager.swift in Sources */,

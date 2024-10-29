@@ -14,7 +14,7 @@ import SDWebImageSwiftUI
 final class NewSettingsModel: ObservableObject {
     
     @Published var httpAvatar: String = ""
-    @Published var imageAvatar: UIImage? = nil
+    @Published var newImageAvatar: UIImage? = nil
     
     @Published var authProviders: [AuthProviderOption] = []
     
@@ -26,7 +26,11 @@ final class NewSettingsModel: ObservableObject {
     
     // TODO
     func updateAvatar() async throws {
-        
+        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+        let user_id = authUser.uid
+        if let newImageAvatar = newImageAvatar {
+            try await UsersManager.shared.updateAvatar(userId: user_id, mimage: newImageAvatar)
+        }
     }
     
     func loadAuthProviders() {
@@ -35,26 +39,30 @@ final class NewSettingsModel: ObservableObject {
         }
     }
     
-    func linkGoogleAccount() async throws {
-        let helper = SignInGoogleHelper()
-        let tokens = try await helper.signIn()
-        let authDataResult = try await AuthManager.shared.linkGoogle(tokens: tokens)
-        AuthUser = authDataResult.
-    }
+//    func linkGoogleAccount() async throws {
+//        let helper = SignInGoogleHelper()
+//        let tokens = try await helper.signIn()
+//        let authDataResult = try await AuthManager.shared.linkGoogle(tokens: tokens)
+//        self.AuthUser = authDataResult
+//    }
+//    
+//    func linkAppleAccount() async throws {
+//        let helper = SignInAppleHelper()
+//        let tokens = try await helper.startSignInWithAppleFlow()
+//        let authDataResult = try await AuthManager.shared.linkApple(tokens: tokens)
+//        self.authUser = authDataResult
+//    }
+//    
+//    // TODO ecran de login
+//    func linkEmailAccount() async throws {
+//        let email = "hello@test.com"
+//        let password = "azerty"
+//        let authDataResult = try await AuthManager.shared.linkEmail(email: email, password: password)
+//        self.authUser = authDataResult
+//    }
     
-    func linkAppleAccount() async throws {
-        let helper = SignInAppleHelper()
-        let tokens = try await helper.startSignInWithAppleFlow()
-        let authDataResult = try await AuthManager.shared.linkApple(tokens: tokens)
-        self.authUser = authDataResult
-    }
-    
-    // TODO ecran de login
-    func linkEmailAccount() async throws {
-        let email = "hello@test.com"
-        let password = "azerty"
-        let authDataResult = try await AuthManager.shared.linkEmail(email: email, password: password)
-        self.authUser = authDataResult
+    func signOut() {
+        try? AuthManager.shared.signOut()
     }
 }
 
@@ -70,6 +78,21 @@ struct NewSettings: View {
     
     var body: some View {
         List {
+            // TODO Bouton Log out à supprimer car le choix du login se fait une seule fois à l'installation
+            Section (
+                header: Text("Log out")
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .font(.largeTitle)
+                    .fontWeight(.heavy))
+            {
+                Button {
+                    viewModel.signOut()
+                    showSignInView = true
+                } label: {
+                    Text("Log out")
+                }
+            }
+            
             Section (
                 header: Text("Avatar")
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -124,6 +147,12 @@ struct NewSettings: View {
             }
             viewModel.loadAuthProviders()
         }
+        .onDisappear {
+            viewModel.newImageAvatar = image
+            Task {
+                try await viewModel.updateAvatar()
+            }
+        }
         .navigationBarTitle("Paramètres")
     }
 }
@@ -137,29 +166,7 @@ struct NewSettings_Previews: PreviewProvider {
 extension NewSettings {
     private var emailSection: some View {
         Section {
-                Button("Login Google") { // TODO Anonymous
-                    Task {
-                        do {
-                            // try await viewModel.signInAnonymous()
-                            showSignInView = false
-                        } catch {
-                            print(error)
-                        }
-                    }
-                }
-                .padding(.horizontal,40)
-                Button("Login Apple") { // TODO Anonymous
-                    Task {
-                        do {
-                            // try await viewModel.signInAnonymous()
-                            showSignInView = false
-                        } catch {
-                            print(error)
-                        }
-                    }
-                }
-                .padding(.horizontal,40)
-                Button("Login email/mot de passe") { // TODO Anonymous
+                Button("Changer de mot de passe") { // TODO
                     Task {
                         do {
                             // try await viewModel.signInAnonymous()
@@ -171,6 +178,5 @@ extension NewSettings {
                 }
                 .padding(.horizontal,40)
         }
-        
     }
 }

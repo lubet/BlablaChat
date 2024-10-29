@@ -41,7 +41,7 @@ final class TokensManager {
         }
     }
     
-    // Sauvegarde du nom taper dans SettingsView dans "tokens"
+    // TODO Display name pour les notifications à taper dans NewSettings
     func saveNom(user_id: String, nom: String) async throws {
         do {
             let docRef = tokenDocument(user_id: user_id)

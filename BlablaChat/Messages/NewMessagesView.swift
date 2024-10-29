@@ -200,12 +200,19 @@ struct NewMessagesView: View {
                     }
                 }
                 .padding(.top, 10)
-                //.background(.white)
-                .onChange(of: viewModel.lastMessageId) { id in
+                
+                .onChange(of: viewModel.lastMessageId) { id, _ in
                     withAnimation {
                         proxy.scrollTo(id, anchor: .bottom)
                     }
                 }
+                
+                // Avant iOS 17
+//                .onChange(of: viewModel.lastMessageId) { id in
+//                    withAnimation {
+//                        proxy.scrollTo(id, anchor: .bottom)
+//                    }
+//                }
             }
         }
         MessageBar

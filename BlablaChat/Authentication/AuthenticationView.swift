@@ -35,11 +35,13 @@ final class AuthenticationViewModel: ObservableObject {
                  
                  let mimage: UIImage = UIImage.init(systemName: "person.fill")!
                  
-                 let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: user.userId)
-
-                 let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-
-                 try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
+                 try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: mimage)
+                 
+//                 let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: user.userId)
+//
+//                 let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
+//
+//                 try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
 
              }
         } catch {
@@ -70,11 +72,13 @@ final class AuthenticationViewModel: ObservableObject {
                             
                             let mimage: UIImage = UIImage.init(systemName: "person.fill")!
                             
-                            let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: user.userId)
+                            try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: mimage)
                             
-                            let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-                            
-                            try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
+//                            let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: user.userId)
+//                            
+//                            let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
+//                            
+//                            try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
                             
                             try await TokensManager.shared.addToken(user_id: authUser.uid, FCMtoken: MyVariables.FCMtoken)
                             
@@ -161,7 +165,7 @@ struct AuthenticationView: View {
                 .frame(height: 55)
                 
                 // iOS 17.0
-                .onChange(of: viewModel.didSignInWithApple, { newValue,_ in
+                .onChange(of: viewModel.didSignInWithApple, { newValue, _ in
                     if newValue == true {
                         showSignInView = false
                     }

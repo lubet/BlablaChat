@@ -30,11 +30,13 @@ final class LoginEmailViewModel: ObservableObject {
         guard let image else { return }
         
         // Avatar
-        let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: user.userId)
-
-        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-
-        try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
+        try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image)
+        
+//        let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: user.userId)
+//
+//        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
+//
+//        try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
         
      }
     

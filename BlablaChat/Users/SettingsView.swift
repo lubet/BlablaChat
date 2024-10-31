@@ -39,30 +39,40 @@ final class SettingsViewModel: ObservableObject {
         }
     }
     
-//    func linkGoogleAccount() async throws {
-//        let helper = SignInGoogleHelper()
-//        let tokens = try await helper.signIn()
-//        let authDataResult = try await AuthManager.shared.linkGoogle(tokens: tokens)
-//        self.AuthUser = authDataResult
-//    }
-//
-//    func linkAppleAccount() async throws {
-//        let helper = SignInAppleHelper()
-//        let tokens = try await helper.startSignInWithAppleFlow()
-//        let authDataResult = try await AuthManager.shared.linkApple(tokens: tokens)
-//        self.authUser = authDataResult
-//    }
-//
-//    // TODO ecran de login
-//    func linkEmailAccount() async throws {
-//        let email = "hello@test.com"
-//        let password = "azerty"
-//        let authDataResult = try await AuthManager.shared.linkEmail(email: email, password: password)
-//        self.authUser = authDataResult
-//    }
+    //    func linkGoogleAccount() async throws {
+    //        let helper = SignInGoogleHelper()
+    //        let tokens = try await helper.signIn()
+    //        let authDataResult = try await AuthManager.shared.linkGoogle(tokens: tokens)
+    //        self.AuthUser = authDataResult
+    //    }
+    //
+    //    func linkAppleAccount() async throws {
+    //        let helper = SignInAppleHelper()
+    //        let tokens = try await helper.startSignInWithAppleFlow()
+    //        let authDataResult = try await AuthManager.shared.linkApple(tokens: tokens)
+    //        self.authUser = authDataResult
+    //    }
+    //
+    //    // TODO ecran de login
+    //    func linkEmailAccount() async throws {
+    //        let email = "hello@test.com"
+    //        let password = "azerty"
+    //        let authDataResult = try await AuthManager.shared.linkEmail(email: email, password: password)
+    //        self.authUser = authDataResult
+    //    }
     
     func signOut() {
         try? AuthManager.shared.signOut()
+    }
+    
+    func resetPassword() async throws {
+        let authUser = try AuthManager.shared.getAuthenticatedUser()
+        
+        guard let email = authUser.email else {
+            throw URLError(.fileDoesNotExist)
+        }
+        
+        try await AuthManager.shared.resetPassword(email: email)
     }
 }
 
@@ -169,7 +179,7 @@ extension SettingsView {
                 Button("Changer de mot de passe") { // TODO
                     Task {
                         do {
-                            // try await viewModel.signInAnonymous()
+                            try await viewModel.resetPassword()
                             showSignInView = false
                         } catch {
                             print(error)

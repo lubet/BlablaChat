@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import FirebaseAuth
 
 private let dbFS = Firestore.firestore()
 
@@ -38,14 +39,14 @@ final class UsersManager {
         ]
         try await userDocument(userId: userId).updateData(data)
     }
-
+    
     // Maj du token FCM (Firebase Cloud Messaging - Notificatons) qui identifie le device
-//    func updateFCMtoken(userId: String, FCMtoken: String) async throws {
-//        let data: [String:Any] = [
-//            DBUser.CodingKeys.FCMtoken.rawValue : FCMtoken,
-//        ]
-//        try await userDocument(userId: userId).updateData(data)
-//    }
+    //    func updateFCMtoken(userId: String, FCMtoken: String) async throws {
+    //        let data: [String:Any] = [
+    //            DBUser.CodingKeys.FCMtoken.rawValue : FCMtoken,
+    //        ]
+    //        try await userDocument(userId: userId).updateData(data)
+    //    }
     
     //
     func getAllUsers() async throws -> [DBUser] {
@@ -84,7 +85,7 @@ final class UsersManager {
             print("getAvatar - Error getting documents: \(error)")
         }
         print("getAvatar: non trouvé pour contact-id: \(contact_id)")
-
+        
         return ""
     }
     
@@ -147,7 +148,7 @@ final class UsersManager {
     func createUser(email:String) async throws -> String {
         let userRef = DBUserCollection.document()
         let user_id = userRef.documentID
-
+        
         let data: [String:Any] = [
             "user_id" : user_id,
             "email": email,
@@ -160,7 +161,7 @@ final class UsersManager {
     
     // Renvoie le room_id du duo from/to ou to/fom si existant dans members
     func searchDuo(user_id: String, contact_id: String) async throws -> String {
-
+        
         do {
             let memberSnapshot = try await MemberCollection.whereFilter(Filter.orFilter([
                 Filter.andFilter([
@@ -185,10 +186,10 @@ final class UsersManager {
         print("searchDuo - La paire n'existe pas dans members")
         return ""
     }
-
+    
     // Recherche de l'id de mon interlocuteur dans "members"
     func searchDuo(from_id: String, room_id: String) async throws -> String {
-
+        
         do {
             let memberSnapshot = try await MemberCollection.whereFilter(Filter.orFilter([
                 Filter.andFilter([
@@ -213,7 +214,7 @@ final class UsersManager {
         print("searchDuo - La paire n'existe pas dans members")
         return ""
     }
-
+    
     
     // New Room pour les contacts (avatar dans "rooms")
     func createRoom(avatar_link: String) async throws -> String {
@@ -232,30 +233,30 @@ final class UsersManager {
     }
     
     func createMembers(room_id: String, user_id:String, contact_id:String) async throws {
-            let memberRef = MemberCollection.document()
-            let member_id = memberRef.documentID
-
+        let memberRef = MemberCollection.document()
+        let member_id = memberRef.documentID
+        
         let data: [String:Any] = [
-                "id": member_id,
-                "from_id": user_id,
-                "to_id": contact_id,
-                "room_id": room_id,
-                "date_created" : Timestamp(),
-                "last_message" : ""
-            ]
-            try await memberRef.setData(data, merge: false)
+            "id": member_id,
+            "from_id": user_id,
+            "to_id": contact_id,
+            "room_id": room_id,
+            "date_created" : Timestamp(),
+            "last_message" : ""
+        ]
+        try await memberRef.setData(data, merge: false)
     }
     
     func createMembers(user_id:String, room_id:String) async throws {
-            let memberRef = MemberCollection.document()
-            let member_id = memberRef.documentID
-
+        let memberRef = MemberCollection.document()
+        let member_id = memberRef.documentID
+        
         let data: [String:Any] = [
-                "id": member_id,
-                "user_id": user_id,
-                "room_id": room_id
-            ]
-            try await memberRef.setData(data, merge: false)
+            "id": member_id,
+            "user_id": user_id,
+            "room_id": room_id
+        ]
+        try await memberRef.setData(data, merge: false)
     }
     
     // retourne vrai si le tryptique combiné existe dans "members"
@@ -285,7 +286,7 @@ final class UsersManager {
         return false
     }
     
-
+    
     // Création du message et maj du dernier message de Room avec le message
     func createMessage(from_id: String, message_text: String, room_id: String, image_link: String, to_id: String) async throws {
         let messageRef = messageCollection.document()
@@ -311,7 +312,7 @@ final class UsersManager {
         
         // Ajout/replace du dernier message dans "rooms"
         let roomRef = roomDocument(room_id: room_id)
-
+        
         let dataRoom: [String:Any] = [
             "last_message": msg,
             "date_message": dateMessage,
@@ -322,7 +323,7 @@ final class UsersManager {
         
         try await roomRef.setData(dataRoom, merge: true)
     }
-
+    
     // Recherche du room_id dans "members" avec le user_id
     func searchRoomId(user_id: String) async throws -> String {
         do {
@@ -340,7 +341,7 @@ final class UsersManager {
         }
         print("searchDuo - La paire n'existe pas dans members")
         return ""
-
+        
         
     }
     
@@ -361,9 +362,9 @@ final class UsersManager {
             print("searchContact - Error getting documents: \(error)")
         }
         return ("","")
-
+        
     }
-   
+    
     // Maj de l'avatar dans "user" à partir de SettingsView
     func updateAvatar(userId: String, mimage: UIImage) async throws {
         let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: userId)
@@ -372,12 +373,16 @@ final class UsersManager {
     }
     
     // SettingsView TODO ajouter le champ nom dans "users"
-//    func saveNom(user_id: String, nom: String) async throws {
-//        do {
-//            let docRef = userDocument(userId: user_id)
-//            try await docRef.setData([ "nom":nom ] , merge: true)
-//        } catch {
-//            print("searchContact - Error getting documents: \(error)")
-//        }
-//    }
+    //    func saveNom(user_id: String, nom: String) async throws {
+    //        do {
+    //            let docRef = userDocument(userId: user_id)
+    //            try await docRef.setData([ "nom":nom ] , merge: true)
+    //        } catch {
+    //            print("searchContact - Error getting documents: \(error)")
+    //        }
+    //    }
+    
+    func resetPassword(email: String) async throws {
+        try await Auth.auth().sendPasswordReset(withEmail: email)
+    }
 }

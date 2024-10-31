@@ -46,13 +46,13 @@
 		C07564EC2BADEA8500E8D7D9 /* LastMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07564EB2BADEA8500E8D7D9 /* LastMessagesView.swift */; };
 		C07723242BC6877900AC0990 /* MessagesCellPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */; };
 		C07F38B72C15A4F300B481B5 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07F38B62C15A4F300B481B5 /* CellView.swift */; };
-		C0839E0D2CCBF6AF001F5706 /* NewSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0839E0C2CCBF6AF001F5706 /* NewSettings.swift */; };
 		C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */; };
 		C0AF17C72C5A1BD700B27376 /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AF17C62C5A1BD700B27376 /* UsersView.swift */; };
 		C0B73E9A2C6AAB2C00B43F19 /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B73E992C6AAB2C00B43F19 /* MessageBubble.swift */; };
 		C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B8555B2BBBFD5900B3956A /* TextBarView.swift */; };
 		C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */; };
 		C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C1A9482B62ACC400646851 /* SearchNick.swift */; };
+		C0C5EEEB2CD3A00800D46C09 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C5EEEA2CD3A00800D46C09 /* SettingsView.swift */; };
 		C0D565F42B7CAF8E00EE0DA0 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */; };
 		C0D70C322C3FDB9300DA0069 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = C0D70C312C3FDB9300DA0069 /* GoogleSignIn */; };
 		C0D70C342C3FDB9300DA0069 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C0D70C332C3FDB9300DA0069 /* GoogleSignInSwift */; };
@@ -105,13 +105,13 @@
 		C07564EB2BADEA8500E8D7D9 /* LastMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesView.swift; sourceTree = "<group>"; };
 		C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCellPhoto.swift; sourceTree = "<group>"; };
 		C07F38B62C15A4F300B481B5 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
-		C0839E0C2CCBF6AF001F5706 /* NewSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSettings.swift; sourceTree = "<group>"; };
 		C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDWebImageLoader.swift; sourceTree = "<group>"; };
 		C0AF17C62C5A1BD700B27376 /* UsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersView.swift; sourceTree = "<group>"; };
 		C0B73E992C6AAB2C00B43F19 /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
 		C0B8555B2BBBFD5900B3956A /* TextBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBarView.swift; sourceTree = "<group>"; };
 		C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleSendView.swift; sourceTree = "<group>"; };
 		C0C1A9482B62ACC400646851 /* SearchNick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNick.swift; sourceTree = "<group>"; };
+		C0C5EEEA2CD3A00800D46C09 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		C0D84B6D2C5B846A00AE9B21 /* UsersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
 		C0D84B722C5B898A00AE9B21 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
@@ -212,7 +212,6 @@
 				C070D6402C53809E006170E3 /* Extensions */,
 				C0D84B6F2C5B889400AE9B21 /* Models */,
 				C0695AEF2C49151400CEAA17 /* Authentication */,
-				C0839E0C2CCBF6AF001F5706 /* NewSettings.swift */,
 				C07564EA2BADEA4F00E8D7D9 /* LastMessages */,
 				C0476E7B2BB70FF9000D860C /* Messages */,
 				C0AF17C52C5A1BB500B27376 /* Users */,
@@ -281,6 +280,7 @@
 				C0AF17C62C5A1BD700B27376 /* UsersView.swift */,
 				C03C39952C5A2BC900A23D33 /* UsersCellView.swift */,
 				C0D84B6D2C5B846A00AE9B21 /* UsersManager.swift */,
+				C0C5EEEA2CD3A00800D46C09 /* SettingsView.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -407,6 +407,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C07723242BC6877900AC0990 /* MessagesCellPhoto.swift in Sources */,
+				C0C5EEEB2CD3A00800D46C09 /* SettingsView.swift in Sources */,
 				C02048842CCFEC0E0032178E /* SignInGoogleHelper.swift in Sources */,
 				C0180A342CBA6A35009E9163 /* TokenModel.swift in Sources */,
 				C0B73E9A2C6AAB2C00B43F19 /* MessageBubble.swift in Sources */,
@@ -439,7 +440,6 @@
 				C0D84B752C5B8A2900AE9B21 /* MemberModel.swift in Sources */,
 				C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */,
 				C0D565F42B7CAF8E00EE0DA0 /* RootView.swift in Sources */,
-				C0839E0D2CCBF6AF001F5706 /* NewSettings.swift in Sources */,
 				C048F18C2BAF2E2400742CD2 /* LastMessagesManager.swift in Sources */,
 				C07F38B72C15A4F300B481B5 /* CellView.swift in Sources */,
 				C068CD3B2BCD769E0072A797 /* AuthenticationView.swift in Sources */,

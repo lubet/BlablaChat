@@ -1,5 +1,5 @@
 //
-//  NewSettings.swift
+//  SettingsView.swift
 //  BlablaChat
 //
 //  Created by Lubet-Moncla Xavier on 25/10/2024.
@@ -11,7 +11,7 @@ import SDWebImage
 import SDWebImageSwiftUI
 
 @MainActor
-final class NewSettingsModel: ObservableObject {
+final class SettingsViewModel: ObservableObject {
     
     @Published var httpAvatar: String = ""
     @Published var newImageAvatar: UIImage? = nil
@@ -45,14 +45,14 @@ final class NewSettingsModel: ObservableObject {
 //        let authDataResult = try await AuthManager.shared.linkGoogle(tokens: tokens)
 //        self.AuthUser = authDataResult
 //    }
-//    
+//
 //    func linkAppleAccount() async throws {
 //        let helper = SignInAppleHelper()
 //        let tokens = try await helper.startSignInWithAppleFlow()
 //        let authDataResult = try await AuthManager.shared.linkApple(tokens: tokens)
 //        self.authUser = authDataResult
 //    }
-//    
+//
 //    // TODO ecran de login
 //    func linkEmailAccount() async throws {
 //        let email = "hello@test.com"
@@ -67,11 +67,11 @@ final class NewSettingsModel: ObservableObject {
 }
 
 // -----------------------
-struct NewSettings: View {
+struct SettingsView: View {
     
     @Binding var showSignInView: Bool
     
-    @StateObject private var viewModel = NewSettingsModel()
+    @StateObject private var viewModel = SettingsViewModel()
     
     @State var showImagePicker: Bool = false
     @State var image: UIImage?
@@ -157,13 +157,13 @@ struct NewSettings: View {
     }
 }
 
-struct NewSettings_Previews: PreviewProvider {
+struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        NewSettings(showSignInView: .constant(false))
+        SettingsView(showSignInView: .constant(false))
     }
 }
 
-extension NewSettings {
+extension SettingsView {
     private var emailSection: some View {
         Section {
                 Button("Changer de mot de passe") { // TODO

@@ -180,7 +180,7 @@ extension SettingsView {
                     Task {
                         do {
                             try await viewModel.resetPassword()
-                            showSignInView = false
+                            print("Reset password")
                         } catch {
                             print(error)
                         }

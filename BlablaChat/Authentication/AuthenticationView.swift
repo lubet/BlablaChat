@@ -118,35 +118,6 @@ struct AuthenticationView: View {
             Color.theme.background // voir "extension Color"
                 .ignoresSafeArea()
             VStack {
-                // Sign In/Up with email/password
-                NavigationLink {
-                    LoginEmailView(showSignInView: $showSignInView)
-                } label: {
-                    Text("S'authentifier avec l'email")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(height: 45)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                        .padding(.bottom, 10)
-                }
-                .padding(.top,30)
-                
-                // SignIn with Goggle
-                GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide, state: .normal))
-                {
-                    Task {
-                        do {
-                            try await viewModel.signInGoogle()
-                            try await viewModel.FCMtoken()
-                            showSignInView = false
-                        } catch {
-                            print(error)
-                        }
-                    }
-                }
-                .padding(.bottom, 10)
                 
                 // SignIn with Apple
                 Button(action: {
@@ -171,7 +142,40 @@ struct AuthenticationView: View {
                     }
                 })
 
-                // Avant iOS 17.0 TODO : fait voir au dessus
+                .padding(.top,30)
+                
+                // SignIn with Goggle
+                GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide, state: .normal))
+                {
+                    Task {
+                        do {
+                            try await viewModel.signInGoogle()
+                            try await viewModel.FCMtoken()
+                            showSignInView = false
+                        } catch {
+                            print(error)
+                        }
+                    }
+                }
+                .padding(.top, 20)
+                
+                // Sign In/Up with email/password
+                NavigationLink {
+                    LoginEmailView(showSignInView: $showSignInView)
+                } label: {
+                    Text("S'authentifier avec l'email")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(height: 45)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .padding(.bottom, 10)
+                }
+
+                .padding(.top, 20)
+                
+                // Avant iOS 17.0
 //                .onChange(of: viewModel.didSignInWithApple) { newValue in
 //                    if newValue == true {
 //                        showSignInView = false

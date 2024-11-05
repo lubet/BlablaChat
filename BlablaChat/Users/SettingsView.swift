@@ -133,16 +133,8 @@ struct SettingsView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
             
-            Section (
-                header: Text("Logins")
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .font(.largeTitle)
-                    .fontWeight(.heavy))
-            {
-                // Current user = email
-                // if viewModel.authProviders.contains(.email) {
+            if viewModel.authProviders.contains(.email) {
                 emailSection
-                //}
             }
             
         }
@@ -175,7 +167,14 @@ struct SettingsView_Previews: PreviewProvider {
 
 extension SettingsView {
     private var emailSection: some View {
-        Section {
+        Section (
+            header: Text("Logins")
+                .frame(maxWidth: .infinity, alignment: .center)
+                .font(.largeTitle)
+                .fontWeight(.heavy))
+        {
+            
+            Section {
                 Button("Changer de mot de passe") { // TODO
                     Task {
                         do {
@@ -187,6 +186,8 @@ extension SettingsView {
                     }
                 }
                 .padding(.horizontal,40)
+            }
         }
     }
 }
+

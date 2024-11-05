@@ -15,6 +15,7 @@ final class SettingsViewModel: ObservableObject {
     
     @Published var httpAvatar: String = ""
     @Published var newImageAvatar: UIImage? = nil
+    @Published var master: Bool = false
     
     @Published var authProviders: [AuthProviderOption] = []
     
@@ -74,6 +75,19 @@ final class SettingsViewModel: ObservableObject {
         
         try await AuthManager.shared.resetPassword(email: email)
     }
+    
+    func isMaster() async throws {
+        let authUser = try AuthManager.shared.getAuthenticatedUser()
+        
+        guard let email = authUser.email else {
+            throw URLError(.fileDoesNotExist)
+        }
+
+        if email == "master@test.com" {
+            master = true
+        }
+        
+    }
 }
 
 // -----------------------
@@ -88,20 +102,11 @@ struct SettingsView: View {
     
     var body: some View {
         List {
-            // TODO Bouton Log out à supprimer car le choix du login se fait une seule fois à l'installation
-            Section (
-                header: Text("Log out")
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .font(.largeTitle)
-                    .fontWeight(.heavy))
-            {
-                Button {
-                    viewModel.signOut()
-                    showSignInView = true
-                } label: {
-                    Text("Log out")
-                }
-            }
+            
+            // La possibilté de sortir avec logout est recervé uniquement au login email "master@test.com"
+            // if viewModel.master {
+                masterSection
+            //}
             
             Section (
                 header: Text("Avatar")
@@ -133,6 +138,7 @@ struct SettingsView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
             
+            // Le changement de mot de passe ne concerne que ceux qui se sont logés avec email et password
             if viewModel.authProviders.contains(.email) {
                 emailSection
             }
@@ -146,6 +152,7 @@ struct SettingsView: View {
         .onAppear {
             Task {
                 try await viewModel.loadAvatar()
+                try await viewModel.isMaster()
             }
             viewModel.loadAuthProviders()
         }
@@ -186,6 +193,24 @@ extension SettingsView {
                     }
                 }
                 .padding(.horizontal,40)
+            }
+        }
+    }
+}
+
+extension SettingsView {
+    private var masterSection: some View {
+        Section (
+            header: Text("Log out")
+                .frame(maxWidth: .infinity, alignment: .center)
+                .font(.largeTitle)
+                .fontWeight(.heavy))
+        {
+            Button {
+                viewModel.signOut()
+                showSignInView = true
+            } label: {
+                Text("Log out")
             }
         }
     }

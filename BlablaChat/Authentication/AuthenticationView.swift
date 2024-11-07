@@ -113,11 +113,14 @@ struct AuthenticationView: View {
     @StateObject private var viewModel = AuthenticationViewModel()
     @Binding var showSignInView: Bool
     
+    @Environment(\.colorScheme) private var colorScheme
+    
     var body: some View {
         ZStack {
             Color.theme.background // voir "extension Color"
                 .ignoresSafeArea()
             VStack {
+                
                 
                 // SignIn with Apple
                 Button(action: {
@@ -130,8 +133,16 @@ struct AuthenticationView: View {
                         }
                     }
                 }, label: {
-                    SignInWithAppleButtonViewRepresentable(type: .default, style: .black)
-                        .allowsHitTesting(false)
+                    if self.colorScheme == .light {
+                        SignInWithAppleButtonViewRepresentable(type: .default, style: .black)
+                            .allowsHitTesting(false)
+                    } else if self.colorScheme == .dark {
+                        SignInWithAppleButtonViewRepresentable(type: .default, style: .white)
+                            .allowsHitTesting(false)
+                    } else {
+                        SignInWithAppleButtonViewRepresentable(type: .default, style: .black)
+                            .allowsHitTesting(false)
+                    }
                 })
                 .frame(height: 55)
                 

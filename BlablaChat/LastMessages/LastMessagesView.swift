@@ -162,6 +162,9 @@ struct LastMessagesView: View {
 
     
     var body: some View {
+        ZStack {
+            Color.theme.background
+                .ignoresSafeArea()
             NavigationStack(path: $path) {
                 List {
                     ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in
@@ -189,7 +192,7 @@ struct LastMessagesView: View {
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink {
-                                SettingsView(showSignInView: $showSignInView)
+                            SettingsView(showSignInView: $showSignInView)
                         } label: {
                             Image(systemName: "gear")
                         }
@@ -213,6 +216,7 @@ struct LastMessagesView: View {
                         NewMessagesView(path: $path, email:emailPassed)
                     }
             }
+        }
     }
 }
 

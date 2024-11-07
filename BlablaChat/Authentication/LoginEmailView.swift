@@ -105,14 +105,16 @@ struct LoginEmailView: View {
                     .frame(width: 300, height: 50)
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
-                    .background(Color.gray.opacity(0.2))
+                    .background(Color.theme.backtext)
+                    .foregroundColor(Color.theme.forground)
                     .cornerRadius(10)
                 
                 SecureField("Mot de passe", text: $viewModel.password)
                     .padding(15)
                     .frame(width: 300, height: 50)
                     .textInputAutocapitalization(.never)
-                    .background(Color.gray.opacity(0.2))
+                    .background(Color.theme.backtext)
+                    .foregroundColor(Color.theme.forground)
                     .cornerRadius(10)
                     .disableAutocorrection(true)
                 

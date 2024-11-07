@@ -15,7 +15,7 @@ final class SettingsViewModel: ObservableObject {
     
     @Published var httpAvatar: String = ""
     @Published var newImageAvatar: UIImage? = nil
-    @Published var master: Bool = false
+    @Published var isMaster: Bool = false
     
     @Published var authProviders: [AuthProviderOption] = []
     
@@ -83,8 +83,10 @@ final class SettingsViewModel: ObservableObject {
             throw URLError(.fileDoesNotExist)
         }
 
-        if email == "master@test.com" {
-            master = true
+        if email == "xlubet-moncla@wanadoo.fr" || email == "lubetmonclax@gmail.com" || email == "leroy@test.com"{
+            isMaster = true
+        } else {
+            isMaster = false
         }
         
     }
@@ -102,18 +104,13 @@ struct SettingsView: View {
     
     var body: some View {
         List {
-            
-            // La possibilté de sortir avec logout est recervé uniquement au login email "master@test.com"
-            // if viewModel.master {
+            // Je m'autorise le logout
+            if viewModel.isMaster {
                 masterSection
+            }
             //}
             
-            Section (
-                header: Text("Avatar")
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .font(.largeTitle)
-                    .fontWeight(.heavy))
-            {
+            Section {
                 Button { // Avatar
                     showImagePicker.toggle()
                 } label: {
@@ -136,6 +133,8 @@ struct SettingsView: View {
                         .stroke(Color.black,lineWidth: 2))
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
+            } header: {
+                Text("Avatar")
             }
             
             // Le changement de mot de passe ne concerne que ceux qui se sont logés avec email et password
@@ -174,44 +173,60 @@ struct SettingsView_Previews: PreviewProvider {
 
 extension SettingsView {
     private var emailSection: some View {
-        Section (
-            header: Text("Logins")
-                .frame(maxWidth: .infinity, alignment: .center)
-                .font(.largeTitle)
-                .fontWeight(.heavy))
-        {
-            
-            Section {
-                Button("Changer de mot de passe") { // TODO
-                    Task {
-                        do {
-                            try await viewModel.resetPassword()
-                            print("Reset password")
-                        } catch {
-                            print(error)
-                        }
+        Section {
+            Button("Reset du mot de passe") { // TODO
+                Task {
+                    do {
+                        try await viewModel.resetPassword()
+                        print("Reset password")
+                    } catch {
+                        print(error)
                     }
                 }
-                .padding(.horizontal,40)
             }
+            .padding(.horizontal,40)
+            
+            Button("Mise à jour du mot de passe") { // TODO
+                Task {
+                    do {
+                        // try await viewModel.resetPassword()
+                        print("Reset password")
+                    } catch {
+                        print(error)
+                    }
+                }
+            }
+            .padding(.horizontal,40)
+            
+            Button("Mise à jour de l'email") { // TODO
+                Task {
+                    do {
+                        // try await viewModel.resetPassword()
+                        print("Reset password")
+                    } catch {
+                        print(error)
+                    }
+                }
+            }
+            .padding(.horizontal,40)
+        } header: {
+            Text("Email et mot de passe")
         }
     }
 }
 
 extension SettingsView {
     private var masterSection: some View {
-        Section (
-            header: Text("Log out")
-                .frame(maxWidth: .infinity, alignment: .center)
-                .font(.largeTitle)
-                .fontWeight(.heavy))
-        {
+        Section {
             Button {
                 viewModel.signOut()
                 showSignInView = true
             } label: {
                 Text("Log out")
             }
+            .padding(.horizontal,40)
+        } header: {
+            Text("Logout")
         }
     }
 }

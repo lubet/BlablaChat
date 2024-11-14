@@ -111,10 +111,9 @@ struct SettingsView: View {
     var body: some View {
         List {
             // Je m'autorise le logout
-            // if viewModel.isMaster {
+            if viewModel.isMaster {
                 masterSection
-            //}
-            //}
+            }
 
             Section {
                 Button { // Avatar

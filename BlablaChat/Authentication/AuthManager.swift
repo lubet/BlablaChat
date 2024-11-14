@@ -104,10 +104,6 @@ extension AuthManager {
         return AuthUser(user: authDataResult.user)
     }
     
-    func resetPassword(email: String) async throws {
-        try await Auth.auth().sendPasswordReset(withEmail: email)
-        // print("resetPAssword **********************************")
-    }
 }
 
 // TODO Providers linking on anonymous account

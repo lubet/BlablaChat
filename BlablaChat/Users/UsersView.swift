@@ -76,5 +76,5 @@ struct UsersView: View {
 }
 
 //#Preview {
-//    UsersView()
+//    UsersView(didSelectedNewUser: ())
 //}

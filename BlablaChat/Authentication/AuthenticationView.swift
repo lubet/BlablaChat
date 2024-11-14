@@ -183,7 +183,6 @@ struct AuthenticationView: View {
                         .cornerRadius(10)
                         .padding(.bottom, 10)
                 }
-
                 .padding(.top, 20)
                 
                 // Avant iOS 17.0

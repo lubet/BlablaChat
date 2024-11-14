@@ -32,6 +32,7 @@ final class SettingsViewModel: ObservableObject {
         if let newImageAvatar = newImageAvatar {
             try await UsersManager.shared.updateAvatar(userId: user_id, mimage: newImageAvatar)
         }
+        // print("updateAvatar")
     }
     
     func loadAuthProviders() {
@@ -73,7 +74,12 @@ final class SettingsViewModel: ObservableObject {
             throw URLError(.fileDoesNotExist)
         }
         
-        try await AuthManager.shared.resetPassword(email: email)
+        try await UsersManager.shared.resetPassword(email: email)
+    }
+    
+    func updateEmail() async throws {
+        let newEmail = "TODO une view de saisir du nouveau email"
+        try await UsersManager.shared.updateEmail(email: newEmail)
     }
     
     func isMaster() async throws {
@@ -83,7 +89,7 @@ final class SettingsViewModel: ObservableObject {
             throw URLError(.fileDoesNotExist)
         }
 
-        if email == "xlubet-moncla@wanadoo.fr" || email == "lubetmonclax@gmail.com" || email == "leroy@test.com"{
+        if email == "leroy@test.com"{
             isMaster = true
         } else {
             isMaster = false
@@ -105,11 +111,11 @@ struct SettingsView: View {
     var body: some View {
         List {
             // Je m'autorise le logout
-            if viewModel.isMaster {
+            // if viewModel.isMaster {
                 masterSection
-            }
             //}
-            
+            //}
+
             Section {
                 Button { // Avatar
                     showImagePicker.toggle()
@@ -135,6 +141,7 @@ struct SettingsView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             } header: {
                 Text("Avatar")
+                    .font(.headline)
             }
             
             // Le changement de mot de passe ne concerne que ceux qui se sont logés avec email et password
@@ -184,30 +191,20 @@ extension SettingsView {
                     }
                 }
             }
-            .padding(.horizontal,40)
-            
-            Button("Mise à jour du mot de passe") { // TODO
-                Task {
-                    do {
-                        // try await viewModel.resetPassword()
-                        print("Reset password")
-                    } catch {
-                        print(error)
-                    }
-                }
-            }
+            .disabled(true)
             .padding(.horizontal,40)
             
             Button("Mise à jour de l'email") { // TODO
                 Task {
                     do {
-                        // try await viewModel.resetPassword()
+                        try await viewModel.updateEmail()
                         print("Reset password")
                     } catch {
                         print(error)
                     }
                 }
             }
+            .disabled(true)
             .padding(.horizontal,40)
         } header: {
             Text("Email et mot de passe")

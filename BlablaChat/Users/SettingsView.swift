@@ -89,11 +89,13 @@ final class SettingsViewModel: ObservableObject {
             throw URLError(.fileDoesNotExist)
         }
 
-        if email == "leroy@test.com"{
-            isMaster = true
-        } else {
-            isMaster = false
-        }
+        isMaster = true
+        
+//        if email == "leroy@test.com"{
+//            isMaster = true
+//        } else {
+//            isMaster = false
+//        }
         
     }
 }

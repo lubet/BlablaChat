@@ -17,6 +17,8 @@ final class AuthenticationViewModel: ObservableObject {
     @Published var didSignInWithApple: Bool = false
     let signInAppleHelper = SignInAppleHelper()
     
+    
+    // Google
     func signInGoogle() async throws {
         let helper = SignInGoogleHelper()
         let tokens = try await helper.signIn()
@@ -49,6 +51,7 @@ final class AuthenticationViewModel: ObservableObject {
         }
     }
     
+    // Apple
     func signInApple() async throws {
         signInAppleHelper.startSignInWithAppleFlow { result in
             switch result {
@@ -56,7 +59,10 @@ final class AuthenticationViewModel: ObservableObject {
                 Task {
                     do {
                         let authUser = try await AuthManager.shared.signInWithApple(tokens: signInAppleResult)
-
+                        self.didSignInWithApple = true
+                        
+                        print("didSignInWithApple \(self.didSignInWithApple)")
+                        
                         guard let email = authUser.email else {
                             print("L'email du user Apple est égal à nil")
                             return
@@ -83,7 +89,6 @@ final class AuthenticationViewModel: ObservableObject {
                             try await TokensManager.shared.addToken(user_id: authUser.uid, FCMtoken: MyVariables.FCMtoken)
                             
                         }
-                        self.didSignInWithApple = true
                     } catch {
                         print("Erreur Sign in with Apple...")
                     }
@@ -120,14 +125,14 @@ struct AuthenticationView: View {
             Color.theme.background // voir "extension Color"
                 .ignoresSafeArea()
             VStack {
-                
-                
                 // SignIn with Apple
                 Button(action: {
                     Task {
                         do {
                             try await viewModel.signInApple()
-                            showSignInView = false
+                            if viewModel.didSignInWithApple { // TODO
+                                showSignInView = false
+                            }
                         } catch {
                             print(error)
                         }

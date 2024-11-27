@@ -12,11 +12,9 @@ import AuthenticationServices
 
 @MainActor
 final class AuthenticationViewModel: ObservableObject {
-    
  
     @Published var didSignInWithApple: Bool = false
     let signInAppleHelper = SignInAppleHelper()
-    
     
     // Google
     func signInGoogle() async throws {
@@ -60,8 +58,6 @@ final class AuthenticationViewModel: ObservableObject {
                     do {
                         let authUser = try await AuthManager.shared.signInWithApple(tokens: signInAppleResult)
                         self.didSignInWithApple = true
-                        
-                        print("didSignInWithApple \(self.didSignInWithApple)")
                         
                         guard let email = authUser.email else {
                             print("L'email du user Apple est égal à nil")
@@ -129,10 +125,7 @@ struct AuthenticationView: View {
                 Button(action: {
                     Task {
                         do {
-                            try await viewModel.signInApple()
-                            if viewModel.didSignInWithApple { // TODO
-                                // showSignInView = false
-                            }
+                            try await viewModel.signInApple() // ne renvoie rien, si on est connecté est gérer par le "onChange" plus bas.
                         } catch {
                             print(error)
                         }
@@ -189,13 +182,6 @@ struct AuthenticationView: View {
                         .padding(.bottom, 10)
                 }
                 .padding(.top, 20)
-                
-                // Avant iOS 17.0
-//                .onChange(of: viewModel.didSignInWithApple) { newValue in
-//                    if newValue == true {
-//                        showSignInView = false
-//                    }
-//                }
                 
                 Spacer()
             }

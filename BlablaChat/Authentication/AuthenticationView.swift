@@ -151,7 +151,7 @@ struct AuthenticationView: View {
                 })
                 .frame(height: 55)
                 
-                // iOS 17.0
+                // J'ai gardé l'ancienne version car la nouvelle ne fonctionne pas
                 .onChange(of: viewModel.didSignInWithApple) { newValue in
                     if newValue == true {
                         showSignInView = false

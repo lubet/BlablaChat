@@ -131,7 +131,7 @@ struct AuthenticationView: View {
                         do {
                             try await viewModel.signInApple()
                             if viewModel.didSignInWithApple { // TODO
-                                showSignInView = false
+                                // showSignInView = false
                             }
                         } catch {
                             print(error)
@@ -152,11 +152,11 @@ struct AuthenticationView: View {
                 .frame(height: 55)
                 
                 // iOS 17.0
-                .onChange(of: viewModel.didSignInWithApple, { newValue, _ in
+                .onChange(of: viewModel.didSignInWithApple) { newValue in
                     if newValue == true {
                         showSignInView = false
                     }
-                })
+                }
 
                 .padding(.top,30)
                 

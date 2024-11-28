@@ -18,7 +18,7 @@ func dateManager(dateMessage: Timestamp) -> String {
     let isToday = Calendar.current.isDateInToday(first)
     
     if (isToday) {
-        return (Date().formatted(date: .omitted, time:.shortened))
+        return (Date().formatted(date: .numeric, time:.shortened))
     } else {
         return "date"
     }

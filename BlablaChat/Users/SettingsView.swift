@@ -112,6 +112,7 @@ struct SettingsView: View {
     
     var body: some View {
         List {
+            Color.theme.background
             // Je m'autorise le logout
             if viewModel.isMaster {
                 masterSection
@@ -147,7 +148,7 @@ struct SettingsView: View {
             
             // Le changement de mot de passe ne concerne que ceux qui se sont logés avec email et password
             if viewModel.authProviders.contains(.email) {
-                emailSection
+                // emailSection TODO pour plus tard
             }
             
         }

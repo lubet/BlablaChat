@@ -20,37 +20,24 @@ struct LastMessagesCellView: View {
                 .ignoresSafeArea()
             HStack(spacing: 0) {
                 SDWebImageLoader(url: lastMessage.avatar_link, size: 40)
-                    //.padding(.leading,1)
-                
                 VStack(alignment: .leading) {
                     
                     let emailShort = EmailShort(email: lastMessage.email)
                     Text("\(emailShort)")
-                        //.frame(width: 150,alignment: .leading)
-                        //.foregroundColor(Color.theme.accent)
                         .font(.system(size: 16, weight: .bold))
-                        // .background(Color(.red))
                         .padding(.leading, 20)
                     
                     let msg = MessageShort(message: lastMessage.message_texte)
                     Text("\(msg)")
-                        //.frame(width: 150, alignment: .leading)
                         .font(.system(size: 14))
-                        .foregroundStyle(.black)
-                        // .foregroundColor(Color.theme.accent)
                         .multilineTextAlignment(.leading)
-                        // .background(Color(.bleu))
                         .padding(.leading, 20)
                 }
                 Spacer()
                 
                 let myDate = dateManager(dateMessage: lastMessage.message_date)
                 Text("\(myDate)")
-                    //.frame(width: 50, alignment: .leading)
-                    //.foregroundColor(Color.theme.accent)
                     .font(.system(size: 10, weight: .semibold))
-                    //.background(Color.theme.button)
-                    //.padding(.trailing,1)
             }
         }
     }

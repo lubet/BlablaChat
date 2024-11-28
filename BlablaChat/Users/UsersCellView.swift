@@ -17,20 +17,11 @@ struct UsersCellView: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text(EmailShort(email: oneUser.email!))
                     .font(.headline)
-                    .foregroundColor(.black)
                 Text(oneUser.email!)
                     .font(.headline)
-                    .foregroundColor(.black)
             }
             .padding(.leading,20)
-//            .frame(width: 200, alignment: .center)
-//            .padding()
         }
-//        .padding(.horizontal,10)
     }
 }
-
-//#Preview {
-//    UsersCellView(email: "maurice@test.com")
-//}
 

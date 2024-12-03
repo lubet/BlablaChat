@@ -13,8 +13,6 @@ struct UsersView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    let didSelectedNewUser: (String) -> () // call back
-    
     @State private var allContacts = [CNContact]()
     
     // Whatever the user is currently looking for
@@ -31,17 +29,24 @@ struct UsersView: View {
             }
         }
     }
-    
-    
+
+    let didSelectedNewUser: (String) -> () // call back
+
     var body: some View {
-        
         NavigationStack {
             VStack {
                 List(filteredContacts) { contact in
                     Text("Say hello to \(contact.givenName)")
+                        Button {
+                            presentationMode.wrappedValue.dismiss() // Fermeture de la vue
+                            didSelectedNewUser(contact.givenName)      // Ouverture de la vue précédente "NewMessagesView" avec passage de l'email selectionné
+                        } label: {
+                            // UsersCellView(oneUser: oneUser)
+                        }
+
                 }
                 .searchable(text: $searchText)
-                
+
                 // This will automatically show a contact if one is matched, or a Search button otherwise
                 ContactAccessButton(queryString: searchText) { results in
                     // Run fetchContacts(with:) when a contact is selected
@@ -51,6 +56,7 @@ struct UsersView: View {
             }
         }
     }
+
     
     func fetchContacts(with identifiers: [String]) {
         Task {
@@ -115,3 +121,7 @@ struct UsersView: View {
     //    UsersView(didSelectedNewUser: ())
     //}
 }
+
+//#Preview {
+//    UsersView()
+//}

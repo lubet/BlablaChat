@@ -89,7 +89,7 @@ final class SettingsViewModel: ObservableObject {
             throw URLError(.fileDoesNotExist)
         }
 
-        isMaster = true // logout
+        isMaster = false // logout
         
 //        if email == "leroy@test.com"{
 //            isMaster = true
@@ -114,9 +114,9 @@ struct SettingsView: View {
         List {
             Color.theme.background
             // Je m'autorise le logout
-            if viewModel.isMaster {
+            // if viewModel.isMaster {
                 masterSection
-            }
+            //}
 
             Section {
                 Button { // Avatar

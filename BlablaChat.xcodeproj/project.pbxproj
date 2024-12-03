@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C0027F482C5BDD59009DABF3 /* DBUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0027F472C5BDD59009DABF3 /* DBUserModel.swift */; };
+		C00658F42CFF1B1400270967 /* NewContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00658F32CFF1B0500270967 /* NewContacts.swift */; };
 		C00C31432CA1B5BA00E5F962 /* MyVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00C31422CA1B5BA00E5F962 /* MyVariables.swift */; };
 		C00CEF102BB55206004C7016 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C00CEF0F2BB55206004C7016 /* SDWebImageSwiftUI */; };
 		C0180A342CBA6A35009E9163 /* TokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0180A332CBA6A35009E9163 /* TokenModel.swift */; };
@@ -68,6 +69,7 @@
 
 /* Begin PBXFileReference section */
 		C0027F472C5BDD59009DABF3 /* DBUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUserModel.swift; sourceTree = "<group>"; };
+		C00658F32CFF1B0500270967 /* NewContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContacts.swift; sourceTree = "<group>"; };
 		C00C31422CA1B5BA00E5F962 /* MyVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyVariables.swift; sourceTree = "<group>"; };
 		C0180A332CBA6A35009E9163 /* TokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenModel.swift; sourceTree = "<group>"; };
 		C0180A352CBA6FF5009E9163 /* TokensManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensManager.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 		C01FE5A72B67F0610049B9EE /* StandBy */ = {
 			isa = PBXGroup;
 			children = (
+				C00658F32CFF1B0500270967 /* NewContacts.swift */,
 				C06B1DDF2B74D4330016E8B6 /* Contacts */,
 				C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */,
 				C0C1A9482B62ACC400646851 /* SearchNick.swift */,
@@ -421,6 +424,7 @@
 				C0027F482C5BDD59009DABF3 /* DBUserModel.swift in Sources */,
 				C05D4E402C5CBF7900270938 /* RoomModel.swift in Sources */,
 				C00C31432CA1B5BA00E5F962 /* MyVariables.swift in Sources */,
+				C00658F42CFF1B1400270967 /* NewContacts.swift in Sources */,
 				C037638A2C4128D000A5602B /* Utilities.swift in Sources */,
 				C02A8C382BB1D62E005ECF0F /* LastMessagesCellView.swift in Sources */,
 				C07564EC2BADEA8500E8D7D9 /* LastMessagesView.swift in Sources */,
@@ -580,7 +584,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BlablaChat/BlablaChat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"BlablaChat/Preview Content\"";
 				DEVELOPMENT_TEAM = Z2D42B65AU;
 				ENABLE_PREVIEWS = YES;
@@ -593,7 +597,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -618,7 +622,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BlablaChat/BlablaChat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"BlablaChat/Preview Content\"";
 				DEVELOPMENT_TEAM = Z2D42B65AU;
 				ENABLE_PREVIEWS = YES;
@@ -631,7 +635,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

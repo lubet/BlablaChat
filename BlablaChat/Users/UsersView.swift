@@ -18,6 +18,7 @@ class UsersViewModel: ObservableObject {
     
     func loadUsers() async throws {
         allUsers = try await UsersManager.shared.getAllUsers()
+        print("\(allUsers)")
     }
 }
 
@@ -27,8 +28,15 @@ struct UsersView: View {
     
     @StateObject var viewModel = UsersViewModel()
     
+    @State private var searchTerm = ""
+    
     @Environment(\.presentationMode) var presentationMode
 
+    var filteredUsers: [DBUser] {
+        guard !searchTerm.isEmpty else { return viewModel.allUsers}
+        return viewModel.allUsers.filter { $0.email!.localizedCaseInsensitiveContains(searchTerm) }
+    }
+    
     let didSelectedNewUser: (String) -> () // call back
     
     var body: some View {
@@ -46,12 +54,16 @@ struct UsersView: View {
                         }
                     }
                 }
-                .searchable(text: $searchTerm, prompt: "Recherche d'un contact")
+                .searchable(text: $searchTerm, placement: .automatic, prompt: "Recherche d'un contact")
                 .autocorrectionDisabled(true)
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
                 .task {
-                    await viewModel.loadUsers() // Chargement des users de la base "Users"
+                    do {
+                        try await viewModel.loadUsers() // Chargement des users de la base "Users"
+                    } catch {
+                        print("UsersView-loadUsers-erreur")
+                    }
                 }
                 .listStyle(PlainListStyle())
                 .navigationTitle("Participants")

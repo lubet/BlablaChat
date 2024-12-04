@@ -181,10 +181,10 @@
 		C0476E7B2BB70FF9000D860C /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				C05D4E3B2C5CB2DD00270938 /* NewMessagesView.swift */,
 				C0476E7E2BB71086000D860C /* MessagesManager.swift */,
 				C0476E802BB712A4000D860C /* MessagesCellView.swift */,
 				C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */,
-				C05D4E3B2C5CB2DD00270938 /* NewMessagesView.swift */,
 				C06A93772CAC4B2A004B68AC /* MessageBigImage.swift */,
 			);
 			path = Messages;

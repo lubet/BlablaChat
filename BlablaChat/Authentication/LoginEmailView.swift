@@ -7,12 +7,19 @@
 
 import SwiftUI
 
+enum userGlobal {
+    static var userId: String = ""
+    static var userEmail: String = ""
+}
+
 @MainActor
 final class LoginEmailViewModel: ObservableObject {
     
     @Published var email: String = ""
     @Published var password: String = ""
-
+    
+    
+    // Nouveau compte - Auth, Users, Tokens
     func signUp(image: UIImage?) async throws {
         
         guard !email.isEmpty, !password.isEmpty else {
@@ -20,45 +27,34 @@ final class LoginEmailViewModel: ObservableObject {
             return
         }
         
-        // Création de l'authetification de Firebase
+        // Création de l'Auth
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
-        
-        // Création d'un profil de base dans "users"
+        userGlobal.userId = authUser.uid
+        userGlobal.userEmail = authUser.email ?? ""
+
+        // Création dans "Users"
         let user = DBUser(auth: authUser) // userId, email
         try await UsersManager.shared.createDbUser(user: user) // sans l'image
         
         guard let image else { return }
         
-        // Avatar
+        // // Création de l'avatar dans "Storage" et maj de l'image dans "Users"
         try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image)
-        
-//        let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: user.userId)
-//
-//        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-//
-//        try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
-        
+
+        try await TokensManager.shared.addToken(user_id: userGlobal.userId, FCMtoken: MyVariables.FCMtoken)
      }
     
+    // Compte qui existe déjà
     func signIn() async throws {
         guard !email.isEmpty, !password.isEmpty else {
             print("Pas d'email ni de password")
             return
         }
-        try await AuthManager.shared.signInUser(email: email, password: password)
-    }
-    
-    func FCMtoken() async throws {
-        // Sauvegarde du FCMtoken dans Firestore
-        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        let user_id = authUser.uid
         
-        try await TokensManager.shared.addToken(user_id: user_id, FCMtoken: MyVariables.FCMtoken)
+        let authUser = try await AuthManager.shared.signInUser(email: email, password: password)
+        userGlobal.userId = authUser.uid
+        userGlobal.userEmail = authUser.email ?? ""
     }
-    
-    
-    // Lier le provider email au user en cours (si c'est aussi un email ?)
-    
 }
 
 // -----------------------------------------------------
@@ -125,17 +121,14 @@ struct LoginEmailView: View {
                 Button { // Entrée
                     Task {
                         do {
-                            // On essaie de créer le compte
+                            // Nouveau compte
                             let mimage: UIImage = image ?? UIImage.init(systemName: "person.fill")!
-                            try await viewModel.signUp(image: mimage)
-                            try await viewModel.FCMtoken()
+                            try await viewModel.signUp(image: mimage) // Création de l'auth, du user et du token.
                             showSignInView = false
                             return
                         } catch {
-                            // erreur
-                            // Le compte existe déjà -> on passe à la suite
+                            // Le compte existe déjà -> on passe à la suite cad à l'ancien compte
                         }
-                        // Le compte existe déjà
                         do {
                             // Ancien compte
                             try await viewModel.signIn()

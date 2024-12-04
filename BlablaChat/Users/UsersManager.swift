@@ -365,7 +365,7 @@ final class UsersManager {
         
     }
     
-    // Maj de l'avatar dans "user" à partir de SettingsView
+    // Création de l'avatar dans "Storage" et maj de l'avatar dans "Users"
     func updateAvatar(userId: String, mimage: UIImage) async throws {
         let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: userId)
         let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)

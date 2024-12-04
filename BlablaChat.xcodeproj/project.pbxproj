@@ -48,6 +48,7 @@
 		C07723242BC6877900AC0990 /* MessagesCellPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */; };
 		C07F38B72C15A4F300B481B5 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07F38B62C15A4F300B481B5 /* CellView.swift */; };
 		C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */; };
+		C0ABF6F82D004CAB00BFD2EB /* ButtonContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ABF6F72D004CAB00BFD2EB /* ButtonContacts.swift */; };
 		C0AF17C72C5A1BD700B27376 /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AF17C62C5A1BD700B27376 /* UsersView.swift */; };
 		C0B73E9A2C6AAB2C00B43F19 /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B73E992C6AAB2C00B43F19 /* MessageBubble.swift */; };
 		C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B8555B2BBBFD5900B3956A /* TextBarView.swift */; };
@@ -108,6 +109,7 @@
 		C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCellPhoto.swift; sourceTree = "<group>"; };
 		C07F38B62C15A4F300B481B5 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDWebImageLoader.swift; sourceTree = "<group>"; };
+		C0ABF6F72D004CAB00BFD2EB /* ButtonContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonContacts.swift; sourceTree = "<group>"; };
 		C0AF17C62C5A1BD700B27376 /* UsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersView.swift; sourceTree = "<group>"; };
 		C0B73E992C6AAB2C00B43F19 /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
 		C0B8555B2BBBFD5900B3956A /* TextBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBarView.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 		C01FE5A72B67F0610049B9EE /* StandBy */ = {
 			isa = PBXGroup;
 			children = (
+				C0ABF6F72D004CAB00BFD2EB /* ButtonContacts.swift */,
 				C00658F32CFF1B0500270967 /* NewContacts.swift */,
 				C06B1DDF2B74D4330016E8B6 /* Contacts */,
 				C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */,
@@ -413,6 +416,7 @@
 				C0C5EEEB2CD3A00800D46C09 /* SettingsView.swift in Sources */,
 				C02048842CCFEC0E0032178E /* SignInGoogleHelper.swift in Sources */,
 				C0180A342CBA6A35009E9163 /* TokenModel.swift in Sources */,
+				C0ABF6F82D004CAB00BFD2EB /* ButtonContacts.swift in Sources */,
 				C0B73E9A2C6AAB2C00B43F19 /* MessageBubble.swift in Sources */,
 				C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */,
 				C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */,

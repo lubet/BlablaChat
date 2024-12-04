@@ -86,13 +86,9 @@ class LastMessagesViewModel: ObservableObject {
             var myrooms: [Room] = []
             
             var allrooms: [Room] = []
-
-            
-            let AuthUser = try AuthManager.shared.getAuthenticatedUser()
-            let user_id = AuthUser.uid
             
             // Tous les enregs de "members" où l'auth est présent (permet de récupérer tous ses room_id's).
-            members = try await LastMessagesManager.shared.getMyRoomsId(user_id: user_id)
+            members = try await LastMessagesManager.shared.getMyRoomsId(user_id: userGlobal.userId)
             
             // All rooms
             allrooms = try await LastMessagesManager.shared.getAllRooms()
@@ -113,7 +109,7 @@ class LastMessagesViewModel: ObservableObject {
                 // Dans "members", raméne les deux user_id ayant le même room_id
                 let (user_id1, user_id2) = try await LastMessagesManager.shared.getFromId(room_id: room.room_id)
 
-                if (user_id1 == user_id) {
+                if (user_id1 == userGlobal.userId) {
                     x_id = user_id2
                 } else {
                     x_id = user_id1
@@ -133,12 +129,10 @@ class LastMessagesViewModel: ObservableObject {
 
     // Entête
     func getMoi() async {
-        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        let user_id = authUser.uid
-        monEmail = EmailShort(email: authUser.email ?? "")
+        monEmail = EmailShort(email: userGlobal.userEmail)
         
         // Recherche de l'avatar dans users
-        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
+        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: userGlobal.userId)
     }
 }
 
@@ -158,13 +152,10 @@ struct LastMessagesView: View {
     
     @State var shouldNavigateToChatLogView = false // call back
     
-   // @State var monEmail:String = ""
-
-    
     var body: some View {
         ZStack {
-            Color.theme.background
-                .ignoresSafeArea()
+            Color.theme.background.ignoresSafeArea()
+            
             NavigationStack(path: $path) {
                 List {
                     ForEach(viewModel.isSearching ? viewModel.filteredMessages : viewModel.lastMessages) { lastMessage in

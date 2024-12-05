@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-enum userGlobal {
-    static var userId: String = ""
-    static var userEmail: String = ""
-}
-
 @MainActor
 final class LoginEmailViewModel: ObservableObject {
     
@@ -29,9 +24,8 @@ final class LoginEmailViewModel: ObservableObject {
         
         // Création de l'Auth
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
-        userGlobal.userId = authUser.uid
-        userGlobal.userEmail = authUser.email ?? ""
-
+        let user_id = authUser.uid
+        
         // Création dans "Users"
         let user = DBUser(auth: authUser) // userId, email
         try await UsersManager.shared.createDbUser(user: user) // sans l'image
@@ -39,9 +33,9 @@ final class LoginEmailViewModel: ObservableObject {
         guard let image else { return }
         
         // // Création de l'avatar dans "Storage" et maj de l'image dans "Users"
-        try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image)
+        try await UsersManager.shared.updateAvatar(userId: user_id, mimage: image)
 
-        try await TokensManager.shared.addToken(user_id: userGlobal.userId, FCMtoken: MyVariables.FCMtoken)
+        try await TokensManager.shared.addToken(user_id: user_id, FCMtoken: MyVariables.FCMtoken)
      }
     
     // Compte qui existe déjà
@@ -50,10 +44,8 @@ final class LoginEmailViewModel: ObservableObject {
             print("Pas d'email ni de password")
             return
         }
-        
-        let authUser = try await AuthManager.shared.signInUser(email: email, password: password)
-        userGlobal.userId = authUser.uid
-        userGlobal.userEmail = authUser.email ?? ""
+//        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+//        let user_id = authUser.uid
     }
 }
 

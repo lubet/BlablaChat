@@ -88,7 +88,10 @@ class LastMessagesViewModel: ObservableObject {
             var allrooms: [Room] = []
             
             // Tous les enregs de "members" où l'auth est présent (permet de récupérer tous ses room_id's).
-            members = try await LastMessagesManager.shared.getMyRoomsId(user_id: userGlobal.userId)
+            guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+            let user_id = AuthUser.uid
+
+            members = try await LastMessagesManager.shared.getMyRoomsId(user_id: user_id)
             
             // All rooms
             allrooms = try await LastMessagesManager.shared.getAllRooms()
@@ -109,7 +112,7 @@ class LastMessagesViewModel: ObservableObject {
                 // Dans "members", raméne les deux user_id ayant le même room_id
                 let (user_id1, user_id2) = try await LastMessagesManager.shared.getFromId(room_id: room.room_id)
 
-                if (user_id1 == userGlobal.userId) {
+                if (user_id1 == user_id) {
                     x_id = user_id2
                 } else {
                     x_id = user_id1
@@ -129,10 +132,14 @@ class LastMessagesViewModel: ObservableObject {
 
     // Entête
     func getMoi() async {
-        monEmail = EmailShort(email: userGlobal.userEmail)
+        guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+        let user_id = AuthUser.uid
+        let email = AuthUser.email ?? "Pas d'email"
+
+        monEmail = EmailShort(email: email)
         
         // Recherche de l'avatar dans users
-        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: userGlobal.userId)
+        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
     }
 }
 

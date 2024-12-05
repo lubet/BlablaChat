@@ -78,8 +78,8 @@ struct UsersView: View {
                         }
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink {
-                           ContactsPickerView()
+                        Button {
+                            ContactsPickerView()
                         } label: {
                             Image(systemName: "person.fill.badge.plus")
                                 .foregroundColor(.black)

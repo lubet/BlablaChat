@@ -74,6 +74,15 @@ struct UsersView: View {
                             presentationMode.wrappedValue.dismiss()
                         } label: {
                             Image(systemName: "xmark")
+                                .foregroundColor(.black)
+                        }
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink {
+                           ContactsPickerView()
+                        } label: {
+                            Image(systemName: "person.fill.badge.plus")
+                                .foregroundColor(.black)
                         }
                     }
                 }

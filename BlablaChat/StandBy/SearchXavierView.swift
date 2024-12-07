@@ -72,7 +72,7 @@ final class NewMessage2ViewModel: ObservableObject {
     
     
     
-    func loadContacts() async {
+    func loadContactsX() async {
         do {
             allContacts = try await manager.getAllContacts()
         } catch  {
@@ -99,7 +99,7 @@ struct SearchXavierView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Contacts")
         .task {
-            await viewModel.loadContacts()
+            await viewModel.loadContactsX()
         }
     }
     

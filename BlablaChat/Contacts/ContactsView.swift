@@ -10,7 +10,7 @@ import SwiftUI
 @MainActor
 class ContactsViewModel: ObservableObject {
     
-    @Published var contacts: [ContactsViewModel] = []
+    @Published var contacts: [ContactModel] = []
     
     init() {
         loadContacts()

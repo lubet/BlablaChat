@@ -32,7 +32,6 @@ class ContactsViewModel: ObservableObject {
             allContacts += newContacts
         }
     }
-
 }
 
 struct ContactsView: View {
@@ -56,8 +55,6 @@ struct ContactsView: View {
 
     
     var body: some View {
-        Text("Hello")
-        
         VStack {
             List(filteredContacts) { contact in
                 Text("Say hello to \(contact.givenName)")

@@ -223,7 +223,6 @@
 				C07564EA2BADEA4F00E8D7D9 /* LastMessages */,
 				C0476E7B2BB70FF9000D860C /* Messages */,
 				C0AF17C52C5A1BB500B27376 /* Users */,
-				C0FE23CA2D04504300EBB61F /* Contacts */,
 				C02BEDAC2B7E012600C15D11 /* Managers */,
 				C0B9DC842B5EB05B006C2B46 /* Components */,
 				C01FE5A72B67F0610049B9EE /* StandBy */,
@@ -327,13 +326,6 @@
 			children = (
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		C0FE23CA2D04504300EBB61F /* Contacts */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Contacts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -260,6 +260,7 @@
 				C02A0CFE2BD3C5FB000E58D4 /* ContactsView.swift */,
 				C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */,
 				C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */,
+				C06CD6E22D01B4610055F0C5 /* ContactsPickerView.swift */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -289,7 +290,6 @@
 				C03C39952C5A2BC900A23D33 /* UsersCellView.swift */,
 				C0D84B6D2C5B846A00AE9B21 /* UsersManager.swift */,
 				C0C5EEEA2CD3A00800D46C09 /* SettingsView.swift */,
-				C06CD6E22D01B4610055F0C5 /* ContactsPickerView.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";

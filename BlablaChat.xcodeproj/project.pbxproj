@@ -67,6 +67,7 @@
 		C0EE66AC2B62654A002F13EB /* MessageBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE66AB2B62654A002F13EB /* MessageBarView.swift */; };
 		C0FAA0922C241DD90009DFF7 /* EmailShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FAA0912C241DD90009DFF7 /* EmailShort.swift */; };
 		C0FAA0942C242C340009DFF7 /* MessageShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FAA0932C242C340009DFF7 /* MessageShort.swift */; };
+		C0FE23CF2D04514300EBB61F /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FE23CE2D04514300EBB61F /* ContactsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,6 +126,7 @@
 		C0EE66AB2B62654A002F13EB /* MessageBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBarView.swift; sourceTree = "<group>"; };
 		C0FAA0912C241DD90009DFF7 /* EmailShort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailShort.swift; sourceTree = "<group>"; };
 		C0FAA0932C242C340009DFF7 /* MessageShort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageShort.swift; sourceTree = "<group>"; };
+		C0FE23CE2D04514300EBB61F /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +225,7 @@
 				C07564EA2BADEA4F00E8D7D9 /* LastMessages */,
 				C0476E7B2BB70FF9000D860C /* Messages */,
 				C0AF17C52C5A1BB500B27376 /* Users */,
+				C0FE23CD2D04511900EBB61F /* Contacts */,
 				C02BEDAC2B7E012600C15D11 /* Managers */,
 				C0B9DC842B5EB05B006C2B46 /* Components */,
 				C01FE5A72B67F0610049B9EE /* StandBy */,
@@ -326,6 +329,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C0FE23CD2D04511900EBB61F /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				C0FE23CE2D04514300EBB61F /* ContactsView.swift */,
+			);
+			path = Contacts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -463,6 +474,7 @@
 				C047E9C62B45625C00C6D48F /* LoginEmailView.swift in Sources */,
 				C02A0CFF2BD3C5FB000E58D4 /* ContactView.swift in Sources */,
 				C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */,
+				C0FE23CF2D04514300EBB61F /* ContactsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

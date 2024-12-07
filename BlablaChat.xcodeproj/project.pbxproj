@@ -17,7 +17,7 @@
 		C01FE5AB2B67F47E0049B9EE /* ContactCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */; };
 		C01FE5AD2B67F7F70049B9EE /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */; };
 		C02048842CCFEC0E0032178E /* SignInGoogleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02048832CCFEC0E0032178E /* SignInGoogleHelper.swift */; };
-		C02A0CFF2BD3C5FB000E58D4 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02A0CFE2BD3C5FB000E58D4 /* ContactsView.swift */; };
+		C02A0CFF2BD3C5FB000E58D4 /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02A0CFE2BD3C5FB000E58D4 /* ContactView.swift */; };
 		C02A8C382BB1D62E005ECF0F /* LastMessagesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02A8C372BB1D62E005ECF0F /* LastMessagesCellView.swift */; };
 		C03763872C41210200A5602B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C03763862C41210200A5602B /* GoogleService-Info.plist */; };
 		C037638A2C4128D000A5602B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03763892C4128D000A5602B /* Utilities.swift */; };
@@ -43,7 +43,7 @@
 		C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */; };
 		C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A8DB82BAEC5030007436C /* TimestampToString.swift */; };
 		C06A93782CAC4B2A004B68AC /* MessageBigImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A93772CAC4B2A004B68AC /* MessageBigImage.swift */; };
-		C06CD6E32D01B4610055F0C5 /* ContactsPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06CD6E22D01B4610055F0C5 /* ContactsPickerView.swift */; };
+		C06CD6E32D01B4610055F0C5 /* ContactPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06CD6E22D01B4610055F0C5 /* ContactPickerView.swift */; };
 		C070D6422C5380C4006170E3 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = C070D6412C5380C4006170E3 /* Color.swift */; };
 		C07564EC2BADEA8500E8D7D9 /* LastMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07564EB2BADEA8500E8D7D9 /* LastMessagesView.swift */; };
 		C07723242BC6877900AC0990 /* MessagesCellPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */; };
@@ -79,7 +79,7 @@
 		C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCellView.swift; sourceTree = "<group>"; };
 		C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		C02048832CCFEC0E0032178E /* SignInGoogleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInGoogleHelper.swift; sourceTree = "<group>"; };
-		C02A0CFE2BD3C5FB000E58D4 /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
+		C02A0CFE2BD3C5FB000E58D4 /* ContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
 		C02A8C372BB1D62E005ECF0F /* LastMessagesCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesCellView.swift; sourceTree = "<group>"; };
 		C02F63DB2C8778F10032A0CD /* BlablaChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlablaChat.entitlements; sourceTree = "<group>"; };
 		C03763852C411F3700A5602B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 		C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAppleHelper.swift; sourceTree = "<group>"; };
 		C06A8DB82BAEC5030007436C /* TimestampToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampToString.swift; sourceTree = "<group>"; };
 		C06A93772CAC4B2A004B68AC /* MessageBigImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBigImage.swift; sourceTree = "<group>"; };
-		C06CD6E22D01B4610055F0C5 /* ContactsPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsPickerView.swift; sourceTree = "<group>"; };
+		C06CD6E22D01B4610055F0C5 /* ContactPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPickerView.swift; sourceTree = "<group>"; };
 		C070D6412C5380C4006170E3 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		C07564EB2BADEA8500E8D7D9 /* LastMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesView.swift; sourceTree = "<group>"; };
 		C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCellPhoto.swift; sourceTree = "<group>"; };
@@ -257,10 +257,10 @@
 		C06B1DDF2B74D4330016E8B6 /* ContactsSave */ = {
 			isa = PBXGroup;
 			children = (
-				C02A0CFE2BD3C5FB000E58D4 /* ContactsView.swift */,
+				C02A0CFE2BD3C5FB000E58D4 /* ContactView.swift */,
 				C01FE5AC2B67F7F70049B9EE /* ContactManager.swift */,
 				C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */,
-				C06CD6E22D01B4610055F0C5 /* ContactsPickerView.swift */,
+				C06CD6E22D01B4610055F0C5 /* ContactPickerView.swift */,
 			);
 			path = ContactsSave;
 			sourceTree = "<group>";
@@ -442,7 +442,7 @@
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
 				C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */,
 				C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */,
-				C06CD6E32D01B4610055F0C5 /* ContactsPickerView.swift in Sources */,
+				C06CD6E32D01B4610055F0C5 /* ContactPickerView.swift in Sources */,
 				C06A93782CAC4B2A004B68AC /* MessageBigImage.swift in Sources */,
 				C0FAA0922C241DD90009DFF7 /* EmailShort.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,
@@ -461,7 +461,7 @@
 				C0476E812BB712A4000D860C /* MessagesCellView.swift in Sources */,
 				C047E9E22B45880400C6D48F /* StorageManager.swift in Sources */,
 				C047E9C62B45625C00C6D48F /* LoginEmailView.swift in Sources */,
-				C02A0CFF2BD3C5FB000E58D4 /* ContactsView.swift in Sources */,
+				C02A0CFF2BD3C5FB000E58D4 /* ContactView.swift in Sources */,
 				C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

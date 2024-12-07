@@ -152,7 +152,7 @@
 			children = (
 				C0ABF6F72D004CAB00BFD2EB /* ButtonContacts.swift */,
 				C00658F32CFF1B0500270967 /* NewContacts.swift */,
-				C06B1DDF2B74D4330016E8B6 /* ContactsSave */,
+				C06B1DDF2B74D4330016E8B6 /* ContactSave */,
 				C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */,
 				C0C1A9482B62ACC400646851 /* SearchNick.swift */,
 				C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */,
@@ -223,6 +223,7 @@
 				C07564EA2BADEA4F00E8D7D9 /* LastMessages */,
 				C0476E7B2BB70FF9000D860C /* Messages */,
 				C0AF17C52C5A1BB500B27376 /* Users */,
+				C0FE23CA2D04504300EBB61F /* Contacts */,
 				C02BEDAC2B7E012600C15D11 /* Managers */,
 				C0B9DC842B5EB05B006C2B46 /* Components */,
 				C01FE5A72B67F0610049B9EE /* StandBy */,
@@ -254,7 +255,7 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
-		C06B1DDF2B74D4330016E8B6 /* ContactsSave */ = {
+		C06B1DDF2B74D4330016E8B6 /* ContactSave */ = {
 			isa = PBXGroup;
 			children = (
 				C02A0CFE2BD3C5FB000E58D4 /* ContactView.swift */,
@@ -262,7 +263,7 @@
 				C01FE5AA2B67F47E0049B9EE /* ContactCellView.swift */,
 				C06CD6E22D01B4610055F0C5 /* ContactPickerView.swift */,
 			);
-			path = ContactsSave;
+			path = ContactSave;
 			sourceTree = "<group>";
 		};
 		C070D6402C53809E006170E3 /* Extensions */ = {
@@ -326,6 +327,13 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C0FE23CA2D04504300EBB61F /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Contacts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

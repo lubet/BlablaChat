@@ -23,7 +23,8 @@ class ContactsViewModel: ObservableObject {
         ]
     }
     
-    func updateUser(contact: ContactModel) {
+    // Contact qui a été selectionné dans la liste
+    func selectContact(contact: ContactModel) {
         
         if let index = contacts.firstIndex(where: { $0.id == contact.id }) {
             // on récupére ici l(index du contact que l'on a selectionée
@@ -43,7 +44,7 @@ struct ContactsView: View {
             ForEach(viewModel.contacts) { oneContact in
                 ContactRowView(oneContact: oneContact)
                     .onTapGesture {
-                        viewModel.updateUser(contact: oneContact)
+                        viewModel.selectContact(contact: oneContact)
                     }
             }
         }

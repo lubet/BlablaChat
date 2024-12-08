@@ -21,8 +21,16 @@ class ContactsViewModel: ObservableObject {
             ContactModel(nom: "Leroy", prenom: "Maurice", emai: "maurice@leroy"),
             ContactModel(nom: "Dugou", prenom: "Robert", emai: "robert@dugou"),
         ]
-
     }
+    
+    func updateUser(contact: ContactModel) {
+        
+        if let index = contacts.firstIndex(where: { $0.id == contact.id }) {
+            // on récupére ici l(index du contact que l'on a selectionée
+            let selectedContact: ContactModel = contacts[index]
+        }
+    }
+    
 }
 
 
@@ -34,6 +42,9 @@ struct ContactsView: View {
         List {
             ForEach(viewModel.contacts) { oneContact in
                 ContactRowView(oneContact: oneContact)
+                    .onTapGesture {
+                        viewModel.updateUser(contact: oneContact)
+                    }
             }
         }
         .navigationTitle("Liste")

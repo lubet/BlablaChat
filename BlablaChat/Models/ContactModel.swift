@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct ContactModel {
-    let id: String
-    let name: String
+struct ContactModel: Identifiable {
+    let id: String = UUID().uuidString
+    let nom: String
+    let prenom: String
     let emai: String
 }

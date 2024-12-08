@@ -41,6 +41,9 @@
 		C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */; };
 		C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A8DB82BAEC5030007436C /* TimestampToString.swift */; };
 		C06A93782CAC4B2A004B68AC /* MessageBigImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A93772CAC4B2A004B68AC /* MessageBigImage.swift */; };
+		C06D0EA22D05EDE10043EBBA /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06D0EA12D05EDE10043EBBA /* ContactsView.swift */; };
+		C06D0EA42D05F0890043EBBA /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06D0EA32D05F0890043EBBA /* ContactRowView.swift */; };
+		C06D0EA62D05FCEA0043EBBA /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06D0EA52D05FCEA0043EBBA /* ContactsManager.swift */; };
 		C070D6422C5380C4006170E3 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = C070D6412C5380C4006170E3 /* Color.swift */; };
 		C07564EC2BADEA8500E8D7D9 /* LastMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07564EB2BADEA8500E8D7D9 /* LastMessagesView.swift */; };
 		C07723242BC6877900AC0990 /* MessagesCellPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */; };
@@ -101,6 +104,9 @@
 		C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAppleHelper.swift; sourceTree = "<group>"; };
 		C06A8DB82BAEC5030007436C /* TimestampToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampToString.swift; sourceTree = "<group>"; };
 		C06A93772CAC4B2A004B68AC /* MessageBigImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBigImage.swift; sourceTree = "<group>"; };
+		C06D0EA12D05EDE10043EBBA /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
+		C06D0EA32D05F0890043EBBA /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
+		C06D0EA52D05FCEA0043EBBA /* ContactsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
 		C070D6412C5380C4006170E3 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		C07564EB2BADEA8500E8D7D9 /* LastMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesView.swift; sourceTree = "<group>"; };
 		C07723232BC6877900AC0990 /* MessagesCellPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCellPhoto.swift; sourceTree = "<group>"; };
@@ -318,6 +324,9 @@
 			isa = PBXGroup;
 			children = (
 				C0D63E252D04A68E0043B382 /* EssaiView.swift */,
+				C06D0EA12D05EDE10043EBBA /* ContactsView.swift */,
+				C06D0EA32D05F0890043EBBA /* ContactRowView.swift */,
+				C06D0EA52D05FCEA0043EBBA /* ContactsManager.swift */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -429,9 +438,11 @@
 				C00C31432CA1B5BA00E5F962 /* MyVariables.swift in Sources */,
 				C00658F42CFF1B1400270967 /* NewContacts.swift in Sources */,
 				C037638A2C4128D000A5602B /* Utilities.swift in Sources */,
+				C06D0EA62D05FCEA0043EBBA /* ContactsManager.swift in Sources */,
 				C02A8C382BB1D62E005ECF0F /* LastMessagesCellView.swift in Sources */,
 				C07564EC2BADEA8500E8D7D9 /* LastMessagesView.swift in Sources */,
 				C043F9A52C170D08002B3C59 /* DateManager.swift in Sources */,
+				C06D0EA22D05EDE10043EBBA /* ContactsView.swift in Sources */,
 				C05D4E3C2C5CB2DD00270938 /* NewMessagesView.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
 				C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */,
@@ -454,6 +465,7 @@
 				C0476E812BB712A4000D860C /* MessagesCellView.swift in Sources */,
 				C047E9E22B45880400C6D48F /* StorageManager.swift in Sources */,
 				C047E9C62B45625C00C6D48F /* LoginEmailView.swift in Sources */,
+				C06D0EA42D05F0890043EBBA /* ContactRowView.swift in Sources */,
 				C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

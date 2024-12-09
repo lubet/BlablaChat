@@ -11,5 +11,5 @@ struct ContactModel: Identifiable {
     let id: String = UUID().uuidString
     let nom: String
     let prenom: String
-    let emai: String
+    let email: String
 }

@@ -198,7 +198,7 @@ struct LastMessagesView: View {
                 }
                 .listStyle(PlainListStyle())
                 
-                NewMessageButton // -> UsersView
+                NewMessageButton // Nouveau message -> UsersView
                 
                     .padding(.bottom,10)
                 
@@ -218,7 +218,7 @@ struct LastMessagesView: View {
     }
 }
 
-// Bouton nouveau contact ------------------
+// Bouton Nouveau message ------------------
 extension LastMessagesView {
     
     private var NewMessageButton: some View {

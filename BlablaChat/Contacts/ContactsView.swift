@@ -28,8 +28,10 @@ class ContactsViewModel: ObservableObject {
         
         if let index = contacts.firstIndex(where: { $0.id == contact.id }) {
             // on récupére ici l(index du contact que l'on a selectionée
-            let selectedContact: ContactModel = contacts[index]
+            let contact: ContactModel = contacts[index]
         }
+        
+        print("\(contact)")
     }
     
 }
@@ -38,6 +40,8 @@ class ContactsViewModel: ObservableObject {
 struct ContactsView: View {
 
     @StateObject var viewModel: ContactsViewModel = ContactsViewModel()
+    
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         List {
@@ -45,6 +49,7 @@ struct ContactsView: View {
                 ContactRowView(oneContact: oneContact)
                     .onTapGesture {
                         viewModel.selectContact(contact: oneContact)
+                        presentationMode.wrappedValue.dismiss() // Fermeture de la vue
                     }
             }
         }

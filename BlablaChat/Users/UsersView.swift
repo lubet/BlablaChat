@@ -58,15 +58,17 @@ struct UsersView: View {
                 .autocorrectionDisabled(true)
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
-                .task {
-                    do {
-                        try await viewModel.loadUsers() // Chargement des users de la base "Users"
-                    } catch {
-                        print("UsersView-loadUsers-erreur")
+                .onAppear {
+                    Task {
+                        do {
+                            try await viewModel.loadUsers() // Chargement des users de la base "Users"
+                        } catch {
+                            print("UsersView-loadUsers Aucun users:")
+                        }
                     }
                 }
                 .listStyle(PlainListStyle())
-                .navigationTitle("Participants")
+                .navigationTitle("Users")
                 .padding(.top,10)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {

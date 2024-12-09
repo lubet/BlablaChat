@@ -18,8 +18,8 @@ class ContactsViewModel: ObservableObject {
     
     func loadContacts() {
         contacts = [
-            ContactModel(nom: "Leroy", prenom: "Maurice", email: "maurice@leroy"),
-            ContactModel(nom: "Dugou", prenom: "Robert", email: "robert@dugou"),
+            ContactModel(nom: "Leroy", prenom: "Maurice", email: "maurice@leroy.com"),
+            ContactModel(nom: "Dugou", prenom: "Robert", email: "robert@dugou.com"),
         ]
     }
     
@@ -28,33 +28,30 @@ class ContactsViewModel: ObservableObject {
         
         let mimage: UIImage = UIImage.init(systemName: "person.fill")!
         
-        if let index = contacts.firstIndex(where: { $0.id == contact.id }) {
-            // on récupére ici l(index du contact que l'on a selectionée
-            let contact: ContactModel = contacts[index]
-
-            guard !contact.email.isEmpty else {
-                print("Pas d'email")
-                return
-            }
-            
-            // Créer l'auth
-            let authUser = try await AuthManager.shared.createUser(email: contact.email, password: "guest")
-            let user_id = authUser.uid
-
-            // Créer le contact dans "Users"
-            // Création dans "Users"
-            let user = DBUser(auth: authUser) // userId, email
-            try await UsersManager.shared.createDbUser(user: user) // sans l'image
-
-            // // Création de l'avatar dans "Storage" et maj de l'image dans "Users"
-            try await UsersManager.shared.updateAvatar(userId: user_id, mimage: mimage)
-
-            print("***** \(contact)")
-        } else {
-            print("selectContact - erreur pas de contact selectionné")
+        guard let index = contacts.firstIndex(where: { $0.id == contact.id }) else {
+            print("selectContact - Pas d'email")
+            return
         }
+        
+        let contact: ContactModel = contacts[index]
+        
+        guard !contact.email.isEmpty else {
+            print("selectContact - Pas d'email")
+            return
+        }
+        
+        // Créer l'auth
+        let authUser = try await AuthManager.shared.createUser(email: contact.email, password: "guest2")
+        let user_id = authUser.uid
+        
+        // Créer le contact dans "Users"
+        // Création dans "Users"
+        let user = DBUser(auth: authUser) // userId, email
+        try await UsersManager.shared.createDbUser(user: user) // sans l'image
+        
+        // // Création de l'avatar dans "Storage" et maj de l'image dans "Users"
+        try await UsersManager.shared.updateAvatar(userId: user_id, mimage: mimage)
     }
-    
 }
 
 

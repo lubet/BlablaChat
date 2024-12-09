@@ -20,7 +20,7 @@ struct ContactRowView: View {
 }
 
 struct ContactRowView_Previews: PreviewProvider {
-    static var contact1 = ContactModel(nom: "nom", prenom: "prenom", emai: "email")
+    static var contact1 = ContactModel(nom: "nom", prenom: "prenom", email: "email")
     
     static var previews: some View {
         ContactRowView(oneContact: contact1)

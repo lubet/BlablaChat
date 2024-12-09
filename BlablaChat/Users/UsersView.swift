@@ -18,7 +18,7 @@ class UsersViewModel: ObservableObject {
     
     func loadUsers() async throws {
         allUsers = try await UsersManager.shared.getAllUsers()
-        print("\(allUsers)")
+        // print("\(allUsers)")
     }
 }
 

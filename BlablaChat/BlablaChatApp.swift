@@ -24,14 +24,6 @@ struct BlablaChatApp: App {
     var body: some Scene {
         WindowGroup {
              RootView()
-                // LastMessagesView
-                //AuthenticationView()
-            
-
-            // NewContactView()
-            // LoginEmailView()
-            // RoomMessagesView(room_id)
-            // MessagesView() obsoléte
         }
     }
 }

@@ -44,8 +44,8 @@ final class LoginEmailViewModel: ObservableObject {
             print("Pas d'email ni de password")
             return
         }
-//        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-//        let user_id = authUser.uid
+       
+        try await AuthManager.shared.signInUser(email: email, password: password)
     }
 }
 

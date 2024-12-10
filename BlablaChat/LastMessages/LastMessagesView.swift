@@ -153,11 +153,11 @@ struct LastMessagesView: View {
     
     @State var path: [LastMessage] = []
     
-    @State var showNewMessageScreen = false // fullSreenCover UsersView
+    @State var showUsersView = false // fullSreenCover UsersView
     
     @State var emailPassed: String = "" // email callback de UsersView
     
-    @State var shouldNavigateToChatLogView = false // call back
+    @State var showChatView = false // call back
     
     var body: some View {
         ZStack {
@@ -210,7 +210,7 @@ struct LastMessagesView: View {
                     .navigationTitle("Derniers messages")
                 
                 // CallBack MessagesView <- email de ContactsView
-                    .navigationDestination(isPresented: $shouldNavigateToChatLogView) {
+                    .navigationDestination(isPresented: $showChatView) {
                         NewMessagesView(path: $path, email:emailPassed)
                     }
             }
@@ -223,11 +223,11 @@ extension LastMessagesView {
     
     private var NewMessageButton: some View {
         Button {
-            showNewMessageScreen.toggle()
+            showUsersView.toggle()
         } label: {
             HStack {
                 Spacer()
-                Text("Nouveau message")
+                Text("Nouveau destinataires")
                     .font(.system(size: 16, weight: .bold))
                 Spacer()
             }
@@ -240,10 +240,10 @@ extension LastMessagesView {
         }
         
         // Callback de UsersView
-        .fullScreenCover(isPresented: $showNewMessageScreen) {
+        .fullScreenCover(isPresented: $showUsersView) {
             UsersView(didSelectedNewUser: { emailSelected in
                 self.emailPassed = emailSelected
-                self.shouldNavigateToChatLogView.toggle()
+                self.showChatView.toggle()
             })
         }
     }

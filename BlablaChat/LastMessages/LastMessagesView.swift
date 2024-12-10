@@ -157,7 +157,7 @@ struct LastMessagesView: View {
     
     @State var emailPassed: String = "" // email callback de UsersView
     
-    @State var showChatView = false // call back
+    @State var showChatView = false // -> ChatView avec call back -> LastMessagesView
     
     var body: some View {
         ZStack {
@@ -198,7 +198,7 @@ struct LastMessagesView: View {
                 }
                 .listStyle(PlainListStyle())
                 
-                NewMessageButton // Nouveau message -> UsersView
+                newDestinataire // Nouveau message -> UsersView
                 
                     .padding(.bottom,10)
                 
@@ -221,13 +221,13 @@ struct LastMessagesView: View {
 // Bouton Nouveau message ------------------
 extension LastMessagesView {
     
-    private var NewMessageButton: some View {
+    private var newDestinataire: some View {
         Button {
             showUsersView.toggle()
         } label: {
             HStack {
                 Spacer()
-                Text("Nouveau destinataires")
+                Text("Nouveau destinataire")
                     .font(.system(size: 16, weight: .bold))
                 Spacer()
             }

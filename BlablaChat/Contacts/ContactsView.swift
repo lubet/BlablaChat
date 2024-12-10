@@ -20,6 +20,7 @@ class ContactsViewModel: ObservableObject {
         contacts = [
             ContactModel(nom: "Leroy", prenom: "Maurice", email: "maurice@leroy.com"),
             ContactModel(nom: "Dugou", prenom: "Robert", email: "robert@dugou.com"),
+            ContactModel(nom: "Zorba", prenom: "Robert", email: "alexis@zorba.com")
         ]
     }
     
@@ -40,7 +41,7 @@ class ContactsViewModel: ObservableObject {
             return
         }
         
-        // Créer l'auth
+        // Création de l'auth mais comme il devient l'auth actuel il ne sera pas repris dans la liste car je ne prends pas l'auth actuel dans la liste ce qui est normal
         let authUser = try await AuthManager.shared.createUser(email: contact.email, password: "guest2")
         let user_id = authUser.uid
         

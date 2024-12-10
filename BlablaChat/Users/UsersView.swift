@@ -18,7 +18,7 @@ class UsersViewModel: ObservableObject {
     
     func loadUsers() async throws {
         allUsers = try await UsersManager.shared.getAllUsers()
-        // print("\(allUsers)")
+       // print("\(allUsers)")
     }
 }
 
@@ -58,15 +58,15 @@ struct UsersView: View {
                 .autocorrectionDisabled(true)
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
-                .onAppear {
-                    Task {
-                        do {
-                            try await viewModel.loadUsers() // Chargement des users de la base "Users"
-                        } catch {
-                            print("UsersView-loadUsers Aucun users:")
-                        }
+                // .onAppear {
+                .task {
+                    do {
+                        try await viewModel.loadUsers() // Chargement des users de la base "Users"
+                    } catch {
+                        print("UsersView-loadUsers Aucun users:")
                     }
                 }
+                //}
                 .listStyle(PlainListStyle())
                 .navigationTitle("Users")
                 .padding(.top,10)

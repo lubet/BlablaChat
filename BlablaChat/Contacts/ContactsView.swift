@@ -41,8 +41,10 @@ class ContactsViewModel: ObservableObject {
             return
         }
         
+        // Création d'un auth anonymous (à lier à un compte Apple quand il se loggera la premiére fois
+        
         // Création de l'auth mais comme il devient l'auth actuel il ne sera pas repris dans la liste car je ne prends pas l'auth actuel dans la liste ce qui est normal
-        let authUser = try await AuthManager.shared.createUser(email: contact.email, password: "guest2")
+        let authUser = try await AuthManager.shared.signInAnonymous()
         let user_id = authUser.uid
         
         // Créer le contact dans "Users"

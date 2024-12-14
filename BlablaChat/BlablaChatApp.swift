@@ -94,9 +94,9 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
     let userInfo = notification.request.content.userInfo
 
-    if let messageID = userInfo[gcmMessageIDKey] {
-        // print("Message ID: \(messageID)")
-    }
+//    if let messageID = userInfo[gcmMessageIDKey] {
+//        // print("Message ID: \(messageID)")
+//    }
 
     // print(userInfo)
 

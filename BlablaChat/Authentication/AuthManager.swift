@@ -86,13 +86,6 @@ extension AuthManager {
 // MARK: SIGN IN SSO (Google, Apple)
 
 extension AuthManager {
-    
-    @discardableResult
-    func signInWithGoogle(tokens: GoggleSignInResultModel) async throws -> AuthUser {
-        let credential = GoogleAuthProvider.credential(withIDToken: tokens.idToken, accessToken: tokens.accessToken)
-        return try await signIn(credential: credential)
-    }
-
     // Apple
     @discardableResult
     func signInWithApple(tokens: SignInWithAppleResult) async throws -> AuthUser {
@@ -104,45 +97,30 @@ extension AuthManager {
         let authDataResult = try await Auth.auth().signIn(with: credential)
         return AuthUser(user: authDataResult.user)
     }
-    
 }
 
-// TODO Providers linking on anonymous account
-// MARK: PROVIDERS LINKS ON CURRENT USER ANONYME
+ // MARK: PROVIDERS LINKS ON CURRENT USER ANONYME
 
-// extension AuthManager {
+ extension AuthManager {
     
-//    @discardableResult
-//    func signInAnonymous() async throws -> AuthUser {
-//        let authDataResult = try await Auth.auth().signInAnonymously()
-//        return AuthUser(user: authDataResult.user)
-//    }
-    
-//    func linkEmail(email: String, password: String) async throws -> AuthUser {
-//        let credential = EmailAuthProvider.credential(withEmail: email, password: password)
-//        return try await linkCredential(credential: credential)
-//    }
-//    
-//    func linkGoogle(tokens: GoggleSignInResultModel) async throws -> AuthUser {
-//        let credential = GoogleAuthProvider.credential(withIDToken: tokens.idToken, accessToken: tokens.accessToken)
-//        return try await linkCredential(credential: credential)
-//    }
-//
-//    func linkApple(tokens: SignInWithAppleResult) async throws -> AuthUser {
-//        let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokens.token, rawNonce: tokens.nonce)
-//        return try await linkCredential(credential: credential)
-//    }
-//    
-//    // Appler par les link ci-dessus - link du provider sur le user courant
-//    private func linkCredential(credential: AuthCredential) async throws -> AuthUser {
-//        guard let user = Auth.auth().currentUser else {
-//            throw URLError(.badURL)
-//        }
-//        
-//        let authDataResult = try await user.link(with: credential)
-//        return AuthUser(user: authDataResult.user)
-//
-//    }
+    @discardableResult
+    func signInAnonymous() async throws -> AuthUser {
+        let authDataResult = try await Auth.auth().signInAnonymously()
+        return AuthUser(user: authDataResult.user)
+    }
 
-// }
+    func linkApple(tokens: SignInWithAppleResult) async throws -> AuthUser {
+        let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokens.token, rawNonce: tokens.nonce)
+        return try await linkCredential(credential: credential)
+    }
+    
+    // Appler par les link ci-dessus - link du provider sur le user courant
+    private func linkCredential(credential: AuthCredential) async throws -> AuthUser {
+        guard let user = Auth.auth().currentUser else {
+            throw URLError(.badURL)
+        }
+        let authDataResult = try await user.link(with: credential)
+        return AuthUser(user: authDataResult.user)
+    }
+ }
 

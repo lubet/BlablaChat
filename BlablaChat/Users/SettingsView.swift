@@ -83,13 +83,13 @@ final class SettingsViewModel: ObservableObject {
     }
     
     func isMaster() async throws {
-        let authUser = try AuthManager.shared.getAuthenticatedUser()
-        
-        guard let email = authUser.email else {
-            throw URLError(.fileDoesNotExist)
-        }
-
-        isMaster = false // logout
+//        let authUser = try AuthManager.shared.getAuthenticatedUser()
+//        
+//        guard let email = authUser.email else {
+//            throw URLError(.fileDoesNotExist)
+//        }
+//
+//        isMaster = false // logout
         
 //        if email == "leroy@test.com"{
 //            isMaster = true

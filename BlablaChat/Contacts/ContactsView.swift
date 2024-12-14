@@ -41,15 +41,14 @@ class ContactsViewModel: ObservableObject {
             return
         }
         
-        // Création d'un auth anonymous (à lier à un compte Apple quand il se loggera la premiére fois
-        
-        // Création de l'auth mais comme il devient l'auth actuel il ne sera pas repris dans la liste car je ne prends pas l'auth actuel dans la liste ce qui est normal
+        // TODO - A voir...
+        // Création d'un auth anonymous pour le contact - quand il se loggera Apple
+        // on l'identifiera avec son flag anonymous et son email à trouver
         let authUser = try await AuthManager.shared.signInAnonymous()
         let user_id = authUser.uid
         
         // Créer le contact dans "Users"
-        // Création dans "Users"
-        let user = DBUser(auth: authUser) // userId, email
+        let user = DBUser(auth: authUser) // userId (pas d'email c'est normal car anonymous)
         try await UsersManager.shared.createDbUser(user: user) // sans l'image
         
         // // Création de l'avatar dans "Storage" et maj de l'image dans "Users"

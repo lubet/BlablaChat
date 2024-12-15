@@ -115,6 +115,22 @@ struct AuthenticationView: View {
                         showSignInView = false
                     }
                 }
+                
+                // Sign In/Up with email/password
+                NavigationLink {
+                    LoginEmailView(showSignInView: $showSignInView)
+                } label: {
+                    Text("S'authentifier avec l'email")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(height: 45)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .padding(.bottom, 10)
+                }
+                .padding(.top, 20)
+
             }
             .padding(.horizontal, 20)
             .navigationTitle("Entrée")

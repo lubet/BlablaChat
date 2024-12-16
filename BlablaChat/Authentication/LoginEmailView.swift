@@ -24,7 +24,7 @@ final class LoginEmailViewModel: ObservableObject {
         
         // Création de l'Auth
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
-        let user_id = authUser.uid
+        let auth_id = authUser.uid
         
         // Création dans "Users"
         let user = DBUser(auth: authUser) // userId, email
@@ -33,9 +33,9 @@ final class LoginEmailViewModel: ObservableObject {
         guard let image else { return }
         
         // // Création de l'avatar dans "Storage" et maj de l'image dans "Users"
-        try await UsersManager.shared.updateAvatar(userId: user_id, mimage: image)
+        try await UsersManager.shared.updateAvatar(userId: auth_id, mimage: image)
 
-        try await TokensManager.shared.addToken(user_id: user_id, FCMtoken: MyVariables.FCMtoken)
+        try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: MyVariables.FCMtoken)
      }
     
     // Compte qui existe déjà

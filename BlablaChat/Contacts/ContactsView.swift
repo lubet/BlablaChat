@@ -45,14 +45,14 @@ class ContactsViewModel: ObservableObject {
         // Création d'un auth anonymous pour le contact - quand il se loggera Apple
         // on l'identifiera avec son flag anonymous et son email à trouver
         let authUser = try await AuthManager.shared.signInAnonymous()
-        let user_id = authUser.uid
+        let auth_id = authUser.uid
         
         // Créer le contact dans "Users"
         let user = DBUser(auth: authUser) // userId (pas d'email c'est normal car anonymous)
         try await UsersManager.shared.createDbUser(user: user) // sans l'image
         
         // // Création de l'avatar dans "Storage" et maj de l'image dans "Users"
-        try await UsersManager.shared.updateAvatar(userId: user_id, mimage: mimage)
+        try await UsersManager.shared.updateAvatar(userId: auth_id, mimage: mimage)
     }
 }
 

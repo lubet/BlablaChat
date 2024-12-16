@@ -47,7 +47,7 @@ final class AuthenticationViewModel: ObservableObject {
 //                            
 //                            try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
                             
-                            try await TokensManager.shared.addToken(user_id: authUser.uid, FCMtoken: MyVariables.FCMtoken)
+                            try await TokensManager.shared.addToken(auth_id: authUser.uid, FCMtoken: MyVariables.FCMtoken)
                             
                         }
                     } catch {
@@ -63,9 +63,9 @@ final class AuthenticationViewModel: ObservableObject {
     func FCMtoken() async throws {
         // Maj du FCMtoken
         let authUser = try! AuthManager.shared.getAuthenticatedUser()
-        let user_id = authUser.uid
+        let auth_id = authUser.uid
 
-        try await TokensManager.shared.addToken(user_id: user_id, FCMtoken: MyVariables.FCMtoken)
+        try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: MyVariables.FCMtoken)
     }
     
 //    func signInAnonymous() async throws {

@@ -20,35 +20,35 @@ final class TokensManager {
     
     private let tokensCollection = db.collection("tokens")
     
-    private func tokenDocument(user_id: String) -> DocumentReference {
-        return tokensCollection.document(user_id)
+    private func tokenDocument(auth_id: String) -> DocumentReference {
+        return tokensCollection.document(auth_id)
     }
 
     // Ajouter le FCMtoken à "tokens"
-    func addToken(user_id: String, FCMtoken: String) async throws {
+    func addToken(auth_id: String, FCMtoken: String) async throws {
         do {
-            let docRef = tokenDocument(user_id: user_id)
+            let docRef = tokenDocument(auth_id: auth_id)
             
             let data: [String:Any] = [
-                "user_id" : user_id,
+                "auth_id" : auth_id,
                 "token" : FCMtoken,
                 "time_stamp" : Timestamp(),
                 "nom": "",
             ]
             try await docRef.setData(data, merge: false)
         } catch {
-            print("addToken Pas de document pour ce user_id: \(error)")
+            print("addToken Pas de document pour ce auth_id: \(error)")
         }
     }
     
     // TODO Display name pour les notifications à taper dans SettingsView
-    func saveNom(user_id: String, nom: String) async throws {
+    func saveNom(auth_id: String, nom: String) async throws {
         do {
-            let docRef = tokenDocument(user_id: user_id)
+            let docRef = tokenDocument(auth_id: auth_id)
             let data: [String:Any] = ["nom": nom]
             try await docRef.setData(data, merge: true)
         } catch {
-            print("saveNom Pas de document pour ce user_id: \(error)")
+            print("saveNom Pas de document pour ce auth_id: \(error)")
         }
     }
 }

@@ -27,15 +27,15 @@ final class LastMessagesManager {
     // Users
     private let userCollection = db.collection("users")
     
-    private func userDocument(user_id: String) -> DocumentReference {
-        return userCollection.document(user_id)
+    private func userDocument(auth_id: String) -> DocumentReference {
+        return userCollection.document(auth_id)
     }
     
     // Membres
     private let memberCollection = db.collection("members")
     
-    private func memberDocument(user_id: String) -> DocumentReference {
-        return memberCollection.document(user_id)
+    private func memberDocument(auth_id: String) -> DocumentReference {
+        return memberCollection.document(auth_id)
     }
 
     // Tous mes rooms
@@ -58,12 +58,12 @@ final class LastMessagesManager {
     }
     
     // Ensemble de tous les enregs de "members" où l'auth est présent soit dans from_id ou soit dans to_id
-    func getMyRoomsId(user_id: String) async throws -> [Member] {
+    func getMyRoomsId(auth_id: String) async throws -> [Member] {
         var members = [Member]()
         do {
             let querySnapshot = try await memberCollection.whereFilter(Filter.orFilter([
-                    Filter.whereField("from_id", isEqualTo: user_id),
-                    Filter.whereField("to_id", isEqualTo: user_id)
+                    Filter.whereField("from_id", isEqualTo: auth_id),
+                    Filter.whereField("to_id", isEqualTo: auth_id)
                 ]))
                 .order(by: "date_created")
                 .getDocuments()
@@ -77,14 +77,14 @@ final class LastMessagesManager {
         return members
     }
     
-    // // Rechercher l'avatar_link dans "users" avec le user_id
-    func getAvatarLink(user_id: String) async throws -> String {
+    // // Rechercher l'avatar_link dans "users" avec le auth_id
+    func getAvatarLink(auth_id: String) async throws -> String {
         
         var avatarLink: String = ""
         
         do {
             let querySnapshot = try await userCollection.whereFilter(Filter.orFilter([
-                    Filter.whereField("user_id", isEqualTo: user_id)
+                    Filter.whereField("auth_id", isEqualTo: auth_id)
                 ]))
                 .getDocuments()
             for document in querySnapshot.documents {
@@ -119,14 +119,14 @@ final class LastMessagesManager {
 
     }
     
-    // Recherche de l'email dans "users" avec le user_id
-    func getEmail(user_id: String) async throws -> String {
+    // Recherche de l'email dans "users" avec le auth_id
+    func getEmail(auth_id: String) async throws -> String {
         
         var email: String = ""
         
         do {
             let querySnapshot = try await userCollection.whereFilter(Filter.orFilter([
-                    Filter.whereField("user_id", isEqualTo: user_id)
+                    Filter.whereField("auth_id", isEqualTo: auth_id)
                 ]))
                 .getDocuments()
             for document in querySnapshot.documents {

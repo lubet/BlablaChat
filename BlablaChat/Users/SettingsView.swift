@@ -21,16 +21,16 @@ final class SettingsViewModel: ObservableObject {
     
     func loadAvatar() async throws {
         guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        let user_id = authUser.uid
-        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
+        let auth_id = authUser.uid
+        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: auth_id)
     }
     
     // TODO
     func updateAvatar() async throws {
         guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        let user_id = authUser.uid
+        let auth_id = authUser.uid
         if let newImageAvatar = newImageAvatar {
-            try await UsersManager.shared.updateAvatar(userId: user_id, mimage: newImageAvatar)
+            try await UsersManager.shared.updateAvatar(userId: auth_id, mimage: newImageAvatar)
         }
         // print("updateAvatar")
     }

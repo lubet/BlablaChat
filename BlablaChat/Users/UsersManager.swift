@@ -51,7 +51,7 @@ final class UsersManager {
     // Get all users sauf moi
     func getAllUsers() async throws -> [DBUser] {
         let authUser = try AuthManager.shared.getAuthenticatedUser()
-        let user_id = authUser.uid
+        let auth_id = authUser.uid
         
         let snapshot = try await Firestore.firestore().collection("users").getDocuments()
         
@@ -59,7 +59,7 @@ final class UsersManager {
         
         for document in snapshot.documents {
             let user = try document.data(as: DBUser.self)
-            if user.authId != user_id {
+            if user.authId != auth_id {
                 dbUsers.append(user)
             }
         }
@@ -72,7 +72,7 @@ final class UsersManager {
     func getAvatar(contact_id: String) async throws -> String {
         do {
             let querySnapshot = try await userCollection
-                .whereField("user_id", isEqualTo: contact_id)
+                .whereField("auth_id", isEqualTo: contact_id)
                 .getDocuments()
             
             for document in querySnapshot.documents {
@@ -98,15 +98,15 @@ final class UsersManager {
         return DBUserCollection.document(email)
     }
     
-    private func userDocument(user_id:String) -> DocumentReference {
-        return DBUserCollection.document(user_id)
+    private func userDocument(auth_id:String) -> DocumentReference {
+        return DBUserCollection.document(auth_id)
     }
     
     // ---------------------------------------------------------------
     private let MemberCollection = dbFS.collection("members")
     
-    private func memberDocument(user_id: String) -> DocumentReference {
-        return MemberCollection.document(user_id)
+    private func memberDocument(auth_id: String) -> DocumentReference {
+        return MemberCollection.document(auth_id)
     }
     
     // -----------------------------------------------------------------
@@ -119,8 +119,8 @@ final class UsersManager {
     // ---------------------------------------------------------------
     private let messageCollection = dbFS.collection("messages")
     
-    private func messageDocument(user_id: String) -> DocumentReference {
-        return messageCollection.document(user_id)
+    private func messageDocument(auth_id: String) -> DocumentReference {
+        return messageCollection.document(auth_id)
     }
     
     //-----------------------------------------------------------------
@@ -147,30 +147,30 @@ final class UsersManager {
     // Création du contact dans la base "users"
     func createUser(email:String) async throws -> String {
         let userRef = DBUserCollection.document()
-        let user_id = userRef.documentID
+        let auth_id = userRef.documentID
         
         let data: [String:Any] = [
-            "user_id" : user_id,
+            "auth_id" : auth_id,
             "email": email,
             "date_created" : Timestamp()
         ]
         try await userRef.setData(data, merge: false)
         
-        return user_id
+        return auth_id
     }
     
     // Renvoie le room_id du duo from/to ou to/fom si existant dans members
-    func searchDuo(user_id: String, contact_id: String) async throws -> String {
+    func searchDuo(auth_id: String, contact_id: String) async throws -> String {
         
         do {
             let memberSnapshot = try await MemberCollection.whereFilter(Filter.orFilter([
                 Filter.andFilter([
-                    Filter.whereField("from_id", isEqualTo: user_id),
+                    Filter.whereField("from_id", isEqualTo: auth_id),
                     Filter.whereField("to_id", isEqualTo: contact_id)
                 ]),
                 Filter.andFilter([
                     Filter.whereField("from_id", isEqualTo: contact_id),
-                    Filter.whereField("to_id", isEqualTo: user_id)
+                    Filter.whereField("to_id", isEqualTo: auth_id)
                 ])
             ])
             ).getDocuments()
@@ -232,13 +232,13 @@ final class UsersManager {
         return room_id
     }
     
-    func createMembers(room_id: String, user_id:String, contact_id:String) async throws {
+    func createMembers(room_id: String, auth_id:String, contact_id:String) async throws {
         let memberRef = MemberCollection.document()
         let member_id = memberRef.documentID
         
         let data: [String:Any] = [
             "id": member_id,
-            "from_id": user_id,
+            "from_id": auth_id,
             "to_id": contact_id,
             "room_id": room_id,
             "date_created" : Timestamp(),
@@ -247,31 +247,31 @@ final class UsersManager {
         try await memberRef.setData(data, merge: false)
     }
     
-    func createMembers(user_id:String, room_id:String) async throws {
+    func createMembers(auth_id:String, room_id:String) async throws {
         let memberRef = MemberCollection.document()
         let member_id = memberRef.documentID
         
         let data: [String:Any] = [
             "id": member_id,
-            "user_id": user_id,
+            "auth_id": auth_id,
             "room_id": room_id
         ]
         try await memberRef.setData(data, merge: false)
     }
     
     // retourne vrai si le tryptique combiné existe dans "members"
-    func dejaMembre(room_id: String, user_id: String, contact_id: String) async throws -> Bool {
+    func dejaMembre(room_id: String, auth_id: String, contact_id: String) async throws -> Bool {
         
         do {
             let memberSnapshot = try await MemberCollection.whereFilter(Filter.orFilter([
                 Filter.andFilter([
-                    Filter.whereField("from_id", isEqualTo: user_id),
+                    Filter.whereField("from_id", isEqualTo: auth_id),
                     Filter.whereField("to_id", isEqualTo: contact_id),
                     Filter.whereField("room_id", isEqualTo: room_id),
                 ]),
                 Filter.andFilter([
                     Filter.whereField("from_id", isEqualTo: contact_id),
-                    Filter.whereField("to_id", isEqualTo: user_id),
+                    Filter.whereField("to_id", isEqualTo: auth_id),
                     Filter.whereField("room_id", isEqualTo: room_id),
                 ])
             ])
@@ -316,7 +316,7 @@ final class UsersManager {
         let dataRoom: [String:Any] = [
             "last_message": msg,
             "date_message": dateMessage,
-            "user_id": from_id,
+            "auth_id": from_id,
             "image_link": image_link,
             "to_id": to_id
         ]
@@ -324,11 +324,11 @@ final class UsersManager {
         try await roomRef.setData(dataRoom, merge: true)
     }
     
-    // Recherche du room_id dans "members" avec le user_id
-    func searchRoomId(user_id: String) async throws -> String {
+    // Recherche du room_id dans "members" avec le auth_id
+    func searchRoomId(auth_id: String) async throws -> String {
         do {
             let memberSnapshot = try await MemberCollection
-                .whereField("user_id", isEqualTo: user_id)
+                .whereField("auth_id", isEqualTo: auth_id)
                 .getDocuments()
             
             for duo in memberSnapshot.documents {
@@ -346,15 +346,15 @@ final class UsersManager {
     }
     
     // Recherhe de l'email dans "users"
-    func searchEmail(user_id: String) async throws -> (String, String) {
+    func searchEmail(auth_id: String) async throws -> (String, String) {
         do {
             let querySnapshot = try await DBUserCollection
-                .whereField("user_id", isEqualTo: user_id)
+                .whereField("auth_id", isEqualTo: auth_id)
                 .getDocuments()
             
             for document in querySnapshot.documents {
                 let user = try document.data(as: DBUser.self)
-                if (user.authId == user_id) {
+                if (user.authId == auth_id) {
                     return (user.email ?? "", user.avatarLink ?? "")
                 }
             }
@@ -374,9 +374,9 @@ final class UsersManager {
     }
     
     // SettingsView TODO ajouter le champ nom dans "users"
-    //    func saveNom(user_id: String, nom: String) async throws {
+    //    func saveNom(auth_id: String, nom: String) async throws {
     //        do {
-    //            let docRef = userDocument(userId: user_id)
+    //            let docRef = userDocument(userId: auth_id)
     //            try await docRef.setData([ "nom":nom ] , merge: true)
     //        } catch {
     //            print("searchContact - Error getting documents: \(error)")

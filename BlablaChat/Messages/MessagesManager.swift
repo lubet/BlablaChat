@@ -27,7 +27,7 @@ final class MessagesManager {
     private let roomCollection = db.collection("rooms")
 
     // Tous les messages d'un room en ordre croissant pour affichage bubble
-    func getRoomMessages(room_id: String, user_id: String) async throws -> [MessageBubble] {
+    func getRoomMessages(room_id: String, auth_id: String) async throws -> [MessageBubble] {
         
         var messagesBubble = [MessageBubble]()
         var send: Bool = false
@@ -41,7 +41,7 @@ final class MessagesManager {
             if let snap = querySnapshot {
                 for doc in snap.documents {
                     let msg = try doc.data(as: Message.self)
-                    if (msg.from_id == user_id) {
+                    if (msg.from_id == auth_id) {
                         send = true
                     } else {
                         send = false
@@ -57,15 +57,15 @@ final class MessagesManager {
         return messagesBubble
     }
         
-    // Recherche du user_id dans membre
-    func getUserId(user_id: String) async throws -> String? {
+    // Recherche du auth_id dans membre
+    func getUserId(auth_id: String) async throws -> String? {
 
         var to_id: String?
         
         do {
             let querySnapshot = try? await memberCollection
-                .whereField("user_id", isEqualTo: user_id)
-                // OU .whereField("to_id", isEqualTo: user_id)
+                .whereField("auth_id", isEqualTo: auth_id)
+                // OU .whereField("to_id", isEqualTo: auth_id)
                 .getDocuments()
             
             let nbMembre = querySnapshot?.count

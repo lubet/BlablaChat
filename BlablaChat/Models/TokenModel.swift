@@ -11,7 +11,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct TokenModel {
-    let user_id: String
+    let auth_id: String
     let token: String
     let time_stamp: Timestamp
     let nom: String

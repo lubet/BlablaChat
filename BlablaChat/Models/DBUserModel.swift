@@ -12,6 +12,7 @@ struct DBUser: Codable, Identifiable {
     let email : String?
     let dateCreated: Date?
     let avatarLink: String?
+    let userId: String?
     
     var id: String {
         authId
@@ -23,18 +24,21 @@ struct DBUser: Codable, Identifiable {
         self.email = auth.email
         self.dateCreated = Date()
         self.avatarLink = nil
+        self.userId = UUID().uuidString
     }
     
     init(
         authId: String,
         email : String? = nil,
         dateCreated: Date? = nil,
-        avatarLink: String? = nil
+        avatarLink: String? = nil,
+        userId: String? = nil
     ) {
         self.authId = authId
         self.email = email
         self.dateCreated = dateCreated
         self.avatarLink = avatarLink
+        self.userId = userId
     }
     
     enum CodingKeys: String, CodingKey {
@@ -42,6 +46,7 @@ struct DBUser: Codable, Identifiable {
         case email = "email"
         case dateCreated = "date_created"
         case avatarLink = "avatar_link"
+        case userId = "user_id"
     }
     
     func encode(to encoder: Encoder) throws {
@@ -50,6 +55,7 @@ struct DBUser: Codable, Identifiable {
         try container.encodeIfPresent(self.email, forKey: .email)
         try container.encodeIfPresent(self.dateCreated, forKey: .dateCreated)
         try container.encodeIfPresent(self.avatarLink, forKey: .avatarLink)
+        try container.encodeIfPresent(self.userId, forKey: .userId)
     }
     
     
@@ -59,5 +65,6 @@ struct DBUser: Codable, Identifiable {
         self.email = try container.decodeIfPresent(String.self, forKey: .email)
         self.dateCreated = try container.decodeIfPresent(Date.self, forKey: .dateCreated)
         self.avatarLink = try container.decodeIfPresent(String.self, forKey: .avatarLink)
+        self.userId = try container.decodeIfPresent(String.self, forKey: .userId)
     }
 }

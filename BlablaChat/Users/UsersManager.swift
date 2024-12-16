@@ -30,7 +30,7 @@ final class UsersManager {
     }
     
     func createDbUser(user: DBUser) async throws {
-        try userDocument(userId: user.userId).setData(from: user, merge: false)
+        try userDocument(userId: user.authId).setData(from: user, merge: false)
     }
     
     func updateImagePath(userId: String, path: String) async throws {
@@ -59,7 +59,7 @@ final class UsersManager {
         
         for document in snapshot.documents {
             let user = try document.data(as: DBUser.self)
-            if user.userId != user_id {
+            if user.authId != user_id {
                 dbUsers.append(user)
             }
         }
@@ -77,7 +77,7 @@ final class UsersManager {
             
             for document in querySnapshot.documents {
                 let user = try document.data(as: DBUser.self)
-                if (user.userId == contact_id) {
+                if (user.authId == contact_id) {
                     return user.avatarLink ?? ""
                 }
             }
@@ -135,7 +135,7 @@ final class UsersManager {
             for document in querySnapshot.documents {
                 let user = try document.data(as: DBUser.self)
                 if (user.email == email) {
-                    return user.userId
+                    return user.authId
                 }
             }
         } catch {
@@ -354,7 +354,7 @@ final class UsersManager {
             
             for document in querySnapshot.documents {
                 let user = try document.data(as: DBUser.self)
-                if (user.userId == user_id) {
+                if (user.authId == user_id) {
                     return (user.email ?? "", user.avatarLink ?? "")
                 }
             }

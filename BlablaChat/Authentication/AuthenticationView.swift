@@ -39,7 +39,7 @@ final class AuthenticationViewModel: ObservableObject {
                             
                             let mimage: UIImage = UIImage.init(systemName: "person.fill")!
                             
-                            try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: mimage)
+                            try await UsersManager.shared.updateAvatar(userId: user.authId, mimage: mimage)
                             
 //                            let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: user.userId)
 //                            

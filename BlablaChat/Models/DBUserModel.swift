@@ -8,37 +8,37 @@
 import Foundation
 
 struct DBUser: Codable, Identifiable {
-    let userId: String
+    let authId: String
     let email : String?
     let dateCreated: Date?
     let avatarLink: String?
     
     var id: String {
-        userId
+        authId
     }
     
     // Init du document à partir des données de l'authentification auxquelles on ajoute la date de création et le lien de l'image
     init(auth: AuthUser) {
-        self.userId = auth.uid
+        self.authId = auth.uid
         self.email = auth.email
         self.dateCreated = Date()
         self.avatarLink = nil
     }
     
     init(
-        userId: String,
+        authId: String,
         email : String? = nil,
         dateCreated: Date? = nil,
         avatarLink: String? = nil
     ) {
-        self.userId = userId
+        self.authId = authId
         self.email = email
         self.dateCreated = dateCreated
         self.avatarLink = avatarLink
     }
     
     enum CodingKeys: String, CodingKey {
-        case userId = "user_id"
+        case authId = "auth_id"
         case email = "email"
         case dateCreated = "date_created"
         case avatarLink = "avatar_link"
@@ -46,7 +46,7 @@ struct DBUser: Codable, Identifiable {
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(self.userId, forKey: .userId)
+        try container.encode(self.authId, forKey: .authId)
         try container.encodeIfPresent(self.email, forKey: .email)
         try container.encodeIfPresent(self.dateCreated, forKey: .dateCreated)
         try container.encodeIfPresent(self.avatarLink, forKey: .avatarLink)
@@ -55,7 +55,7 @@ struct DBUser: Codable, Identifiable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.userId = try container.decode(String.self, forKey: .userId)
+        self.authId = try container.decode(String.self, forKey: .authId)
         self.email = try container.decodeIfPresent(String.self, forKey: .email)
         self.dateCreated = try container.decodeIfPresent(Date.self, forKey: .dateCreated)
         self.avatarLink = try container.decodeIfPresent(String.self, forKey: .avatarLink)

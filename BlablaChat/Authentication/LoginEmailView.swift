@@ -35,7 +35,7 @@ final class LoginEmailViewModel: ObservableObject {
         // // Création de l'avatar dans "Storage" et maj de l'image dans "Users"
         try await UsersManager.shared.updateAvatar(userId: auth_id, mimage: image)
 
-        try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: MyVariables.FCMtoken)
+        try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: Globales.FCMtoken)
      }
     
     // Compte qui existe déjà

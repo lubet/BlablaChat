@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct Globales {
+struct G {
     static var user_id: String = ""
     static var email: String = ""
     static var contact_id: String = ""

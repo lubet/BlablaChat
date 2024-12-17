@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		C0027F482C5BDD59009DABF3 /* DBUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0027F472C5BDD59009DABF3 /* DBUserModel.swift */; };
 		C00658F42CFF1B1400270967 /* NewContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00658F32CFF1B0500270967 /* NewContacts.swift */; };
-		C00C31432CA1B5BA00E5F962 /* MyVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00C31422CA1B5BA00E5F962 /* MyVariables.swift */; };
 		C00CEF102BB55206004C7016 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C00CEF0F2BB55206004C7016 /* SDWebImageSwiftUI */; };
 		C0180A342CBA6A35009E9163 /* TokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0180A332CBA6A35009E9163 /* TokenModel.swift */; };
 		C0180A362CBA6FF5009E9163 /* TokensManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0180A352CBA6FF5009E9163 /* TokensManager.swift */; };
@@ -32,6 +31,7 @@
 		C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9DF2B45767B00C6D48F /* AuthManager.swift */; };
 		C047E9E22B45880400C6D48F /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9E12B45880400C6D48F /* StorageManager.swift */; };
 		C048F18C2BAF2E2400742CD2 /* LastMessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C048F18B2BAF2E2400742CD2 /* LastMessagesManager.swift */; };
+		C052F0A32D116A2A00FB0C9A /* Globales.swift in Sources */ = {isa = PBXBuildFile; fileRef = C052F0A22D116A2A00FB0C9A /* Globales.swift */; };
 		C05D4E3C2C5CB2DD00270938 /* NewMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D4E3B2C5CB2DD00270938 /* NewMessagesView.swift */; };
 		C05D4E402C5CBF7900270938 /* RoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D4E3F2C5CBF7900270938 /* RoomModel.swift */; };
 		C062FD092D04611F009F2957 /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C062FD082D04611F009F2957 /* ContactModel.swift */; };
@@ -70,7 +70,6 @@
 /* Begin PBXFileReference section */
 		C0027F472C5BDD59009DABF3 /* DBUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUserModel.swift; sourceTree = "<group>"; };
 		C00658F32CFF1B0500270967 /* NewContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContacts.swift; sourceTree = "<group>"; };
-		C00C31422CA1B5BA00E5F962 /* MyVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyVariables.swift; sourceTree = "<group>"; };
 		C0180A332CBA6A35009E9163 /* TokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenModel.swift; sourceTree = "<group>"; };
 		C0180A352CBA6FF5009E9163 /* TokensManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensManager.swift; sourceTree = "<group>"; };
 		C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchXavierView.swift; sourceTree = "<group>"; };
@@ -92,6 +91,7 @@
 		C047E9E12B45880400C6D48F /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		C048F18B2BAF2E2400742CD2 /* LastMessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesManager.swift; sourceTree = "<group>"; };
 		C04C3A7A2C85C7CD0044B21B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		C052F0A22D116A2A00FB0C9A /* Globales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globales.swift; sourceTree = "<group>"; };
 		C05D4E3B2C5CB2DD00270938 /* NewMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessagesView.swift; sourceTree = "<group>"; };
 		C05D4E3F2C5CBF7900270938 /* RoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomModel.swift; sourceTree = "<group>"; };
 		C062FD082D04611F009F2957 /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
@@ -211,6 +211,7 @@
 				C03763852C411F3700A5602B /* Info.plist */,
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
 				C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */,
+				C052F0A22D116A2A00FB0C9A /* Globales.swift */,
 				C03763882C4128A500A5602B /* Utilities */,
 				C070D6402C53809E006170E3 /* Extensions */,
 				C0D84B6F2C5B889400AE9B21 /* Models */,
@@ -294,7 +295,6 @@
 		C0D84B6F2C5B889400AE9B21 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C00C31422CA1B5BA00E5F962 /* MyVariables.swift */,
 				C0D84B722C5B898A00AE9B21 /* MessageModel.swift */,
 				C0D84B742C5B8A2900AE9B21 /* MemberModel.swift */,
 				C0027F472C5BDD59009DABF3 /* DBUserModel.swift */,
@@ -415,6 +415,7 @@
 				C0ABF6F82D004CAB00BFD2EB /* ButtonContacts.swift in Sources */,
 				C0B73E9A2C6AAB2C00B43F19 /* MessageBubble.swift in Sources */,
 				C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */,
+				C052F0A32D116A2A00FB0C9A /* Globales.swift in Sources */,
 				C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */,
 				C03C39962C5A2BC900A23D33 /* UsersCellView.swift in Sources */,
 				C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */,
@@ -424,7 +425,6 @@
 				C0D84B6E2C5B846A00AE9B21 /* UsersManager.swift in Sources */,
 				C0027F482C5BDD59009DABF3 /* DBUserModel.swift in Sources */,
 				C05D4E402C5CBF7900270938 /* RoomModel.swift in Sources */,
-				C00C31432CA1B5BA00E5F962 /* MyVariables.swift in Sources */,
 				C00658F42CFF1B1400270967 /* NewContacts.swift in Sources */,
 				C037638A2C4128D000A5602B /* Utilities.swift in Sources */,
 				C06D0EA62D05FCEA0043EBBA /* ContactsManager.swift in Sources */,

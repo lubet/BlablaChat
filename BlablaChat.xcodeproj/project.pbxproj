@@ -32,6 +32,7 @@
 		C047E9E22B45880400C6D48F /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9E12B45880400C6D48F /* StorageManager.swift */; };
 		C048F18C2BAF2E2400742CD2 /* LastMessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C048F18B2BAF2E2400742CD2 /* LastMessagesManager.swift */; };
 		C052F0A32D116A2A00FB0C9A /* Globales.swift in Sources */ = {isa = PBXBuildFile; fileRef = C052F0A22D116A2A00FB0C9A /* Globales.swift */; };
+		C052F0A52D118AE800FB0C9A /* AuthUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C052F0A42D118AE800FB0C9A /* AuthUserModel.swift */; };
 		C05D4E3C2C5CB2DD00270938 /* NewMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D4E3B2C5CB2DD00270938 /* NewMessagesView.swift */; };
 		C05D4E402C5CBF7900270938 /* RoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D4E3F2C5CBF7900270938 /* RoomModel.swift */; };
 		C062FD092D04611F009F2957 /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C062FD082D04611F009F2957 /* ContactModel.swift */; };
@@ -92,6 +93,7 @@
 		C048F18B2BAF2E2400742CD2 /* LastMessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesManager.swift; sourceTree = "<group>"; };
 		C04C3A7A2C85C7CD0044B21B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		C052F0A22D116A2A00FB0C9A /* Globales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globales.swift; sourceTree = "<group>"; };
+		C052F0A42D118AE800FB0C9A /* AuthUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUserModel.swift; sourceTree = "<group>"; };
 		C05D4E3B2C5CB2DD00270938 /* NewMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessagesView.swift; sourceTree = "<group>"; };
 		C05D4E3F2C5CBF7900270938 /* RoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomModel.swift; sourceTree = "<group>"; };
 		C062FD082D04611F009F2957 /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 				C0B73E992C6AAB2C00B43F19 /* MessageBubble.swift */,
 				C0180A332CBA6A35009E9163 /* TokenModel.swift */,
 				C062FD082D04611F009F2957 /* ContactModel.swift */,
+				C052F0A42D118AE800FB0C9A /* AuthUserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				C07F38B72C15A4F300B481B5 /* CellView.swift in Sources */,
 				C068CD3B2BCD769E0072A797 /* AuthenticationView.swift in Sources */,
 				C0D84B732C5B898A00AE9B21 /* MessageModel.swift in Sources */,
+				C052F0A52D118AE800FB0C9A /* AuthUserModel.swift in Sources */,
 				C0180A362CBA6FF5009E9163 /* TokensManager.swift in Sources */,
 				C0FAA0942C242C340009DFF7 /* MessageShort.swift in Sources */,
 				C0850DC42D0F2BD7001AD3AA /* LoginEmailView.swift in Sources */,

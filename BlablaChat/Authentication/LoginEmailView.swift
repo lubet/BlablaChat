@@ -34,6 +34,11 @@ final class LoginEmailViewModel: ObservableObject {
         
         print("user: \(user)")
         
+        // TODO Avec l'email Recherche dans "users" si le user n'a pas de auth_id
+        
+        // si pas de authid le mettre à jour
+        
+        
         // // Création de l'avatar dans "Storage" et maj de l'image dans "Users"
         try await UsersManager.shared.updateAvatar(userId: auth_id, mimage: image)
 

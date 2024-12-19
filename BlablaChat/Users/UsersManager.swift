@@ -13,8 +13,8 @@ final class UsersManager {
     private let userCollection: CollectionReference = Firestore.firestore().collection("users")
     
     // user
-    private func userDocument(userId: String) -> DocumentReference {
-        return userCollection.document(userId)
+    private func userDocument(id: String) -> DocumentReference {
+        return userCollection.document(id)
     }
     
     // users
@@ -23,7 +23,7 @@ final class UsersManager {
     }
     
     func createDbUser(user: DBUser) async throws {
-        try userDocument(userId: user.userId).setData(from: user, merge: false)
+        try userDocument(id: user.id).setData(from: user, merge: false)
     }
     
     func updateAvatar(userId: String, mimage: UIImage) async throws {
@@ -57,7 +57,7 @@ final class UsersManager {
         let data: [String:Any] = [
             DBUser.CodingKeys.avatarLink.rawValue : path,
         ]
-        try await userDocument(userId: userId).updateData(data)
+        try await userDocument(id: userId).updateData(data)
     }
 
 }

@@ -45,11 +45,6 @@ final class AuthenticationViewModel: ObservableObject {
                         let authUser = try await AuthManager.shared.signInWithApple(tokens: signInAppleResult)
                         self.didSignInWithApple = true
                         
-                        guard let email = authUser.email else {
-                            print("L'email du user Apple est égal à nil")
-                            return
-                        }
-                        
                     } catch {
                         print("Erreur Sign in with Apple...")
                     }

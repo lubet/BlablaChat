@@ -24,13 +24,10 @@ final class LoginEmailViewModel: ObservableObject {
         
         // Création de l'Auth
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
-        let auth_id = authUser.uid
         
         // Création dans "Users"
         let user = DBUser(auth: authUser) // userId, email
         try await UsersManager.shared.createDbUser(user: user) // sans l'image
-        
-        guard let image else { return }
         
         // // Création de l'avatar dans "Storage" et maj de l'image dans "Users"
         // try await UsersManager.shared.updateAvatar(userId: auth_id, mimage: image)

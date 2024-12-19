@@ -4,7 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 01/08/2024.
 //
-// Personne qui est logué
+// Création d'un user dans la base "users" à partir de l'authentification plus dateCreated, avatarLink et userId
 
 import Foundation
 
@@ -15,7 +15,8 @@ struct DBUser: Codable, Identifiable {
     let avatarLink: String?
     let userId: String?
         
-    // Init du document à partir des données de l'authentification auxquelles on ajoute la date de création et le lien de l'image
+    // Init du document à partir des données de l'authentification auxquelles on ajoute la date de création, le lien de l'image
+    // et un userId (servira dans les contacts)
     init(auth: AuthUser) {
         self.id = auth.uid
         self.email = auth.email
@@ -24,6 +25,7 @@ struct DBUser: Codable, Identifiable {
         self.userId = UUID().uuidString
     }
     
+// Si on ne vaut créer un user dans "users" à partir de l'authentification:
 //    init(
 //        id: String,
 //        email : String? = nil,

@@ -25,7 +25,7 @@ final class LoginEmailViewModel: ObservableObject {
         // Création de l'Auth
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
         
-        // Création dans "Users"
+        // Création d'un user à partir de l'authentification auquel on rajoute des champs (voir DBUser)
         let user = DBUser(auth: authUser) // userId, email
         try await UsersManager.shared.createDbUser(user: user) // sans l'image
         

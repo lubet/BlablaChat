@@ -41,62 +41,8 @@ final class SettingsViewModel: ObservableObject {
         }
     }
     
-    //    func linkGoogleAccount() async throws {
-    //        let helper = SignInGoogleHelper()
-    //        let tokens = try await helper.signIn()
-    //        let authDataResult = try await AuthManager.shared.linkGoogle(tokens: tokens)
-    //        self.AuthUser = authDataResult
-    //    }
-    //
-    //    func linkAppleAccount() async throws {
-    //        let helper = SignInAppleHelper()
-    //        let tokens = try await helper.startSignInWithAppleFlow()
-    //        let authDataResult = try await AuthManager.shared.linkApple(tokens: tokens)
-    //        self.authUser = authDataResult
-    //    }
-    //
-    //    // TODO ecran de login
-    //    func linkEmailAccount() async throws {
-    //        let email = "hello@test.com"
-    //        let password = "azerty"
-    //        let authDataResult = try await AuthManager.shared.linkEmail(email: email, password: password)
-    //        self.authUser = authDataResult
-    //    }
-    
     func signOut() {
         try? AuthManager.shared.signOut()
-    }
-    
-//    func resetPassword() async throws {
-//        let authUser = try AuthManager.shared.getAuthenticatedUser()
-//        
-//        guard let email = authUser.email else {
-//            throw URLError(.fileDoesNotExist)
-//        }
-//        
-//        try await UsersManager.shared.resetPassword(email: email)
-//    }
-//    
-//    func updateEmail() async throws {
-//        let newEmail = "TODO une view de saisir du nouveau email"
-//        try await UsersManager.shared.updateEmail(email: newEmail)
-//    }
-    
-    func isMaster() async throws {
-        let authUser = try AuthManager.shared.getAuthenticatedUser()
-        
-        guard let email = authUser.email else {
-            throw URLError(.fileDoesNotExist)
-        }
-
-        isMaster = false // logout
-        
-//        if email == "leroy@test.com"{
-//            isMaster = true
-//        } else {
-//            isMaster = false
-//        }
-        
     }
 }
 
@@ -160,7 +106,6 @@ struct SettingsView: View {
         .onAppear {
             Task {
                 try await viewModel.loadAvatar()
-                try await viewModel.isMaster()
             }
             viewModel.loadAuthProviders()
         }

@@ -16,6 +16,25 @@ final class AuthenticationViewModel: ObservableObject {
     @Published var didSignInWithApple: Bool = false
     let signInAppleHelper = SignInAppleHelper()
     
+    @Published var httpAvatar: String = ""
+    @Published var newImageAvatar: UIImage? = nil
+
+    func loadAvatar() async throws {
+        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+        let user_id = authUser.uid
+        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
+    }
+    
+    // TODO
+    func updateAvatar() async throws {
+        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+        let user_id = authUser.uid
+        if let newImageAvatar = newImageAvatar {
+            try await UsersManager.shared.updateAvatar(userId: user_id, mimage: newImageAvatar)
+        }
+        // print("updateAvatar")
+    }
+    
     // Apple
     func signInApple() async throws {
         signInAppleHelper.startSignInWithAppleFlow { result in
@@ -54,7 +73,7 @@ struct AuthenticationView: View {
     
     var body: some View {
         ZStack {
-            Color.theme.background.ignoresSafeArea()
+            Color.theme.background
             VStack {
                 
                 // Avatar
@@ -68,11 +87,19 @@ struct AuthenticationView: View {
                                 .scaledToFill()
                                 .frame(width: 100, height: 100)
                                 .clipShape(Circle())
+                        } else {
+                            WebImage(url: URL(string: viewModel.httpAvatar))
+                                .resizable()
+                                .frame(width: 120, height: 120)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(Color.black, lineWidth: 1))
                         }
                     }
                     .overlay(RoundedRectangle(cornerRadius: 64)
                         .stroke(Color.black,lineWidth: 2))
                 }
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.bottom,40)
                 
                 // SignIn with Apple
                 Button(action: {
@@ -117,10 +144,10 @@ struct AuthenticationView: View {
                         .padding(.bottom, 10)
                 }
                 .padding(.top, 20)
+                .padding(.bottom,40)
                 
             }
             .padding(.horizontal, 20)
-            .navigationTitle("Entrée")
         }
         // Image
         .fullScreenCover(isPresented: $showImagePicker, onDismiss: nil) {

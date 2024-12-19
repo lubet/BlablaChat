@@ -12,6 +12,8 @@
 		C01077332D14251F004960F2 /* DBUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01077322D14251F004960F2 /* DBUserModel.swift */; };
 		C01077362D142688004960F2 /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01077352D142688004960F2 /* UsersManager.swift */; };
 		C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */; };
+		C0268BE12D142F5E005374DD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0268BE02D142F5E005374DD /* SettingsView.swift */; };
+		C0268BE42D1431A1005374DD /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0268BE32D1431A1005374DD /* StorageManager.swift */; };
 		C03763872C41210200A5602B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C03763862C41210200A5602B /* GoogleService-Info.plist */; };
 		C037638A2C4128D000A5602B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03763892C4128D000A5602B /* Utilities.swift */; };
 		C043F9A52C170D08002B3C59 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C043F9A42C170D08002B3C59 /* DateManager.swift */; };
@@ -48,6 +50,8 @@
 		C01077322D14251F004960F2 /* DBUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUserModel.swift; sourceTree = "<group>"; };
 		C01077352D142688004960F2 /* UsersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
 		C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchXavierView.swift; sourceTree = "<group>"; };
+		C0268BE02D142F5E005374DD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C0268BE32D1431A1005374DD /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		C02F63DB2C8778F10032A0CD /* BlablaChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlablaChat.entitlements; sourceTree = "<group>"; };
 		C03763852C411F3700A5602B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C03763862C41210200A5602B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -107,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				C01077352D142688004960F2 /* UsersManager.swift */,
+				C0268BE02D142F5E005374DD /* SettingsView.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -123,6 +128,14 @@
 				C07F38B62C15A4F300B481B5 /* CellView.swift */,
 			);
 			path = StandBy;
+			sourceTree = "<group>";
+		};
+		C0268BE22D14312D005374DD /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				C0268BE32D1431A1005374DD /* StorageManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		C03763882C4128A500A5602B /* Utilities */ = {
@@ -163,6 +176,7 @@
 				C01077312D1424A1004960F2 /* Models */,
 				C0695AEF2C49151400CEAA17 /* Authentication */,
 				C01077342D14261D004960F2 /* Users */,
+				C0268BE22D14312D005374DD /* Managers */,
 				C0B9DC842B5EB05B006C2B46 /* Components */,
 				C01FE5A72B67F0610049B9EE /* StandBy */,
 				C047E9C72B45625D00C6D48F /* Assets.xcassets */,
@@ -319,6 +333,7 @@
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,
 				C01077332D14251F004960F2 /* DBUserModel.swift in Sources */,
 				C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */,
+				C0268BE12D142F5E005374DD /* SettingsView.swift in Sources */,
 				C070D6422C5380C4006170E3 /* Color.swift in Sources */,
 				C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */,
 				C0D565F42B7CAF8E00EE0DA0 /* RootView.swift in Sources */,
@@ -328,6 +343,7 @@
 				C0FAA0942C242C340009DFF7 /* MessageShort.swift in Sources */,
 				C0850DC42D0F2BD7001AD3AA /* LoginEmailView.swift in Sources */,
 				C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */,
+				C0268BE42D1431A1005374DD /* StorageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

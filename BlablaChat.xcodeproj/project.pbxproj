@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		C00658F42CFF1B1400270967 /* NewContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00658F32CFF1B0500270967 /* NewContacts.swift */; };
 		C00CEF102BB55206004C7016 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C00CEF0F2BB55206004C7016 /* SDWebImageSwiftUI */; };
-		C010772B2D141FF9004960F2 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C010772A2D141FF9004960F2 /* AuthManager.swift */; };
 		C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */; };
 		C03763872C41210200A5602B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C03763862C41210200A5602B /* GoogleService-Info.plist */; };
 		C037638A2C4128D000A5602B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03763892C4128D000A5602B /* Utilities.swift */; };
@@ -44,7 +43,6 @@
 
 /* Begin PBXFileReference section */
 		C00658F32CFF1B0500270967 /* NewContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContacts.swift; sourceTree = "<group>"; };
-		C010772A2D141FF9004960F2 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchXavierView.swift; sourceTree = "<group>"; };
 		C02F63DB2C8778F10032A0CD /* BlablaChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlablaChat.entitlements; sourceTree = "<group>"; };
 		C03763852C411F3700A5602B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -142,7 +140,6 @@
 				C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */,
 				C03763882C4128A500A5602B /* Utilities */,
 				C070D6402C53809E006170E3 /* Extensions */,
-				C0D84B6F2C5B889400AE9B21 /* Models */,
 				C0695AEF2C49151400CEAA17 /* Authentication */,
 				C0B9DC842B5EB05B006C2B46 /* Components */,
 				C01FE5A72B67F0610049B9EE /* StandBy */,
@@ -192,14 +189,6 @@
 				C0FAA0932C242C340009DFF7 /* MessageShort.swift */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		C0D84B6F2C5B889400AE9B21 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				C010772A2D141FF9004960F2 /* AuthManager.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		C0E63A742C8EFF6F0041E598 /* Frameworks */ = {
@@ -294,7 +283,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0ABF6F82D004CAB00BFD2EB /* ButtonContacts.swift in Sources */,
-				C010772B2D141FF9004960F2 /* AuthManager.swift in Sources */,
 				C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */,
 				C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */,
 				C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */,

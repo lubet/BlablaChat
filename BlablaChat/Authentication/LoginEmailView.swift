@@ -27,17 +27,10 @@ final class LoginEmailViewModel: ObservableObject {
         let auth_id = authUser.uid
         
         // Création dans "Users"
-        let user = DBUser(auth: authUser) // userId, email
-        try await UsersManager.shared.createDbUser(user: user) // sans l'image
+        GdbUser = DBUser(auth: authUser) // userId, email
+        try await UsersManager.shared.createDbUser(user: GdbUser) // sans l'image
         
         guard let image else { return }
-        
-        print("user: \(user)")
-        
-        // TODO Avec l'email Recherche dans "users" si le user n'a pas de auth_id
-        
-        // si pas de authid le mettre à jour
-        
         
         // // Création de l'avatar dans "Storage" et maj de l'image dans "Users"
         try await UsersManager.shared.updateAvatar(userId: auth_id, mimage: image)

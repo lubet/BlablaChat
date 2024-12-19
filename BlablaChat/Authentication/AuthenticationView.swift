@@ -7,10 +7,12 @@
 
 import SwiftUI
 import AuthenticationServices
+import SDWebImage
+import SDWebImageSwiftUI
 
 @MainActor
 final class AuthenticationViewModel: ObservableObject {
- 
+    
     @Published var didSignInWithApple: Bool = false
     let signInAppleHelper = SignInAppleHelper()
     
@@ -28,28 +30,7 @@ final class AuthenticationViewModel: ObservableObject {
                             print("L'email du user Apple est égal à nil")
                             return
                         }
-
-                        let contact_id  = try await UsersManager.shared.searchContact(email: email)
                         
-                        if contact_id == "" {
-                            
-                            let user = DBUser(auth: authUser) // Instanciation userId email
-                            
-                            try await UsersManager.shared.createDbUser(user: user) // Save in Firestore sans l'image
-                            
-                            let mimage: UIImage = UIImage.init(systemName: "person.fill")!
-                            
-                            try await UsersManager.shared.updateAvatar(userId: user.authId, mimage: mimage)
-                            
-//                            let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: user.userId)
-//                            
-//                            let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-//                            
-//                            try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
-                            
-                            try await TokensManager.shared.addToken(auth_id: authUser.uid, FCMtoken: G.FCMtoken)
-                            
-                        }
                     } catch {
                         print("Erreur Sign in with Apple...")
                     }
@@ -59,23 +40,13 @@ final class AuthenticationViewModel: ObservableObject {
             }
         }
     }
-    
-    func FCMtoken() async throws {
-        // Maj du FCMtoken
-        let authUser = try! AuthManager.shared.getAuthenticatedUser()
-        let auth_id = authUser.uid
-
-        try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
-    }
-    
-//    func signInAnonymous() async throws {
-//        try await AuthManager.shared.signInAnonymous()
-//    }
-
 }
 
 struct AuthenticationView: View {
     
+    @State var showImagePicker: Bool = false
+    @State var image: UIImage?
+
     @StateObject private var viewModel = AuthenticationViewModel()
     @Binding var showSignInView: Bool
     
@@ -83,9 +54,26 @@ struct AuthenticationView: View {
     
     var body: some View {
         ZStack {
-            Color.theme.background // voir "extension Color"
-                .ignoresSafeArea()
+            Color.theme.background.ignoresSafeArea()
             VStack {
+                
+                // Avatar
+                Button { // Avatar
+                    showImagePicker.toggle()
+                } label: {
+                    VStack {
+                        if let image = image {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 100, height: 100)
+                                .clipShape(Circle())
+                        }
+                    }
+                    .overlay(RoundedRectangle(cornerRadius: 64)
+                        .stroke(Color.black,lineWidth: 2))
+                }
+                
                 // SignIn with Apple
                 Button(action: {
                     Task {
@@ -109,8 +97,7 @@ struct AuthenticationView: View {
                 })
                 .frame(height: 55)
                 
-                // J'ai gardé l'ancienne version car la nouvelle ne fonctionne pas
-                .onChange(of: viewModel.didSignInWithApple) { newValue in
+                .onChange(of: viewModel.didSignInWithApple) { oldValue, newValue in
                     if newValue == true {
                         showSignInView = false
                     }
@@ -130,11 +117,16 @@ struct AuthenticationView: View {
                         .padding(.bottom, 10)
                 }
                 .padding(.top, 20)
-
+                
             }
             .padding(.horizontal, 20)
             .navigationTitle("Entrée")
         }
+        // Image
+        .fullScreenCover(isPresented: $showImagePicker, onDismiss: nil) {
+            ImagePicker(image: $image) // Utilities/ImagePicker
+        }
+
     }
 }
 

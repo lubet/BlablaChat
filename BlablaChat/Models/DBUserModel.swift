@@ -45,7 +45,7 @@ struct DBUser: Codable, Identifiable {
         case email = "email"
         case dateCreated = "date_created"
         case avatarLink = "avatar_link"
-        case userId = "userId"
+        case userId = "user_id"
     }
     
     func encode(to encoder: Encoder) throws {

@@ -29,8 +29,13 @@ final class LoginEmailViewModel: ObservableObject {
         let user = DBUser(auth: authUser) // userId, email
         try await UsersManager.shared.createDbUser(user: user) // sans l'image
         
-        // // Création de l'avatar dans "Storage" et maj de l'image dans "Users"
-        // try await UsersManager.shared.updateAvatar(userId: auth_id, mimage: image)
+        guard let user_id = user.userId else {
+            print("LoginEmailViewModel - signUp - Pas de user_id")
+            return
+        }
+        // Création de l'avatar dans "Storage" et mise à jour de l'avatar du user dans "Users"
+        let image: UIImage = image ?? UIImage.init(systemName: "person.fill")!
+        try await UsersManager.shared.updateAvatar(userId: user_id, image: image)
 
         // try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
      }
@@ -49,41 +54,19 @@ final class LoginEmailViewModel: ObservableObject {
 // -----------------------------------------------------
 struct LoginEmailView: View {
     
+    var image: UIImage?
+    
     @StateObject private var viewModel = LoginEmailViewModel()
     
     @Binding var showSignInView: Bool
     
     @State var showImagePicker: Bool = false
-    @State var image: UIImage?
     
     var body: some View {
         ZStack {
             Color.theme.background
                 .ignoresSafeArea()
             VStack {
-                
-                Button { // Avatar
-                    showImagePicker.toggle()
-                } label: {
-                    VStack {
-                        if let image = image {
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 100, height: 100)
-                                .clipShape(Circle())
-                        } else {
-                            Image(systemName: "person.fill")
-                                .font(.system(size: 70))
-                                .padding()
-                                .foregroundColor(Color(.label))
-                        }
-                    }
-                    .overlay(RoundedRectangle(cornerRadius: 64)
-                        .stroke(Color.black,lineWidth: 2))
-                    
-                }
-                .padding(.bottom,20)
                 
                 TextField("Email", text: $viewModel.email)
                     .padding(15)
@@ -111,8 +94,7 @@ struct LoginEmailView: View {
                     Task {
                         do {
                             // Nouveau compte
-                            let mimage: UIImage = image ?? UIImage.init(systemName: "person.fill")!
-                            try await viewModel.signUp(image: mimage) // Création de l'auth, du user et du token.
+                            try await viewModel.signUp(image: image) // Création de l'auth, du user et du token.
                             showSignInView = false
                             return
                         } catch {
@@ -138,17 +120,12 @@ struct LoginEmailView: View {
                 } // Fin bouton signIn
             }
             .padding()
-            
-            // Image
-            .fullScreenCover(isPresented: $showImagePicker, onDismiss: nil) {
-                ImagePicker(image: $image) // Utilities/ImagePicker
-            }
         }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginEmailView(showSignInView: .constant(false))
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LoginEmailView(showSignInView: .constant(false))
+//    }
+//}

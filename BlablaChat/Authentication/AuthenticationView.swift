@@ -26,14 +26,14 @@ final class AuthenticationViewModel: ObservableObject {
     }
     
     // TODO
-    func updateAvatar() async throws {
-        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        let user_id = authUser.uid
-        if let newImageAvatar = newImageAvatar {
-            try await UsersManager.shared.updateAvatar(userId: user_id, mimage: newImageAvatar)
-        }
-        // print("updateAvatar")
-    }
+//    func updateAvatar() async throws {
+//        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+//        let user_id = authUser.uid
+//        if let newImageAvatar = newImageAvatar {
+//            try await UsersManager.shared.updateAvatar(userId: user_id, mimage: newImageAvatar)
+//        }
+//        // print("updateAvatar")
+//    }
     
     // Apple
     func signInApple() async throws {
@@ -127,7 +127,7 @@ struct AuthenticationView: View {
                 
                 // Sign In/Up with email/password
                 NavigationLink {
-                    LoginEmailView(showSignInView: $showSignInView)
+                    LoginEmailView(image: image, showSignInView: $showSignInView)
                 } label: {
                     Text("S'authentifier avec l'email")
                         .font(.headline)

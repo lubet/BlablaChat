@@ -26,14 +26,14 @@ final class SettingsViewModel: ObservableObject {
     }
     
     // TODO
-    func updateAvatar() async throws {
-        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        let user_id = authUser.uid
-        if let newImageAvatar = newImageAvatar {
-            try await UsersManager.shared.updateAvatar(userId: user_id, mimage: newImageAvatar)
-        }
-        // print("updateAvatar")
-    }
+//    func updateAvatar() async throws {
+//        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+//        let user_id = authUser.uid
+//        if let newImageAvatar = newImageAvatar {
+//            try await UsersManager.shared.updateAvatar(userId: user_id, mimage: newImageAvatar)
+//        }
+//        // print("updateAvatar")
+//    }
     
     func loadAuthProviders() {
         if let providers = try? AuthManager.shared.getProviders() {
@@ -109,12 +109,12 @@ struct SettingsView: View {
             }
             viewModel.loadAuthProviders()
         }
-        .onDisappear {
-            viewModel.newImageAvatar = image
-            Task {
-                try await viewModel.updateAvatar()
-            }
-        }
+//        .onDisappear {
+//            viewModel.newImageAvatar = image
+//            Task {
+//                try await viewModel.updateAvatar()
+//            }
+//        }
         .navigationBarTitle("Paramètres")
     }
 }

@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+// Globales
+struct G {
+    static var id: String = ""
+    static var email: String = ""
+    static var date_created = Date()
+    static var avatar_link = ""
+    static var user_id = ""
+}
+
 @MainActor
 final class LoginEmailViewModel: ObservableObject {
     
@@ -35,7 +44,20 @@ final class LoginEmailViewModel: ObservableObject {
         }
         // Création de l'avatar dans "Storage" et mise à jour de l'avatar du user dans "Users"
         let image: UIImage = image ?? UIImage.init(systemName: "person.fill")!
-        try await UsersManager.shared.updateAvatar(userId: user_id, image: image)
+        let urlAvatar = try await UsersManager.shared.updateAvatar(userId: user_id, image: image)
+        
+        // Globales
+        G.id = user.id
+        
+        G.email = user.email ?? ""
+        if (user.email == "") { print("LoginEmailViewModel - email nil"); return }
+        
+        G.date_created = user.dateCreated ?? Date()
+        G.avatar_link = urlAvatar
+        
+        G.user_id = user.userId ?? ""
+        if (user.userId == "") { print("LoginEmailViewModel - user_id nil"); return }
+        G.user_id = user.userId ?? ""
 
         // try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
      }

@@ -26,11 +26,11 @@ final class UsersManager {
         try userDocument(id: user.id).setData(from: user, merge: false)
     }
     
-    func updateAvatar(userId: String, image: UIImage) async throws {
+    func updateAvatar(userId: String, image: UIImage) async throws -> String {
         let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: userId)
         let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-        try await UsersManager.shared.updateImagePath(userId: userId, path: lurl.absoluteString) // maj Firestore
-        // print("updateAvatar \(lurl)")
+        try await UsersManager.shared.updateImagePath(userId: userId, path: lurl.absoluteString)
+        return lurl.absoluteString
     }
     
     func getAvatar(contact_id: String) async throws -> String {

@@ -40,8 +40,7 @@ class ContactsViewModel: ObservableObject {
         }
 
         // Pas d'id (auth) mais un contactId et pas d'avatar pour les contacts
-        let contactId = UUID().uuidString
-        let userDB = DBUser(id:"", email: contact.email, dateCreated: Date(), avatarLink:"", userId: contactId)
+        let userDB = DBUser(id:"", email: contact.email, dateCreated: Date(), avatarLink:"", userId: UUID().uuidString)
         try await UsersManager.shared.createDbUser(user: userDB)
     }
 }

@@ -3,7 +3,7 @@
 //  BlablaChat
 //
 //  Created by Lubet-Moncla Xavier on 08/12/2024.
-//  Selection d'un contact et création dans "Users"
+//  Création d'un contact dans "Users"
 
 import SwiftUI
 

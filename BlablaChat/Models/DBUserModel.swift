@@ -26,19 +26,19 @@ struct DBUser: Codable, Identifiable {
     }
     
 // Si on ne vaut créer un user dans "users" à partir de l'authentification:
-//    init(
-//        id: String,
-//        email : String? = nil,
-//        dateCreated: Date? = nil,
-//        avatarLink: String? = nil,
-//        userId: String = UUID().uuidString
-//    ) {
-//        self.id = id
-//        self.email = email
-//        self.dateCreated = dateCreated
-//        self.avatarLink = avatarLink
-//        self.userId = userId
-//    }
+    init(
+        id: String,
+        email : String? = nil,
+        dateCreated: Date? = nil,
+        avatarLink: String? = nil,
+        userId: String = UUID().uuidString
+    ) {
+        self.id = id
+        self.email = email
+        self.dateCreated = dateCreated
+        self.avatarLink = avatarLink
+        self.userId = userId
+    }
     
     enum CodingKeys: String, CodingKey {
         case id = "id"

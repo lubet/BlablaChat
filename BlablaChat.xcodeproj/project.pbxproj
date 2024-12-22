@@ -11,6 +11,9 @@
 		C00CEF102BB55206004C7016 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C00CEF0F2BB55206004C7016 /* SDWebImageSwiftUI */; };
 		C01077332D14251F004960F2 /* DBUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01077322D14251F004960F2 /* DBUserModel.swift */; };
 		C01077362D142688004960F2 /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01077352D142688004960F2 /* UsersManager.swift */; };
+		C01BD44E2D1889DD003FA4A3 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01BD44D2D1889DD003FA4A3 /* ContactsView.swift */; };
+		C01BD4502D188A2F003FA4A3 /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01BD44F2D188A2F003FA4A3 /* ContactModel.swift */; };
+		C01BD4522D188AA9003FA4A3 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01BD4512D188AA9003FA4A3 /* ContactRowView.swift */; };
 		C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */; };
 		C0268BE12D142F5E005374DD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0268BE02D142F5E005374DD /* SettingsView.swift */; };
 		C0268BE42D1431A1005374DD /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0268BE32D1431A1005374DD /* StorageManager.swift */; };
@@ -49,6 +52,9 @@
 		C00658F32CFF1B0500270967 /* NewContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContacts.swift; sourceTree = "<group>"; };
 		C01077322D14251F004960F2 /* DBUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUserModel.swift; sourceTree = "<group>"; };
 		C01077352D142688004960F2 /* UsersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
+		C01BD44D2D1889DD003FA4A3 /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
+		C01BD44F2D188A2F003FA4A3 /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
+		C01BD4512D188AA9003FA4A3 /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
 		C01FE5A52B67ED9D0049B9EE /* SearchXavierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchXavierView.swift; sourceTree = "<group>"; };
 		C0268BE02D142F5E005374DD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C0268BE32D1431A1005374DD /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
@@ -103,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				C01077322D14251F004960F2 /* DBUserModel.swift */,
+				C01BD44F2D188A2F003FA4A3 /* ContactModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -114,6 +121,15 @@
 				C0268BE02D142F5E005374DD /* SettingsView.swift */,
 			);
 			path = Users;
+			sourceTree = "<group>";
+		};
+		C01BD44C2D18899C003FA4A3 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				C01BD44D2D1889DD003FA4A3 /* ContactsView.swift */,
+				C01BD4512D188AA9003FA4A3 /* ContactRowView.swift */,
+			);
+			path = Contacts;
 			sourceTree = "<group>";
 		};
 		C01FE5A72B67F0610049B9EE /* StandBy */ = {
@@ -171,6 +187,7 @@
 				C03763852C411F3700A5602B /* Info.plist */,
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
 				C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */,
+				C01BD44C2D18899C003FA4A3 /* Contacts */,
 				C03763882C4128A500A5602B /* Utilities */,
 				C070D6402C53809E006170E3 /* Extensions */,
 				C01077312D1424A1004960F2 /* Models */,
@@ -326,6 +343,7 @@
 				C00658F42CFF1B1400270967 /* NewContacts.swift in Sources */,
 				C037638A2C4128D000A5602B /* Utilities.swift in Sources */,
 				C043F9A52C170D08002B3C59 /* DateManager.swift in Sources */,
+				C01BD4522D188AA9003FA4A3 /* ContactRowView.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
 				C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */,
 				C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */,
@@ -333,8 +351,10 @@
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,
 				C01077332D14251F004960F2 /* DBUserModel.swift in Sources */,
 				C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */,
+				C01BD44E2D1889DD003FA4A3 /* ContactsView.swift in Sources */,
 				C0268BE12D142F5E005374DD /* SettingsView.swift in Sources */,
 				C070D6422C5380C4006170E3 /* Color.swift in Sources */,
+				C01BD4502D188A2F003FA4A3 /* ContactModel.swift in Sources */,
 				C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */,
 				C0D565F42B7CAF8E00EE0DA0 /* RootView.swift in Sources */,
 				C01077362D142688004960F2 /* UsersManager.swift in Sources */,

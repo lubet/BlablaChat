@@ -8,7 +8,7 @@
 import SwiftUI
 
 // Globales
-struct G {
+struct user {
     static var id: String = ""
     static var email: String = ""
     static var date_created = Date()
@@ -35,10 +35,10 @@ final class LoginEmailViewModel: ObservableObject {
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
         
         // Création d'un user à partir de l'authentification auquel on rajoute des champs (voir DBUser)
-        let user = DBUser(auth: authUser) // userId, email
-        try await UsersManager.shared.createDbUser(user: user) // sans l'image
+        let userDB = DBUser(auth: authUser) // userId, email
+        try await UsersManager.shared.createDbUser(user: userDB) // sans l'image
         
-        guard let user_id = user.userId else {
+        guard let user_id = userDB.userId else {
             print("LoginEmailViewModel - signUp - Pas de user_id")
             return
         }
@@ -47,17 +47,17 @@ final class LoginEmailViewModel: ObservableObject {
         let urlAvatar = try await UsersManager.shared.updateAvatar(userId: user_id, image: image)
         
         // Globales
-        G.id = user.id
+        user.id = userDB.id
         
-        G.email = user.email ?? ""
+        user.email = userDB.email ?? ""
         if (user.email == "") { print("LoginEmailViewModel - email nil"); return }
         
-        G.date_created = user.dateCreated ?? Date()
-        G.avatar_link = urlAvatar
+        user.date_created = userDB.dateCreated ?? Date()
+        user.avatar_link = urlAvatar
         
-        G.user_id = user.userId ?? ""
-        if (user.userId == "") { print("LoginEmailViewModel - user_id nil"); return }
-        G.user_id = user.userId ?? ""
+        user.user_id = userDB.userId ?? ""
+        if (user.user_id == "") { print("LoginEmailViewModel - user_id nil"); return }
+        user.user_id = userDB.userId ?? ""
 
         // try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
      }

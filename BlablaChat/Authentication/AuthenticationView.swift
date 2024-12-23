@@ -7,33 +7,15 @@
 
 import SwiftUI
 import AuthenticationServices
-import SDWebImage
-import SDWebImageSwiftUI
+
+// objet user global à l'application
+var user: DBUser = DBUser(id: "", email: "", dateCreated: Date(), avatarLink: "")
 
 @MainActor
 final class AuthenticationViewModel: ObservableObject {
     
     @Published var didSignInWithApple: Bool = false
     let signInAppleHelper = SignInAppleHelper()
-    
-    @Published var httpAvatar: String = ""
-    @Published var newImageAvatar: UIImage? = nil
-
-    func loadAvatar() async throws {
-        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        let user_id = authUser.uid
-        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
-    }
-    
-    // TODO
-//    func updateAvatar() async throws {
-//        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-//        let user_id = authUser.uid
-//        if let newImageAvatar = newImageAvatar {
-//            try await UsersManager.shared.updateAvatar(userId: user_id, mimage: newImageAvatar)
-//        }
-//        // print("updateAvatar")
-//    }
     
     // Apple
     func signInApple() async throws {
@@ -42,7 +24,7 @@ final class AuthenticationViewModel: ObservableObject {
             case .success(let signInAppleResult):
                 Task {
                     do {
-                        let authUser = try await AuthManager.shared.signInWithApple(tokens: signInAppleResult)
+                        let _ = try await AuthManager.shared.signInWithApple(tokens: signInAppleResult)
                         self.didSignInWithApple = true
                         
                     } catch {
@@ -57,9 +39,6 @@ final class AuthenticationViewModel: ObservableObject {
 }
 
 struct AuthenticationView: View {
-    
-    @State var showImagePicker: Bool = false
-    @State var image: UIImage?
 
     @StateObject private var viewModel = AuthenticationViewModel()
     @Binding var showSignInView: Bool
@@ -71,30 +50,6 @@ struct AuthenticationView: View {
             Color.theme.background
             VStack {
                 
-                // Avatar
-                Button { // Avatar
-                    showImagePicker.toggle()
-                } label: {
-                    VStack {
-                        if let image = image {
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 100, height: 100)
-                                .clipShape(Circle())
-                        } else {
-                            WebImage(url: URL(string: viewModel.httpAvatar))
-                                .resizable()
-                                .frame(width: 120, height: 120)
-                                .clipShape(Circle())
-                                .overlay(Circle().stroke(Color.black, lineWidth: 1))
-                        }
-                    }
-                    .overlay(RoundedRectangle(cornerRadius: 64)
-                        .stroke(Color.black,lineWidth: 2))
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.bottom,40)
                 
                 // SignIn with Apple
                 Button(action: {
@@ -127,7 +82,7 @@ struct AuthenticationView: View {
                 
                 // Sign In/Up with email/password
                 NavigationLink {
-                    LoginEmailView(image: image, showSignInView: $showSignInView)
+                    LoginEmailView(showSignInView: $showSignInView)
                 } label: {
                     Text("S'authentifier avec l'email")
                         .font(.headline)
@@ -143,10 +98,6 @@ struct AuthenticationView: View {
                 
             }
             .padding(.horizontal, 20)
-        }
-        // Image
-        .fullScreenCover(isPresented: $showImagePicker, onDismiss: nil) {
-            ImagePicker(image: $image) // Utilities/ImagePicker
         }
 
     }

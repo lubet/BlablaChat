@@ -6,21 +6,17 @@
 //
 
 import SwiftUI
-
-// Globales
-struct user {
-    static var id: String = ""
-    static var email: String = ""
-    static var date_created = Date()
-    static var avatar_link = ""
-    static var user_id = ""
-}
+import SDWebImage
+import SDWebImageSwiftUI
 
 @MainActor
 final class LoginEmailViewModel: ObservableObject {
     
     @Published var email: String = ""
     @Published var password: String = ""
+    
+    @Published var httpAvatar: String = ""
+    @Published var newImageAvatar: UIImage? = nil
     
     
     // Nouveau compte - Auth, Users, Tokens
@@ -33,35 +29,23 @@ final class LoginEmailViewModel: ObservableObject {
         
         // Création de l'Auth
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
+
+        // création du user uid, email + les champs dateCreated(Date()), avatarLink(""), userId(UUID)
+        user = DBUser(auth: authUser)
+        try await UsersManager.shared.createDbUser(user: user) // sans l'image
         
-        // Création d'un user à partir de l'authentification auquel on rajoute des champs (voir DBUser)
-        let userDB = DBUser(auth: authUser) // userId, email
-        try await UsersManager.shared.createDbUser(user: userDB) // sans l'image
-        
-        guard let user_id = userDB.userId else {
+        // Le user_id est utilisé en tant qu'identifiant de user pour toute l'application
+        guard let user_id = user.userId else {
             print("LoginEmailViewModel - signUp - Pas de user_id")
             return
         }
         // Création de l'avatar dans "Storage" et mise à jour de l'avatar du user dans "Users"
         let image: UIImage = image ?? UIImage.init(systemName: "person.fill")!
-        let urlAvatar = try await UsersManager.shared.updateAvatar(userId: user_id, image: image)
-        
-        // Globales
-        user.id = userDB.id
-        
-        user.email = userDB.email ?? ""
-        if (user.email == "") { print("LoginEmailViewModel - email nil"); return }
-        
-        user.date_created = userDB.dateCreated ?? Date()
-        user.avatar_link = urlAvatar
-        
-        user.user_id = userDB.userId ?? ""
-        if (user.user_id == "") { print("LoginEmailViewModel - user_id nil"); return }
-        user.user_id = userDB.userId ?? ""
+        let _ = try await UsersManager.shared.updateAvatar(userId: user_id, image: image)
 
         // try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
      }
-    
+
     // Compte qui existe déjà
     func signIn() async throws {
         guard !email.isEmpty, !password.isEmpty else {
@@ -71,24 +55,54 @@ final class LoginEmailViewModel: ObservableObject {
        
         try await AuthManager.shared.signInUser(email: email, password: password)
     }
+    
+    func loadAvatar() async throws {
+        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
+        let user_id = authUser.uid
+        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
+    }
 }
 
 // -----------------------------------------------------
 struct LoginEmailView: View {
     
-    var image: UIImage?
+    @State var showImagePicker: Bool = false
+    @State var image: UIImage?
     
     @StateObject private var viewModel = LoginEmailViewModel()
     
     @Binding var showSignInView: Bool
-    
-    @State var showImagePicker: Bool = false
     
     var body: some View {
         ZStack {
             Color.theme.background
                 .ignoresSafeArea()
             VStack {
+                // Avatar
+                Button { // Avatar
+                    showImagePicker.toggle()
+                } label: {
+                    VStack {
+                        if let image = image {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 100, height: 100)
+                                .clipShape(Circle())
+                        } else {
+                            WebImage(url: URL(string: viewModel.httpAvatar))
+                                .resizable()
+                                .frame(width: 120, height: 120)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(Color.black, lineWidth: 1))
+                        }
+                    }
+                    .overlay(RoundedRectangle(cornerRadius: 64)
+                        .stroke(Color.black,lineWidth: 2))
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.bottom,40)
+
                 
                 TextField("Email", text: $viewModel.email)
                     .padding(15)
@@ -142,6 +156,10 @@ struct LoginEmailView: View {
                 } // Fin bouton signIn
             }
             .padding()
+        }
+        // Image
+        .fullScreenCover(isPresented: $showImagePicker, onDismiss: nil) {
+            ImagePicker(image: $image) // Utilities/ImagePicker
         }
     }
 }

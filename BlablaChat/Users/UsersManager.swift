@@ -33,22 +33,22 @@ final class UsersManager {
         return lurl.absoluteString
     }
     
-    func getAvatar(contact_id: String) async throws -> String {
+    func getAvatar(user_id: String) async throws -> String {
         do {
             let querySnapshot = try await userCollection
-                .whereField("user_id", isEqualTo: contact_id)
+                .whereField("user_id", isEqualTo: user_id)
                 .getDocuments()
             
             for document in querySnapshot.documents {
                 let user = try document.data(as: DBUser.self)
-                if (user.userId == contact_id) {
+                if (user.userId == user_id) {
                     return user.avatarLink ?? ""
                 }
             }
         } catch {
             print("getAvatar - Error getting documents: \(error)")
         }
-        print("getAvatar: non trouvé pour contact-id: \(contact_id)")
+        print("getAvatar: non trouvé pour contact-id: \(user_id)")
         
         return ""
     }

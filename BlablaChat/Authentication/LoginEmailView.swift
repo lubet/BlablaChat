@@ -27,20 +27,23 @@ final class LoginEmailViewModel: ObservableObject {
             return
         }
         
-        // Création de l'Auth
+        // Création de l'Authentifaction
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
-
-        // création du user uid, email + les champs dateCreated(Date()), avatarLink(""), userId(UUID)
+        
+        // Variable globale user (définit dans AuthenticationView)
         user = DBUser(auth: authUser)
         try await UsersManager.shared.createDbUser(user: user) // sans l'image
         
         // Le user_id est utilisé en tant qu'identifiant de user pour toute l'application
-        guard let user_id = user.userId else {
+        guard let userId = user.userId else {
             print("LoginEmailViewModel - signUp - Pas de user_id")
             return
         }
-        // Création de l'avatar dans "Storage" et mise à jour de l'avatar du user dans "Users"
+
+        // Si il n'y a pas d'image en mettre une par défaut
         let image: UIImage = image ?? UIImage.init(systemName: "person.fill")!
+
+        // Création de l'avatar dans "Storage" et mise à jour de l'avatar du user dans "Users"
         let _ = try await UsersManager.shared.updateAvatar(userId: user_id, image: image)
 
         // try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
@@ -52,14 +55,7 @@ final class LoginEmailViewModel: ObservableObject {
             print("Pas d'email ni de password")
             return
         }
-       
         try await AuthManager.shared.signInUser(email: email, password: password)
-    }
-    
-    func loadAvatar() async throws {
-        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        let user_id = authUser.uid
-        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
     }
 }
 

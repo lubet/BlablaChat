@@ -20,9 +20,7 @@ final class SettingsViewModel: ObservableObject {
     @Published var authProviders: [AuthProviderOption] = []
     
     func loadAvatar() async throws {
-        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        let user_id = authUser.uid
-        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
+        httpAvatar = try! await UsersManager.shared.getAvatar(user_id: user.user_id)
     }
     
     // TODO

@@ -8,8 +8,9 @@
 import SwiftUI
 import AuthenticationServices
 
-// objet user global à l'application (userId est valorisé par défaut dans l'init du modèle)
-var user: DBUser = DBUser(id: "", email: "", dateCreated: Date(), avatarLink: "")
+// Identifiant global du user
+var user_id: String = ""
+var user_email: String = ""
 
 @MainActor
 final class AuthenticationViewModel: ObservableObject {

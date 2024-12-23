@@ -31,15 +31,15 @@ final class LoginEmailViewModel: ObservableObject {
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
         
         // Variable globale user (définit dans AuthenticationView)
-        user = DBUser(auth: authUser)
+        let user = DBUser(auth: authUser)
         try await UsersManager.shared.createDbUser(user: user) // sans l'image
         
-        // Le user_id est utilisé en tant qu'identifiant de user pour toute l'application
-        guard let userId = user.userId else {
-            print("LoginEmailViewModel - signUp - Pas de user_id")
-            return
-        }
-
+        // Globales - Identifiant et email du user
+        user_id = user.userId ?? ""
+        if user_id == "" { print("LoginEmailViewModel - \(user_id) = \"\"")}
+        user_email = user.email ?? ""
+        if user_email == "" { print("LoginEmailViewModel - \(email) = \"\"")}
+        
         // Si il n'y a pas d'image en mettre une par défaut
         let image: UIImage = image ?? UIImage.init(systemName: "person.fill")!
 

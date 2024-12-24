@@ -12,7 +12,6 @@ struct ContactModel: Identifiable {
     let nom: String
     let prenom: String
     let email: String
-    
     var id: String {
         user_id
     }

@@ -13,7 +13,6 @@ struct Conversation: Identifiable {
     let conversation_id: String
     let date_creation: Timestamp
     let last_message_id: String
-    
     var id: String {
         conversation_id
     }

@@ -78,52 +78,6 @@ class LastMessagesViewModel: ObservableObject {
     func getLastMessages() async {
         // print("getLastMessages")
         
-        Task {
-            lastMessages = []
-            
-           var members: [Member] = []
-            
-            var myrooms: [Room] = []
-            
-            var allrooms: [Room] = []
-            
-            // Tous les enregs de "members" où l'auth est présent (permet de récupérer tous ses room_id's).
-            guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-            let user_id = AuthUser.uid
-
-            members = try await LastMessagesManager.shared.getMyRoomsId(user_id: user_id)
-            
-            // All rooms
-            allrooms = try await LastMessagesManager.shared.getAllRooms()
-            
-            // Rooms de l'auth
-            for member in members {
-                for oneroom in allrooms {
-                    if member.room_id == oneroom.room_id {
-                        myrooms.append(oneroom)
-                    }
-                }
-            }
-            
-            // Balayer les rooms de l'auth
-            var x_id: String = ""
-            for room in myrooms {
-                
-                // Dans "members", raméne les deux user_id ayant le même room_id
-                let (user_id1, user_id2) = try await LastMessagesManager.shared.getFromId(room_id: room.room_id)
-
-                if (user_id1 == user_id) {
-                    x_id = user_id2
-                } else {
-                    x_id = user_id1
-                }
-                
-                // Recherche de l'email dans "users" avec un user_id
-                let (email, avatar_link) = try await UsersManager.shared.searchEmail(user_id: x_id)
-                
-                lastMessages.append(LastMessage(avatar_link: avatar_link, email: email, message_texte: room.last_message, message_date: room.date_message))
-            }
-        }
     }
     
     func deleteLast(index: IndexSet) {

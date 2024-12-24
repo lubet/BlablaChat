@@ -8,7 +8,7 @@
 import SwiftUI
 import AuthenticationServices
 
-// Identifiant global du user
+// Globales
 var user_id: String = ""
 var user_email: String = ""
 

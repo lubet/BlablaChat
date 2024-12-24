@@ -8,30 +8,24 @@
 import Foundation
 
 struct ContactModel: Identifiable {
-    let id: String = UUID().uuidString
+    let user_id: String
     let nom: String
     let prenom: String
     let email: String
+    
+    var id: String {
+        user_id
+    }
+    
+    init(
+        user_id: String,
+        nom: String,
+        prenom: String,
+        email: String
+    ) {
+        self.user_id = user_id
+        self.nom = nom
+        self.prenom = prenom
+        self.email = email
+    }
 }
-
-//init(
-//    id: String,
-//    nom: String,
-//    prenom: String,
-//    email: String,
-//    contactId: String
-//) {
-//    self.id = id
-//    self.nom = nom
-//    self.dateCreated = dateCreated
-//    self.avatarLink = avatarLink
-//    self.userId = userId
-//}
-//
-//enum CodingKeys: String, CodingKey {
-//    case id = "id"
-//    case nom = "nom"
-//    case prenom = "prenom"
-//    case email = "email"
-//    case contactId = "contact_id"
-//}

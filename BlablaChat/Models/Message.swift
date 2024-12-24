@@ -17,5 +17,4 @@ struct Message: Identifiable {
     var id: String {
         message_id
     }
-
 }

@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+struct DBUser_Conversation: Identifiable {
+    let user_id: String
+    let conversation_id: String
+    var id: String {
+        user_id
+    }
+}

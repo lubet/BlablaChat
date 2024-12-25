@@ -44,6 +44,7 @@
 		C08906BF2D1ABD0E00277CCD /* MessagesCellPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08906BE2D1ABD0E00277CCD /* MessagesCellPhoto.swift */; };
 		C08906C52D1ABE9E00277CCD /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08906C42D1ABE9E00277CCD /* Message.swift */; };
 		C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */; };
+		C09FCD662D1C9ED8000DAD33 /* EssaiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09FCD652D1C9ED8000DAD33 /* EssaiModel.swift */; };
 		C0ABF6F82D004CAB00BFD2EB /* ButtonContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ABF6F72D004CAB00BFD2EB /* ButtonContacts.swift */; };
 		C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B8555B2BBBFD5900B3956A /* TextBarView.swift */; };
 		C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */; };
@@ -96,6 +97,7 @@
 		C08906BE2D1ABD0E00277CCD /* MessagesCellPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCellPhoto.swift; sourceTree = "<group>"; };
 		C08906C42D1ABE9E00277CCD /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDWebImageLoader.swift; sourceTree = "<group>"; };
+		C09FCD652D1C9ED8000DAD33 /* EssaiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssaiModel.swift; sourceTree = "<group>"; };
 		C0ABF6F72D004CAB00BFD2EB /* ButtonContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonContacts.swift; sourceTree = "<group>"; };
 		C0B8555B2BBBFD5900B3956A /* TextBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBarView.swift; sourceTree = "<group>"; };
 		C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleSendView.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				C0F6C9C82D1C8FA300BE471E /* Salons.swift */,
 				C0F6C9C62D1C8F1100BE471E /* Salons_Users.swift */,
 				C01077322D14251F004960F2 /* DBUser.swift */,
+				C09FCD652D1C9ED8000DAD33 /* EssaiModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				C08906B52D1ABB4500277CCD /* UsersView.swift in Sources */,
 				C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */,
 				C08906BB2D1ABC9C00277CCD /* MessagesManager.swift in Sources */,
+				C09FCD662D1C9ED8000DAD33 /* EssaiModel.swift in Sources */,
 				C08906BF2D1ABD0E00277CCD /* MessagesCellPhoto.swift in Sources */,
 				C0D565F42B7CAF8E00EE0DA0 /* RootView.swift in Sources */,
 				C01077362D142688004960F2 /* UsersManager.swift in Sources */,

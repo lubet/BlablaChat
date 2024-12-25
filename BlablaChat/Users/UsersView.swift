@@ -15,7 +15,7 @@ import FirebaseFirestoreSwift
 class UsersViewModel: ObservableObject {
     
     func loadUsers() async throws {
-        
+        print("essai")
     }
 }
 

@@ -11,30 +11,24 @@ import FirebaseFirestoreSwift
 
 
 struct Message: Identifiable {
-    let message_id: String
-    let conversation_id: String
-    let date_message: Timestamp
+    let id: String
+    let salon_id: String // -> salon
+    let from: String // -> user_id
     let texte: String
-    let from_user_id: String
-    let to_user_id: String
-    var id: String {
-        message_id
-    }
+    let date_message: Timestamp
     
     init(
-        message_id: String,
-        conversation_id: String,
-        date_message: Timestamp,
+        id: String,
+        salon_id: String,
+        from: String,
         texte: String,
-        from_user_id: String,
-        to_user_id: String
+        date_message: Timestamp
     ) {
-        self.message_id = message_id
-        self.conversation_id = conversation_id
+        self.id = id
+        self.salon_id = salon_id
         self.date_message = Timestamp()
         self.texte = texte
-        self.from_user_id = from_user_id
-        self.to_user_id = to_user_id
+        self.from = from
     }
 
 }

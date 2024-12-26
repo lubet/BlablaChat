@@ -49,8 +49,10 @@ struct LastMessagesView: View {
     }
 }
 
-struct LastMessagesView_Previews: PreviewProvider {
+struct LastMessages_Previews: PreviewProvider {
     static var previews: some View {
-        LastMessagesView(showSignInView: .constant(false))
+        NavigationStack {
+            LastMessagesView(showSignInView: .constant(false))
+        }
     }
 }

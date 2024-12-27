@@ -26,24 +26,27 @@ struct LastMessagesView: View {
     @Binding var showSignInView: Bool
     
     var body: some View {
-        ZStack {
-            Color.theme.background.ignoresSafeArea()
-            
-            NavigationLink {
-                // UsersView
-            } label: {
-                HStack {
-                    Spacer()
-                    Text("Nouveau destinataire")
-                        .font(.system(size: 16, weight: .bold))
-                    Spacer()
-                }
-                .foregroundColor(.white)
-                .padding(.vertical)
+        NavigationStack {
+            ZStack {
+                Color.theme.background.ignoresSafeArea()
+                
+                NavigationLink {
+                    // -> UsersView -> Contacs -> Messages
+                    // -> UsersView -> Messages
+                } label: {
+                    HStack {
+                        Spacer()
+                        Text("Nouveau message")
+                            .font(.system(size: 16, weight: .bold))
+                        Spacer()
+                    }
+                    .foregroundColor(.white)
+                    .padding(.vertical)
                     .background(Color.blue)
                     .cornerRadius(32)
                     .padding(.horizontal)
                     //.shadow(radius: 15)
+                }
             }
         }
     }

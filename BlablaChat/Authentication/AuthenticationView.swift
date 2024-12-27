@@ -81,10 +81,9 @@ struct AuthenticationView: View {
                     }
                 }
                 
-                // Sign In/Up with email/password
-                NavigationLink {
+                Button(action: {
                     LoginEmailView(showSignInView: $showSignInView)
-                } label: {
+                }, label: {
                     Text("S'authentifier avec l'email")
                         .font(.headline)
                         .foregroundColor(.white)
@@ -93,7 +92,21 @@ struct AuthenticationView: View {
                         .background(Color.blue)
                         .cornerRadius(10)
                         .padding(.bottom, 10)
-                }
+                })
+                
+                // Sign In/Up with email/password
+//                NavigationLink {
+//                    LoginEmailView(showSignInView: $showSignInView)
+//                } label: {
+//                    Text("S'authentifier avec l'email")
+//                        .font(.headline)
+//                        .foregroundColor(.white)
+//                        .frame(height: 45)
+//                        .frame(maxWidth: .infinity)
+//                        .background(Color.blue)
+//                        .cornerRadius(10)
+//                        .padding(.bottom, 10)
+//                }
                 .padding(.top, 20)
                 .padding(.bottom,40)
                 

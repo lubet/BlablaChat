@@ -21,7 +21,8 @@ final class UsersManager {
     private let DBUserCollection = dbFS.collection("users")
     
     // Fonctions ---------------------------------------------------
-    // Retourne le document du user
+
+    // Retourne le user
     private func userDocument(userId: String) -> DocumentReference {
         return userCollection.document(userId)
     }
@@ -33,6 +34,19 @@ final class UsersManager {
     
     func createDbUser(user: DBUser) async throws {
         try userDocument(userId: user_id).setData(from: user, merge: false)
+    }
+
+    func updateAvatar(userId: String, image: UIImage) async throws {
+        let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: userId)
+        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
+        try await UsersManager.shared.updateImagePath(userId: userId, path: lurl.absoluteString)
+    }
+    
+    func updateImagePath(userId: String, path: String) async throws {
+        let data: [String:Any] = [
+            DBUser.CodingKeys.avatarLink.rawValue : path,
+        ]
+        try await userDocument(userId: userId).updateData(data)
     }
     
     // Recherche de l'avatar dans "users".
@@ -74,10 +88,4 @@ final class UsersManager {
     // Recherhe de l'email dans "users"
     
     // Création de l'avatar dans "Storage" et maj de l'avatar dans "Users"
-    func updateAvatar(userId: String, image: UIImage) async throws {
-        let (path, _) = try await StorageManager.shared.saveImage(image: image, userId: userId)
-        let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-        try await UsersManager.shared.updateImagePath(userId: userId, path: lurl.absoluteString) // maj Firestore
-        // print("updateAvatar \(lurl)")
-    }
 }

@@ -33,7 +33,7 @@ final class UsersManager {
     }
     
     func createDbUser(user: DBUser) async throws {
-        try userDocument(userId: user_id).setData(from: user, merge: false)
+        try userDocument(userId: user.userId).setData(from: user.userId, merge: false)
     }
 
     func updateAvatar(userId: String, image: UIImage) async throws {

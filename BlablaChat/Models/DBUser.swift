@@ -7,20 +7,23 @@
 // Création d'un user dans la base "users" à partir de l'authentification plus dateCreated, avatarLink et userId
 
 import Foundation
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+
 
 struct DBUser: Codable, Identifiable {
     let id: String
     let email : String?
-    let dateCreated: Date?
+    var dateCreated: Timestamp = Timestamp()
     let avatarLink: String?
-    let userId: String?
+    let userId: String
         
     // Init du document à partir des données de l'authentification auxquelles on ajoute la date de création, le lien de l'image
     // et un userId (servira dans les contacts)
     init(auth: AuthUser) {
         self.id = auth.uid
         self.email = auth.email
-        self.dateCreated = Date()
+        self.dateCreated = Timestamp()
         self.avatarLink = nil
         self.userId = UUID().uuidString
     }
@@ -29,7 +32,7 @@ struct DBUser: Codable, Identifiable {
     init(
         id: String,
         email : String? = nil,
-        dateCreated: Date? = nil,
+        dateCreated: Timestamp = Timestamp(),
         avatarLink: String? = nil,
         userId: String = UUID().uuidString
     ) {
@@ -63,8 +66,8 @@ struct DBUser: Codable, Identifiable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
         self.email = try container.decodeIfPresent(String.self, forKey: .email)
-        self.dateCreated = try container.decodeIfPresent(Date.self, forKey: .dateCreated)
+        self.dateCreated = try container.decodeIfPresent(Timestamp.self, forKey: .dateCreated)!
         self.avatarLink = try container.decodeIfPresent(String.self, forKey: .avatarLink)
-        self.userId = try container.decodeIfPresent(String.self, forKey: .userId)
+        self.userId = try container.decodeIfPresent(String.self, forKey: .userId)!
     }
 }

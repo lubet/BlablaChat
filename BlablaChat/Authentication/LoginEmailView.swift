@@ -32,6 +32,8 @@ final class LoginEmailViewModel: ObservableObject {
         
         // Variable globale user (définit dans AuthenticationView)
         user = DBUser(auth: authUser)
+        
+        // print("\(user)")
 
         try await UsersManager.shared.createDbUser(user: user) // sans l'image
         
@@ -39,7 +41,7 @@ final class LoginEmailViewModel: ObservableObject {
         let image: UIImage = image ?? UIImage.init(systemName: "person.fill")! 
         
         // Création de l'avatar dans "Storage" et mise à jour de l'avatar du user dans "Users"
-        let _ = try await UsersManager.shared.updateAvatar(userId: user.userId, image: image)
+        let _ = try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image)
 
         // try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
      }

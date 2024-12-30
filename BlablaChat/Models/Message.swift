@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 struct Message: Identifiable {
     let id: String
     let salon_id: String // -> salon
-    let from: String // user_id
+    let from: String // -> user_id de "Users"
     let texte: String
     let date_message: Timestamp
     

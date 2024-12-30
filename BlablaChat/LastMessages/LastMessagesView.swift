@@ -15,6 +15,10 @@ import Combine
 @MainActor
 class LastMessagesViewModel: ObservableObject {
     
+    func logOut() {
+        try? UsersManager.shared.signOut()
+    }
+    
 }
 
 // -----------------------------------------------------------------------------
@@ -26,19 +30,16 @@ struct LastMessagesView: View {
     @Binding var showSignInView: Bool
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color.theme.background.ignoresSafeArea()
-                
+        ZStack {
+            Color.theme.background.ignoresSafeArea()
+            VStack {
                 NavigationLink {
                     // -> UsersView -> Contacs -> Messages
                     // -> UsersView -> Messages
                 } label: {
                     HStack {
-                        Spacer()
                         Text("Nouveau message")
                             .font(.system(size: 16, weight: .bold))
-                        Spacer()
                     }
                     .foregroundColor(.white)
                     .padding(.vertical)
@@ -47,6 +48,11 @@ struct LastMessagesView: View {
                     .padding(.horizontal)
                     //.shadow(radius: 15)
                 }
+                .padding(.bottom,10)
+                Button("Logout") {
+                    viewModel.logOut()
+                    showSignInView = true
+                }
             }
         }
     }
@@ -54,8 +60,6 @@ struct LastMessagesView: View {
 
 struct LastMessages_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationStack {
             LastMessagesView(showSignInView: .constant(false))
-        }
     }
 }

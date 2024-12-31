@@ -31,7 +31,7 @@ final class LoginEmailViewModel: ObservableObject {
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
         
         // Variable globale user (définit dans AuthenticationView)
-        user = DBUser(auth: authUser)
+        let user = DBUser(auth: authUser)
         
         // print("\(user)")
 

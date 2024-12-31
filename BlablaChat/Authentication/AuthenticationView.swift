@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 import AuthenticationServices
 
 // Globales
-var user: DBUser = DBUser(id: "", email: "", dateCreated: Timestamp(), avatarLink: "", userId: "")
+// var user: DBUser = DBUser(id: "", email: "", dateCreated: Timestamp(), avatarLink: "", userId: "")
 
 @MainActor
 final class AuthenticationViewModel: ObservableObject {
@@ -49,58 +49,56 @@ struct AuthenticationView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color.theme.background
-                VStack {
-                    // SignIn with Apple
-                    Button(action: {
-                        Task {
-                            do {
-                                try await viewModel.signInApple() // ne renvoie rien, si on est connecté est gérer par le "onChange" plus bas.
-                            } catch {
-                                print(error)
-                            }
-                        }
-                    }, label: {
-                        if self.colorScheme == .light {
-                            SignInWithAppleButtonViewRepresentable(type: .default, style: .black)
-                                .allowsHitTesting(false)
-                        } else if self.colorScheme == .dark {
-                            SignInWithAppleButtonViewRepresentable(type: .default, style: .white)
-                                .allowsHitTesting(false)
-                        } else {
-                            SignInWithAppleButtonViewRepresentable(type: .default, style: .black)
-                                .allowsHitTesting(false)
-                        }
-                    })
-                    .frame(height: 55)
-                    
-                    .onChange(of: viewModel.didSignInWithApple) { oldValue, newValue in
-                        if newValue == true {
-                            showSignInView = false
+        ZStack {
+            Color.theme.background
+            VStack {
+                // SignIn with Apple
+                Button(action: {
+                    Task {
+                        do {
+                            try await viewModel.signInApple() // ne renvoie rien, si on est connecté est gérer par le "onChange" plus bas.
+                        } catch {
+                            print(error)
                         }
                     }
-                    
-                    // Sign In/Up with email/password
-                    NavigationLink {
-                        LoginEmailView(showSignInView: $showSignInView)
-                    } label: {
-                        Text("S'authentifier avec l'email")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .frame(height: 45)
-                            .frame(maxWidth: .infinity)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                            .padding(.bottom, 10)
+                }, label: {
+                    if self.colorScheme == .light {
+                        SignInWithAppleButtonViewRepresentable(type: .default, style: .black)
+                            .allowsHitTesting(false)
+                    } else if self.colorScheme == .dark {
+                        SignInWithAppleButtonViewRepresentable(type: .default, style: .white)
+                            .allowsHitTesting(false)
+                    } else {
+                        SignInWithAppleButtonViewRepresentable(type: .default, style: .black)
+                            .allowsHitTesting(false)
                     }
-                    .padding(.top, 20)
-                    .padding(.bottom,40)
-                    
+                })
+                .frame(height: 55)
+                
+                .onChange(of: viewModel.didSignInWithApple) { oldValue, newValue in
+                    if newValue == true {
+                        showSignInView = false
+                    }
                 }
-                .padding(.horizontal, 20)
+                
+                // Sign In/Up with email/password
+                NavigationLink {
+                    LoginEmailView(showSignInView: $showSignInView)
+                } label: {
+                    Text("S'authentifier avec l'email")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(height: 45)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .padding(.bottom, 10)
+                }
+                .padding(.top, 20)
+                .padding(.bottom,40)
+                
             }
+            .padding(.horizontal, 20)
         }
     }
 }

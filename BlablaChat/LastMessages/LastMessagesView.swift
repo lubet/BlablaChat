@@ -17,6 +17,7 @@ class LastMessagesViewModel: ObservableObject {
     
     func logOut() {
         try? UsersManager.shared.signOut()
+        
     }
     
 }
@@ -33,22 +34,35 @@ struct LastMessagesView: View {
         ZStack {
             Color.theme.background.ignoresSafeArea()
             VStack {
-                NavigationLink {
-                    // -> UsersView -> Contacs -> Messages
-                    // -> UsersView -> Messages
-                } label: {
-                    HStack {
-                        Text("Nouveau message")
-                            .font(.system(size: 16, weight: .bold))
-                    }
-                    .foregroundColor(.white)
-                    .padding(.vertical)
-                    .background(Color.blue)
-                    .cornerRadius(32)
-                    .padding(.horizontal)
-                    //.shadow(radius: 15)
+
+                NavigationLink("Nouveau message") {
+                    UsersView()
                 }
+                .font(.system(size: 16, weight: .bold))
+                .foregroundColor(.white)
+                .padding(.vertical)
+                .background(Color.blue)
+                .cornerRadius(32)
+                .padding(.horizontal)
+
+                
+//                NavigationLink(
+//                    destination: UsersView(),
+//                    
+//                label: {
+//                    HStack {
+//                        Text("Nouveau message")
+//                            .font(.system(size: 16, weight: .bold))
+//                    }
+//                    .foregroundColor(.white)
+//                    .padding(.vertical)
+//                    .background(Color.blue)
+//                    .cornerRadius(32)
+//                    .padding(.horizontal)
+//                    //.shadow(radius: 15)
+//                })
                 .padding(.bottom,10)
+                
                 Button("Logout") {
                     viewModel.logOut()
                     showSignInView = true
@@ -60,6 +74,8 @@ struct LastMessagesView: View {
 
 struct LastMessages_Previews: PreviewProvider {
     static var previews: some View {
+        NavigationStack {
             LastMessagesView(showSignInView: .constant(false))
+        }
     }
 }

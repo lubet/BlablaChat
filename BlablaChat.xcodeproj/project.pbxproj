@@ -14,6 +14,7 @@
 		C0268BE42D1431A1005374DD /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0268BE32D1431A1005374DD /* StorageManager.swift */; };
 		C03763872C41210200A5602B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C03763862C41210200A5602B /* GoogleService-Info.plist */; };
 		C037638A2C4128D000A5602B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03763892C4128D000A5602B /* Utilities.swift */; };
+		C03A4A5D2D22E3E000F1A183 /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03A4A5C2D22E3E000F1A183 /* UsersView.swift */; };
 		C03A722D2D1DB1DD00961705 /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03A722C2D1DB1DD00961705 /* UsersManager.swift */; };
 		C043F9A52C170D08002B3C59 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C043F9A42C170D08002B3C59 /* DateManager.swift */; };
 		C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */; };
@@ -59,6 +60,7 @@
 		C03763852C411F3700A5602B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C03763862C41210200A5602B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C03763892C4128D000A5602B /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		C03A4A5C2D22E3E000F1A183 /* UsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersView.swift; sourceTree = "<group>"; };
 		C03A722C2D1DB1DD00961705 /* UsersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
 		C043F9A42C170D08002B3C59 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		C047E9C02B45625C00C6D48F /* BlablaChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlablaChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,6 +156,7 @@
 		C03A722B2D1DB1AA00961705 /* Users */ = {
 			isa = PBXGroup;
 			children = (
+				C03A4A5C2D22E3E000F1A183 /* UsersView.swift */,
 				C03A722C2D1DB1DD00961705 /* UsersManager.swift */,
 			);
 			path = Users;
@@ -364,6 +367,7 @@
 				C07F38B72C15A4F300B481B5 /* CellView.swift in Sources */,
 				C0B9EFD92D19B02900BC06FC /* LastMessagesView.swift in Sources */,
 				C068CD3B2BCD769E0072A797 /* AuthenticationView.swift in Sources */,
+				C03A4A5D2D22E3E000F1A183 /* UsersView.swift in Sources */,
 				C0FAA0942C242C340009DFF7 /* MessageShort.swift in Sources */,
 				C08906B32D1ABACD00277CCD /* LastMessagesCellView.swift in Sources */,
 				C03A722D2D1DB1DD00961705 /* UsersManager.swift in Sources */,

@@ -45,6 +45,7 @@
 		C0E63A762C8EFF6F0041E598 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C0E63A752C8EFF6F0041E598 /* FirebaseAnalytics */; };
 		C0E63A782C8EFF9D0041E598 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C0E63A772C8EFF9D0041E598 /* FirebaseMessaging */; };
 		C0EE66AC2B62654A002F13EB /* MessageBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE66AB2B62654A002F13EB /* MessageBarView.swift */; };
+		C0F503302D25C459006705B0 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F5032F2D25C459006705B0 /* ContactsView.swift */; };
 		C0F6C9C72D1C8F1100BE471E /* Salons_Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F6C9C62D1C8F1100BE471E /* Salons_Users.swift */; };
 		C0F6C9C92D1C8FA300BE471E /* Salons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F6C9C82D1C8FA300BE471E /* Salons.swift */; };
 		C0FAA0922C241DD90009DFF7 /* EmailShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FAA0912C241DD90009DFF7 /* EmailShort.swift */; };
@@ -87,6 +88,7 @@
 		C0C1A9482B62ACC400646851 /* SearchNick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNick.swift; sourceTree = "<group>"; };
 		C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		C0EE66AB2B62654A002F13EB /* MessageBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBarView.swift; sourceTree = "<group>"; };
+		C0F5032F2D25C459006705B0 /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		C0F6C9C62D1C8F1100BE471E /* Salons_Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salons_Users.swift; sourceTree = "<group>"; };
 		C0F6C9C82D1C8FA300BE471E /* Salons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salons.swift; sourceTree = "<group>"; };
 		C0FAA0912C241DD90009DFF7 /* EmailShort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailShort.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			children = (
 				C03A4A5C2D22E3E000F1A183 /* UsersView.swift */,
 				C03A722C2D1DB1DD00961705 /* UsersManager.swift */,
+				C0F5032F2D25C459006705B0 /* ContactsView.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				C00658F42CFF1B1400270967 /* NewContacts.swift in Sources */,
 				C037638A2C4128D000A5602B /* Utilities.swift in Sources */,
 				C043F9A52C170D08002B3C59 /* DateManager.swift in Sources */,
+				C0F503302D25C459006705B0 /* ContactsView.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
 				C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */,
 				C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */,

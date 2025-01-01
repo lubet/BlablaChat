@@ -18,7 +18,7 @@ struct RootView: View {
                 // LastMessagesView(showSignInView: $showSignInView)
                 // SettingsView(showSignInView: $showSignInView)
                 // LastMessagesView(showSignInView: $showSignInView)
-                NewContacts()
+                Contacts()
             }
         }
         .onAppear {

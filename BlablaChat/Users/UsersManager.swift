@@ -23,8 +23,8 @@ final class UsersManager {
         return DBUserCollection.document(user_id)
     }
     
-    func createDbUser(user: DBUser) async throws {
-        try userDocument(user_id: user.userId).setData(from: user, merge: false)
+    func createDbUser() async throws {
+        try userDocument(user_id: user.id).setData(from: user, merge: false)
     }
     
     func updateImagePath(userId: String, path: String) async throws {
@@ -137,10 +137,10 @@ final class UsersManager {
     }
     
     // Création de l'avatar dans "Storage" et maj de l'avatar dans "Users"
-    func updateAvatar(userId: String, mimage: UIImage) async throws {
-        let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: userId)
+    func updateAvatar(mimage: UIImage) async throws {
+        let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: user.userId)
         let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
-        try await UsersManager.shared.updateImagePath(userId: userId, path: lurl.absoluteString) // maj Firestore
+        try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
         // print("updateAvatar \(lurl)")
     }
     

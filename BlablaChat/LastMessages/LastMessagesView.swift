@@ -44,23 +44,6 @@ struct LastMessagesView: View {
                 .background(Color.blue)
                 .cornerRadius(32)
                 .padding(.horizontal)
-
-                
-//                NavigationLink(
-//                    destination: UsersView(),
-//                    
-//                label: {
-//                    HStack {
-//                        Text("Nouveau message")
-//                            .font(.system(size: 16, weight: .bold))
-//                    }
-//                    .foregroundColor(.white)
-//                    .padding(.vertical)
-//                    .background(Color.blue)
-//                    .cornerRadius(32)
-//                    .padding(.horizontal)
-//                    //.shadow(radius: 15)
-//                })
                 .padding(.bottom,10)
                 
                 Button("Logout") {

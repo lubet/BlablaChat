@@ -16,7 +16,7 @@
 import SwiftUI
 import ContactsUI
 
-struct ContentView: View {
+struct NewContacts: View {
     // We hold all our loaded contacts here
     @State private var allContacts = [CNContact]()
 
@@ -39,7 +39,10 @@ struct ContentView: View {
         NavigationStack {
             VStack {
                 List(filteredContacts) { contact in
-                    Text("Say hello to \(contact.givenName)")
+                    NavigationLink("\(contact.givenName)") {
+                        UsersView()
+                    }
+                    // Text("Say hello to \(contact.givenName)")
                 }
                 .searchable(text: $searchText)
 
@@ -75,6 +78,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    NewContacts()
 }
 

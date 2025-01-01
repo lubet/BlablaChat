@@ -17,7 +17,8 @@ struct RootView: View {
             if showSignInView == false {
                 // LastMessagesView(showSignInView: $showSignInView)
                 // SettingsView(showSignInView: $showSignInView)
-                LastMessagesView(showSignInView: $showSignInView)
+                // LastMessagesView(showSignInView: $showSignInView)
+                NewContacts()
             }
         }
         .onAppear {

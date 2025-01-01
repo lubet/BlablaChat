@@ -15,6 +15,10 @@ import Combine
 @MainActor
 class LastMessagesViewModel: ObservableObject {
     
+    // get all my users
+    
+    
+    
     func logOut() {
         try? UsersManager.shared.signOut()
         

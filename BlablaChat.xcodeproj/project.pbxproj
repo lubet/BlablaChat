@@ -34,7 +34,7 @@
 		C0850DC42D0F2BD7001AD3AA /* LoginEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0850DC32D0F2BD7001AD3AA /* LoginEmailView.swift */; };
 		C08906B32D1ABACD00277CCD /* LastMessagesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08906B22D1ABACD00277CCD /* LastMessagesCellView.swift */; };
 		C08906B92D1ABC5800277CCD /* LastMessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08906B82D1ABC5800277CCD /* LastMessagesManager.swift */; };
-		C08906C52D1ABE9E00277CCD /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08906C42D1ABE9E00277CCD /* Message.swift */; };
+		C08906C52D1ABE9E00277CCD /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08906C42D1ABE9E00277CCD /* Messages.swift */; };
 		C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */; };
 		C0ABF6F82D004CAB00BFD2EB /* ButtonContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ABF6F72D004CAB00BFD2EB /* ButtonContacts.swift */; };
 		C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B8555B2BBBFD5900B3956A /* TextBarView.swift */; };
@@ -42,6 +42,7 @@
 		C0B9EFD92D19B02900BC06FC /* LastMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9EFD82D19B02900BC06FC /* LastMessagesView.swift */; };
 		C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C1A9482B62ACC400646851 /* SearchNick.swift */; };
 		C0D565F42B7CAF8E00EE0DA0 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */; };
+		C0DD71522D26AE0400E232E1 /* BubblesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DD71512D26AE0400E232E1 /* BubblesView.swift */; };
 		C0E63A762C8EFF6F0041E598 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C0E63A752C8EFF6F0041E598 /* FirebaseAnalytics */; };
 		C0E63A782C8EFF9D0041E598 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C0E63A772C8EFF9D0041E598 /* FirebaseMessaging */; };
 		C0EE66AC2B62654A002F13EB /* MessageBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE66AB2B62654A002F13EB /* MessageBarView.swift */; };
@@ -79,7 +80,7 @@
 		C0850DC32D0F2BD7001AD3AA /* LoginEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginEmailView.swift; sourceTree = "<group>"; };
 		C08906B22D1ABACD00277CCD /* LastMessagesCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesCellView.swift; sourceTree = "<group>"; };
 		C08906B82D1ABC5800277CCD /* LastMessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesManager.swift; sourceTree = "<group>"; };
-		C08906C42D1ABE9E00277CCD /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		C08906C42D1ABE9E00277CCD /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDWebImageLoader.swift; sourceTree = "<group>"; };
 		C0ABF6F72D004CAB00BFD2EB /* ButtonContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonContacts.swift; sourceTree = "<group>"; };
 		C0B8555B2BBBFD5900B3956A /* TextBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBarView.swift; sourceTree = "<group>"; };
@@ -87,6 +88,7 @@
 		C0B9EFD82D19B02900BC06FC /* LastMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesView.swift; sourceTree = "<group>"; };
 		C0C1A9482B62ACC400646851 /* SearchNick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNick.swift; sourceTree = "<group>"; };
 		C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		C0DD71512D26AE0400E232E1 /* BubblesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesView.swift; sourceTree = "<group>"; };
 		C0EE66AB2B62654A002F13EB /* MessageBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBarView.swift; sourceTree = "<group>"; };
 		C0F5032F2D25C459006705B0 /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		C0F6C9C62D1C8F1100BE471E /* Salons_Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salons_Users.swift; sourceTree = "<group>"; };
@@ -116,7 +118,7 @@
 		C01077312D1424A1004960F2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C08906C42D1ABE9E00277CCD /* Message.swift */,
+				C08906C42D1ABE9E00277CCD /* Messages.swift */,
 				C0F6C9C82D1C8FA300BE471E /* Salons.swift */,
 				C0F6C9C62D1C8F1100BE471E /* Salons_Users.swift */,
 				C01077322D14251F004960F2 /* DBUser.swift */,
@@ -194,6 +196,7 @@
 				C01077312D1424A1004960F2 /* Models */,
 				C0695AEF2C49151400CEAA17 /* Authentication */,
 				C03A722B2D1DB1AA00961705 /* Users */,
+				C0DD71502D26ADBD00E232E1 /* Bubbles */,
 				C0B9EFD72D19AFD600BC06FC /* LastMessages */,
 				C0268BE22D14312D005374DD /* Managers */,
 				C0B9DC842B5EB05B006C2B46 /* Components */,
@@ -254,6 +257,14 @@
 				C08906B82D1ABC5800277CCD /* LastMessagesManager.swift */,
 			);
 			path = LastMessages;
+			sourceTree = "<group>";
+		};
+		C0DD71502D26ADBD00E232E1 /* Bubbles */ = {
+			isa = PBXGroup;
+			children = (
+				C0DD71512D26AE0400E232E1 /* BubblesView.swift */,
+			);
+			path = Bubbles;
 			sourceTree = "<group>";
 		};
 		C0E63A742C8EFF6F0041E598 /* Frameworks */ = {
@@ -347,11 +358,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0DD71522D26AE0400E232E1 /* BubblesView.swift in Sources */,
 				C0ABF6F82D004CAB00BFD2EB /* ButtonContacts.swift in Sources */,
 				C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */,
 				C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */,
 				C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */,
-				C08906C52D1ABE9E00277CCD /* Message.swift in Sources */,
+				C08906C52D1ABE9E00277CCD /* Messages.swift in Sources */,
 				C0EE66AC2B62654A002F13EB /* MessageBarView.swift in Sources */,
 				C00658F42CFF1B1400270967 /* NewContacts.swift in Sources */,
 				C037638A2C4128D000A5602B /* Utilities.swift in Sources */,

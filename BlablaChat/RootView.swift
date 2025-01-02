@@ -4,7 +4,6 @@
 //
 //  Created by Lubet-Moncla Xavier on 14/02/2024.
 //
-// Essai
 
 import SwiftUI
 
@@ -18,7 +17,7 @@ struct RootView: View {
                 // LastMessagesView(showSignInView: $showSignInView)
                 // SettingsView(showSignInView: $showSignInView)
                 // LastMessagesView(showSignInView: $showSignInView)
-                Contacts()
+                ContactsView()
             }
         }
         .onAppear {

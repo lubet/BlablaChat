@@ -1,16 +1,8 @@
 //
-//  NewContacts.swift
+//  Contacts.swift
 //  BlablaChat
 //
 //  Created by Lubet-Moncla Xavier on 03/12/2024.
-//
-// Ios18
-
-//
-//  ContentView.swift
-//  BlablaContacts
-//
-//  Created by Lubet-Moncla Xavier on 02/12/2024.
 //
 // Rechercher/Afficher/selection d'un contact, le créer dans "Users"
 // sans authId mais avec un user_id car on ne veut pas du loggind auto, cela remplacerait le login du user actuellement loggé.
@@ -18,7 +10,7 @@
 import SwiftUI
 import ContactsUI
 
-struct Contacts: View {
+struct ContactsView: View {
     // We hold all our loaded contacts here
     @State private var allContacts = [CNContact]()
 
@@ -38,12 +30,12 @@ struct Contacts: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationStack { // TODO à supprimer
             VStack {
                 List(filteredContacts) { contact in
                     // Créer le contact dans "Users" si il n'existe pas et aller dans messages bubbles
                     NavigationLink("\(contact.givenName)") {
-                        UsersView()
+                        BubblesView()
                     }
                     // Text("Say hello to \(contact.givenName)")
                 }
@@ -81,6 +73,6 @@ struct Contacts: View {
 }
 
 #Preview {
-    Contacts()
+    ContactsView()
 }
 

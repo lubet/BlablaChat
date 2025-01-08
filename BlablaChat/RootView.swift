@@ -17,7 +17,10 @@ struct RootView: View {
                 // LastMessagesView(showSignInView: $showSignInView)
                 // SettingsView(showSignInView: $showSignInView)
                 // LastMessagesView(showSignInView: $showSignInView)
-                ContactsView()
+                // ContactsView()
+                //EssaiView()
+                // ContactBootcamp()
+                UsersView()
             }
         }
         .onAppear {

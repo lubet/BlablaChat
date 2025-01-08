@@ -27,10 +27,10 @@ final class LoginEmailViewModel: ObservableObject {
             return
         }
         
-        // Création de l'Authentifaction
+        // Création et activation d'une Authentifaction
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
         
-        // Variable globale user (définit dans AuthenticationView)
+        // Création de l'authentification dans la base "Users" + des champs qui sont rajouées (voir modèle DBUser)
         user = DBUser(auth: authUser)
         
         // print("\(user)")

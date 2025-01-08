@@ -67,9 +67,8 @@ final class AuthManager {
 }
 
 // MARK: SIGN IN EMAIL
-
 extension AuthManager {
-    // Nouveau compte
+    // Création et activation d'une nouvelle authentification
     @discardableResult
     func createUser(email: String, password: String) async throws -> AuthUser {
         let AuthDataResult = try await Auth.auth().createUser(withEmail: email, password: password)

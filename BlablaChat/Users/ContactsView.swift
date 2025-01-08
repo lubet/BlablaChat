@@ -28,16 +28,13 @@ struct ContactsView: View {
             }
         }
     }
-
+    
     var body: some View {
         NavigationStack { // TODO à supprimer
             VStack {
                 List(filteredContacts) { contact in
                     // Créer le contact dans "Users" si il n'existe pas et aller dans messages bubbles
-                    NavigationLink("\(contact.givenName)") {
-                        BubblesView()
-                    }
-                    // Text("Say hello to \(contact.givenName)")
+                    Text("Say hello to \(contact.givenName)")
                 }
                 .searchable(text: $searchText)
 
@@ -68,6 +65,7 @@ struct ContactsView: View {
 
             // Load is completed, so add the new contacts to our existing array
             allContacts += newContacts
+            print(allContacts)
         }
     }
 }

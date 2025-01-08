@@ -7,12 +7,24 @@
 
 import SwiftUI
 
+@MainActor
+final class UsersViewModel: ObservableObject {
+    
+    func fetchContacts() {
+        
+    }
+}
+
 struct UsersView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List {
+            UserRowView(nom: "Maurice Leroy")
+        }
+        .navigationTitle("Contacts")
     }
 }
 
 #Preview {
     UsersView()
 }
+

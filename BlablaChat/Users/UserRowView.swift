@@ -9,16 +9,16 @@ import SwiftUI
 
 struct UserRowView: View {
     
-    let nom: String
+    let email: String
     
     var body: some View {
         HStack{
-            Text(nom)
+            Text(email)
             Spacer()
         }
     }
 }
 
 #Preview {
-    UserRowView(nom: "Maurice Leroy")
+    UserRowView(email: "mleroy@test.com")
 }

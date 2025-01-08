@@ -40,6 +40,7 @@
 		C08906C52D1ABE9E00277CCD /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08906C42D1ABE9E00277CCD /* Messages.swift */; };
 		C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */; };
 		C0ABF6F82D004CAB00BFD2EB /* ButtonContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ABF6F72D004CAB00BFD2EB /* ButtonContacts.swift */; };
+		C0B15FBC2D2E92810083135A /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B15FBB2D2E92810083135A /* ContactModel.swift */; };
 		C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B8555B2BBBFD5900B3956A /* TextBarView.swift */; };
 		C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */; };
 		C0B9EFD92D19B02900BC06FC /* LastMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9EFD82D19B02900BC06FC /* LastMessagesView.swift */; };
@@ -90,6 +91,7 @@
 		C08906C42D1ABE9E00277CCD /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDWebImageLoader.swift; sourceTree = "<group>"; };
 		C0ABF6F72D004CAB00BFD2EB /* ButtonContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonContacts.swift; sourceTree = "<group>"; };
+		C0B15FBB2D2E92810083135A /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
 		C0B8555B2BBBFD5900B3956A /* TextBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBarView.swift; sourceTree = "<group>"; };
 		C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleSendView.swift; sourceTree = "<group>"; };
 		C0B9EFD82D19B02900BC06FC /* LastMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesView.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				C0F6C9C82D1C8FA300BE471E /* Salons.swift */,
 				C0F6C9C62D1C8F1100BE471E /* Salons_Users.swift */,
 				C01077322D14251F004960F2 /* DBUser.swift */,
+				C0B15FBB2D2E92810083135A /* ContactModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				C000E30A2D283DA10077540E /* EssaiView.swift in Sources */,
 				C0DD71552D26B0F000E232E1 /* MessagesView.swift in Sources */,
 				C019526F2D2E85370031B47E /* UserRowView.swift in Sources */,
+				C0B15FBC2D2E92810083135A /* ContactModel.swift in Sources */,
 				C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */,
 				C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */,
 				C08906C52D1ABE9E00277CCD /* Messages.swift in Sources */,

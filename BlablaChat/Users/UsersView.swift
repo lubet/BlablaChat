@@ -6,12 +6,35 @@
 //
 
 import SwiftUI
+import Contacts
 
 @MainActor
 final class UsersViewModel: ObservableObject {
     
     @Published var contacts: [ContactModel] = []
     
+    func fetchAllContacts() async {
+        let store = CNContactStore()
+        let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactEmailAddressesKey] as [CNKeyDescriptor]
+        let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
+        do {
+            try store.enumerateContacts(with: fetchRequest, usingBlock:
+                                            {(contact, stop) in
+                let email = contact.emailAddresses.first?.value.description ?? ""
+                let prenom = contact.givenName
+                let nom = contact.familyName
+                if ((prenom != "" || nom != "") && email != "") {
+                    contacts.append(ContactModel(prenom: prenom, nom: nom, email: email))
+                }
+                print(contact.givenName)
+                print(contact.familyName)
+                print(contact.emailAddresses.first?.value.description ?? "")
+            })
+         }
+        catch let erreur {
+            print(erreur)
+        }
+    }
     
     func fetchContacts() {
         contacts.append(ContactModel(prenom: "Marcel", nom: "Leroy", email: "mleroy@test.com"))

@@ -20,7 +20,8 @@ struct RootView: View {
                 // ContactsView()
                 //EssaiView()
                 // ContactBootcamp()
-                UsersView()
+                // UsersView()
+                SearchBarView(searchText: .constant(""))
             }
         }
         .onAppear {

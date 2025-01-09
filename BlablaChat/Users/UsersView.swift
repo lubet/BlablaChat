@@ -12,8 +12,9 @@ import Contacts
 final class UsersViewModel: ObservableObject {
     
     @Published var contacts: [ContactModel] = []
+    @Published var searchText: String = ""
     
-    func fetchAllContacts() async {
+    func fetchAllContacts() {
         let store = CNContactStore()
         let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactEmailAddressesKey] as [CNKeyDescriptor]
         let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
@@ -48,14 +49,23 @@ struct UsersView: View {
     @StateObject var vm = UsersViewModel()
     
     var body: some View {
-        List {
-            ForEach(vm.contacts, id: \.self) { item in
-                UserRowView(email: item.email)
+        ZStack {
+            Color.theme.background
+                .ignoresSafeArea()
+            VStack {
+                
+                SearchBarView(searchText: $vm.searchText)
+                
+                List {
+                    ForEach(vm.contacts, id: \.self) { item in
+                        UserRowView(nomprenom: item.nom + " " + item.prenom)
+                    }
+                }
+                .navigationTitle("Contacts")
+                .onAppear {
+                    vm.fetchContacts()
+                }
             }
-        }
-        .navigationTitle("Contacts")
-        .onAppear {
-            vm.fetchContacts()
         }
     }
 }

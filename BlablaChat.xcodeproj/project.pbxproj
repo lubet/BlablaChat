@@ -33,6 +33,7 @@
 		C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */; };
 		C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A8DB82BAEC5030007436C /* TimestampToString.swift */; };
 		C070D6422C5380C4006170E3 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = C070D6412C5380C4006170E3 /* Color.swift */; };
+		C07F10D12D2FB7B70010650C /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07F10D02D2FB7B70010650C /* SearchBarView.swift */; };
 		C07F38B72C15A4F300B481B5 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07F38B62C15A4F300B481B5 /* CellView.swift */; };
 		C0850DC42D0F2BD7001AD3AA /* LoginEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0850DC32D0F2BD7001AD3AA /* LoginEmailView.swift */; };
 		C08906B32D1ABACD00277CCD /* LastMessagesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08906B22D1ABACD00277CCD /* LastMessagesCellView.swift */; };
@@ -51,7 +52,6 @@
 		C0E63A762C8EFF6F0041E598 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C0E63A752C8EFF6F0041E598 /* FirebaseAnalytics */; };
 		C0E63A782C8EFF9D0041E598 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C0E63A772C8EFF9D0041E598 /* FirebaseMessaging */; };
 		C0EE66AC2B62654A002F13EB /* MessageBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE66AB2B62654A002F13EB /* MessageBarView.swift */; };
-		C0F503302D25C459006705B0 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F5032F2D25C459006705B0 /* ContactsView.swift */; };
 		C0F6C9C72D1C8F1100BE471E /* Salons_Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F6C9C62D1C8F1100BE471E /* Salons_Users.swift */; };
 		C0F6C9C92D1C8FA300BE471E /* Salons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F6C9C82D1C8FA300BE471E /* Salons.swift */; };
 		C0FAA0922C241DD90009DFF7 /* EmailShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FAA0912C241DD90009DFF7 /* EmailShort.swift */; };
@@ -84,6 +84,7 @@
 		C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAppleHelper.swift; sourceTree = "<group>"; };
 		C06A8DB82BAEC5030007436C /* TimestampToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampToString.swift; sourceTree = "<group>"; };
 		C070D6412C5380C4006170E3 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		C07F10D02D2FB7B70010650C /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		C07F38B62C15A4F300B481B5 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		C0850DC32D0F2BD7001AD3AA /* LoginEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginEmailView.swift; sourceTree = "<group>"; };
 		C08906B22D1ABACD00277CCD /* LastMessagesCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesCellView.swift; sourceTree = "<group>"; };
@@ -100,7 +101,6 @@
 		C0DD71542D26B0F000E232E1 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		C0DD71562D26B1D300E232E1 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
 		C0EE66AB2B62654A002F13EB /* MessageBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBarView.swift; sourceTree = "<group>"; };
-		C0F5032F2D25C459006705B0 /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		C0F6C9C62D1C8F1100BE471E /* Salons_Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salons_Users.swift; sourceTree = "<group>"; };
 		C0F6C9C82D1C8FA300BE471E /* Salons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salons.swift; sourceTree = "<group>"; };
 		C0FAA0912C241DD90009DFF7 /* EmailShort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailShort.swift; sourceTree = "<group>"; };
@@ -175,7 +175,6 @@
 				C03A4A5C2D22E3E000F1A183 /* UsersView.swift */,
 				C019526E2D2E85370031B47E /* UserRowView.swift */,
 				C03A722C2D1DB1DD00961705 /* UsersManager.swift */,
-				C0F5032F2D25C459006705B0 /* ContactsView.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -259,6 +258,7 @@
 				C043F9A42C170D08002B3C59 /* DateManager.swift */,
 				C0FAA0912C241DD90009DFF7 /* EmailShort.swift */,
 				C0FAA0932C242C340009DFF7 /* MessageShort.swift */,
+				C07F10D02D2FB7B70010650C /* SearchBarView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -386,13 +386,13 @@
 				C00658F42CFF1B1400270967 /* NewContacts.swift in Sources */,
 				C037638A2C4128D000A5602B /* Utilities.swift in Sources */,
 				C043F9A52C170D08002B3C59 /* DateManager.swift in Sources */,
-				C0F503302D25C459006705B0 /* ContactsView.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
 				C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */,
 				C01FE5A62B67ED9D0049B9EE /* SearchXavierView.swift in Sources */,
 				C0F6C9C72D1C8F1100BE471E /* Salons_Users.swift in Sources */,
 				C0FAA0922C241DD90009DFF7 /* EmailShort.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,
+				C07F10D12D2FB7B70010650C /* SearchBarView.swift in Sources */,
 				C043008C2D2BF92000AF56E7 /* ContactBootcamp.swift in Sources */,
 				C01077332D14251F004960F2 /* DBUser.swift in Sources */,
 				C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */,

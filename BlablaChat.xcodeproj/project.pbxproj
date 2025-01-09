@@ -56,6 +56,7 @@
 		C0F6C9C92D1C8FA300BE471E /* Salons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F6C9C82D1C8FA300BE471E /* Salons.swift */; };
 		C0FAA0922C241DD90009DFF7 /* EmailShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FAA0912C241DD90009DFF7 /* EmailShort.swift */; };
 		C0FAA0942C242C340009DFF7 /* MessageShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FAA0932C242C340009DFF7 /* MessageShort.swift */; };
+		C0FCE7972D2FE3400097FFA2 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FCE7962D2FE3400097FFA2 /* UIApplication.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +106,7 @@
 		C0F6C9C82D1C8FA300BE471E /* Salons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salons.swift; sourceTree = "<group>"; };
 		C0FAA0912C241DD90009DFF7 /* EmailShort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailShort.swift; sourceTree = "<group>"; };
 		C0FAA0932C242C340009DFF7 /* MessageShort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageShort.swift; sourceTree = "<group>"; };
+		C0FCE7962D2FE3400097FFA2 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				C070D6412C5380C4006170E3 /* Color.swift */,
+				C0FCE7962D2FE3400097FFA2 /* UIApplication.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				C0B15FBC2D2E92810083135A /* ContactModel.swift in Sources */,
 				C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */,
 				C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */,
+				C0FCE7972D2FE3400097FFA2 /* UIApplication.swift in Sources */,
 				C08906C52D1ABE9E00277CCD /* Messages.swift in Sources */,
 				C0EE66AC2B62654A002F13EB /* MessageBarView.swift in Sources */,
 				C00658F42CFF1B1400270967 /* NewContacts.swift in Sources */,

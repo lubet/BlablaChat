@@ -9,12 +9,13 @@ import SwiftUI
 
 struct SearchBarView: View {
     
-    @Binding var searchText: String
+    @State var searchText: String = ""
     
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(Color.theme.forground)
+            
             TextField("Recherche...", text: $searchText)
                 .foregroundColor(Color.theme.forground)
                 .disableAutocorrection(true)
@@ -22,9 +23,10 @@ struct SearchBarView: View {
                     Image(systemName: "xmark.circle.fill")
                         .padding()
                         .offset(x: 10)
-                        .foregroundColor(Color.theme.forground)
+                        .foregroundColor(Color.black)
                         .opacity(searchText.isEmpty ? 0.0 : 1.0)
                         .onTapGesture {
+                            UIApplication.shared.endEditing()
                             searchText = ""
                         }
                     ,alignment: .trailing
@@ -45,6 +47,6 @@ struct SearchBarView: View {
 
 struct SearchBarView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBarView(searchText: .constant(""))
+        SearchBarView()
     }
 }

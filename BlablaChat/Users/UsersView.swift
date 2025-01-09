@@ -12,6 +12,7 @@ import Contacts
 final class UsersViewModel: ObservableObject {
     
     @Published var contacts: [ContactModel] = []
+    
     @Published var searchText: String = ""
     
     func fetchAllContacts() {
@@ -54,7 +55,7 @@ struct UsersView: View {
                 .ignoresSafeArea()
             VStack {
                 
-                SearchBarView(searchText: $vm.searchText)
+                SearchBarView()
                 
                 List {
                     ForEach(vm.contacts, id: \.self) { item in

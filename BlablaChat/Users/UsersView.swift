@@ -55,7 +55,7 @@ struct UsersView: View {
                 .ignoresSafeArea()
             VStack {
                 
-                SearchBarView()
+                SearchBarView(searchText: .constant(""))
                 
                 List {
                     ForEach(vm.contacts, id: \.self) { item in

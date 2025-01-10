@@ -12,6 +12,19 @@ import Contacts
 final class UsersViewModel: ObservableObject {
     
     @Published var contacts: [ContactModel] = []
+    @Published var searchText: String = ""
+    
+    var filteredContacts: [ContactModel] {
+        guard !searchText.isEmpty else { return contacts}
+        
+        return contacts.filter { oneContact in
+            oneContact.nom.lowercased().contains(searchText.lowercased())
+        }
+    }
+    
+    init() {
+        fetchContacts()
+    }
     
     func fetchAllContacts() {
         let store = CNContactStore()
@@ -48,17 +61,18 @@ struct UsersView: View {
     @StateObject var vm = UsersViewModel()
     
     var body: some View {
+        NavigationStack {
             VStack {
                 List {
-                    ForEach(vm.contacts, id: \.self) { item in
+                    ForEach(vm.filteredContacts, id: \.self) { item in
                         UserRowView(contact: item)
                     }
                 }
+                .listStyle(.plain)
                 .navigationTitle("Contacts")
-                .onAppear {
-                    vm.fetchContacts()
-                }
+                .searchable(text: $vm.searchText)
             }
+        }
     }
 }
 

@@ -77,7 +77,7 @@ struct UsersView: View {
                 }
                 .navigationTitle("Contacts")
                 .navigationDestination(for: ContactModel.self) { oneContact in
-                    BubblesView(oneContact: oneContact)
+                    MessagesView(oneContact: oneContact)
                 }
                 .searchable(text: $vm.searchText)
             }

@@ -10,25 +10,17 @@ import SwiftUI
 @MainActor
 final class MessagesViewModel: ObservableObject {
 
-    func getAllMessages() {
-        
-    }
-    
-    func createMessage() {
-        
-    }
-    
 }
 
 struct MessagesView: View {
     
-    let email: String
+    let oneContact: ContactModel
     
     var body: some View {
-        Text("email: \(email)")
+        Text("nom du conntact: \(oneContact.nom)")
     }
 }
 
 #Preview {
-    MessagesView(email: "toto@test.com")
+    MessagesView(oneContact: ContactModel(prenom: "Marcel", nom: "Leroy", email: "mleroy@test.com"))
 }

@@ -20,7 +20,6 @@
 		C03A722D2D1DB1DD00961705 /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03A722C2D1DB1DD00961705 /* UsersManager.swift */; };
 		C043008C2D2BF92000AF56E7 /* ContactBootcamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C043008B2D2BF92000AF56E7 /* ContactBootcamp.swift */; };
 		C043F9A52C170D08002B3C59 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C043F9A42C170D08002B3C59 /* DateManager.swift */; };
-		C0476DCF2D32CB5C008083BA /* BubblesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0476DCE2D32CB5C008083BA /* BubblesView.swift */; };
 		C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */; };
 		C047E9C82B45625D00C6D48F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C047E9C72B45625D00C6D48F /* Assets.xcassets */; };
 		C047E9CB2B45625D00C6D48F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C047E9CA2B45625D00C6D48F /* Preview Assets.xcassets */; };
@@ -75,7 +74,6 @@
 		C03A722C2D1DB1DD00961705 /* UsersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
 		C043008B2D2BF92000AF56E7 /* ContactBootcamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactBootcamp.swift; sourceTree = "<group>"; };
 		C043F9A42C170D08002B3C59 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
-		C0476DCE2D32CB5C008083BA /* BubblesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesView.swift; sourceTree = "<group>"; };
 		C047E9C02B45625C00C6D48F /* BlablaChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlablaChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlablaChatApp.swift; sourceTree = "<group>"; };
 		C047E9C72B45625D00C6D48F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -264,7 +262,6 @@
 				C0FAA0912C241DD90009DFF7 /* EmailShort.swift */,
 				C0FAA0932C242C340009DFF7 /* MessageShort.swift */,
 				C07F10D02D2FB7B70010650C /* SearchBarView.swift */,
-				C0476DCE2D32CB5C008083BA /* BubblesView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -382,7 +379,6 @@
 				C0ABF6F82D004CAB00BFD2EB /* ButtonContacts.swift in Sources */,
 				C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */,
 				C000E30A2D283DA10077540E /* EssaiView.swift in Sources */,
-				C0476DCF2D32CB5C008083BA /* BubblesView.swift in Sources */,
 				C0DD71552D26B0F000E232E1 /* MessagesView.swift in Sources */,
 				C019526F2D2E85370031B47E /* UserRowView.swift in Sources */,
 				C0B15FBC2D2E92810083135A /* ContactModel.swift in Sources */,

@@ -40,7 +40,7 @@ struct LastMessagesView: View {
             VStack {
 
                 NavigationLink("Nouveau message") {
-                    UsersView()
+                    ContactsView()
                 }
                 .font(.system(size: 16, weight: .bold))
                 .foregroundColor(.white)

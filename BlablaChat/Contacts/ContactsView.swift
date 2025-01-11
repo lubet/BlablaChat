@@ -13,7 +13,7 @@ import SwiftUI
 import Contacts
 
 @MainActor
-final class UsersViewModel: ObservableObject {
+final class ContactsViewModel: ObservableObject {
     
     @Published var contacts: [ContactModel] = []
     @Published var searchText: String = ""
@@ -61,9 +61,9 @@ final class UsersViewModel: ObservableObject {
     }
 }
 
-struct UsersView: View {
+struct ContactsView: View {
     
-    @StateObject var vm = UsersViewModel()
+    @StateObject var vm = ContactsViewModel()
     
     var body: some View {
         NavigationStack {
@@ -71,7 +71,7 @@ struct UsersView: View {
                 List {
                     ForEach(vm.filteredContacts, id: \.self) { oneContact in
                         NavigationLink(value: oneContact) {
-                            UserRowView(oneContact: oneContact)
+                            ContactRowView(oneContact: oneContact)
                         }
                     }
                 }
@@ -86,6 +86,6 @@ struct UsersView: View {
 }
 
 #Preview {
-    UsersView()
+    ContactsView()
 }
 

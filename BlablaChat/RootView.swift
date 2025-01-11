@@ -20,7 +20,7 @@ struct RootView: View {
                 // ContactsView()
                 //EssaiView()
                 // ContactBootcamp()
-                UsersView()
+                ContactsView()
                 //SearchBarView(searchText: .constant(""))
             }
         }

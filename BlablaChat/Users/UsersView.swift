@@ -4,6 +4,10 @@
 //
 //  Created by Lubet-Moncla Xavier on 30/12/2024.
 //
+// Liste des contactes du carnet d'adresses
+// Selection d'un contact
+// Passage du contact à la view Messages
+//
 
 import SwiftUI
 import Contacts

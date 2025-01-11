@@ -53,6 +53,7 @@ final class UsersViewModel: ObservableObject {
         contacts.append(ContactModel(prenom: "Marcel", nom: "Leroy", email: "mleroy@test.com"))
         contacts.append(ContactModel(prenom: "Robert", nom: "Gured", email: "rgured@test.com"))
         contacts.append(ContactModel(prenom: "Roger", nom: "Dujou", email: "rdujou@test.com"))
+        contacts.append(ContactModel(prenom: "Albert", nom: "Lafon", email: "rdujou@test.com"))
     }
 }
 
@@ -64,15 +65,19 @@ struct UsersView: View {
         NavigationStack {
             VStack {
                 List {
-                    ForEach(vm.filteredContacts, id: \.self) { item in
-                        UserRowView(contact: item)
+                    ForEach(vm.filteredContacts, id: \.self) { oneContact in
+                        NavigationLink(value: oneContact) {
+                            UserRowView(oneContact: oneContact)
+                        }
                     }
                 }
-                .listStyle(.plain)
                 .navigationTitle("Contacts")
+                .navigationDestination(for: ContactModel.self) { oneContact in
+                    BubblesView(oneContact: oneContact)
+                }
                 .searchable(text: $vm.searchText)
             }
-        }
+       }
     }
 }
 

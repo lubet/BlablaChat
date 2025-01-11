@@ -9,16 +9,17 @@ import SwiftUI
 
 struct UserRowView: View {
     
-    let contact: ContactModel
+    let oneContact: ContactModel
     
     var body: some View {
         HStack(spacing: 10) {
-            Text(contact.nom)
-            Text(contact.prenom)
+            Text(oneContact.nom)
+            Text(oneContact.prenom)
         }
+        //.padding(.horizontal,20)
     }
 }
 
 #Preview {
-    UserRowView(contact: ContactModel(prenom: "Marcel", nom: "Leroy", email: "mleroy@test.com"))
+    UserRowView(oneContact: ContactModel(prenom: "Marcel", nom: "Leroy", email: "mleroy@test.com"))
 }

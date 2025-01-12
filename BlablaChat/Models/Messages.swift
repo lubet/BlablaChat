@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct Messages: Identifiable {
+struct Messages: Codable, Identifiable {
     let id: String
     let salon_id: String // -> salon
     let from: String // -> user_id de "Users"

@@ -15,16 +15,24 @@ final class MessagesViewModel: ObservableObject {
     
     @Published var allMessages: [Messages] = []
     
+    //getAllmessages du user_id courant
+    func getAllMessages(user_id: String) {
+        
+    }
+
+    // Création du message
     func messages(oneContact: ContactModel) async throws {
         
         // Si le contact est nouveau - avec l'email recherche dans la base "Users"
-        let new =  try? await UsersManager.shared.searchContact(email: oneContact.email)
+        let user_id =  try? await UsersManager.shared.searchContact(email: oneContact.email)
         
         // le créer dans "Users"
+        if user_id == "" {
+            let user_id = try await UsersManager.shared.createUser(email: oneContact.email)
+        }
         
-        // créer le message
+        // Créer le message
         
-        // charger tous les messages du user_id courant
         
     }
 }
@@ -41,6 +49,10 @@ struct MessagesView: View {
         }
         .onAppear {
             Task {
+                // Lister tous les messages du user_id courant
+                vm.getAllMessages(user_id: user.userId) // user est une globale
+                
+                // A la créatio du message si le contact est nouveau -> créer dans "Users" en plus et avant de "Messages"
                 try await vm.messages(oneContact: oneContact)
             }
         }

@@ -29,13 +29,13 @@ final class MessagesViewModel: ObservableObject {
         }
         
         // Voir si il y a une conversation entre celui qui est loggé et n personnes (moi et d'autres) dans conversations-personnes
-        // (il faut que les deux personnes aient le même n° de conversation) - Table: n°conversaton-userId personne
+        // (il faut que les n personnes aient le même n° de conversation) - Table: n°conversaton-userId personne
         // si il n'y en a pas:
         //      créer une conversation dans Conversation,
-        //      créer les deux personnes avec le même n° de conversation dans conversations-personnes
+        //      créer les n personnes avec le même n° de conversation dans conversations-personnes
         //      créer autant de messages que de personnes dans Messages avec le même n° de conversation
-        // Si un conversation existe cad deux personnes même n° de conversation
-        //     on crée le message avec ce n° de conversation
+        // Si un conversation existe cad n personnes ont le même n° de conversation
+        //     on crée les messages avec ce n° de conversation
         
         // peut être étendu à n personnes...
         

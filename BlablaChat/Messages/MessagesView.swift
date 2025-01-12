@@ -28,14 +28,16 @@ final class MessagesViewModel: ObservableObject {
             let contact_id = try await UsersManager.shared.createUser(email: oneContact.email)
         }
         
-        // Voir si il y a une conversation entre deux personnes dans conversations-personnes
-        // (il faut que les deux personnes aient le même n° de conversation)
+        // Voir si il y a une conversation entre celui qui est loggé et n personnes (moi et d'autres) dans conversations-personnes
+        // (il faut que les deux personnes aient le même n° de conversation) - Table: n°conversaton-userId personne
         // si il n'y en a pas:
         //      créer une conversation dans Conversation,
         //      créer les deux personnes avec le même n° de conversation dans conversations-personnes
-        //      créer le message dans Messages avec le même n° de conversation
+        //      créer autant de messages que de personnes dans Messages avec le même n° de conversation
         // Si un conversation existe cad deux personnes même n° de conversation
         //     on crée le message avec ce n° de conversation
+        
+        // peut être étendu à n personnes...
         
     }
 }

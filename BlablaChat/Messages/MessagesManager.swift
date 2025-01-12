@@ -22,15 +22,15 @@ final class MessagesManager {
         return MessagesCollection.document(user_id)
     }
     
-    // Get all users
-    func getAllMessages(user_id: String) async throws -> [Messages] {
+    // Get mes Messages
+    func getMessages(userId: String) async throws -> [Messages] {
         let snapshot = try await Firestore.firestore().collection("Messages").getDocuments()
         
         var messages = [Messages]()
         
         for document in snapshot.documents {
             let msg = try document.data(as: Messages.self)
-            if msg.from != user_id {
+            if msg.from != userId {
                 messages.append(msg)
             }
         }

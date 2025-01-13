@@ -26,18 +26,18 @@ final class MessagesViewModel: ObservableObject {
     
     @Published var allMessages: [Messages] = []
     
-    //getAllmessages du user_id courant
-    func getAllMessages(userId: String) {
-        
+    // Messages du user
+    func getMessages(userId: String) async throws {
+        allMessages = try await MessagesManager.shared.getMessages(userId: user.userId)
     }
 
     // Création du message
-    func messages(oneContact: ContactModel, userId: String) async throws {
+    func newMessages(oneContact: ContactModel, texteMessage: String) async throws {
         
         // Si le contact n'existe pas dans Users je le crée
-        let contactId =  try? await UsersManager.shared.searchContact(email: oneContact.email)
+        var contactId =  try? await UsersManager.shared.searchContact(email: oneContact.email)
         if contactId == "" {
-            let contactId = try await UsersManager.shared.createUser(email: oneContact.email)
+            contactId = try await UsersManager.shared.createUser(email: oneContact.email)
         }
         
         guard let contactId else { print("MessagesViewModel: pas de contactId"); return }
@@ -53,32 +53,93 @@ final class MessagesViewModel: ObservableObject {
         
         // Création du message avec le n° de salon et le from égal au userId
         try await MessagesManager.shared.newMessage(salonId: salonId, fromId: user.userId, texte: "Hello")
-        
-        
     }
 }
 
 struct MessagesView: View {
-    
     let oneContact: ContactModel
-    
     @StateObject var vm = MessagesViewModel()
-    
+    @State private var texteMessage: String = ""
+    @State var alertTitle: String = ""
+    @State var showAlert: Bool = false
+
     var body: some View {
         List {
-            
+            ForEach(vm.allMessages) { message in
+                Text("\(message)")
+            }
         }
         .onAppear {
             Task {
                 // Lister tous les messages du user_id courant
-                vm.getAllMessages(userId: user.userId) // user est une globale
+                try await vm.getMessages(userId: user.userId) // user est une globale
                 
                 // A la créatio du message si le contact est nouveau -> créer dans "Users" en plus et avant de "Messages"
-                try await vm.messages(oneContact: oneContact, userId: user.userId)
+                // try await vm.newMessages(oneContact: oneContact, )
             }
         }
     }
 }
+
+// Saisie du message
+extension MessagesView {
+    
+    private var MessageBar: some View {
+        HStack {
+            // Selection de la photo
+//            PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
+//                Image(systemName: "photo")
+//                    //.foregroundColor(Color.black)
+//            }
+            
+            // Saisie du message
+            TextField("Message", text: $texteMessage, axis: .vertical)
+                .disableAutocorrection(true)
+            
+            // Envoi du message
+            Image(systemName: "paperplane.circle")
+                .padding()
+                .offset(x:10)
+                .foregroundColor(Color.blue)
+                .opacity(texteMessage.isEmpty ? 0.0 : 1.0)
+                .onTapGesture {
+                    sendButton()
+                }
+        }
+        .font(.headline)
+        .background(
+            RoundedRectangle(cornerRadius: 25)
+                .fill(Color.black.opacity(0.05))
+        )
+        .padding()
+    }
+    
+    // Sauvegarde du message "texte"
+    func sendButton() {
+        if textIsCorrect() {
+            // path.removeAll() // back to LastMessagesView
+            Task {
+                try? await vm.newMessages(oneContact: oneContact, texteMessage: texteMessage)
+                texteMessage = ""
+            }
+        }
+    }
+    
+    func textIsCorrect() -> Bool {
+        if texteMessage.count < 3 {
+            alertTitle = "Saisir un message d'au moins 3 caractères"
+            showAlert.toggle()
+            return false
+        }
+        return true
+    }
+    
+    func getAlert() -> Alert {
+        return Alert(title: Text(alertTitle))
+    }
+
+}
+
 
 #Preview {
     MessagesView(oneContact: ContactModel(prenom: "Marcel", nom: "Leroy", email: "mleroy@test.com"))

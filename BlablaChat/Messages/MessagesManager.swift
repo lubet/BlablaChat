@@ -62,9 +62,48 @@ final class MessagesManager {
             "salon_id" : docId
         ]
         try await userRef.setData(data, merge: false)
-
-        
         return ""
+    }
+
+    // Deux enregs dans Salons-Users avec le même n° de salon, un pour le contact, un pour le user
+    func newSalonUser(salonId: String, contactId: String, userId: String) async throws {
+        let userRef = SalonsUsersCollection.document()
+        
+        let data1: [String:Any] = [
+            "salon_id" : salonId,
+            "user_id" : contactId
+        ]
+        do {
+           try  await userRef.setData(data1, merge: false)
+        }
+        catch {
+            print("newSalonUser-contact: \(error)")
+        }
+        
+        let data2: [String:Any] = [
+            "salon_id" : salonId,
+            "user_id" : userId
+        ]
+        do {
+            try await userRef.setData(data2, merge: false)
+        } catch {
+            print("newSalonUser-user: \(error)")
+        }
+    }
+    
+    func newMessage(salonId: String, fromId: String, texte: String) async throws {
+        let userRef = MessagesCollection.document()
+        
+        let data: [String:Any] = [
+            "salon_id" : salonId,
+            "from_id" : fromId,
+            "texte" : texte
+        ]
+        do {
+            try await userRef.setData(data, merge: false)
+        } catch {
+            print("newMessage: \(error)")
+        }
     }
     
     // Get mes Messages
@@ -75,7 +114,7 @@ final class MessagesManager {
         
         for document in snapshot.documents {
             let msg = try document.data(as: Messages.self)
-            if msg.from != userId {
+            if msg.fromId != userId {
                 messages.append(msg)
             }
         }

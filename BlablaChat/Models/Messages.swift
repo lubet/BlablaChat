@@ -9,25 +9,21 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct Messages: Codable, Identifiable {
-    let id: String
-    let salon_id: String // -> salon
-    let from: String // -> user_id de "Users"
+struct Messages: Identifiable, Codable {
+    let salonId: String
+    let fromId: String
     let texte: String
-    let date_message: Timestamp
+    let dateMessage: Timestamp
+
+    var id: String {
+        salonId
+    }
     
-    init(
-        id: String,
-        salon_id: String,
-        from: String,
-        texte: String,
-        date_message: Timestamp
-    ) {
-        self.id = id
-        self.salon_id = salon_id
-        self.date_message = Timestamp()
-        self.texte = texte
-        self.from = from
+    enum CodingKeys: String, CodingKey {
+        case salonId = "salon_id"
+        case fromId = "from_id"
+        case texte
+        case dateMessage = "date_message"
     }
 
 }

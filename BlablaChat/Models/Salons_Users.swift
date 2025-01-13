@@ -10,8 +10,8 @@
 import Foundation
 
 struct Salons_Users: Codable {
-    let salonId: String // -> Salon
-    let userId: String // -> DBUser
+    let salonId: String // -> Salons
+    let userId: String // -> Users
     
     init(
         salonId: String,

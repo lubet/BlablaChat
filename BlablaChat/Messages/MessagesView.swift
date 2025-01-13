@@ -42,7 +42,7 @@ final class MessagesViewModel: ObservableObject {
         
         guard let contactId else { print("MessagesViewModel: pas de contactId"); return }
         
-        // Recherche du salon des deux interlocuteurs
+        // Recherche du salon dans lequel se trouve les deux interlocuteurs (si il y en a un)
         let salonId = await MessagesManager.shared.searchSalon(contactId: contactId, userId: user.userId)
         
         if salonId == "" { // Pas de salon, j'en crée un dans Salons et je crée deux enregs n°salon,contactI et même n°salon,userId
@@ -52,8 +52,11 @@ final class MessagesViewModel: ObservableObject {
             
             // Création de deux enregs dans salons-users
             
+        } else {
+            // Le salon existe
         }
         
+        // Création du message avec le n° de salon et le from égal au userId
         
         
         

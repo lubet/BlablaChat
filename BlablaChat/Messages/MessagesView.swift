@@ -4,6 +4,17 @@
 //
 //  Created by Lubet-Moncla Xavier on 02/01/2025.
 //
+// Afin de créer un message:
+// Voir si il y a un salon entre la personne qui est loggé et une autre personnes (moi et une autre) dans salons-users
+// (il faut que les 2 personnes aient le même n° de salon) - Table: salons users
+// si il n'y en a pas:
+//      créer un salon dans Salons,
+//      créer les n personnes avec le même n° de salon dans salons-users
+//      créer autant de messages que de personnes dans Messages avec le même n° de salon
+// Si un salon existe cad 2 personnes ont le même n° de salon
+//     on crée les messages avec ce n° de salon
+// peut être étendu à n personnes...
+//
 // 1) Si c'est un nouveau (email non existant dans "Users" -> création dans "Users" (nouveau user_id) -> création dans "Messages"
 // Liste des messages du user_id courant
 //
@@ -23,21 +34,28 @@ final class MessagesViewModel: ObservableObject {
     // Création du message
     func messages(oneContact: ContactModel, userId: String) async throws {
         
-        let contact_id =  try? await UsersManager.shared.searchContact(email: oneContact.email)
-        if contact_id == "" {
-            let contact_id = try await UsersManager.shared.createUser(email: oneContact.email)
+        // Si le contact n'existe pas dans Users je le crée
+        let contactId =  try? await UsersManager.shared.searchContact(email: oneContact.email)
+        if contactId == "" {
+            let contactId = try await UsersManager.shared.createUser(email: oneContact.email)
         }
         
-        // Voir si il y a une conversation entre celui qui est loggé et n personnes (moi et d'autres) dans conversations-personnes
-        // (il faut que les n personnes aient le même n° de conversation) - Table: n°conversaton-userId personne
-        // si il n'y en a pas:
-        //      créer une conversation dans Conversation,
-        //      créer les n personnes avec le même n° de conversation dans conversations-personnes
-        //      créer autant de messages que de personnes dans Messages avec le même n° de conversation
-        // Si un conversation existe cad n personnes ont le même n° de conversation
-        //     on crée les messages avec ce n° de conversation
+        guard let contactId else { print("MessagesViewModel: pas de contactId"); return }
         
-        // peut être étendu à n personnes...
+        // Recherche du salon des deux interlocuteurs
+        let salonId = await MessagesManager.shared.searchSalon(contactId: contactId, userId: user.userId)
+        
+        if salonId == "" { // Pas de salon, j'en crée un dans Salons et je crée deux enregs n°salon,contactI et même n°salon,userId
+            
+            // Création d'un salon
+            let numSalon = try await MessagesManager.shared.newSalon()
+            
+            // Création de deux enregs dans salons-users
+            
+        }
+        
+        
+        
         
     }
 }

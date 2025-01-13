@@ -9,15 +9,15 @@
  
 import Foundation
 
-struct Salons_Users {
-    let salon_id: String // -> Salon
+struct Salons_Users: Codable {
+    let salonId: String // -> Salon
     let userId: String // -> DBUser
     
     init(
-        salon_id: String,
+        salonId: String,
         userId: String
     ) {
-        self.salon_id = salon_id
+        self.salonId = salonId
         self.userId = userId
     }
 

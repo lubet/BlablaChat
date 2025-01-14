@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 import AuthenticationServices
 
 // Globales
-var user: DBUser = DBUser(id: "", email: "", dateCreated: Timestamp(), avatarLink: "", userId: "")
+// var user: DBUser = DBUser(id: "", email: "", dateCreated: Timestamp(), avatarLink: "", userId: "")
 
 @MainActor
 final class AuthenticationViewModel: ObservableObject {

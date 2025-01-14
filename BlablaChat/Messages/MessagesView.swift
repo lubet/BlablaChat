@@ -9,13 +9,15 @@
 // (il faut que les 2 personnes aient le même n° de salon) - Table: salons users
 // si il n'y en a pas:
 //      créer un salon dans Salons,
-//      créer les n personnes avec le même n° de salon dans salons-users
-//      créer autant de messages que de personnes dans Messages avec le même n° de salon
+//      créer les 2 personnes avec le même n° de salon dans salons-users
+//      créer le message dans Messages avec le même n° de salon et le from = userId
 // Si un salon existe cad 2 personnes ont le même n° de salon
-//     on crée les messages avec ce n° de salon
-// peut être étendu à n personnes...
+//     on crée le message avec ce n° de salon
+// (peut être étendu à n personnes... à voir plus tard)
 //
-// 1) Si c'est un nouveau (email non existant dans "Users" -> création dans "Users" (nouveau user_id) -> création dans "Messages"
+// 1) Si c'est un nouveau contact (email non existant dans "Users" -> création dans "Users" (nouveau userId)
+// forcemment je n'ai pas de salon -> création d'un salon et de deux enregs salons-users avec le même n° de salon.
+// Création du message ave le n° de salon et fromId = userId
 // Liste des messages du user_id courant
 //
 
@@ -48,18 +50,24 @@ final class MessagesViewModel: ObservableObject {
         // Pas de salon, j'en crée un dans Salons et je crée deux enregs n°salon,contactI et même n°salon,userId
         if salonId == "" {
             salonId = try await MessagesManager.shared.newSalon()
+            
+            print("salonId: \(salonId) - contactId: \(contactId) - userId: \(user.userId)")
+            
             try await MessagesManager.shared.newSalonUser(salonId: salonId, contactId: contactId, userId: user.userId)
         }
         
-        // Création du message avec le n° de salon et le from égal au userId
+        // Création du message avec le n° de salon et le fromId égal au userId
         try await MessagesManager.shared.newMessage(salonId: salonId, fromId: user.userId, texte: "Hello")
     }
 }
 
 struct MessagesView: View {
-    let oneContact: ContactModel
+    let oneContact: ContactModel // <- ContactsView
+    
     @StateObject var vm = MessagesViewModel()
+    
     @State private var texteMessage: String = ""
+    
     @State var alertTitle: String = ""
     @State var showAlert: Bool = false
 
@@ -78,6 +86,10 @@ struct MessagesView: View {
                 // try await vm.newMessages(oneContact: oneContact, )
             }
         }
+        MessageBar
+            .alert(isPresented: $showAlert) {
+                getAlert()
+            }
     }
 }
 

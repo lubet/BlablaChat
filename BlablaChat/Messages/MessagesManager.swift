@@ -54,15 +54,17 @@ final class MessagesManager {
         return ""
     }
     
+    // Création d'un nouveau salon
     func newSalon() async throws -> String {
         let userRef = SalonsCollection.document()
         let docId = userRef.documentID
         
         let data: [String:Any] = [
-            "salon_id" : docId
+            "salon_id" : docId,
+            "date_created" : Timestamp()
         ]
         try await userRef.setData(data, merge: false)
-        return ""
+        return docId
     }
 
     // Deux enregs dans Salons-Users avec le même n° de salon, un pour le contact, un pour le user

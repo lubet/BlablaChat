@@ -24,7 +24,8 @@ final class UsersManager {
     }
     
     func createDbUser() async throws {
-        try userDocument(user_id: user.id).setData(from: user, merge: false)
+        let user = try UsersManager.shared.getUser()
+        try userDocument(user_id: user.id).setData(from: user.userId, merge: false)
     }
     
     func updateImagePath(userId: String, path: String) async throws {
@@ -138,6 +139,7 @@ final class UsersManager {
     
     // Création de l'avatar dans "Storage" et maj de l'avatar dans "Users"
     func updateAvatar(mimage: UIImage) async throws {
+        let user = try UsersManager.shared.getUser()
         let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: user.userId)
         let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
         try await UsersManager.shared.updateImagePath(userId: user.userId, path: lurl.absoluteString) // maj Firestore
@@ -172,5 +174,16 @@ final class UsersManager {
         } catch {
             print("**** signOut failed")
         }
+    }
+    
+    func getUser() throws -> DBUser {
+        
+        enum MyError: Error {
+            case runtimeError(String)
+        }
+        
+        guard let data = UserDefaults.standard.data(forKey: "saveuser") else { throw MyError.runtimeError("getUser - UserDefaults") }
+        guard let savedUser = try? JSONDecoder().decode(DBUser.self, from: data) else { throw MyError.runtimeError("getUser - JSONDecoder") }
+        return savedUser
     }
 }

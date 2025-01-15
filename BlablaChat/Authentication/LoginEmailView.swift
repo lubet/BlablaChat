@@ -31,9 +31,11 @@ final class LoginEmailViewModel: ObservableObject {
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
         
         // Création de l'authentification dans la base "Users" + des champs qui sont rajouées (voir modèle DBUser)
-        let user = DBUser(auth: authUser)
-        
-        // print("\(user)")
+        let dbuser = DBUser(auth: authUser)
+        // UserDefaults - Save user
+        if let encodedData = try? JSONEncoder().encode(dbuser) {
+            UserDefaults.standard.set(encodedData, forKey: "saveuser")
+        }
 
         try await UsersManager.shared.createDbUser() // sans l'image
         

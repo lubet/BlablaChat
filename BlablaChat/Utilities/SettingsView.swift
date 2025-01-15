@@ -20,15 +20,12 @@ final class SettingsViewModel: ObservableObject {
     @Published var authProviders: [AuthProviderOption] = []
     
     func loadAvatar() async throws {
-        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        let user_id = authUser.uid
-        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user_id)
+        let user = try UsersManager.shared.getUser()
+        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user.userId)
     }
     
     // TODO
     func updateAvatar() async throws {
-        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { return }
-        let user_id = authUser.uid
         if let newImageAvatar = newImageAvatar {
             try await UsersManager.shared.updateAvatar(mimage: newImageAvatar)
         }
@@ -68,9 +65,8 @@ final class SettingsViewModel: ObservableObject {
     }
     
     func resetPassword() async throws {
-        let authUser = try AuthManager.shared.getAuthenticatedUser()
-        
-        guard let email = authUser.email else {
+        let user = try UsersManager.shared.getUser()
+        guard let email = user.email else {
             throw URLError(.fileDoesNotExist)
         }
         
@@ -80,23 +76,6 @@ final class SettingsViewModel: ObservableObject {
     func updateEmail() async throws {
         let newEmail = "TODO une view de saisir du nouveau email"
         try await UsersManager.shared.updateEmail(email: newEmail)
-    }
-    
-    func isMaster() async throws {
-        let authUser = try AuthManager.shared.getAuthenticatedUser()
-        
-        guard let email = authUser.email else {
-            throw URLError(.fileDoesNotExist)
-        }
-
-        isMaster = false // logout
-        
-//        if email == "leroy@test.com"{
-//            isMaster = true
-//        } else {
-//            isMaster = false
-//        }
-        
     }
 }
 
@@ -160,7 +139,6 @@ struct SettingsView: View {
         .onAppear {
             Task {
                 try await viewModel.loadAvatar()
-                try await viewModel.isMaster()
             }
             viewModel.loadAuthProviders()
         }

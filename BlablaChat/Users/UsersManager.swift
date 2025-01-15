@@ -38,16 +38,14 @@ final class UsersManager {
     
     // Get all users sauf moi
     func getAllUsers() async throws -> [DBUser] {
-        let authUser = try AuthManager.shared.getAuthenticatedUser()
-        let user_id = authUser.uid
-        
+        let user = try UsersManager.shared.getUser()
         let snapshot = try await Firestore.firestore().collection("users").getDocuments()
         
         var dbUsers = [DBUser]()
         
         for document in snapshot.documents {
             let user = try document.data(as: DBUser.self)
-            if user.userId != user_id {
+            if user.userId != user.userId {
                 dbUsers.append(user)
             }
         }

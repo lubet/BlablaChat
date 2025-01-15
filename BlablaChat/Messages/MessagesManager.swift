@@ -69,6 +69,8 @@ final class MessagesManager {
 
     // Deux enregs dans Salons-Users avec le même n° de salon, un pour le contact, un pour le user
     func newSalonUser(salonId: String, contactId: String, userId: String) async throws {
+        
+        // Le contact
         let userRef = SalonsUsersCollection.document()
         
         let data1: [String:Any] = [
@@ -82,12 +84,15 @@ final class MessagesManager {
             print("newSalonUser-contact: \(error)")
         }
         
+        // Le user
+        let userRef2 = SalonsUsersCollection.document()
+        
         let data2: [String:Any] = [
             "salon_id" : salonId,
             "user_id" : userId
         ]
         do {
-            try await userRef.setData(data2, merge: false)
+            try await userRef2.setData(data2, merge: false)
         } catch {
             print("newSalonUser-user: \(error)")
         }

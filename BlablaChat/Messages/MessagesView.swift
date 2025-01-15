@@ -83,10 +83,7 @@ struct MessagesView: View {
             Task {
                 // Lister tous les messages du user_id courant
                 let user = try UsersManager.shared.getUser()
-                try await vm.getMessages(userId: user.userId) // user est une globale
-                
-                // A la créatio du message si le contact est nouveau -> créer dans "Users" en plus et avant de "Messages"
-                // try await vm.newMessages(oneContact: oneContact, )
+                try await vm.getMessages(userId: user.userId)
             }
         }
         MessageBar

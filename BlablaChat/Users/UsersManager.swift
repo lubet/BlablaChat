@@ -19,13 +19,14 @@ final class UsersManager {
     
     private let DBUserCollection = dbFS.collection("users")
     
-    private func userDocument(user_id:String) -> DocumentReference {
+    private func userDocument(user_id: String) -> DocumentReference {
         return DBUserCollection.document(user_id)
     }
     
-    func createDbUser() async throws {
-        let user = try UsersManager.shared.getUser()
-        try userDocument(user_id: user.id).setData(from: user.userId, merge: false)
+    // Création du user dans la base "users"
+    func createDbUser(user: DBUser) async throws {
+        print("createDbUser: \(user)")
+        try userDocument(user_id: user.userId).setData(from: user, merge: false)
     }
     
     func updateImagePath(userId: String, path: String) async throws {

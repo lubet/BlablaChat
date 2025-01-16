@@ -23,6 +23,10 @@ final class UsersManager {
         return DBUserCollection.document(user_id)
     }
     
+    private func userDocument(email:String) -> DocumentReference {
+        return DBUserCollection.document(email)
+    }
+    
     // Création du user dans la base "users"
     func createDbUser(user: DBUser) async throws {
         print("createDbUser: \(user)")
@@ -75,14 +79,11 @@ final class UsersManager {
         return ""
     }
     
-    // --------------------------------------------------------------
-    
-    // ---------------------------------------------------
-    
     //-----------------------------------------------------------------
     
     // Recherche du contact dans la base "users"
     func searchContact(email: String) async throws -> String {
+        print("searchContact email:\(email)")
         do {
             let querySnapshot = try await DBUserCollection
                 .whereField("email", isEqualTo: email)
@@ -130,7 +131,7 @@ final class UsersManager {
                 }
             }
         } catch {
-            print("searchContact - Error getting documents: \(error)")
+            print("searchEmail - Error getting documents: \(error)")
         }
         return ("","")
         

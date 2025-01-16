@@ -8,6 +8,7 @@
 // Selection d'un contact
 // Passage du contact à la view Messages
 //
+// ContactsView -> MessagesView
 
 import SwiftUI
 import Contacts
@@ -18,9 +19,9 @@ final class ContactsViewModel: ObservableObject {
     @Published var contacts: [ContactModel] = []
     @Published var searchText: String = ""
     
+    // Recherche contacts
     var filteredContacts: [ContactModel] {
         guard !searchText.isEmpty else { return contacts}
-        
         return contacts.filter { oneContact in
             oneContact.nom.lowercased().contains(searchText.lowercased())
         }

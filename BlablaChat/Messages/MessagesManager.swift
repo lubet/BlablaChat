@@ -29,8 +29,9 @@ final class MessagesManager {
     
     private let SalonsCollection = dbFS.collection("Salons")
     
-    // Recherche du salon des interlocuteurs
+    // Voir si le contact et le user existe déjà dans Salons-Users
     func searchSalon(contactId: String, userId: String) async -> String {
+        print("contactId: \(contactId) - userId: \(userId)")
         do {
             let salonsUsersSnapshot = try await SalonsUsersCollection.whereFilter(Filter.orFilter([
                 Filter.andFilter([

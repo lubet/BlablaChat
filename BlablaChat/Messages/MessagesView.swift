@@ -38,10 +38,12 @@ final class MessagesViewModel: ObservableObject {
     func newMessages(oneContact: ContactModel, texteMessage: String) async throws {
         let user = try UsersManager.shared.getUser()
         
+        print("newMessages email: \(oneContact.email)")
+        
         // Si le contact n'existe pas dans Users je le crée
         var contactId =  try? await UsersManager.shared.searchContact(email: oneContact.email)
         if contactId == "" {
-            contactId = try await UsersManager.shared.createUser(email: oneContact.email)
+            contactId = try await UsersManager.shared.createUser(email: oneContact.email) // TODO créer le contact dans la base - voir les champs
         }
         
         guard let contactId else { print("MessagesViewModel: pas de contactId"); return }
@@ -93,7 +95,7 @@ struct MessagesView: View {
     }
 }
 
-// Saisie du message
+// Barre de saisie et d'envoie du message
 extension MessagesView {
     
     private var MessageBar: some View {

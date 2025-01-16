@@ -4,6 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 03/01/2024.
 //
+// LoginEmailView signIn/signUp -> RootView
 
 import SwiftUI
 import SDWebImage

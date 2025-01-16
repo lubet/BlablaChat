@@ -29,29 +29,26 @@ final class MessagesManager {
     
     private let SalonsCollection = dbFS.collection("Salons")
     
-    // Voir si le contact et le user existe déjà dans Salons-Users
-    func searchSalon(contactId: String, userId: String) async -> String {
-        print("contactId: \(contactId) - userId: \(userId)")
+    // Voir si le contact et le user existe déjà dans Salons-Users, la paire ne devrait exister qu'une fois ou ne pas exister
+    func searchSalonUsers(contactId: String, userId: String) async -> String {
         do {
             let salonsUsersSnapshot = try await SalonsUsersCollection.whereFilter(Filter.orFilter([
-                Filter.andFilter([
-                    Filter.whereField("userId", isEqualTo: userId),
-                ]),
-                Filter.andFilter([
-                    Filter.whereField("userId", isEqualTo: contactId),
-                ])
-            ])
-            ).getDocuments()
+                Filter.whereField("userId", isEqualTo: userId),
+                Filter.whereField("userId", isEqualTo: contactId)
+                ]))
+                .getDocuments()
             
             for duo in salonsUsersSnapshot.documents {
                 let duo = try duo.data(as: Salons_Users.self)
                 let salonId = duo.salonId
+                print("searchSalonUsers - La pair \(contactId)-\(userId) existe")
                 return salonId
             }
         } catch {
-            print("searchSalon - Error getting documents from members: \(error)")
+            print("searchSalonUsers - Error getting documents from Salons-Users: \(error)")
         }
-        print("searchSalon - La paire n'existe pas dans members")
+        print("searchSalonUsers - La paire n'existe pas dans Salons-Users")
+        print("searchSalonUsers \(contactId) \(userId)")
         return ""
     }
     
@@ -68,12 +65,10 @@ final class MessagesManager {
         return docId
     }
 
-    // Deux enregs dans Salons-Users avec le même n° de salon, un pour le contact, un pour le user
-    func newSalonUser(salonId: String, contactId: String, userId: String) async throws {
-        
+    // Création d'un enreg user et d'un enreg contact dans Salons-Users avec le mêm n° de salon.
+    func newSalonsUsers(salonId: String, contactId: String, userId: String) async throws {
         // Le contact
         let userRef = SalonsUsersCollection.document()
-        
         let data1: [String:Any] = [
             "salon_id" : salonId,
             "user_id" : contactId

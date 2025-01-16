@@ -9,14 +9,23 @@
  
 import Foundation
 
-struct Salons_Users: Codable {
+struct Salons_Users: Identifiable, Codable {
+    let id: String
     let salonId: String // -> Salons
     let userId: String // -> Users
     
+    enum CodingKeys: String, CodingKey {
+        case id
+        case salonId = "salon_id"
+        case userId = "user_id"
+    }
+    
     init(
+        id: String,
         salonId: String,
         userId: String
     ) {
+        self.id = id
         self.salonId = salonId
         self.userId = userId
     }

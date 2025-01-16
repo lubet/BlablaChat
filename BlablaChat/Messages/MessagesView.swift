@@ -43,21 +43,18 @@ final class MessagesViewModel: ObservableObject {
         // Si le contact n'existe pas dans Users je le crée
         var contactId =  try? await UsersManager.shared.searchContact(email: oneContact.email)
         if contactId == "" {
-            contactId = try await UsersManager.shared.createUser(email: oneContact.email) // TODO créer le contact dans la base - voir les champs
+            contactId = try await UsersManager.shared.createUser(email: oneContact.email)
         }
         
         guard let contactId else { print("MessagesViewModel: pas de contactId"); return }
         
-        // Recherche du salon dans lequel se trouve les deux interlocuteurs (si il y en a un)
-        var salonId = await MessagesManager.shared.searchSalon(contactId: contactId, userId: user.userId)
+        // Recherche dans Salons-Users des deux interlocuteurs
+        var salonId = await MessagesManager.shared.searchSalonUsers(contactId: contactId, userId: user.userId)
         
-        // Pas de salon, j'en crée un dans Salons et je crée deux enregs n°salon,contactI et même n°salon,userId
+        // Pas de salons_users, je crée deux enregs n°salon,contactI et un dans Salon
         if salonId == "" {
             salonId = try await MessagesManager.shared.newSalon()
-            
-            print("salonId: \(salonId) - contactId: \(contactId) - userId: \(user.userId)")
-            
-            try await MessagesManager.shared.newSalonUser(salonId: salonId, contactId: contactId, userId: user.userId)
+            try await MessagesManager.shared.newSalonsUsers(salonId: salonId, contactId: contactId, userId: user.userId)
         }
         
         // Création du message avec le n° de salon et le fromId égal au userId

@@ -107,9 +107,11 @@ final class UsersManager {
         let user_id = userRef.documentID
         
         let data: [String:Any] = [
-            "user_id" : user_id,
+            "avatar_link": "",
+            "date_created" : Timestamp(),
             "email": email,
-            "date_created" : Timestamp()
+            "id" : user_id,
+            "user_id" : user_id
         ]
         try await userRef.setData(data, merge: false)
         

@@ -37,10 +37,6 @@ final class MessagesViewModel: ObservableObject {
     // Création du message
     func newMessages(oneContact: ContactModel, texteMessage: String) async throws {
         let user = try UsersManager.shared.getUser()
-
-        // await MessagesManager.shared.essai()
-        
-        print("newMessages email: \(oneContact.email)")
         
         // Si le contact n'existe pas dans Users je le crée
         var contactId =  try? await UsersManager.shared.searchContact(email: oneContact.email)
@@ -50,18 +46,18 @@ final class MessagesViewModel: ObservableObject {
         
         guard let contactId else { print("MessagesViewModel: pas de contactId"); return }
         
-        // Recherche dans Salons-Users des deux interlocuteurs
+        // Recherche do salonId commun au contact et au user
         var salonId = try await MessagesManager.shared.searchSalonsUsers(contactId: contactId, userId: user.userId)
         
-        
-        // Pas de salons_users, je crée deux enregs n°salon,contactI et un dans Salon
+        // Pas de salonsId
         if salonId == "" {
-            salonId = try await MessagesManager.shared.newSalon()
+            salonId = try await MessagesManager.shared.newSalon() // Création d'un salon
             
+            // Création contact et user même salon dans Salons-Users
             try await MessagesManager.shared.newSalonsUsers(salonId: salonId, contactId: contactId, userId: user.userId)
         }
         
-        // Création du message avec le n° de salon et le fromId égal au userId
+        // Création du message avec le n° de salon et le fromId égal au user
         try await MessagesManager.shared.newMessage(salonId: salonId, fromId: user.userId, texte: "Hello")
     }
 }

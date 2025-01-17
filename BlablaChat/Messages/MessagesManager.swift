@@ -28,28 +28,30 @@ final class MessagesManager {
     // ---------------------------------------------------------------
     
     private let SalonsCollection = dbFS.collection("Salons")
-    
-    // Voir si le contact et le user existe déjà dans Salons-Users, la paire ne devrait exister qu'une fois ou ne pas exister
+     
+    // Recherche do salonId commun au contact et au user
     func searchSalonsUsers(contactId: String, userId: String) async throws -> String {
+        
+        // Tous les mêmes contactId
         do {
-            
-            let query = try await SalonsUsersCollection.whereFilter(Filter.orFilter([
-                Filter.whereField("user_id", isEqualTo: contactId),
-                Filter.whereField("user_id", isEqualTo : userId)
-                ]))
+            let lesContactId = try await SalonsUsersCollection.whereField("user_id", isEqualTo: contactId)
                 .getDocuments()
-            
-            for doc in query.documents {
-                let duo = try doc.data(as: Salons_Users.self)
-                let salon_id = duo.salonId
-                print("searchSalonUsers - La pair \(contactId)-\(userId) existe")
-                print(salon_id)
+            let lesUserId = try await SalonsUsersCollection.whereField("user_id", isEqualTo: userId)
+                .getDocuments()
+            for oneContact in lesContactId.documents {
+                let onecontact = try oneContact.data(as: Salons_Users.self)
+                let contactSalonId = onecontact.salonId
+                for oneUser in lesUserId.documents {
+                    let oneuser = try oneUser.data(as: Salons_Users.self)
+                    if (oneuser.salonId == contactSalonId) {
+                        return contactSalonId
+                    }
+                }
             }
         } catch {
-            print("searchSalonUsers - Error getting documents from Salons_Users: \(error)")
+            print("searchSalonUsers-erreurs:\(error)")
         }
-        print("searchSalonUsers - La paire n'existe pas dans Salons_Users")
-        print("searchSalonUsers \(contactId) \(userId)")
+        print("searchSalonUsers-Pas de n° de salon en commun pour contact et user")
         return ""
     }
     

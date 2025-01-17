@@ -87,8 +87,10 @@ final class MessagesManager {
     func newSalonsUsers(salonId: String, contactId: String, userId: String) async throws {
         // Le contact
         let userRef = SalonsUsersCollection.document()
+        let docId1 = userRef.documentID
         
         let data1: [String:Any] = [
+            "id" : docId1,
             "salon_id" : salonId,
             "user_id" : contactId
         ]
@@ -101,9 +103,10 @@ final class MessagesManager {
         
         // Le user
         let userRef2 = SalonsUsersCollection.document()
+        let docId2 = userRef2.documentID
         
         let data2: [String:Any] = [
-            "id" : UUID().uuidString,
+            "id" : docId2,
             "salon_id" : salonId,
             "user_id" : userId
         ]

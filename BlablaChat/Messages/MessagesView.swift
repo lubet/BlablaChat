@@ -29,7 +29,7 @@ final class MessagesViewModel: ObservableObject {
     @Published var allMessages: [Messages] = []
     
     // Messages du user
-    func getMessages(userId: String) async throws {
+    func getMessages() async throws {
         let user = try UsersManager.shared.getUser()
         allMessages = try await MessagesManager.shared.getMessages(userId: user.userId)
     }
@@ -60,7 +60,7 @@ final class MessagesViewModel: ObservableObject {
         }
         
         // Création du message avec le n° de salon et le fromId égal au user
-        try await MessagesManager.shared.newMessage(salonId: salonId, fromId: user.userId, texte: "Hello")
+        try await MessagesManager.shared.newMessage(salonId: salonId, fromId: user.userId, texte: texteMessage)
     }
 }
 
@@ -82,9 +82,7 @@ struct MessagesView: View {
         }
         .onAppear {
             Task {
-                // Lister tous les messages du user_id courant
-                let user = try UsersManager.shared.getUser()
-                try await vm.getMessages(userId: user.userId)
+                try await vm.getMessages()
             }
         }
         MessageBar

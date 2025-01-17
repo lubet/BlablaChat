@@ -58,7 +58,7 @@ final class ContactsViewModel: ObservableObject {
         contacts.append(ContactModel(prenom: "Marcel", nom: "Leroy", email: "mleroy@test.com"))
         contacts.append(ContactModel(prenom: "Robert", nom: "Gured", email: "rgured@test.com"))
         contacts.append(ContactModel(prenom: "Roger", nom: "Dujou", email: "rdujou@test.com"))
-        contacts.append(ContactModel(prenom: "Albert", nom: "Lafon", email: "rdujou@test.com"))
+        contacts.append(ContactModel(prenom: "Albert", nom: "Lafon", email: "alafon@test.com"))
     }
 }
 

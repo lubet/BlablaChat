@@ -37,6 +37,8 @@ final class MessagesViewModel: ObservableObject {
     // Création du message
     func newMessages(oneContact: ContactModel, texteMessage: String) async throws {
         let user = try UsersManager.shared.getUser()
+
+        // await MessagesManager.shared.essai()
         
         print("newMessages email: \(oneContact.email)")
         
@@ -49,11 +51,13 @@ final class MessagesViewModel: ObservableObject {
         guard let contactId else { print("MessagesViewModel: pas de contactId"); return }
         
         // Recherche dans Salons-Users des deux interlocuteurs
-        var salonId = await MessagesManager.shared.searchSalonUsers(contactId: contactId, userId: user.userId)
+        var salonId = try await MessagesManager.shared.searchSalonsUsers(contactId: contactId, userId: user.userId)
+        
         
         // Pas de salons_users, je crée deux enregs n°salon,contactI et un dans Salon
         if salonId == "" {
             salonId = try await MessagesManager.shared.newSalon()
+            
             try await MessagesManager.shared.newSalonsUsers(salonId: salonId, contactId: contactId, userId: user.userId)
         }
         

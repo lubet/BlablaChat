@@ -23,34 +23,50 @@ final class MessagesManager {
     
     // --------------------------------------------------------------
     
-    private let SalonsUsersCollection = dbFS.collection("Salons-Users")
+    private let SalonsUsersCollection = dbFS.collection("Salons_Users")
     
     // ---------------------------------------------------------------
     
     private let SalonsCollection = dbFS.collection("Salons")
     
     // Voir si le contact et le user existe déjà dans Salons-Users, la paire ne devrait exister qu'une fois ou ne pas exister
-    func searchSalonUsers(contactId: String, userId: String) async -> String {
+    func searchSalonsUsers(contactId: String, userId: String) async throws -> String {
         do {
-            let salonsUsersSnapshot = try await SalonsUsersCollection.whereFilter(Filter.orFilter([
-                Filter.whereField("userId", isEqualTo: userId),
-                Filter.whereField("userId", isEqualTo: contactId)
+            
+            let query = try await SalonsUsersCollection.whereFilter(Filter.orFilter([
+                Filter.whereField("user_id", isEqualTo: contactId),
+                Filter.whereField("user_id", isEqualTo : userId)
                 ]))
                 .getDocuments()
             
-            for duo in salonsUsersSnapshot.documents {
-                let duo = try duo.data(as: Salons_Users.self)
-                let salonId = duo.salonId
+            for doc in query.documents {
+                let duo = try doc.data(as: Salons_Users.self)
+                let salon_id = duo.salonId
                 print("searchSalonUsers - La pair \(contactId)-\(userId) existe")
-                return salonId
+                print(salon_id)
             }
         } catch {
-            print("searchSalonUsers - Error getting documents from Salons-Users: \(error)")
+            print("searchSalonUsers - Error getting documents from Salons_Users: \(error)")
         }
-        print("searchSalonUsers - La paire n'existe pas dans Salons-Users")
+        print("searchSalonUsers - La paire n'existe pas dans Salons_Users")
         print("searchSalonUsers \(contactId) \(userId)")
         return ""
     }
+    
+    // OK
+    func essai() async {
+        do {
+            let querySnapshot = try await SalonsUsersCollection.whereField("user_id", isEqualTo: "oGemyMofBw1At8sC2lcX")
+                .getDocuments()
+            for document in querySnapshot.documents {
+                print("essai*****:\(document.documentID) => \(document.data())")
+            }
+        } catch {
+            print("Error getting documents: \(error)")
+        }
+        print("Pas trouvé **********")
+    }
+    
     
     // Création d'un nouveau salon
     func newSalon() async throws -> String {
@@ -70,6 +86,7 @@ final class MessagesManager {
         // Le contact
         let userRef = SalonsUsersCollection.document()
         let data1: [String:Any] = [
+            "id" : UUID().uuidString,
             "salon_id" : salonId,
             "user_id" : contactId
         ]
@@ -84,6 +101,7 @@ final class MessagesManager {
         let userRef2 = SalonsUsersCollection.document()
         
         let data2: [String:Any] = [
+            "id" : UUID().uuidString,
             "salon_id" : salonId,
             "user_id" : userId
         ]

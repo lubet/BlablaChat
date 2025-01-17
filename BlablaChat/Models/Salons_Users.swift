@@ -15,7 +15,7 @@ struct Salons_Users: Identifiable, Codable {
     let userId: String // -> Users
     
     enum CodingKeys: String, CodingKey {
-        case id
+        case id = "id"
         case salonId = "salon_id"
         case userId = "user_id"
     }

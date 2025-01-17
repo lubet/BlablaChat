@@ -83,7 +83,6 @@ final class UsersManager {
     
     // Recherche du contact dans la base "users"
     func searchContact(email: String) async throws -> String {
-        print("searchContact email:\(email)")
         do {
             let querySnapshot = try await DBUserCollection
                 .whereField("email", isEqualTo: email)

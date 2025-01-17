@@ -39,11 +39,11 @@ final class MessagesManager {
             let lesUserId = try await SalonsUsersCollection.whereField("user_id", isEqualTo: userId)
                 .getDocuments()
             for oneContact in lesContactId.documents {
-                let onecontact = try oneContact.data(as: Salons_Users.self)
-                let contactSalonId = onecontact.salonId
+                let cont = try oneContact.data(as: Salons_Users.self)
+                let contactSalonId = cont.salonId
                 for oneUser in lesUserId.documents {
-                    let oneuser = try oneUser.data(as: Salons_Users.self)
-                    if (oneuser.salonId == contactSalonId) {
+                    let oneus = try oneUser.data(as: Salons_Users.self)
+                    if (oneus.salonId == contactSalonId) {
                         return contactSalonId
                     }
                 }
@@ -87,8 +87,8 @@ final class MessagesManager {
     func newSalonsUsers(salonId: String, contactId: String, userId: String) async throws {
         // Le contact
         let userRef = SalonsUsersCollection.document()
+        
         let data1: [String:Any] = [
-            "id" : UUID().uuidString,
             "salon_id" : salonId,
             "user_id" : contactId
         ]
@@ -116,8 +116,10 @@ final class MessagesManager {
     
     func newMessage(salonId: String, fromId: String, texte: String) async throws {
         let userRef = MessagesCollection.document()
+        let id = userRef.documentID
         
         let data: [String:Any] = [
+            "id" : id,
             "salon_id" : salonId,
             "from_id" : fromId,
             "texte" : texte

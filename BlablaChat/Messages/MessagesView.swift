@@ -38,8 +38,10 @@ final class MessagesViewModel: ObservableObject {
     func newMessages(oneContact: ContactModel, texteMessage: String) async throws {
         let user = try UsersManager.shared.getUser()
         
-        // Si le contact n'existe pas dans Users je le crée
+        // Recherche du contact dans la base "Users"
         var contactId =  try? await UsersManager.shared.searchContact(email: oneContact.email)
+        
+        // Création dans "Users" si pas présent
         if contactId == "" {
             contactId = try await UsersManager.shared.createUser(email: oneContact.email)
         }

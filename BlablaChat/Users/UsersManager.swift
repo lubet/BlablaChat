@@ -40,16 +40,18 @@ final class UsersManager {
         try await userDocument(user_id: userId).updateData(data)
     }
     
-    // Get all users sauf moi
+    // Get all users sauf le userSigned
     func getAllUsers() async throws -> [DBUser] {
-        let user = try UsersManager.shared.getUser()
-        let snapshot = try await Firestore.firestore().collection("users").getDocuments()
+        let userSigned = try UsersManager.shared.getUser()
+        let userId = userSigned.userId
+        
+        let snapshot = try await DBUserCollection.getDocuments()
         
         var dbUsers = [DBUser]()
         
         for document in snapshot.documents {
             let user = try document.data(as: DBUser.self)
-            if user.userId != user.userId {
+            if user.userId != userId {
                 dbUsers.append(user)
             }
         }

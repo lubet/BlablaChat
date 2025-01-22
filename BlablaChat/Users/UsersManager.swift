@@ -29,7 +29,6 @@ final class UsersManager {
     
     // Création du user dans la base "users"
     func createDbUser(user: DBUser) async throws {
-        print("createDbUser: \(user)")
         try userDocument(user_id: user.userId).setData(from: user, merge: false)
     }
     

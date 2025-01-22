@@ -29,7 +29,7 @@ final class MessagesViewModel: ObservableObject {
     @Published var allMessages: [Messages] = []
     
     // Messages du user
-    func getMessages() async throws {
+    func allMyMessages() async throws {
         let user = try UsersManager.shared.getUser()
         allMessages = try await MessagesManager.shared.getMessages(userId: user.userId)
     }
@@ -77,12 +77,12 @@ struct MessagesView: View {
     var body: some View {
         List {
             ForEach(vm.allMessages) { message in
-                Text("\(message)")
+                Text("\(message.texte)")
             }
         }
         .onAppear {
             Task {
-                try await vm.getMessages()
+                try await vm.allMyMessages()
             }
         }
         MessageBar

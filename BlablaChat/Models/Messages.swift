@@ -20,7 +20,7 @@ struct Messages: Identifiable, Codable {
         case id = "id"
         case salonId = "salon_id"
         case fromId = "from_id"
-        case texte
+        case texte = "texte"
         case dateMessage = "date_message"
     }
 

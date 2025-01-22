@@ -13,6 +13,7 @@ import FirebaseFirestoreSwift
 struct Salons: Identifiable, Codable {
     let salonId: String
     let dateCreated: Timestamp
+    let lastMessage: String
     
     var id: String {
         salonId
@@ -21,5 +22,6 @@ struct Salons: Identifiable, Codable {
     enum CodingKeys: String, CodingKey {
         case salonId = "salon_id"
         case dateCreated = "date_created"
+        case lastMessage = "last_message"
     }
 }

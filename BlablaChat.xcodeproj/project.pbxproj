@@ -24,6 +24,7 @@
 		C047E9DB2B45652000C6D48F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C047E9DA2B45652000C6D48F /* FirebaseStorage */; };
 		C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9DD2B45668800C6D48F /* ImagePicker.swift */; };
 		C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9DF2B45767B00C6D48F /* AuthManager.swift */; };
+		C0524A102D3E695400630778 /* MessageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0524A0F2D3E695400630778 /* MessageRowView.swift */; };
 		C068CD3B2BCD769E0072A797 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */; };
 		C068E8BF2D36B1AF001964E7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C068E8BE2D36B1AF001964E7 /* SettingsView.swift */; };
 		C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */; };
@@ -49,7 +50,6 @@
 		C0EB0C252D3327FE001DB090 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EB0C242D3327FE001DB090 /* ContactsView.swift */; };
 		C0EB0C272D3328FB001DB090 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EB0C262D3328FB001DB090 /* ContactRowView.swift */; };
 		C0EE66AC2B62654A002F13EB /* MessageBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE66AB2B62654A002F13EB /* MessageBarView.swift */; };
-		C0F6C9C72D1C8F1100BE471E /* Salons_Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F6C9C62D1C8F1100BE471E /* Salons_Users.swift */; };
 		C0F6C9C92D1C8FA300BE471E /* Salons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F6C9C82D1C8FA300BE471E /* Salons.swift */; };
 		C0FAA0922C241DD90009DFF7 /* EmailShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FAA0912C241DD90009DFF7 /* EmailShort.swift */; };
 		C0FAA0942C242C340009DFF7 /* MessageShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FAA0932C242C340009DFF7 /* MessageShort.swift */; };
@@ -73,6 +73,7 @@
 		C047E9DD2B45668800C6D48F /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		C047E9DF2B45767B00C6D48F /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		C04C3A7A2C85C7CD0044B21B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		C0524A0F2D3E695400630778 /* MessageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRowView.swift; sourceTree = "<group>"; };
 		C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		C068E8BE2D36B1AF001964E7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C0695AF02C4915C800CEAA17 /* SignInAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAppleHelper.swift; sourceTree = "<group>"; };
@@ -96,7 +97,6 @@
 		C0EB0C242D3327FE001DB090 /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		C0EB0C262D3328FB001DB090 /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
 		C0EE66AB2B62654A002F13EB /* MessageBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBarView.swift; sourceTree = "<group>"; };
-		C0F6C9C62D1C8F1100BE471E /* Salons_Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salons_Users.swift; sourceTree = "<group>"; };
 		C0F6C9C82D1C8FA300BE471E /* Salons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salons.swift; sourceTree = "<group>"; };
 		C0FAA0912C241DD90009DFF7 /* EmailShort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailShort.swift; sourceTree = "<group>"; };
 		C0FAA0932C242C340009DFF7 /* MessageShort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageShort.swift; sourceTree = "<group>"; };
@@ -126,7 +126,6 @@
 			children = (
 				C08906C42D1ABE9E00277CCD /* Messages.swift */,
 				C0F6C9C82D1C8FA300BE471E /* Salons.swift */,
-				C0F6C9C62D1C8F1100BE471E /* Salons_Users.swift */,
 				C01077322D14251F004960F2 /* DBUser.swift */,
 				C0B15FBB2D2E92810083135A /* ContactModel.swift */,
 			);
@@ -271,6 +270,7 @@
 			children = (
 				C0DD71542D26B0F000E232E1 /* MessagesView.swift */,
 				C0DD71562D26B1D300E232E1 /* MessagesManager.swift */,
+				C0524A0F2D3E695400630778 /* MessageRowView.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -380,6 +380,7 @@
 				C0EB0C272D3328FB001DB090 /* ContactRowView.swift in Sources */,
 				C0B15FBC2D2E92810083135A /* ContactModel.swift in Sources */,
 				C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */,
+				C0524A102D3E695400630778 /* MessageRowView.swift in Sources */,
 				C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */,
 				C068E8BF2D36B1AF001964E7 /* SettingsView.swift in Sources */,
 				C0FCE7972D2FE3400097FFA2 /* UIApplication.swift in Sources */,
@@ -389,7 +390,6 @@
 				C043F9A52C170D08002B3C59 /* DateManager.swift in Sources */,
 				C047E9DE2B45668800C6D48F /* ImagePicker.swift in Sources */,
 				C06A8DB92BAEC5030007436C /* TimestampToString.swift in Sources */,
-				C0F6C9C72D1C8F1100BE471E /* Salons_Users.swift in Sources */,
 				C0FAA0922C241DD90009DFF7 /* EmailShort.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,
 				C07F10D12D2FB7B70010650C /* SearchBarView.swift in Sources */,

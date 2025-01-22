@@ -102,7 +102,7 @@ final class MessagesManager {
 
     // Est-ce que le contact et le user ont le même salon_id
     func searchMembres(contactId: String, userId: String) async throws -> String {
-        // Tous les mêmes contactId
+
         do {
             let lesContactId = try await membresCollection.whereField("user_id", isEqualTo: contactId)
                 .getDocuments()
@@ -112,11 +112,11 @@ final class MessagesManager {
             
             for oneContact in lesContactId.documents {
                 let cont = try oneContact.data(as: Membres.self)
-                let contactId = cont.userId
+                let salondId = cont.salonId
                 for oneUser in lesUserId.documents {
                     let oneus = try oneUser.data(as: Membres.self)
-                    if (oneus.userId == contactId) {
-                        return contactId
+                    if (oneus.salonId == salondId) {
+                        return oneus.salonId
                     }
                 }
             }

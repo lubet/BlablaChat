@@ -178,12 +178,11 @@ final class UsersManager {
         }
     }
     
+    // Store des infos du user loggé
     func getUser() throws -> DBUser {
-        
         enum MyError: Error {
             case runtimeError(String)
         }
-        
         guard let data = UserDefaults.standard.data(forKey: "saveuser") else { throw MyError.runtimeError("getUser - UserDefaults") }
         guard let savedUser = try? JSONDecoder().decode(DBUser.self, from: data) else { throw MyError.runtimeError("getUser - JSONDecoder") }
         return savedUser

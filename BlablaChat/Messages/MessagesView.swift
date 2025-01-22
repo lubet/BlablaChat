@@ -53,10 +53,7 @@ final class MessagesViewModel: ObservableObject {
         
         // Pas de salonsId
         if salonId == "" {
-            salonId = try await MessagesManager.shared.newSalon() // Création d'un salon
-            
-            // Création contact et user même salon dans Salons-Users
-            try await MessagesManager.shared.newSalonsUsers(salonId: salonId, contactId: contactId, userId: user.userId)
+            salonId = try await MessagesManager.shared.newSalon(last_message: texteMessage) // Création d'un salon
         }
         
         // Création du message avec le n° de salon et le fromId égal au user

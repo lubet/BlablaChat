@@ -21,23 +21,26 @@ final class MessagesManager {
     // ---------------------------------------------------------------
     
 
-    // Salons
+    // Salons ----------------------------------------------------
     private let salonsCollection = dbFS.collection("Salons")
-
     private func salonDocument(salonId: String) -> DocumentReference {
         salonsCollection.document(salonId)
     }
     
-    // Messages ----------------------------------
-    
-    // Tous les messages
+    // Salons/Messages
     private let messagesCollection = dbFS.collection("Messages")
-
     // Tous les messages d'un salon
     private func messagesCollection(salonId: String) -> CollectionReference {
         return salonDocument(salonId: salonId).collection("Messages")
     }
-
+    
+    // Salons/Users ------------------------------
+    private let usersCollaction = dbFS.collection("Users")
+    // Tous les users d'un salon
+    private func usersSalon(salonId: String) -> CollectionReference {
+        return salonDocument(salonId: salonId).collection("Users")
+    }
+    
     
     //
 //    private func messageDocument(salonId: String, messageId: String) -> DocumentReference {
@@ -57,15 +60,16 @@ final class MessagesManager {
     // ------------------------------------------------------------------------------------
     
     // Création d'un nouveau salon
-    func newSalon() async throws -> String {
-        let userRef = salonsCollection.document()
-        let docId = userRef.documentID
+    func newSalon(last_message: String) async throws -> String {
+        let salonRef = salonsCollection.document()
+        let docId = salonRef.documentID
         
         let data: [String:Any] = [
             "salon_id" : docId,
+            "last_message": last_message,
             "date_created" : Timestamp()
         ]
-        try await userRef.setData(data, merge: false)
+        try await salonRef.setData(data, merge: false)
         return docId
     }
     
@@ -104,6 +108,33 @@ final class MessagesManager {
         return messages
     }
 
+    // Voir si user et contact ont le même salonId
+    func searchSalonsUsers(contactId: String, userId: String) async throws -> String {
+
+        // Tous les mêmes contactId
+        do {
+            let lesContactId = try await usersCollaction.whereField("user_id", isEqualTo: contactId)
+                .getDocuments()
+            let lesUserId = try await usersCollaction.whereField("user_id", isEqualTo: userId)
+                .getDocuments()
+            for oneContact in lesContactId.documents {
+                let cont = try oneContact.data(as: DBUser.self)
+                let contactSalonId = cont.userId
+                for oneUser in lesUserId.documents {
+                    let oneus = try oneUser.data(as: DBUser.self)
+                    if (oneus.userId == contactSalonId) {
+                        return contactSalonId
+                    }
+                }
+            }
+        } catch {
+            print("searchSalonUsers-erreurs:\(error)")
+        }
+        print("searchSalonUsers-Pas de n° de salon en commun pour contact et user")
+        return ""
+    }
+
+    
     
     
     

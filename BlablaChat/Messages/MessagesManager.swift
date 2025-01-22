@@ -35,26 +35,18 @@ final class MessagesManager {
     }
     
     // Salons/Users ------------------------------
-    private let usersCollaction = dbFS.collection("Users")
+    private let usersCollection = dbFS.collection("Users")
     // Tous les users d'un salon
     private func usersSalon(salonId: String) -> CollectionReference {
         return salonDocument(salonId: salonId).collection("Users")
     }
     
-    
-    //
-//    private func messageDocument(salonId: String, messageId: String) -> DocumentReference {
-//        return messagesCollection(salonId: salonId).document(messageId)
-//    }
-//
-//    private func messageDocument(salonId: String) -> DocumentReference {
-//        return messagesCollection(salonId: salonId).document()
-//    }
-//
-//    private func messageDocument(userId: String) -> DocumentReference {
-//        return messagesCollection.document(userId)
-//    }
-    
+    // Membres
+    private let membresCollection = dbFS.collection("Membres")
+   
+    private func membreDocument(salonId: String, contactId: String, userId: String) -> DocumentReference {
+        return membresCollection.document(salonId)
+    }
     
     
     // ------------------------------------------------------------------------------------
@@ -92,8 +84,8 @@ final class MessagesManager {
     }
 
     // Get mes Messages
-    func getMessages(fromId: String) async throws -> [Messages] {
-        let snapshot = try await messagesCollection.whereField("fromId", isEqualTo: fromId)
+    func getMessages(userId: String) async throws -> [Messages] {
+        let snapshot = try await messagesCollection.whereField("fromId", isEqualTo: userId)
             .getDocuments()
 
         var messages = [Messages]()
@@ -108,22 +100,23 @@ final class MessagesManager {
         return messages
     }
 
-    // Voir si user et contact ont le même salonId
-    func searchSalonsUsers(contactId: String, userId: String) async throws -> String {
-
+    // Est-ce que le contact et le user ont le même salon_id
+    func searchMembres(contactId: String, userId: String) async throws -> String {
         // Tous les mêmes contactId
         do {
-            let lesContactId = try await usersCollaction.whereField("user_id", isEqualTo: contactId)
+            let lesContactId = try await membresCollection.whereField("user_id", isEqualTo: contactId)
                 .getDocuments()
-            let lesUserId = try await usersCollaction.whereField("user_id", isEqualTo: userId)
+
+            let lesUserId = try await membresCollection.whereField("user_id", isEqualTo: userId)
                 .getDocuments()
+            
             for oneContact in lesContactId.documents {
-                let cont = try oneContact.data(as: DBUser.self)
-                let contactSalonId = cont.userId
+                let cont = try oneContact.data(as: Membres.self)
+                let contactId = cont.userId
                 for oneUser in lesUserId.documents {
-                    let oneus = try oneUser.data(as: DBUser.self)
-                    if (oneus.userId == contactSalonId) {
-                        return contactSalonId
+                    let oneus = try oneUser.data(as: Membres.self)
+                    if (oneus.userId == contactId) {
+                        return contactId
                     }
                 }
             }
@@ -134,29 +127,48 @@ final class MessagesManager {
         return ""
     }
 
+    // Création de deux enregs dans membres un pour le contact, un pour le user, tous les deux avec le même n° de salon
+    func newMembres(salonId: String, contactId: String, userId: String) async throws {
+        
+        // Création d'un enreg pour le contact
+        let doc = membresCollection.document()
+        let docId = doc.documentID
+        
+        let data: [String:Any] = [
+            "id": docId,
+            "salonId": salonId,
+            "userId" : contactId
+        ]
+        try await doc.setData(data, merge: false)
+        
+        // Création d'un enreg pour le contact
+        let doc2 = membresCollection.document()
+        let docId2 = doc2.documentID
+        
+        let data2: [String:Any] = [
+            "id": docId2,
+            "salonId": salonId,
+            "userId" : userId
+        ]
+        try await doc.setData(data2, merge: false)
+    }
     
     
-    
-    
-    
-    // -------------------------------------------------------------------------------------
-    
-     
-    // Recherche do salonId commun au contact et au user
+// Voir si user et contact ont le même salonId
 //    func searchSalonsUsers(contactId: String, userId: String) async throws -> String {
-//        
+//
 //        // Tous les mêmes contactId
 //        do {
-//            let lesContactId = try await SalonsUsersCollection.whereField("user_id", isEqualTo: contactId)
+//            let lesContactId = try await usersCollaction.whereField("user_id", isEqualTo: contactId)
 //                .getDocuments()
-//            let lesUserId = try await SalonsUsersCollection.whereField("user_id", isEqualTo: userId)
+//            let lesUserId = try await usersCollaction.whereField("user_id", isEqualTo: userId)
 //                .getDocuments()
 //            for oneContact in lesContactId.documents {
-//                let cont = try oneContact.data(as: Salons_Users.self)
-//                let contactSalonId = cont.salonId
+//                let cont = try oneContact.data(as: DBUser.self)
+//                let contactSalonId = cont.userId
 //                for oneUser in lesUserId.documents {
-//                    let oneus = try oneUser.data(as: Salons_Users.self)
-//                    if (oneus.salonId == contactSalonId) {
+//                    let oneus = try oneUser.data(as: DBUser.self)
+//                    if (oneus.userId == contactSalonId) {
 //                        return contactSalonId
 //                    }
 //                }
@@ -167,6 +179,8 @@ final class MessagesManager {
 //        print("searchSalonUsers-Pas de n° de salon en commun pour contact et user")
 //        return ""
 //    }
+    
+     
     
     // OK
 //    func essai() async {

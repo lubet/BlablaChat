@@ -49,11 +49,12 @@ final class MessagesViewModel: ObservableObject {
         guard let contactId else { print("MessagesViewModel: pas de contactId"); return }
         
         // Recherche do salonId commun au contact et au user
-        var salonId = try await MessagesManager.shared.searchSalonsUsers(contactId: contactId, userId: user.userId)
+        var salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: user.userId)
         
         // Pas de salonsId
         if salonId == "" {
             salonId = try await MessagesManager.shared.newSalon(last_message: texteMessage) // Création d'un salon
+            try await MessagesManager.shared.newMembres(salonId: salonId, contactId: contactId, userId: user.userId)
         }
         
         // Création du message avec le n° de salon et le fromId égal au user

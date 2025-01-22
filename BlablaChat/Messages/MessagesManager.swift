@@ -100,7 +100,7 @@ final class MessagesManager {
         return messages
     }
 
-    // Est-ce que le contact et le user ont le même salon_id
+    // Est-ce que le contact et le user ont le même salon_id ?
     func searchMembres(contactId: String, userId: String) async throws -> String {
 
         do {
@@ -150,7 +150,7 @@ final class MessagesManager {
             "salonId": salonId,
             "userId" : userId
         ]
-        try await doc.setData(data2, merge: false)
+        try await doc2.setData(data2, merge: false)
     }
     
     

@@ -83,48 +83,53 @@ final class MessagesManager {
         }
     }
 
-    // Get mes Messages
+    // Extrait les messages du user (personne qui est loggé)
     func getMessages(userId: String) async throws -> [Messages] {
-        let snapshot = try await messagesCollection.whereField("fromId", isEqualTo: userId)
+        let snapshot = try await messagesCollection
+            .whereField("from_id", isEqualTo: userId)
             .getDocuments()
 
         var messages = [Messages]()
 
-        for document in snapshot.documents {
-            let msg = try document.data(as: Messages.self)
-            print("msg \(msg)")
+        for doc in snapshot.documents {
+            let msg = try doc.data(as: Messages.self)
             messages.append(msg)
 
         }
-        print("fin \(messages)")
+        print("messages:\(messages)")
         return messages
     }
 
-    // Est-ce que le contact et le user ont le même salon_id ?
+    // Retourn le salon_id si il est commun à user et à contact sinon ""
     func searchMembres(contactId: String, userId: String) async throws -> String {
-
         do {
-            let lesContactId = try await membresCollection.whereField("user_id", isEqualTo: contactId)
+            let queryUser = try await membresCollection
+                .whereField("user_id", isEqualTo: userId)
                 .getDocuments()
 
-            let lesUserId = try await membresCollection.whereField("user_id", isEqualTo: userId)
+            // ------------------------------------------
+            
+            let queryContact = try await membresCollection
+                .whereField("user_id", isEqualTo: contactId)
                 .getDocuments()
             
-            for oneContact in lesContactId.documents {
-                let cont = try oneContact.data(as: Membres.self)
-                let salondId = cont.salonId
-                for oneUser in lesUserId.documents {
-                    let oneus = try oneUser.data(as: Membres.self)
-                    if (oneus.salonId == salondId) {
-                        return oneus.salonId
+            // ------------------------------------------
+            for unContact in queryContact.documents {
+                let mContact = try unContact.data(as: Membres.self)
+                let salonC = mContact.salonId
+                for unUser in queryUser.documents {
+                    let mUser = try unUser.data(as: Membres.self)
+                    let salonU = mUser.salonId
+                    if salonU == salonC {
+                        print("salonU salonC: \(salonU)")
+                        return salonU
                     }
                 }
             }
         } catch {
-            print("searchSalonUsers-erreurs:\(error)")
+            print("getToId - Error getting documents: \(error)")
         }
-        print("searchSalonUsers-Pas de n° de salon en commun pour contact et user")
-        return ""
+        return("")
     }
 
     // Création de deux enregs dans membres un pour le contact, un pour le user, tous les deux avec le même n° de salon
@@ -136,8 +141,8 @@ final class MessagesManager {
         
         let data: [String:Any] = [
             "id": docId,
-            "salonId": salonId,
-            "userId" : contactId
+            "salon_id": salonId,
+            "user_id" : contactId
         ]
         try await doc.setData(data, merge: false)
         
@@ -147,8 +152,8 @@ final class MessagesManager {
         
         let data2: [String:Any] = [
             "id": docId2,
-            "salonId": salonId,
-            "userId" : userId
+            "salon_id": salonId,
+            "user_id" : userId
         ]
         try await doc2.setData(data2, merge: false)
     }

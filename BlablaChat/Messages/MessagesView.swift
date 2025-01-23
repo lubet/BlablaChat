@@ -27,38 +27,44 @@ import SwiftUI
 final class MessagesViewModel: ObservableObject {
     
     @Published var allMessages: [Messages] = []
+    private var salonId: String = ""
     
     // Messages du user
-    func allMyMessages() async throws {
-        let user = try UsersManager.shared.getUser()
-        allMessages = try await MessagesManager.shared.getMessages(userId: user.userId)
-    }
-
-    // Création du message
-    func newMessages(oneContact: ContactModel, texteMessage: String) async throws {
-        let user = try UsersManager.shared.getUser()
+    func allMyMessages(oneContact: ContactModel) async throws {
         
-        // Recherche du contact dans la base "Users"
+        // user
+        let user = try UsersManager.shared.getUser()
+
+        // Recherche du contact dans "Users"
         var contactId =  try? await UsersManager.shared.searchContact(email: oneContact.email)
         
-        // Création dans "Users" si pas présent
+        // Création du contact dans "Users" si pas présent
         if contactId == "" {
             contactId = try await UsersManager.shared.createUser(email: oneContact.email)
         }
-        
+
         guard let contactId else { print("MessagesViewModel: pas de contactId"); return }
         
-        // Recherche do salonId commun au contact et au user
-        var salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: user.userId)
+        // Recherche du salon_id
+        salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: user.userId)
         
-        // Pas de salonsId
         if salonId == "" {
-            salonId = try await MessagesManager.shared.newSalon(last_message: texteMessage) // Création d'un salon
-            try await MessagesManager.shared.newMembres(salonId: salonId, contactId: contactId, userId: user.userId)
+            salonId = try await MessagesManager.shared.newSalon(last_message: "")
         }
+        
+        allMessages = try await MessagesManager.shared.getMessages(salonId: salonId)
+    }
+
+    // Création du message
+    func newMessages(texteMessage: String) async throws {
+        let user = try UsersManager.shared.getUser()
         
         // Création du message avec le n° de salon et le fromId égal au user
         try await MessagesManager.shared.newMessage(salonId: salonId, fromId: user.userId, texte: texteMessage)
+        
+        // Mettre à jour last_message dans Salons
+        try await MessagesManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: texteMessage)
+        
     }
 }
 
@@ -80,7 +86,7 @@ struct MessagesView: View {
         }
         .onAppear {
             Task {
-                try await vm.allMyMessages()
+                try await vm.allMyMessages(oneContact: oneContact)
             }
         }
         MessageBar
@@ -128,7 +134,7 @@ extension MessagesView {
         if textIsCorrect() {
             // path.removeAll() // back to LastMessagesView
             Task {
-                try? await vm.newMessages(oneContact: oneContact, texteMessage: texteMessage)
+                try? await vm.newMessages(texteMessage: texteMessage)
                 texteMessage = ""
             }
         }

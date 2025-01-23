@@ -83,13 +83,16 @@ final class MessagesManager {
         }
     }
 
-    // Extrait les messages du user (personne qui est loggé)
-    func getMessages(userId: String) async throws -> [Messages] {
+    // Extrait les messages du salon
+    func getMessages(salonId: String) async throws -> [Messages] {
         let snapshot = try await messagesCollection
-            .whereField("from_id", isEqualTo: userId)
+            .whereField("salon_id", isEqualTo: salonId)
             .getDocuments()
 
         var messages = [Messages]()
+        
+        let nbMsg = snapshot.documents.count
+        print("nbMsg:\(nbMsg)")
 
         for doc in snapshot.documents {
             let msg = try doc.data(as: Messages.self)
@@ -157,7 +160,14 @@ final class MessagesManager {
         ]
         try await doc2.setData(data2, merge: false)
     }
-    
+
+    func majLastMessageSalons(salonId: String, lastMessage: String) async throws {
+        let data: [String:Any] = [
+            Salons.CodingKeys.lastMessage.rawValue : lastMessage,
+        ]
+        try await salonDocument(salonId: salonId).updateData(data)
+    }
+
     
 // Voir si user et contact ont le même salonId
 //    func searchSalonsUsers(contactId: String, userId: String) async throws -> String {

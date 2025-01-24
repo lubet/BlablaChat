@@ -35,7 +35,7 @@ final class MessagesViewModel: ObservableObject {
         // user
         let user = try UsersManager.shared.getUser()
 
-        // Recherche du contact dans "Users"
+        // Recherche du contact dans "Users" avec email
         var contactId =  try? await UsersManager.shared.searchContact(email: oneContact.email)
         
         // Création du contact dans "Users" si pas présent
@@ -45,14 +45,19 @@ final class MessagesViewModel: ObservableObject {
 
         guard let contactId else { print("MessagesViewModel: pas de contactId"); return }
         
-        // Recherche du salon_id
+        // Recherche du salon_id du couple contact user
         salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: user.userId)
         
+        // Si pas présent création d'un salon
         if salonId == "" {
             salonId = try await MessagesManager.shared.newSalon(last_message: "")
+            // Ajout du couple contact user à ce salon
+            try await MessagesManager.shared.newMembres(salonId: salonId, contactId: contactId, userId: user.userId)
         }
-        
+
+        // Tous les messages du salon
         allMessages = try await MessagesManager.shared.getMessages(salonId: salonId)
+        print("allMessages:\(allMessages)-salon:\(salonId)")
     }
 
     // Création du message

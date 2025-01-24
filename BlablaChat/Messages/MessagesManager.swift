@@ -105,14 +105,12 @@ final class MessagesManager {
         var messages = [Messages]()
         
         let nbMsg = snapshot.documents.count
-        print("nbMsg:\(nbMsg)")
 
         for doc in snapshot.documents {
             let msg = try doc.data(as: Messages.self)
             messages.append(msg)
 
         }
-        print("messages:\(messages)")
         return messages
     }
 

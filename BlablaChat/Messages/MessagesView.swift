@@ -57,16 +57,15 @@ final class MessagesViewModel: ObservableObject {
 
         // Tous les messages du salon
         allMessages = try await MessagesManager.shared.getMessages(salonId: salonId)
-        print("allMessages:\(allMessages)-salon:\(salonId)")
-        
-        func addListenerForMessages() {
-            MessagesManager.shared.addlistenerMessages(salonId: salonId) { [weak self] messages in
-                self?.allMessages = messages
-            }
-        }
-        
     }
 
+    // Listener sur les messages
+    func addListenerForMessages() {
+        MessagesManager.shared.addlistenerMessages(salonId: salonId) { [weak self] messages in
+            self?.allMessages = messages
+        }
+    }
+    
     // Création du message
     func newMessages(texteMessage: String) async throws {
         let user = try UsersManager.shared.getUser()
@@ -99,6 +98,7 @@ struct MessagesView: View {
         .onAppear {
             Task {
                 try await vm.allMyMessages(oneContact: oneContact)
+                
             }
         }
         MessageBar

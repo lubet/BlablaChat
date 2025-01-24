@@ -23,14 +23,12 @@ final class MessagesManager {
 
     // Salons ----------------------------------------------------
     private let salonsCollection = dbFS.collection("Salons")
-    
     private func salonDocument(salonId: String) -> DocumentReference {
         salonsCollection.document(salonId)
     }
     
-    // Salons/Messages -------------------------------------------
+    // Salons/Messages
     private let messagesCollection = dbFS.collection("Messages")
-    
     // Tous les messages d'un salon
     private func messagesCollection(salonId: String) -> CollectionReference {
         return salonDocument(salonId: salonId).collection("Messages")
@@ -87,7 +85,6 @@ final class MessagesManager {
 
     // Extrait les messages du salon
     func getMessages(salonId: String) async throws -> [Messages] {
-        
         let snapshot = try await messagesCollection(salonId: salonId)
             .whereField("salon_id", isEqualTo: salonId)
             .getDocuments()

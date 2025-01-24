@@ -82,6 +82,19 @@ final class MessagesManager {
             print("newMessage: \(error)")
         }
     }
+    
+    
+    // addListenerMessages
+    func addlistenerMessages(salonId: String, completion: @escaping (_ messages: [Messages]) -> Void) {
+        messagesCollection(salonId: salonId).addSnapshotListener { querySnapshot, error in
+            guard let documents = querySnapshot?.documents else {
+                print("no documents")
+                return
+            }
+            let messages: [Messages] = documents.compactMap({ try? $0.data(as: Messages.self) })
+            completion(messages)
+        }
+    }
 
     // Extrait les messages du salon
     func getMessages(salonId: String) async throws -> [Messages] {

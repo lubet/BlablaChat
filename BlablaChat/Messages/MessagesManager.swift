@@ -103,8 +103,6 @@ final class MessagesManager {
             .getDocuments()
 
         var messages = [Messages]()
-        
-        let nbMsg = snapshot.documents.count
 
         for doc in snapshot.documents {
             let msg = try doc.data(as: Messages.self)

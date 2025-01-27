@@ -28,6 +28,7 @@ final class MessagesViewModel: ObservableObject {
     
     @Published var allMessages: [Messages] = []
     private var salonId: String = ""
+    private var didAppear: Bool = false
     
     // Messages du user
     func allMyMessages(oneContact: ContactModel) async throws {
@@ -57,13 +58,14 @@ final class MessagesViewModel: ObservableObject {
 
         // Tous les messages du salon
         allMessages = try await MessagesManager.shared.getMessages(salonId: salonId)
-    }
 
-    // Listener sur les messages
-    func addListenerForMessages() {
-        MessagesManager.shared.addlistenerMessages(salonId: salonId) { [weak self] messages in
-            self?.allMessages = messages
+        if !didAppear {
+            MessagesManager.shared.addlistenerMessages(salonId: salonId) { [weak self] messages in
+                self?.allMessages = messages
+            }
+            didAppear = true
         }
+        
     }
     
     // Création du message

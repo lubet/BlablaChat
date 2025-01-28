@@ -59,12 +59,13 @@ final class MessagesViewModel: ObservableObject {
         // Tous les messages du salon
         allMessages = try await MessagesManager.shared.getMessages(salonId: salonId)
 
-        if !didAppear {
-            MessagesManager.shared.addlistenerMessages(salonId: salonId) { [weak self] messages in
-                self?.allMessages = messages
-            }
-            didAppear = true
-        }
+        // Listener sur les messages
+//        if !didAppear {
+//            MessagesManager.shared.addlistenerMessages(salonId: salonId) { [weak self] messages in
+//                self?.allMessages = messages
+//            }
+//            didAppear = true
+//        }
         
     }
     
@@ -92,9 +93,9 @@ struct MessagesView: View {
     @State var showAlert: Bool = false
 
     var body: some View {
-        List {
+        ScrollView {
             ForEach(vm.allMessages) { message in
-                Text("\(message.texte)")
+                MessageRowView(message: message)
             }
         }
         .onAppear {

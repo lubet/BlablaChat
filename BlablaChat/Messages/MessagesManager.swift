@@ -72,6 +72,7 @@ final class MessagesManager {
         let data: [String:Any] = [
             "id" : documentId,
             "salon_id" : salonId,
+            "send" : true,
             "from_id" : fromId,
             "texte" : texte,
             "date_message": Timestamp()
@@ -84,7 +85,7 @@ final class MessagesManager {
     }
     
     
-    // addListenerMessages
+    // Listener sur les messages
     func addlistenerMessages(salonId: String, completion: @escaping (_ messages: [Messages]) -> Void) {
         messagesCollection(salonId: salonId).addSnapshotListener { querySnapshot, error in
             guard let documents = querySnapshot?.documents else {
@@ -133,7 +134,7 @@ final class MessagesManager {
                     let mUser = try unUser.data(as: Membres.self)
                     let salonU = mUser.salonId
                     if salonU == salonC {
-                        print("salonU salonC: \(salonU)")
+                        // print("salonU salonC: \(salonU)")
                         return salonU
                     }
                 }

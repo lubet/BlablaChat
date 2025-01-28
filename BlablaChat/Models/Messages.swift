@@ -12,6 +12,7 @@ import FirebaseFirestoreSwift
 struct Messages: Identifiable, Codable {
     let id: String
     let salonId: String
+    let send: Bool
     let fromId: String
     let texte: String
     let dateMessage: Timestamp
@@ -19,6 +20,7 @@ struct Messages: Identifiable, Codable {
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case salonId = "salon_id"
+        case send = "send"
         case fromId = "from_id"
         case texte = "texte"
         case dateMessage = "date_message"

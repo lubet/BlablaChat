@@ -22,11 +22,16 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 @MainActor
 final class MessagesViewModel: ObservableObject {
     
     @Published var allMessages: [Messages] = []
+    @Published private(set) var selectedImage: UIImage? = nil
+    @Published var imageSelection: PhotosPickerItem? = nil
+    
+    
     private var salonId: String = ""
     private var didAppear: Bool = false
     
@@ -117,10 +122,10 @@ extension MessagesView {
     private var MessageBar: some View {
         HStack {
             // Selection de la photo
-//            PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
-//                Image(systemName: "photo")
-//                    //.foregroundColor(Color.black)
-//            }
+            PhotosPicker(selection: $vm.imageSelection, matching: .images) {
+                Image(systemName: "photo")
+                    //.foregroundColor(Color.black)
+            }
             
             // Saisie du message
             TextField("Message", text: $texteMessage, axis: .vertical)

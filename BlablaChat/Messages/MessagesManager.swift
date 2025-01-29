@@ -65,7 +65,7 @@ final class MessagesManager {
         return docId
     }
     
-    func newMessage(salonId: String, fromId: String, texte: String) async throws {
+    func newMessage(salonId: String, fromId: String, texte: String, urlPhoto: String) async throws {
         let document = messagesCollection(salonId: salonId).document()
         let documentId = document.documentID
         
@@ -75,7 +75,8 @@ final class MessagesManager {
             "send" : true,
             "from_id" : fromId,
             "texte" : texte,
-            "date_message": Timestamp()
+            "date_message": Timestamp(),
+            "url_photo" : urlPhoto
         ]
         do {
             try await document.setData(data, merge: false)

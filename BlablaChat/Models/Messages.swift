@@ -16,6 +16,7 @@ struct Messages: Identifiable, Codable {
     let fromId: String
     let texte: String
     let dateMessage: Timestamp
+    let urlPhoto: String
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -24,6 +25,6 @@ struct Messages: Identifiable, Codable {
         case fromId = "from_id"
         case texte = "texte"
         case dateMessage = "date_message"
+        case urlPhoto = "url_photo"
     }
-
 }

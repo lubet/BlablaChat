@@ -26,6 +26,9 @@ import PhotosUI
 
 @MainActor
 final class MessagesViewModel: ObservableObject {
+
+    private var salonId: String = ""
+    private var didAppear: Bool = false
     
     @Published var allMessages: [Messages] = []
     @Published private(set) var selectedImage: UIImage? = nil // UI image
@@ -41,15 +44,26 @@ final class MessagesViewModel: ObservableObject {
         Task {
             if let data = try? await selection.loadTransferable(type: Data.self) {
                 if let uiImage =  UIImage(data: data) {
-                    selectedImage = uiImage
+                    // selectedImage = uiImage
+                    let user = try UsersManager.shared.getUser()
+                    
+                    // Transfomer l'uiImage en url
+                    let (path, _) = try await StorageManager.shared.saveImage(image: uiImage, userId: user.userId)
+
+                    let lurl = try await StorageManager.shared.getUrlForImage(path: path)
+                    
+                    // Création du message avec le n° de salon et le fromId égal au user
+                    try await MessagesManager.shared.newMessage(salonId: salonId, fromId: user.userId, texte: "Photo", urlPhoto: lurl.absoluteString)
+                    
+                    // Mettre à jour last_message dans Salons
+                    try await MessagesManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: lurl.absoluteString)
+                    
                     return
                 }
             }
         }
     }
     
-    private var salonId: String = ""
-    private var didAppear: Bool = false
     
     // Messages du user
     func allMyMessages(oneContact: ContactModel) async throws {
@@ -95,7 +109,7 @@ final class MessagesViewModel: ObservableObject {
         let user = try UsersManager.shared.getUser()
         
         // Création du message avec le n° de salon et le fromId égal au user
-        try await MessagesManager.shared.newMessage(salonId: salonId, fromId: user.userId, texte: texteMessage)
+        try await MessagesManager.shared.newMessage(salonId: salonId, fromId: user.userId, texte: texteMessage, urlPhoto: "")
         
         // Mettre à jour last_message dans Salons
         try await MessagesManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: texteMessage)

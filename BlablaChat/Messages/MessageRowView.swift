@@ -42,5 +42,5 @@ struct MessageRowView: View {
 }
 
 #Preview {
-    MessageRowView(message: Messages(id: "", salonId: "12", send: true, fromId: "3FA...", texte: "Bonjour", dateMessage: Timestamp()))
+    MessageRowView(message: Messages(id: "", salonId: "12", send: true, fromId: "3FA...", texte: "Bonjour", dateMessage: Timestamp(), urlPhoto: ""))
 }

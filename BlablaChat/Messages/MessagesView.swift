@@ -129,11 +129,15 @@ struct MessagesView: View {
 
     var body: some View {
         ScrollView {
-            ForEach(vm.allMessages) { message in
-                if message.texte == "Photo" {
-                    MessageCellPhoto(message: message)
-                } else {
-                    MessageRowView(message: message)
+            ScrollViewReader { proxy in
+                VStack(spacing: 20) {
+                    ForEach(vm.allMessages) { message in
+                        if message.texte == "Photo" {
+                            MessageCellPhoto(message: message)
+                        } else {
+                            MessageRowView(message: message)
+                        }
+                    }
                 }
             }
         }

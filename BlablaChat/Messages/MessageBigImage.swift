@@ -17,7 +17,7 @@ struct MessageBigImage: View {
         WebImage(url: URL(string: urlImage))
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .onTapGesture(count: 2) {
+            .onTapGesture(count: 1) {
                 presentationMode.wrappedValue.dismiss()
             }
     }

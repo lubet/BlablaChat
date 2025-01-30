@@ -33,7 +33,7 @@ struct MessageCellPhoto: View {
 //                showTime.toggle()
 //            }
             
-            .onTapGesture(count: 2) {
+            .onTapGesture(count: 1) {
                 showScreenCover.toggle()
             }
             

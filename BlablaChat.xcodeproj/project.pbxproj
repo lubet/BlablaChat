@@ -42,6 +42,8 @@
 		C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B8555B2BBBFD5900B3956A /* TextBarView.swift */; };
 		C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */; };
 		C0B9EFD92D19B02900BC06FC /* LastMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9EFD82D19B02900BC06FC /* LastMessagesView.swift */; };
+		C0C064C02D4B7C1D00D0C29B /* MessageCellPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C064BF2D4B7C1D00D0C29B /* MessageCellPhoto.swift */; };
+		C0C064C22D4B7D0C00D0C29B /* MessageBigImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C064C12D4B7D0C00D0C29B /* MessageBigImage.swift */; };
 		C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C1A9482B62ACC400646851 /* SearchNick.swift */; };
 		C0D565F42B7CAF8E00EE0DA0 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */; };
 		C0DD71552D26B0F000E232E1 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DD71542D26B0F000E232E1 /* MessagesView.swift */; };
@@ -92,6 +94,8 @@
 		C0B8555B2BBBFD5900B3956A /* TextBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBarView.swift; sourceTree = "<group>"; };
 		C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleSendView.swift; sourceTree = "<group>"; };
 		C0B9EFD82D19B02900BC06FC /* LastMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessagesView.swift; sourceTree = "<group>"; };
+		C0C064BF2D4B7C1D00D0C29B /* MessageCellPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellPhoto.swift; sourceTree = "<group>"; };
+		C0C064C12D4B7D0C00D0C29B /* MessageBigImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBigImage.swift; sourceTree = "<group>"; };
 		C0C1A9482B62ACC400646851 /* SearchNick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNick.swift; sourceTree = "<group>"; };
 		C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		C0DD71542D26B0F000E232E1 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
@@ -274,6 +278,8 @@
 				C0DD71542D26B0F000E232E1 /* MessagesView.swift */,
 				C0DD71562D26B1D300E232E1 /* MessagesManager.swift */,
 				C0524A0F2D3E695400630778 /* MessageRowView.swift */,
+				C0C064BF2D4B7C1D00D0C29B /* MessageCellPhoto.swift */,
+				C0C064C12D4B7D0C00D0C29B /* MessageBigImage.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -410,7 +416,9 @@
 				C08906B32D1ABACD00277CCD /* LastMessagesCellView.swift in Sources */,
 				C03A722D2D1DB1DD00961705 /* UsersManager.swift in Sources */,
 				C0850DC42D0F2BD7001AD3AA /* LoginEmailView.swift in Sources */,
+				C0C064C02D4B7C1D00D0C29B /* MessageCellPhoto.swift in Sources */,
 				C0F6C9C92D1C8FA300BE471E /* Salons.swift in Sources */,
+				C0C064C22D4B7D0C00D0C29B /* MessageBigImage.swift in Sources */,
 				C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */,
 				C08906B92D1ABC5800277CCD /* LastMessagesManager.swift in Sources */,
 				C06A78CB2D4181430094BAE0 /* Membres.swift in Sources */,

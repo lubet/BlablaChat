@@ -130,7 +130,11 @@ struct MessagesView: View {
     var body: some View {
         ScrollView {
             ForEach(vm.allMessages) { message in
-                MessageRowView(message: message)
+                if message.texte == "Photo" {
+                    MessageCellPhoto(message: message)
+                } else {
+                    MessageRowView(message: message)
+                }
             }
         }
         .onAppear {

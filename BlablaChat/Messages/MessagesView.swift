@@ -48,7 +48,7 @@ final class MessagesViewModel: ObservableObject {
                     let user = try UsersManager.shared.getUser()
                     
                     // Sauvegarde dans Storage. TODO: par salon pour les messages-photos (toujours par user pour l'avatar)
-                    let (path, _) = try await StorageManager.shared.saveImage(image: uiImage, userId: user.userId)
+                    let (path, _) = try await StorageManager.shared.saveImage(image: uiImage, salonId: salonId)
 
                     let lurl = try await StorageManager.shared.getUrlForImage(path: path)
                     

@@ -119,23 +119,23 @@ final class UsersManager {
     }
     
     
-    // Recherhe de l'email dans "users"
-    func searchEmail(user_id: String) async throws -> (String, String) {
+    // Recherhe du user dans "users" avec l'email de connection
+    func searchEmail(email: String) async throws -> Bool {
         do {
             let querySnapshot = try await DBUserCollection
-                .whereField("user_id", isEqualTo: user_id)
+                .whereField("email", isEqualTo: email)
                 .getDocuments()
             
             for document in querySnapshot.documents {
                 let user = try document.data(as: DBUser.self)
-                if (user.userId == user_id) {
-                    return (user.email ?? "", user.avatarLink ?? "")
+                if (user.email == email) {
+                    return true
                 }
             }
         } catch {
             print("searchEmail - Error getting documents: \(error)")
         }
-        return ("","")
+        return (false)
         
     }
     

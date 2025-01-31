@@ -52,7 +52,8 @@ struct AuthenticationView: View {
         ZStack {
             Color.theme.background
             VStack {
-                // SignIn with Apple
+                
+                // -------------- SignIn with Apple
                 Button(action: {
                     Task {
                         do {
@@ -81,7 +82,7 @@ struct AuthenticationView: View {
                     }
                 }
                 
-                // Sign In/Up with email/password
+                // ------------- Sign In/Up with email/password
                 NavigationLink {
                     LoginEmailView(showSignInView: $showSignInView)
                 } label: {

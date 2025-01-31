@@ -20,13 +20,17 @@ final class LoginEmailViewModel: ObservableObject {
     @Published var newImageAvatar: UIImage? = nil
     
     
-    // Nouveau compte - Auth, Users, Tokens
+    // Nouveau compte - Auth, Users, Tokens - Si déjà présent dans "Users" (contact) prendre le userId existant
     func signUp(image: UIImage?) async throws {
         
         guard !email.isEmpty, !password.isEmpty else {
             print("Pas d'email ni de password")
             return
         }
+        
+        // Si le user existe déjà (contact), récupérer le userID, save UserDefault
+        // Recherche dans "Users" avec l'email
+        
         
         // Création et activation d'une Authentifaction
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)

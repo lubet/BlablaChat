@@ -31,6 +31,11 @@ final class LoginEmailViewModel: ObservableObject {
         // Si le user existe déjà (contact), récupérer le userID, save UserDefault
         // Recherche dans "Users" avec l'email
         
+        let userUsers = try await UsersManager.shared.searchUser(email: email)
+        
+        if userUsers == nil {
+            // ...
+        }
         
         // Création et activation d'une Authentifaction
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)

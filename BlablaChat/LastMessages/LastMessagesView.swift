@@ -16,7 +16,12 @@ import Combine
 class LastMessagesViewModel: ObservableObject {
     
     // get all my users
-    
+    func getLastMessages() async throws {
+        let user = try UsersManager.shared.getUser()
+        
+        // Selection de tous les salons où je suis présent dans "Member"
+        
+    }
     
     
     func logOut() {

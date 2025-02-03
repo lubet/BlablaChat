@@ -23,6 +23,8 @@ final class LoginEmailViewModel: ObservableObject {
     // Nouveau compte - Auth, Users, Tokens - Si déjà présent dans "Users" (contact) prendre le userId existant
     func signUp(image: UIImage?) async throws {
         
+        print("**** Sign Up ****")
+        
         guard !email.isEmpty, !password.isEmpty else {
             print("Pas d'email ni de password")
             return
@@ -46,12 +48,13 @@ final class LoginEmailViewModel: ObservableObject {
         }
             
         // UserDefaults - Save user
+        print("dbuser:\(dbuser)")
         if let encodedData = try? JSONEncoder().encode(dbuser) {
             UserDefaults.standard.set(encodedData, forKey: "saveuser")
         }
         
         // Si il n'y a pas d'image en mettre une par défaut
-        let image: UIImage = image ?? UIImage.init(systemName: "person.fill")! 
+        let image: UIImage = image ?? UIImage.init(systemName: "person.circle.fill")! 
         
         // Création de l'avatar dans "Storage" et mise à jour de l'avatar du user dans "Users"
         let _ = try await UsersManager.shared.updateAvatar(mimage: image)
@@ -61,6 +64,9 @@ final class LoginEmailViewModel: ObservableObject {
 
     // Compte qui existe déjà
     func signIn() async throws {
+        
+        print("---- Sign In ----")
+        
         guard !email.isEmpty, !password.isEmpty else {
             print("Pas d'email ni de password")
             return

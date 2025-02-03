@@ -28,22 +28,23 @@ final class LoginEmailViewModel: ObservableObject {
             return
         }
         
-        // Si le user existe déjà (contact), récupérer le userID, save UserDefault
-        // Recherche dans "Users" avec l'email
-        
-        let userUsers = try await UsersManager.shared.searchUser(email: email)
-        
-        if userUsers == nil {
-            // ...
-        }
-        
-        // Création et activation d'une Authentifaction
+        // New Auth
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
         
-        // Création de l'authentification dans la base "Users" + des champs qui sont rajouées (voir modèle DBUser)
-        let dbuser = DBUser(auth: authUser)
-        try await UsersManager.shared.createDbUser(user: dbuser) // sans l'image
+        // Création de l'objet user avec infos de l'auth + complément
+        var dbuser = DBUser(auth: authUser)
+
+        // Est ce que le user existe déjà dans "Users"
+        let userUsers = try await UsersManager.shared.searchUser(email: email)
         
+        // Si le user existe déjà dans la base "Users" je l'utilise
+        if userUsers != nil {
+            dbuser = userUsers!
+        } else {
+            // le user n'existe pas dans "Users", je le crée.
+            try await UsersManager.shared.createDbUser(user: dbuser) // sans l'image
+        }
+            
         // UserDefaults - Save user
         if let encodedData = try? JSONEncoder().encode(dbuser) {
             UserDefaults.standard.set(encodedData, forKey: "saveuser")

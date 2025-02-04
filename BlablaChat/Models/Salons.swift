@@ -10,7 +10,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct Salons: Identifiable, Codable {
+struct Salons: Identifiable, Codable, Hashable {
     let salonId: String
     let dateCreated: Timestamp
     let lastMessage: String

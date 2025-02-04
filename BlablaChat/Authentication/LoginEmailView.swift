@@ -26,7 +26,7 @@ final class LoginEmailViewModel: ObservableObject {
         print("**** Sign Up ****")
         
         guard !email.isEmpty, !password.isEmpty else {
-            print("Pas d'email ni de password")
+            print("SignUp - Pas d'email ni de password")
             return
         }
         
@@ -68,10 +68,21 @@ final class LoginEmailViewModel: ObservableObject {
         print("---- Sign In ----")
         
         guard !email.isEmpty, !password.isEmpty else {
-            print("Pas d'email ni de password")
+            print("SignIn - Pas d'email ni de password")
             return
         }
+        
         try await AuthManager.shared.signInUser(email: email, password: password)
+
+        guard let dbuser = try await UsersManager.shared.searchUser(email: email) else {
+            print("LoginEmailView-signIn: email \(email) non trouvé dans la base Users")
+            return
+        }
+
+        if let encodedData = try? JSONEncoder().encode(dbuser) {
+            UserDefaults.standard.set(encodedData, forKey: "saveuser")
+        }
+        return
     }
 }
 

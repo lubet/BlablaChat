@@ -14,13 +14,13 @@ struct RootView: View {
     var body: some View {
         ZStack {
             if showSignInView == false {
-                // LastMessagesView(showSignInView: $showSignInView)
+                LastMessagesView(showSignInView: $showSignInView)
                 // SettingsView(showSignInView: $showSignInView)
                 // LastMessagesView(showSignInView: $showSignInView)
                 // ContactsView()
                 //EssaiView()
                 // ContactBootcamp()
-                ContactsView()
+                // ContactsView()
                 //SearchBarView(searchText: .constant(""))
             }
         }

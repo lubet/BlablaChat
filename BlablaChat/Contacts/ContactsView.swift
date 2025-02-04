@@ -66,8 +66,9 @@ struct ContactsView: View {
     
     @StateObject var vm = ContactsViewModel()
     
+    let salonId: String
+    
     var body: some View {
-        NavigationStack {
             VStack {
                 List {
                     ForEach(vm.filteredContacts, id: \.self) { oneContact in
@@ -82,11 +83,10 @@ struct ContactsView: View {
                 }
                 .searchable(text: $vm.searchText)
             }
-       }
     }
 }
 
 #Preview {
-    ContactsView()
+    ContactsView(salonId: "E")
 }
 

@@ -12,17 +12,38 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Combine
 
+struct LastMessage: Identifiable, Codable, Hashable {
+    let id = UUID().uuidString
+    let avatarLink: String
+    let email: String
+    let texte: String
+    let date: Timestamp
+    let salonId: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case avatarLink = "avatar_link"
+        case email = "email"
+        case texte = "message_texte"
+        case date = "message_date"
+        case salonId = "salon_id"
+    }
+}
+
 @MainActor
 class LastMessagesViewModel: ObservableObject {
     
-    // get all my users
-    func getLastMessages() async throws {
-        let user = try UsersManager.shared.getUser()
-        
-        // Selection de tous les salons où je suis présent dans "Member"
-        
+    @Published var lastMessages: [LastMessage] = []
+    
+    init() {
+        fetchLastMessages()
     }
     
+    func fetchLastMessages() {
+        lastMessages.append(LastMessage(avatarLink: "http", email: "Leroy", texte: "Hello1", date: Timestamp(), salonId: "11"))
+        lastMessages.append(LastMessage(avatarLink: "http", email: "Gured", texte: "Hello1", date: Timestamp(), salonId: "11"))
+        lastMessages.append(LastMessage(avatarLink: "http", email: "Max", texte: "Hello1", date: Timestamp(), salonId: "11"))
+    }
     
     func logOut() {
         try? UsersManager.shared.signOut()
@@ -35,34 +56,38 @@ class LastMessagesViewModel: ObservableObject {
 
 struct LastMessagesView: View {
     
-    @ObservedObject var viewModel: LastMessagesViewModel = LastMessagesViewModel()
+    @ObservedObject var vm: LastMessagesViewModel = LastMessagesViewModel()
     
     @Binding var showSignInView: Bool
     
     var body: some View {
-        ZStack {
-            Color.theme.background.ignoresSafeArea()
-            VStack {
-
-                NavigationLink("Nouveau message") {
-                    ContactsView()
+        NavigationStack {
+            ZStack {
+                Color.theme.background.ignoresSafeArea()
+                VStack {
+                    List {
+                        ForEach(vm.lastMessages) { message in
+                            NavigationLink(value: message) {
+                                LastMessagesCellView(lastMessage: message)
+                            }
+                        }
+                    }
+                    .navigationTitle("Last messages")
+                    .navigationDestination(for: LastMessage.self) { message in
+                        ContactsView(salonId: message.salonId)
+                    }
+                    // .searchable(text: $vm.searchText)
                 }
-                .font(.system(size: 16, weight: .bold))
-                .foregroundColor(.white)
-                .padding(.vertical)
-                .background(Color.blue)
-                .cornerRadius(32)
-                .padding(.horizontal)
-                .padding(.bottom,10)
                 
                 Button("Logout") {
-                    viewModel.logOut()
+                    vm.logOut()
                     showSignInView = true
                 }
             }
         }
     }
 }
+
 
 struct LastMessages_Previews: PreviewProvider {
     static var previews: some View {

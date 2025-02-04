@@ -11,6 +11,7 @@ import FirebaseFirestoreSwift
 
 struct LastMessagesCellView: View {
     
+    let lastMessage: LastMessage
     
     var body: some View {
         
@@ -21,16 +22,16 @@ struct LastMessagesCellView: View {
                 //SDWebImageLoader(url: lastMessage.avatar_link, size: 40)
                 VStack(alignment: .leading) {
                     
-                    //let emailShort = EmailShort(email: lastMessage.email)
-//                    Text("\(emailShort)")
-//                        .font(.system(size: 16, weight: .bold))
-//                        .padding(.leading, 20)
+                    let emailShort = EmailShort(email: lastMessage.email)
+                    Text("\(emailShort)")
+                        .font(.system(size: 16, weight: .bold))
+                        .padding(.leading, 20)
                     
-                    //let msg = MessageShort(message: lastMessage.message_texte)
-//                    Text("\(msg)")
-//                        .font(.system(size: 14))
-//                        .multilineTextAlignment(.leading)
-//                        .padding(.leading, 20)
+                    let msg = MessageShort(message: lastMessage.email)
+                    Text("\(msg)")
+                        .font(.system(size: 14))
+                        .multilineTextAlignment(.leading)
+                        .padding(.leading, 20)
                 }
                 Spacer()
                 

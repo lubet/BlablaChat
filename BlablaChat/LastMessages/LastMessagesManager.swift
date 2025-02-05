@@ -18,10 +18,10 @@ final class LastMessagesManager {
     init() { }
     
     // Rooms
-    private let roomCollection = db.collection("rooms")
+    private let salonCollection = db.collection("Salons")
     
-    private func roomDocument(room_id: String) -> DocumentReference {
-        return roomCollection.document(room_id)
+    private func salonDocument(salon_id: String) -> DocumentReference {
+        return salonCollection.document(salon_id)
     }
 
     // Users
@@ -32,10 +32,31 @@ final class LastMessagesManager {
     }
     
     // Membres
-    private let memberCollection = db.collection("members")
+    private let memberCollection = db.collection("Membres")
     
     private func memberDocument(user_id: String) -> DocumentReference {
         return memberCollection.document(user_id)
     }
     
+    // Renvoie tous les salons où userId est présent
+    func fetchMyLastMessages(userId: String) async throws -> [Salons]? {
+        do {
+            let querySnapshot = try await salonCollection
+                .whereField("user_id", isEqualTo: userId)
+                .getDocuments()
+            
+            var salons: [Salons] = []
+            
+            for document in querySnapshot.documents {
+                let salon = try document.data(as: Salons.self)
+                salons.append(salon)
+            }
+            return salons
+        } catch {
+            print("getAvatar - Error getting documents: \(error)")
+        }
+        print("getAvatar: non trouvé pour contact-id: \(userId)")
+        
+        return nil
+    }
 }

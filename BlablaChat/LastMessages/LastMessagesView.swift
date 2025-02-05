@@ -34,10 +34,35 @@ struct LastMessage: Identifiable, Codable, Hashable {
 class LastMessagesViewModel: ObservableObject {
     
     @Published var lastMessages: [LastMessage] = []
+
+    // Dans Membres, ramener tous les salonId auquel appartient le userId
+    // Dans Salons, pour chaque salon de Membres, ramener le dernier message texte
+    // Dans Users, ramener l'email et l'avatar du user_id
+    
+    private var tousMesSalons: [Salons] = [] // <- Membres/userId
+    
+    private var derniersMessages: [Messages] = [] // <- salonId
+    
+    private var emailAvatars: [DBUser] = [] // <- userId
+    
+    
     
     init() {
         fetchLastMessages()
     }
+
+    func fetchMyLastMessages() {
+        
+        // user
+        let user = try UsersManager.shared.getUser()
+        
+        tousMesSalons = 
+        
+        
+    }
+    
+    
+    
     
     func fetchLastMessages() {
         lastMessages.append(LastMessage(avatarLink: "http", email: "Leroy", texte: "Hello1", date: Timestamp(), salonId: "11"))

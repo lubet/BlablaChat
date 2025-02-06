@@ -12,6 +12,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Combine
 
+// Dernier Message
 struct LastMessage: Identifiable, Codable, Hashable {
     let id = UUID().uuidString
     let avatarLink: String

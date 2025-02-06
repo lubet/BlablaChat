@@ -52,14 +52,15 @@ final class MessagesManager {
     // ------------------------------------------------------------------------------------
     
     // Création d'un nouveau salon
-    func newSalon(last_message: String) async throws -> String {
+    func newSalon(last_message: String, contactId: String) async throws -> String {
         let salonRef = salonsCollection.document()
         let docId = salonRef.documentID
         
         let data: [String:Any] = [
             "salon_id" : docId,
             "last_message": last_message,
-            "date_created" : Timestamp()
+            "date_created" : Timestamp(),
+            "contact_id": contactId
         ]
         try await salonRef.setData(data, merge: false)
         return docId

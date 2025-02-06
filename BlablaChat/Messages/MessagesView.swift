@@ -86,7 +86,7 @@ final class MessagesViewModel: ObservableObject {
         
         // Si pas présent création d'un salon
         if salonId == "" {
-            salonId = try await MessagesManager.shared.newSalon(last_message: "")
+            salonId = try await MessagesManager.shared.newSalon(last_message: "", contactId: contactId)
             // Ajout du couple contact user à ce salon
             try await MessagesManager.shared.newMembres(salonId: salonId, contactId: contactId, userId: user.userId)
         }

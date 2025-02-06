@@ -38,25 +38,73 @@ final class LastMessagesManager {
         return memberCollection.document(user_id)
     }
     
-    // Renvoie tous les salons où userId est présent
-    func fetchMyLastMessages(userId: String) async throws -> [Salons]? {
+    // Salons/Messages
+    private let messagesCollection = db.collection("Messages")
+    
+    // Tous les messages d'un salon
+    private func messagesCollection(salonId: String) -> CollectionReference {
+        return salonDocument(salon_id: salonId).collection("Messages")
+    }
+    
+    
+    // Renvoie les enregs de "Membres" dont fait partie user - l'enreg de Membres contient le salonID.
+    func userMembres(userId: String) async throws -> [Membres]? {
         do {
-            let querySnapshot = try await salonCollection
+            let querySnapshot = try await memberCollection
                 .whereField("user_id", isEqualTo: userId)
                 .getDocuments()
             
-            var salons: [Salons] = []
+            var membres: [Membres] = []
+            
+            for document in querySnapshot.documents {
+                let membre = try document.data(as: Membres.self)
+                membres.append(membre)
+            }
+            return membres
+        } catch {
+            print("userMembres - Error getting documents: \(error)")
+        }
+        print("userMembres: non trouvé pour userId: \(userId)")
+        return nil
+    }
+    
+    
+    // Renvoie tous les messages d'un salon
+    func userMessages(salonId: String) async throws -> [Messages]? {
+        do {
+            let querySnapshot = try await messagesCollection(salonId: salonId)
+                .whereField("salon_id", isEqualTo: salonId)
+                .getDocuments()
+            
+            var messages: [Messages] = []
+            
+            for document in querySnapshot.documents {
+                let message = try document.data(as: Messages.self)
+                messages.append(message)
+            }
+            return messages
+        } catch {
+            print("userMessages - Error getting documents: \(error)")
+        }
+        print("userMessages: non trouvé pour userId: \(salonId)")
+        
+        return nil
+   }
+   
+    // Renvoi un Salon
+    func getSalon(salonId: String) async throws -> Salons? {
+        do {
+            let querySnapshot = try await salonCollection
+                .whereField("salon_id", isEqualTo: salonId)
+                .getDocuments()
             
             for document in querySnapshot.documents {
                 let salon = try document.data(as: Salons.self)
-                salons.append(salon)
+                return salon
             }
-            return salons
         } catch {
-            print("getAvatar - Error getting documents: \(error)")
+            print("searchEmail - Error getting documents: \(error)")
         }
-        print("getAvatar: non trouvé pour contact-id: \(userId)")
-        
         return nil
     }
 }

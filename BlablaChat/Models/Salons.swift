@@ -14,6 +14,7 @@ struct Salons: Identifiable, Codable, Hashable {
     let salonId: String
     let dateCreated: Timestamp
     let lastMessage: String
+    let contactId: String
     
     var id: String {
         salonId
@@ -23,5 +24,6 @@ struct Salons: Identifiable, Codable, Hashable {
         case salonId = "salon_id"
         case dateCreated = "date_created"
         case lastMessage = "last_message"
+        case contactId = "contact_id"
     }
 }

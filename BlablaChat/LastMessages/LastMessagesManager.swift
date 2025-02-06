@@ -91,7 +91,7 @@ final class LastMessagesManager {
         return nil
    }
    
-    // Renvoi un Salon
+    // Renvoi un salon pris dans "Salons"
     func getSalon(salonId: String) async throws -> Salons? {
         do {
             let querySnapshot = try await salonCollection
@@ -104,6 +104,23 @@ final class LastMessagesManager {
             }
         } catch {
             print("searchEmail - Error getting documents: \(error)")
+        }
+        return nil
+    }
+    
+    // Renvoie un user pris dans "Users"
+    func fetchUser(contactId: String) async throws -> DBUser? {
+        do {
+            let querySnapshot = try await userCollection
+                .whereField("user_id", isEqualTo: contactId)
+                .getDocuments()
+            
+            for document in querySnapshot.documents {
+                let user = try document.data(as: DBUser.self)
+                return user
+            }
+        } catch {
+            print("fetchUser - Error getting documents: \(error)")
         }
         return nil
     }

@@ -34,13 +34,6 @@ struct LastMessage: Identifiable, Codable, Hashable {
 class LastMessagesViewModel: ObservableObject {
     
     @Published var lastMessages: [LastMessage] = []
-
-    // Dans Membres, ramener tous les salonId auquel appartient le userId
-    // Dans Salons, pour chaque salon de Membres, ramener le dernier message texte
-    // Dans Users, ramener l'email et l'avatar du user_id
-    
-    // private var tousMesSalons: [Salons] = [] // <- Membres/userId
-    
     
     init() {
         fetchLastMessages()
@@ -48,7 +41,6 @@ class LastMessagesViewModel: ObservableObject {
 
     // Derniers messages
     func getLastMessages() async throws {
-        
         var messages: [Messages] = []
         
         Task {
@@ -59,12 +51,17 @@ class LastMessagesViewModel: ObservableObject {
             guard let userMembres = try await LastMessagesManager.shared.userMembres(userId: user.userId) else { return }
             
             for membre in userMembres { // Pour chaque salon
+                let salonId = membre.salonId
                 // Charger le salon
                 guard let salon = try await LastMessagesManager.shared.getSalon(salonId: membre.salonId) else { return }
+                let lastMessage = salon.lastMessage
+                let contactId = salon.contactId
                 
-                // récuprer le lastMessage et le contact_id
                 // avec le contactId du salonrécuprer l'email et l'url de l'avatar dans user
-
+                guard let user = try await LastMessagesManager.shared.fetchUser(contactId: contactId) else { return }
+                let email = user.email
+                let urlAvatar = user.avatarLink
+                
                 // récupérer tous les messages de ce salon
                 guard let salonMessages = try await LastMessagesManager.shared.userMessages(salonId: salonId) else { return }
                 for message in salonMessages {

@@ -41,10 +41,7 @@ class LastMessagesViewModel: ObservableObject {
 
     // Derniers messages
     func getLastMessages() async throws {
-        var messages: [Messages] = []
-        
         Task {
-            
             guard let user = try? UsersManager.shared.getUser() else { return }
             
             // Renvoie tous les salons dont est membre le user
@@ -57,23 +54,16 @@ class LastMessagesViewModel: ObservableObject {
                 let lastMessage = salon.lastMessage
                 let contactId = salon.contactId
                 
-                // avec le contactId du salonrécuprer l'email et l'url de l'avatar dans user
+                // avec le contactId du salon récuprer l'email et l'url de l'avatar dans user
                 guard let user = try await LastMessagesManager.shared.fetchUser(contactId: contactId) else { return }
-                let email = user.email
-                let urlAvatar = user.avatarLink
-                
-                // récupérer tous les messages de ce salon
-                guard let salonMessages = try await LastMessagesManager.shared.userMessages(salonId: salonId) else { return }
-                for message in salonMessages {
-                    messages.append(message)
-                }
+                let email = user.email ?? ""
+                let urlAvatar = user.avatarLink ?? ""
+
+                lastMessages.append(LastMessage(avatarLink: urlAvatar, email: email, texte: lastMessage, date: Timestamp(), salonId: salonId))
             }
             
         }
     }
-    
-    
-    
     
     func fetchLastMessages() {
         lastMessages.append(LastMessage(avatarLink: "http", email: "Leroy", texte: "Hello1", date: Timestamp(), salonId: "11"))

@@ -46,17 +46,26 @@ class LastMessagesViewModel: ObservableObject {
             guard let user = try? UsersManager.shared.getUser() else { return }
             
             // Renvoie tous les salons dont est membre le user
-            guard let userMembres = try await LastMessagesManager.shared.userMembres(userId: user.userId) else { return }
+            guard let userMembres = try await LastMessagesManager.shared.userMembres(userId: user.userId) else {
+                print("Pas de salons pour le user \(user.userId)")
+                return
+            }
             
             for membre in userMembres { // Pour chaque salon
                 let salonId = membre.salonId
                 // Charger le salon
-                guard let salon = try await LastMessagesManager.shared.getSalon(salonId: membre.salonId) else { return }
+                guard let salon = try await LastMessagesManager.shared.getSalon(salonId: membre.salonId) else {
+                    print("Salon inexistant dans Salons: \(membre.salonId)")
+                    return
+                }
                 let lastMessage = salon.lastMessage
                 let contactId = salon.contactId
                 
                 // avec le contactId du salon récuprer l'email et l'url de l'avatar dans user
-                guard let user = try await LastMessagesManager.shared.fetchUser(contactId: contactId) else { return }
+                guard let user = try await LastMessagesManager.shared.fetchUser(contactId: contactId) else {
+                    print("contactId \(contactId) inexistant dans Users")
+                    return
+                }
                 let email = user.email ?? ""
                 let urlAvatar = user.avatarLink ?? ""
 

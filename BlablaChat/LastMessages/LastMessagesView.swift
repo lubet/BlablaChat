@@ -16,7 +16,7 @@ import Combine
 struct LastMessage: Identifiable, Codable, Hashable {
     let id = UUID().uuidString
     let avatarLink: String
-    let email: String
+    let emailContact: String
     let texte: String
     let date: Timestamp
     let salonId: String
@@ -24,7 +24,7 @@ struct LastMessage: Identifiable, Codable, Hashable {
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case avatarLink = "avatar_link"
-        case email = "email"
+        case emailContact = "email_contact"
         case texte = "message_texte"
         case date = "message_date"
         case salonId = "salon_id"
@@ -62,23 +62,23 @@ class LastMessagesViewModel: ObservableObject {
                 let contactId = salon.contactId
                 
                 // avec le contactId du salon récuprer l'email et l'url de l'avatar dans user
-                guard let user = try await LastMessagesManager.shared.fetchUser(contactId: contactId) else {
+                guard let contact = try await LastMessagesManager.shared.fetchUser(contactId: contactId) else {
                     print("contactId \(contactId) inexistant dans Users")
                     return
                 }
-                let email = user.email ?? ""
+                let emailContact = contact.email ?? ""
                 let urlAvatar = user.avatarLink ?? ""
 
-                lastMessages.append(LastMessage(avatarLink: urlAvatar, email: email, texte: lastMessage, date: Timestamp(), salonId: salonId))
+                lastMessages.append(LastMessage(avatarLink: urlAvatar, emailContact: emailContact, texte: lastMessage, date: Timestamp(), salonId: salonId))
             }
             
         }
     }
     
     func fetchLastMessages() {
-        lastMessages.append(LastMessage(avatarLink: "http", email: "Leroy", texte: "Hello1", date: Timestamp(), salonId: "11"))
-        lastMessages.append(LastMessage(avatarLink: "http", email: "Gured", texte: "Hello1", date: Timestamp(), salonId: "11"))
-        lastMessages.append(LastMessage(avatarLink: "http", email: "Max", texte: "Hello1", date: Timestamp(), salonId: "11"))
+        lastMessages.append(LastMessage(avatarLink: "http", emailContact: "Leroy", texte: "Hello1", date: Timestamp(), salonId: "11"))
+        lastMessages.append(LastMessage(avatarLink: "http", emailContact: "Gured", texte: "Hello1", date: Timestamp(), salonId: "11"))
+        lastMessages.append(LastMessage(avatarLink: "http", emailContact: "Max", texte: "Hello1", date: Timestamp(), salonId: "11"))
     }
     
     func logOut() {

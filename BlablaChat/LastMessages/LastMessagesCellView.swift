@@ -22,12 +22,12 @@ struct LastMessagesCellView: View {
                 //SDWebImageLoader(url: lastMessage.avatar_link, size: 40)
                 VStack(alignment: .leading) {
                     
-                    let emailShort = EmailShort(email: lastMessage.email)
+                    let emailShort = EmailShort(email: lastMessage.emailContact)
                     Text("\(emailShort)")
                         .font(.system(size: 16, weight: .bold))
                         .padding(.leading, 20)
                     
-                    let msg = MessageShort(message: lastMessage.email)
+                    let msg = MessageShort(message: lastMessage.emailContact)
                     Text("\(msg)")
                         .font(.system(size: 14))
                         .multilineTextAlignment(.leading)

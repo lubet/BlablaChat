@@ -4,7 +4,9 @@
 //
 //  Created by Lubet-Moncla Xavier on 23/03/2024.
 //
-// Liste de derniers messages par room
+// Liste du dernier message des salons du user
+// click sur un salon -> tous les messages de ce salon pour ce user + possibilité d'ajouter un message
+// click sur nouveau message -> Affichage des users ->  LastMessageView -> tous les messages de ce user
 
 
 import SwiftUI
@@ -40,7 +42,7 @@ class LastMessagesViewModel: ObservableObject {
         fetchLastMessages()
     }
 
-    // Derniers messages
+    // Liste des derniers messages d'un user par salons
     func getLastMessages() async throws {
         Task {
             guard let user = try? UsersManager.shared.getUser() else { return }
@@ -104,17 +106,20 @@ struct LastMessagesView: View {
                     List {
                         ForEach(vm.lastMessages) { message in
                             NavigationLink(value: message) {
-                                LastMessagesCellView(lastMessage: message)
+                                LastMessagesCellView(lastMessage: message) // liste des salons/derniers messages du user
                             }
                         }
                     }
                     .navigationTitle("Last messages")
                     .navigationDestination(for: LastMessage.self) { message in
-                        ContactsView(salonId: message.salonId)
+                        // -> BubblesView() Tous les messages du salon selectionné dans la liste
                     }
                     // .searchable(text: $vm.searchText)
                 }
                 
+                // Nouveau message: ContactsView(salonId: message.salonId)
+
+                // Pour les tests:
                 Button("Logout") {
                     vm.logOut()
                     showSignInView = true

@@ -4,6 +4,8 @@
 //
 //  Created by Lubet-Moncla Xavier on 02/01/2025.
 //
+// **** Quand on vient du choix du contact contact ****
+//
 // Afin de créer un message:
 // Voir si il y a un salon entre la personne qui est loggé et une autre personnes (moi et une autre) dans salons-users
 // (il faut que les 2 personnes aient le même n° de salon) - Table: salons users

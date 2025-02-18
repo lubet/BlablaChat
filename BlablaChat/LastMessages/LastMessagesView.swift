@@ -98,6 +98,8 @@ struct LastMessagesView: View {
     
     @Binding var showSignInView: Bool
     
+    @State var showUsersView = false // fullSreenCover UsersView
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -119,6 +121,7 @@ struct LastMessagesView: View {
                 }
                 
                 // Nouveau message: ContactsView(salonId: message.salonId)
+                btnNewMessage
 
                 // Pour les tests:
                 Button("Logout") {
@@ -129,6 +132,41 @@ struct LastMessagesView: View {
         }
     }
 }
+
+
+// Bouton Nouveau message ------------------
+extension LastMessagesView {
+    
+    private var btnNewMessage: some View {
+        Button {
+            showUsersView.toggle()
+        } label: {
+            HStack {
+                Spacer()
+                Text("Nouveau destinataire")
+                    .font(.system(size: 16, weight: .bold))
+                Spacer()
+            }
+            .foregroundColor(.white)
+            .padding(.vertical)
+                .background(Color.blue)
+                .cornerRadius(32)
+                .padding(.horizontal)
+                //.shadow(radius: 15)
+        }
+        
+        // Callback de UsersView
+        .fullScreenCover(isPresented: $showUsersView) {
+            UsersView(didSelectedNewUser: { emailSelected in // Liste des contacts pour un nouveau messages
+                self.emailPassed = emailSelected
+                self.showChatView.toggle()
+            })
+        }
+    }
+}
+
+
+
 
 
 struct LastMessages_Previews: PreviewProvider {

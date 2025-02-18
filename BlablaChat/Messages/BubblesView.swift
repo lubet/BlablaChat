@@ -178,6 +178,6 @@ extension BubblesView {
 }
 
 
-#Preview {
-    BubblesView(salonId: "12")
-}
+//#Preview {
+//    BubblesView(email: "12@zut")
+//}

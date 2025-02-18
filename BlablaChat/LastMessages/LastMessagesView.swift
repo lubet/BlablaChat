@@ -98,40 +98,46 @@ struct LastMessagesView: View {
     
     @Binding var showSignInView: Bool
     
-    @State var showUsersView = false // fullSreenCover UsersView
+    @State var showUsersView = false // fullSreenCover UsersView (contacts)
+    
+    @State var salonPassed: String = "" // email callback de UsersView
+    
+    @State var showChatView = false // -> ChatView avec call back ->
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color.theme.background.ignoresSafeArea()
-                VStack {
+        ZStack {
+            Color.theme.background.ignoresSafeArea()
+            
+            NavigationStack {
                     List {
                         ForEach(vm.lastMessages) { message in
-                            NavigationLink(value: message.salonId) {
-                                LastMessagesCellView(lastMessage: message) // liste des salons/derniers messages du user
+                            NavigationLink {
+                                BubblesView(salonId: message.salonId)
+                            } label: {
+                                LastMessagesCellView(lastMessage: message)
                             }
                         }
                     }
-                    .navigationTitle("Last messages")
-                    .navigationDestination(for: String.self) { salonId in
-                        // Tous les messages du salon qui a été selectionné
-                        BubblesView(salonId: salonId)
-                    }
-                    // .searchable(text: $vm.searchText)
-                }
-                
-                // Nouveau message: ContactsView(salonId: message.salonId)
-                btnNewMessage
 
-                // Pour les tests:
-                Button("Logout") {
-                    vm.logOut()
-                    showSignInView = true
+                    btnNewMessage
+
+                    .navigationTitle("Last messages")
+                
+                    // CallBack <- ContactsView
+                    .navigationDestination(isPresented: $showChatView) {
+                        BubblesView(salonId: salonPassed)
+                    }
+                    
+                    
+                    // Pour les tests:
+                    Button("Logout") {
+                        vm.logOut()
+                        showSignInView = true
+                    }
                 }
             }
         }
     }
-}
 
 
 // Bouton Nouveau message ------------------
@@ -157,8 +163,8 @@ extension LastMessagesView {
         
         // Callback de UsersView
         .fullScreenCover(isPresented: $showUsersView) {
-            UsersView(didSelectedNewUser: { emailSelected in // Liste des contacts pour un nouveau messages
-                self.emailPassed = emailSelected
+            ContactsView(didSelectedNewUser: { salonSelected in // Liste des contacts pour un nouveau messages
+                self.salonPassed = salonSelected
                 self.showChatView.toggle()
             })
         }

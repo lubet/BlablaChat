@@ -66,27 +66,32 @@ struct ContactsView: View {
     
     @StateObject var vm = ContactsViewModel()
     
-    let salonId: String
+    let didSelectedNewUser: (String) -> () // call back
+    
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-            VStack {
+        ZStack {
+            Color.theme.background
+            NavigationStack {
                 List {
                     ForEach(vm.filteredContacts, id: \.self) { oneContact in
-                        NavigationLink(value: oneContact) {
+                        Button {
+                            presentationMode.wrappedValue.dismiss() // Fermeture de la vue
+                            didSelectedNewUser(oneContact.email)      // Ouverture de la vue précédente "NewMessagesView" avec passage de l'email selectionné
+                        } label: {
                             ContactRowView(oneContact: oneContact)
                         }
                     }
                 }
                 .navigationTitle("Contacts")
-                .navigationDestination(for: ContactModel.self) { oneContact in
-                    MessagesView(oneContact: oneContact)
-                }
                 .searchable(text: $vm.searchText)
             }
+        }
     }
 }
 
-#Preview {
-    ContactsView(salonId: "E")
-}
+//#Preview {
+//    ContactsView(salonId: "E")
+//}
 

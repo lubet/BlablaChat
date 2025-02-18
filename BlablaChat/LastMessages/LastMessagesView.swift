@@ -105,14 +105,15 @@ struct LastMessagesView: View {
                 VStack {
                     List {
                         ForEach(vm.lastMessages) { message in
-                            NavigationLink(value: message) {
+                            NavigationLink(value: message.salonId) {
                                 LastMessagesCellView(lastMessage: message) // liste des salons/derniers messages du user
                             }
                         }
                     }
                     .navigationTitle("Last messages")
-                    .navigationDestination(for: LastMessage.self) { message in
-                        // -> BubblesView() Tous les messages du salon selectionné dans la liste
+                    .navigationDestination(for: String.self) { salonId in
+                        // Tous les messages du salon qui a été selectionné
+                        BubblesView(salonId: salonId)
                     }
                     // .searchable(text: $vm.searchText)
                 }

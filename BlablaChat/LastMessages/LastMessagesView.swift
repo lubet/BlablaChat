@@ -39,11 +39,11 @@ class LastMessagesViewModel: ObservableObject {
     @Published var lastMessages: [LastMessage] = []
     
     init() {
-        fetchLastMessages()
+        getLastMessages()
     }
 
     // Liste des derniers messages d'un user par salons
-    func getLastMessages() async throws {
+    func getLastMessages() {
         Task {
             guard let user = try? UsersManager.shared.getUser() else { return }
             

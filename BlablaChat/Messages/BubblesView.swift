@@ -103,6 +103,7 @@ struct BubblesView: View {
                 }
             }
         }
+        .navigationTitle("Bubbles")
         .onAppear {
             Task {
                 vm.salonId = salonId

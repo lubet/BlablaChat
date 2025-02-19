@@ -14,7 +14,7 @@ import PhotosUI
 final class BubblesViewModel: ObservableObject {
     
     private var salonId: String = ""
-    @Published var email: String = ""
+    @Published var emailContact: String = ""
     
     private var didAppear: Bool = false
 
@@ -55,18 +55,18 @@ final class BubblesViewModel: ObservableObject {
     // Messages du salon selectionné par le user dans lastMessagesView
     // ou messages vide pour un nouveau contact
     
-    // email <- LastMessagesView ou ContactsView
-    func allUserSalonMessages(email: String) async throws {
+    // email du user ou du contact <- LastMessagesView ou ContactsView
+    func allUserSalonMessages(emailContact: String) async throws {
         
         // user
         let user = try UsersManager.shared.getUser()
 
         // Recherche du contact dans "Users" avec email
-        var contactId =  try? await UsersManager.shared.searchContact(email: email)
+        var contactId =  try? await UsersManager.shared.searchContact(email: emailContact)
         
         // Création du contact dans "Users" si pas présent
         if contactId == "" {
-            contactId = try await UsersManager.shared.createUser(email: email)
+            contactId = try await UsersManager.shared.createUser(email: emailContact)
         }
 
         guard let contactId else { print("MessagesViewModel: pas de contactId"); return }
@@ -106,7 +106,7 @@ final class BubblesViewModel: ObservableObject {
 
 struct BubblesView: View {
     
-    let email: String
+    let emailContact: String
     
     @StateObject var vm = BubblesViewModel()
     
@@ -132,8 +132,8 @@ struct BubblesView: View {
         .navigationTitle("Bubbles")
         .onAppear {
             Task {
-                vm.email = email
-                try await vm.allUserSalonMessages(email: email)
+                vm.emailContact = emailContact
+                try await vm.allUserSalonMessages(emailContact: emailContact)
                 
             }
         }

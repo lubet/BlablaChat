@@ -12,28 +12,9 @@
 //
 
 import SwiftUI
+import Combine
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-import Combine
-
-// Dernier Message
-struct LastMessage: Identifiable, Codable, Hashable {
-    let id = UUID().uuidString
-    let avatarLink: String
-    let emailContact: String
-    let texte: String
-    let date: Timestamp
-    let salonId: String
-    
-    enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case avatarLink = "avatar_link"
-        case emailContact = "email_contact"
-        case texte = "message_texte"
-        case date = "message_date"
-        case salonId = "salon_id"
-    }
-}
 
 @MainActor
 class LastMessagesViewModel: ObservableObject {
@@ -102,7 +83,7 @@ struct LastMessagesView: View {
     
     @State var showUsersView = false // fullSreenCover UsersView (contacts)
     
-    @State var salonPassed: String = "" // email callback de UsersView
+    @State var emailPassed: String = "" // email callback de UsersView
     
     @State var showChatView = false // -> ChatView avec call back ->
     
@@ -114,7 +95,7 @@ struct LastMessagesView: View {
                     List {
                         ForEach(vm.lastMessages) { message in
                             NavigationLink {
-                                BubblesView(salonId: message.salonId)
+                                BubblesView(emailContact: message.emailContact)
                             } label: {
                                 LastMessagesCellView(lastMessage: message)
                             }
@@ -127,7 +108,7 @@ struct LastMessagesView: View {
                 
                     // -> Bubbles en retour des contacts
                     .navigationDestination(isPresented: $showChatView) {
-                        BubblesView(salonId: salonPassed)
+                        BubblesView(emailContact: emailPassed)
                     }
                     
                     
@@ -165,8 +146,8 @@ extension LastMessagesView {
         
         // -> Contacts
         .fullScreenCover(isPresented: $showUsersView) {
-            ContactsView(didSelectedNewUser: { salonSelected in // Liste des contacts pour un nouveau messages
-                self.salonPassed = salonSelected
+            ContactsView(didSelectedNewUser: { emailSelected in // Liste des contacts pour un nouveau messages
+                self.emailPassed = emailSelected
                 self.showChatView.toggle()
             })
         }

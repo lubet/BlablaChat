@@ -19,15 +19,15 @@ import FirebaseFirestoreSwift
 @MainActor
 class LastMessagesViewModel: ObservableObject {
     
-    @Published var lastMessages: [LastMessage] = []
-    
-    init() {
-        getLastMessages()
-    }
+    @Published private(set) var lastMessages: [LastMessage] = []
 
     // Liste des derniers messages d'un user par salons
-    func getLastMessages() {
+    func getLastMessages() async {
+
         Task {
+            
+            lastMessages = []
+            
             guard let user = try? UsersManager.shared.getUser() else { return }
             
             // Renvoie tous les salons dont est membre le user
@@ -55,6 +55,7 @@ class LastMessagesViewModel: ObservableObject {
                 let urlAvatar = user.avatarLink ?? ""
 
                 lastMessages.append(LastMessage(avatarLink: urlAvatar, emailContact: emailContact, texte: lastMessage, date: Timestamp(), salonId: salonId))
+                // print("lastMessages:\(lastMessages)")
             }
             
         }
@@ -106,12 +107,16 @@ struct LastMessagesView: View {
 
                     .navigationTitle("Last messages")
                 
+                    .task {
+                        await vm.getLastMessages() // Les derniers messages
+                    }
+                
                     // -> Bubbles en retour des contacts
                     .navigationDestination(isPresented: $showChatView) {
                         BubblesView(emailContact: emailPassed)
                     }
-                    
-                    
+
+                
                     // Pour les tests:
                     Button("Logout") {
                         vm.logOut()

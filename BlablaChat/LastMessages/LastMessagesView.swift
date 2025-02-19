@@ -7,7 +7,9 @@
 // Liste du dernier message des salons du user
 // click sur un salon -> tous les messages de ce salon pour ce user + possibilité d'ajouter un message
 // click sur nouveau message -> Affichage des users ->  LastMessageView -> tous les messages de ce user
-
+//
+// TODO: Cas d'un nouveau contact
+//
 
 import SwiftUI
 import FirebaseFirestore
@@ -77,11 +79,11 @@ class LastMessagesViewModel: ObservableObject {
         }
     }
     
-    func fetchLastMessages() {
-        lastMessages.append(LastMessage(avatarLink: "http", emailContact: "Leroy", texte: "Hello1", date: Timestamp(), salonId: "11"))
-        lastMessages.append(LastMessage(avatarLink: "http", emailContact: "Gured", texte: "Hello1", date: Timestamp(), salonId: "11"))
-        lastMessages.append(LastMessage(avatarLink: "http", emailContact: "Max", texte: "Hello1", date: Timestamp(), salonId: "11"))
-    }
+//    func fetchLastMessages() {
+//        lastMessages.append(LastMessage(avatarLink: "http", emailContact: "Leroy", texte: "Hello1", date: Timestamp(), salonId: "11"))
+//        lastMessages.append(LastMessage(avatarLink: "http", emailContact: "Gured", texte: "Hello1", date: Timestamp(), salonId: "11"))
+//        lastMessages.append(LastMessage(avatarLink: "http", emailContact: "Max", texte: "Hello1", date: Timestamp(), salonId: "11"))
+//    }
     
     func logOut() {
         try? UsersManager.shared.signOut()
@@ -119,11 +121,11 @@ struct LastMessagesView: View {
                         }
                     }
 
-                    btnNewMessage
+                    btnNewMessage // -> ContactsView
 
                     .navigationTitle("Last messages")
                 
-                    // CallBack <- ContactsView
+                    // -> Bubbles en retour des contacts
                     .navigationDestination(isPresented: $showChatView) {
                         BubblesView(salonId: salonPassed)
                     }
@@ -161,7 +163,7 @@ extension LastMessagesView {
                 //.shadow(radius: 15)
         }
         
-        // Callback de UsersView
+        // -> Contacts
         .fullScreenCover(isPresented: $showUsersView) {
             ContactsView(didSelectedNewUser: { salonSelected in // Liste des contacts pour un nouveau messages
                 self.salonPassed = salonSelected

@@ -66,7 +66,7 @@ struct ContactsView: View {
     
     @StateObject var vm = ContactsViewModel()
     
-    let didSelectedNewUser: (String) -> () // call back
+    let didSelectedNewUser: (String) -> () // -> retour à LastMessagesView -> Bubbles
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -78,7 +78,8 @@ struct ContactsView: View {
                     ForEach(vm.filteredContacts, id: \.self) { oneContact in
                         Button {
                             presentationMode.wrappedValue.dismiss() // Fermeture de la vue
-                            didSelectedNewUser(oneContact.email)      // Ouverture de la vue précédente "NewMessagesView" avec passage de l'email selectionné
+                            // -> LastMessagesView -> BubblesView
+                            didSelectedNewUser(oneContact.email)
                         } label: {
                             ContactRowView(oneContact: oneContact)
                         }

@@ -4,23 +4,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 02/01/2025.
 //
-// **** Quand on vient du choix du contact contact ****
-//
-// Afin de créer un message:
-// Voir si il y a un salon entre la personne qui est loggé et une autre personnes (moi et une autre) dans salons-users
-// (il faut que les 2 personnes aient le même n° de salon) - Table: salons users
-// si il n'y en a pas:
-//      créer un salon dans Salons,
-//      créer les 2 personnes avec le même n° de salon dans salons-users
-//      créer le message dans Messages avec le même n° de salon et le from = userId
-// Si un salon existe cad 2 personnes ont le même n° de salon
-//     on crée le message avec ce n° de salon
-// (peut être étendu à n personnes... à voir plus tard)
-//
-// 1) Si c'est un nouveau contact (email non existant dans "Users" -> création dans "Users" (nouveau userId)
-// forcemment je n'ai pas de salon -> création d'un salon et de deux enregs salons-users avec le même n° de salon.
-// Création du message ave le n° de salon et fromId = userId
-// Liste des messages du user_id courant
+// Dialogue du /user/salon selectionné dans LastMessageView
 //
 
 import SwiftUI
@@ -67,7 +51,7 @@ final class MessagesViewModel: ObservableObject {
     }
     
     
-    // Messages du user
+    // Messages du user/salon
     func allMyMessages(oneContact: ContactModel) async throws {
         
         // user

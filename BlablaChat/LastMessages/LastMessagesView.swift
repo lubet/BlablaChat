@@ -61,17 +61,9 @@ class LastMessagesViewModel: ObservableObject {
         }
     }
     
-//    func fetchLastMessages() {
-//        lastMessages.append(LastMessage(avatarLink: "http", emailContact: "Leroy", texte: "Hello1", date: Timestamp(), salonId: "11"))
-//        lastMessages.append(LastMessage(avatarLink: "http", emailContact: "Gured", texte: "Hello1", date: Timestamp(), salonId: "11"))
-//        lastMessages.append(LastMessage(avatarLink: "http", emailContact: "Max", texte: "Hello1", date: Timestamp(), salonId: "11"))
-//    }
-    
     func logOut() {
         try? UsersManager.shared.signOut()
-        
     }
-    
 }
 
 // -----------------------------------------------------------------------------

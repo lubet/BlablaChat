@@ -20,6 +20,9 @@ import FirebaseFirestoreSwift
 class LastMessagesViewModel: ObservableObject {
     
     @Published private(set) var lastMessages: [LastMessage] = []
+    
+    @Published private(set) var userEmail: String = ""
+    @Published private(set) var userAvatarLink: String = ""
 
     // Liste des derniers messages d'un user par salons
     func getLastMessages() async {
@@ -64,6 +67,12 @@ class LastMessagesViewModel: ObservableObject {
     func logOut() {
         try? UsersManager.shared.signOut()
     }
+    
+    func getUserAvatarLink() {
+        guard let user = try? UsersManager.shared.getUser() else { return }
+        userEmail = user.email ?? ""
+        userAvatarLink = user.avatarLink ?? ""
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -91,6 +100,21 @@ struct LastMessagesView: View {
                                 BubblesView(emailContact: message.emailContact)
                             } label: {
                                 LastMessagesCellView(lastMessage: message)
+                            }
+                        }
+                    }
+                    .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            SDWebImageLoader(url: vm.userAvatarLink, size: 30)
+                        }
+                        ToolbarItem(placement: .topBarLeading) {
+                            Text("\(vm.userEmail)")
+                        }
+                        ToolbarItem(placement: .topBarTrailing) {
+                            NavigationLink {
+                                SettingsView(showSignInView: $showSignInView)
+                            } label: {
+                                Image(systemName: "gear")
                             }
                         }
                     }

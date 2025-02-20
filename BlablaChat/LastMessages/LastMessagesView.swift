@@ -67,6 +67,14 @@ class LastMessagesViewModel: ObservableObject {
     func logOut() {
         try? UsersManager.shared.signOut()
     }
+    
+    func getUserToolBar() {
+        guard let user = try? UsersManager.shared.getUser() else { return }
+        userEmail = user.email ?? ""
+        userAvatarLink = user.avatarLink ?? ""
+        
+        print("**** getUserToolBar()\(userAvatarLink)")
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +107,7 @@ struct LastMessagesView: View {
                     }
                     .onAppear {
                         Task {
-                            // vm.getUserToolBar() // AvatarLink et email du user
+                            vm.getUserToolBar() // AvatarLink et email du user
                         }
                     }
                     .toolbar {

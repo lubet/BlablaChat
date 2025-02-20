@@ -32,9 +32,15 @@ final class LoginEmailViewModel: ObservableObject {
         
         // New Auth
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
+
+        // Si il n'y a pas d'image en mettre une par défaut
+        let image: UIImage = image ?? UIImage.init(systemName: "person.circle.fill")!
+        // Création de l'avatar dans "Storage", maj de l'avatarLink dans "users",
+        let avatarLink = try await UsersManager.shared.updateAvatar(mimage: image)
         
-        // Création de l'objet user avec infos de l'auth + complément
-        var dbuser = DBUser(auth: authUser)
+        // Création du user = les valeurs par défault du modéle DBUser + les valeurs de authUser + l'avatarLink
+        var dbuser = DBUser(id: authUser.uid, email: authUser.email, avatarLink: avatarLink)
+        //print("********* dbuser\(dbuser)")
 
         // Est ce que le user existe déjà dans "Users"
         let userUsers = try await UsersManager.shared.searchUser(email: email)
@@ -52,12 +58,6 @@ final class LoginEmailViewModel: ObservableObject {
         if let encodedData = try? JSONEncoder().encode(dbuser) {
             UserDefaults.standard.set(encodedData, forKey: "saveuser")
         }
-        
-        // Si il n'y a pas d'image en mettre une par défaut
-        let image: UIImage = image ?? UIImage.init(systemName: "person.circle.fill")! 
-        
-        // Création de l'avatar dans "Storage" et mise à jour de l'avatar du user dans "Users"
-        let _ = try await UsersManager.shared.updateAvatar(mimage: image)
 
         // try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
      }

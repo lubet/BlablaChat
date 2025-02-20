@@ -16,6 +16,8 @@ import SwiftUI
 import Firebase
 import UserNotifications
 
+var fcmTocken: String = ""
+
 @main
 struct BlablaChatApp: App {
     
@@ -69,7 +71,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         print("Message ID: \(messageID)")
       }
 
-      // print(userInfo)
+      // print(userInfo)´´,,,,,,,,,,,,,,,,,
 
       completionHandler(UIBackgroundFetchResult.newData)
     }
@@ -78,8 +80,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
 
-      let deviceToken:[String: String] = ["token": fcmToken ?? ""]
+      // let deviceToken:[String: String] = ["token": fcmToken ?? ""]
         // print("Device token: ", deviceToken) // This token can be used for testing notifications on FCM
+        
+        fcmTocken = fcmToken ?? ""
     }
 }
 

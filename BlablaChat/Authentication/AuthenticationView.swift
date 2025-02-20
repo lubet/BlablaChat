@@ -39,11 +39,53 @@ final class AuthenticationViewModel: ObservableObject {
             }
         }
     }
+    
+    func signUpApple() async throws {
+        
+        // authUser
+        guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else {
+            print("**** Erreur signUpApple() - AuthUser = nil")
+            return
+        }
+        
+        // email
+        guard let email = AuthUser.email else {
+            print("**** Erreur: SignUpApple() - Pas d'email")
+            return
+        }
+
+        // Avatar par défaut pour le signUp Apple
+        let image = UIImage.init(systemName: "person.circle.fill")!
+        
+        // Création d'un objet dbUser sans l'image mais le user_id est par défaut
+        var dbuser = DBUser(id: AuthUser.uid, email: AuthUser.email)
+   
+        // Est ce que le user existe déjà dans "Users"
+        let userUsers = try await UsersManager.shared.searchUser(email: email)
+        
+        // Si le user existe déjà dans la base "Users" je l'utilise
+        if userUsers != nil {
+            dbuser = userUsers!
+        } else {
+            // le user n'existe pas dans "Users", je le crée.
+            try await UsersManager.shared.createDbUser(user: dbuser) // sans l'image
+            
+            // Création de l'avatar dans "Storage", maj de l'avatarLink dans "users",
+            let avatarLink = try await UsersManager.shared.updateAvatar(mimage: image)
+
+            dbuser = DBUser(id: AuthUser.uid, email: AuthUser.email, avatarLink: avatarLink)
+        }
+        // UserDefaults - Save user
+        print("dbuser:\(dbuser)")
+        if let encodedData = try? JSONEncoder().encode(dbuser) {
+            UserDefaults.standard.set(encodedData, forKey: "saveuser")
+        }
+    }
 }
 
 struct AuthenticationView: View {
 
-    @StateObject private var viewModel = AuthenticationViewModel()
+    @StateObject private var vm = AuthenticationViewModel()
     @Binding var showSignInView: Bool
     
     @Environment(\.colorScheme) private var colorScheme
@@ -57,7 +99,7 @@ struct AuthenticationView: View {
                 Button(action: {
                     Task {
                         do {
-                            try await viewModel.signInApple() // ne renvoie rien, si on est connecté est gérer par le "onChange" plus bas.
+                            try await vm.signInApple() // ne renvoie rien, si on est connecté est gérer par le "onChange" plus bas.
                         } catch {
                             print(error)
                         }
@@ -76,8 +118,13 @@ struct AuthenticationView: View {
                 })
                 .frame(height: 55)
                 
-                .onChange(of: viewModel.didSignInWithApple) { oldValue, newValue in
+                .onChange(of: vm.didSignInWithApple) { oldValue, newValue in
                     if newValue == true {
+                        // Je suis connecté pour la première fois
+                        // Je prépare mon profile et le sauve
+                        Task {
+                            try await vm.signUpApple()
+                        }
                         showSignInView = false
                     }
                 }

@@ -53,9 +53,6 @@ final class AuthenticationViewModel: ObservableObject {
             print("**** Erreur: SignUpApple() - Pas d'email")
             return
         }
-
-        // Avatar par défaut pour le signUp Apple
-        let image = UIImage.init(systemName: "person.circle.fill")!
         
         // Création d'un objet dbUser sans l'image mais le user_id est par défaut
         var dbuser = DBUser(id: AuthUser.uid, email: AuthUser.email)
@@ -68,10 +65,13 @@ final class AuthenticationViewModel: ObservableObject {
             dbuser = userUsers!
         } else {
             // le user n'existe pas dans "Users", je le crée.
-            try await UsersManager.shared.createDbUser(user: dbuser) // sans l'image
+            try await UsersManager.shared.createDbUser(user: dbuser) // sans l'image mais pour générer le user_id
+
+            // Avatar par défaut pour le signUp Apple
+            let image = UIImage.init(systemName: "person.circle.fill")!
             
             // Création de l'avatar dans "Storage", maj de l'avatarLink dans "users",
-            let avatarLink = try await UsersManager.shared.updateAvatar(mimage: image)
+            let avatarLink = try await UsersManager.shared.updateAvatar(mimage: image) // le user_id est chargé dans l'updateAvatar()
 
             dbuser = DBUser(id: AuthUser.uid, email: AuthUser.email, avatarLink: avatarLink)
         }

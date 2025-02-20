@@ -67,12 +67,6 @@ class LastMessagesViewModel: ObservableObject {
     func logOut() {
         try? UsersManager.shared.signOut()
     }
-    
-    func getUserAvatarLink() {
-        guard let user = try? UsersManager.shared.getUser() else { return }
-        userEmail = user.email ?? ""
-        userAvatarLink = user.avatarLink ?? ""
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -101,6 +95,11 @@ struct LastMessagesView: View {
                             } label: {
                                 LastMessagesCellView(lastMessage: message)
                             }
+                        }
+                    }
+                    .onAppear {
+                        Task {
+                            // vm.getUserToolBar() // AvatarLink et email du user
                         }
                     }
                     .toolbar {

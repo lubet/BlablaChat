@@ -20,13 +20,13 @@ final class SettingsViewModel: ObservableObject {
     @Published var authProviders: [AuthProviderOption] = []
     
     func loadAvatar() async throws {
-        let user = try UsersManager.shared.getUser()
+        let user = try UsersManager.shared.getUserDefault()
         httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user.userId)
     }
     
     // TODO
     func updateAvatar() async throws {
-        let user = try UsersManager.shared.getUser()
+        let user = try UsersManager.shared.getUserDefault()
         if let newImageAvatar = newImageAvatar {
            let _ = try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: newImageAvatar)
         }
@@ -66,7 +66,7 @@ final class SettingsViewModel: ObservableObject {
     }
     
     func resetPassword() async throws {
-        let user = try UsersManager.shared.getUser()
+        let user = try UsersManager.shared.getUserDefault()
         guard let email = user.email else {
             throw URLError(.fileDoesNotExist)
         }

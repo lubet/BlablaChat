@@ -41,7 +41,7 @@ final class UsersManager {
     
     // Get all users sauf le userSigned
     func getAllUsers() async throws -> [DBUser] {
-        let userSigned = try UsersManager.shared.getUser()
+        let userSigned = try UsersManager.shared.getUserDefault()
         let userId = userSigned.userId
         
         let snapshot = try await DBUserCollection.getDocuments()
@@ -178,7 +178,7 @@ final class UsersManager {
     }
     
     // Store des infos du user loggé
-    func getUser() throws -> DBUser {
+    func getUserDefault() throws -> DBUser {
         enum MyError: Error {
             case runtimeError(String)
         }

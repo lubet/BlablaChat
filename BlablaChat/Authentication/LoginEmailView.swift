@@ -72,9 +72,9 @@ final class LoginEmailViewModel: ObservableObject {
             return
         }
 
-        if let encodedData = try? JSONEncoder().encode(dbuser) {
-            UserDefaults.standard.set(encodedData, forKey: "saveuser")
-        }
+        let user = try UsersManager.shared.getUserDefault()
+        httpAvatar = user.avatarLink ?? ""
+        
         return
     }
 }

@@ -31,7 +31,7 @@ class LastMessagesViewModel: ObservableObject {
             
             lastMessages = []
             
-            guard let user = try? UsersManager.shared.getUser() else { return }
+            guard let user = try? UsersManager.shared.getUserDefault() else { return }
             
             // Renvoie tous les salons dont est membre le user
             guard let userMembres = try await LastMessagesManager.shared.userMembres(userId: user.userId) else {
@@ -69,7 +69,8 @@ class LastMessagesViewModel: ObservableObject {
     }
     
     func getUserToolBar() {
-        guard let user = try? UsersManager.shared.getUser() else { return }
+        guard let user = try? UsersManager.shared.getUserDefault() else { return }
+        
         userEmail = user.email ?? ""
         userAvatarLink = user.avatarLink ?? ""
         

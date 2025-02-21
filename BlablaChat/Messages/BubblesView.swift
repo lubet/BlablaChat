@@ -33,7 +33,7 @@ final class BubblesViewModel: ObservableObject {
             if let data = try? await selection.loadTransferable(type: Data.self) {
                 if let uiImage =  UIImage(data: data) {
                     // selectedImage = uiImage
-                    let user = try UsersManager.shared.getUser()
+                    let user = try UsersManager.shared.getUserDefault()
                     
                     // Sauvegarde dans Storage. TODO: par salon pour les messages-photos (toujours par user pour l'avatar)
                     let (path, _) = try await StorageManager.shared.saveImage(image: uiImage, salonId: salonId)
@@ -59,7 +59,7 @@ final class BubblesViewModel: ObservableObject {
     func allUserSalonMessages(emailContact: String) async throws {
         
         // user
-        let user = try UsersManager.shared.getUser()
+        let user = try UsersManager.shared.getUserDefault()
 
         // Recherche du contact dans "Users" avec email
         var contactId =  try? await UsersManager.shared.searchContact(email: emailContact)
@@ -93,7 +93,7 @@ final class BubblesViewModel: ObservableObject {
     
     // Création du message
     func newMessages(texteMessage: String) async throws {
-        let user = try UsersManager.shared.getUser()
+        let user = try UsersManager.shared.getUserDefault()
         
         // Création du message avec le n° de salon et le fromId égal au user
         try await MessagesManager.shared.newMessage(salonId: salonId, fromId: user.userId, texte: texteMessage, urlPhoto: "")

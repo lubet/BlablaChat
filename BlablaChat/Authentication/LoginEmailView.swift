@@ -5,6 +5,12 @@
 //  Created by Lubet-Moncla Xavier on 03/01/2024.
 //
 // LoginEmailView signIn/signUp -> RootView
+// dbuser = DBUser(auth)
+// Create dbuser
+// Create Storage
+// Maj user avatarlink
+// userDefault id,email,user_id (dbuser.user_id) key: variable user_id
+
 
 import SwiftUI
 import SDWebImage
@@ -22,49 +28,36 @@ final class LoginEmailViewModel: ObservableObject {
     
     // Nouveau compte - Auth, Users, Tokens - Si déjà présent dans "Users" (contact) prendre le userId existant
     func signUp(image: UIImage?) async throws {
-        
-        print("**** Sign Up ****")
-        
+
         guard !email.isEmpty, !password.isEmpty else {
-            print("SignUp - Pas d'email ni de password")
+            print("Pas d'email ni de password")
             return
         }
         
-        // New Auth
+        // Création de l'Auth
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
-
-        // Si il n'y a pas d'image en mettre une par défaut
-        let image: UIImage = image ?? UIImage.init(systemName: "person.circle.fill")!
-        // Création de l'avatar dans "Storage", maj de l'avatarLink dans "users",
-        let avatarLink = try await UsersManager.shared.updateAvatar(mimage: image)
         
-        // Création du user = les valeurs par défault du modéle DBUser + les valeurs de authUser + l'avatarLink
-        var dbuser = DBUser(id: authUser.uid, email: authUser.email, avatarLink: avatarLink)
-        //print("********* dbuser\(dbuser)")
-
-        // Est ce que le user existe déjà dans "Users"
-        let userUsers = try await UsersManager.shared.searchUser(email: email)
+        // Création dans "Users"
+        let user = DBUser(auth: authUser) // userId, email
+        try await UsersManager.shared.createDbUser(user: user) // sans l'image
         
-        // Si le user existe déjà dans la base "Users" je l'utilise
-        if userUsers != nil {
-            dbuser = userUsers!
-        } else {
-            // le user n'existe pas dans "Users", je le crée.
-            try await UsersManager.shared.createDbUser(user: dbuser) // sans l'image
-        }
-            
-        // UserDefaults - Save user
-        print("dbuser:\(dbuser)")
+        guard let image else { return }
+        
+        // Création de l'avatar dans "Storage" et maj de l'image dans "Users"
+        try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image)
+        
+        // Rercher le user que l'on vient de créer pour l'avoir complet dont l'avatarLink
+        let dbuser = try await UsersManager.shared.searchUser(email: email)
+
+        // Sauvegarde du UserProfil
         if let encodedData = try? JSONEncoder().encode(dbuser) {
             UserDefaults.standard.set(encodedData, forKey: "saveuser")
         }
-
         // try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
      }
 
     // Compte qui existe déjà
     func signIn() async throws {
-        
         print("---- Sign In ----")
         
         guard !email.isEmpty, !password.isEmpty else {

@@ -42,44 +42,32 @@ final class AuthenticationViewModel: ObservableObject {
     
     func signUpApple() async throws {
         
-        // authUser
-        guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else {
-            print("**** Erreur signUpApple() - AuthUser = nil")
-            return
-        }
-        
-        // email
-        guard let email = AuthUser.email else {
-            print("**** Erreur: SignUpApple() - Pas d'email")
-            return
-        }
-        
-        // Création d'un objet dbUser sans l'image mais le user_id est par défaut
-        var dbuser = DBUser(id: AuthUser.uid, email: AuthUser.email)
-   
-        // Est ce que le user existe déjà dans "Users"
-        let userUsers = try await UsersManager.shared.searchUser(email: email)
-        
-        // Si le user existe déjà dans la base "Users" je l'utilise
-        if userUsers != nil {
-            dbuser = userUsers!
-        } else {
-            // le user n'existe pas dans "Users", je le crée.
-            try await UsersManager.shared.createDbUser(user: dbuser) // sans l'image mais pour générer le user_id
+//        // authUser
+//        guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else {
+//            print("**** Erreur signUpApple() - AuthUser = nil")
+//            return
+//        }
+//        // email
+//        guard let email = AuthUser.email else {
+//            print("**** Erreur: SignUpApple() - Pas d'email")
+//            return
+//        }
+//
+//        var dbuser0 = DBUser(auth: AuthUser)
+//        
+//        // Save "Storage" et maj
+//        let image: UIImage = UIImage.init(systemName: "person.circle.fill")!
+//        //let avatarLink = try await UsersManager.shared.updateAvatar(mimage: image)
+//        
+//        // Création dans "users"
+//        //var dbuser1 = DBUser(id: dbuser0.id, email: dbuser0.email, avatarLink: avatarLink)
+//        try await UsersManager.shared.createDbUser(user: dbuser1)
+//        
+//        if let encodedData = try? JSONEncoder().encode(dbuser1) {
+//            UserDefaults.standard.set(encodedData, forKey: "saveuser")
+//        }
+//        // try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
 
-            // Avatar par défaut pour le signUp Apple
-            let image = UIImage.init(systemName: "person.circle.fill")!
-            
-            // Création de l'avatar dans "Storage", maj de l'avatarLink dans "users",
-            let avatarLink = try await UsersManager.shared.updateAvatar(mimage: image) // le user_id est chargé dans l'updateAvatar()
-
-            dbuser = DBUser(id: AuthUser.uid, email: AuthUser.email, avatarLink: avatarLink)
-        }
-        // UserDefaults - Save user
-        print("dbuser:\(dbuser)")
-        if let encodedData = try? JSONEncoder().encode(dbuser) {
-            UserDefaults.standard.set(encodedData, forKey: "saveuser")
-        }
     }
 }
 

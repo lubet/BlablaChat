@@ -26,8 +26,9 @@ final class SettingsViewModel: ObservableObject {
     
     // TODO
     func updateAvatar() async throws {
+        let user = try UsersManager.shared.getUser()
         if let newImageAvatar = newImageAvatar {
-            try await UsersManager.shared.updateAvatar(mimage: newImageAvatar)
+           let _ = try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: newImageAvatar)
         }
         // print("updateAvatar")
     }

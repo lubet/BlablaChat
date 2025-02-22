@@ -36,26 +36,34 @@ final class LoginEmailViewModel: ObservableObject {
         
         // Création de l'Auth
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
-        
-        // Création dans "Users"
-        let user = DBUser(auth: authUser) // userId, email
-        try await UsersManager.shared.createDbUser(user: user) // sans l'image
-        
-        guard let image else { return }
-        
-        // Création de l'avatar dans "Storage" et maj de l'image dans "Users"
-        try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image)
-        
-        // Rercher le user que l'on vient de créer pour l'avoir complet dont l'avatarLink
-        let dbuser = try await UsersManager.shared.searchUser(email: email)
 
-        // Sauvegarde du UserProfil
+        // Chercher dans "users" pour voir si il n'existe pas (cas d'un nouveau contact)
+        var dbuser = try await UsersManager.shared.searchUser(email: email)
+        
+        if dbuser == nil {
+            let user = DBUser(auth: authUser) // uid, email, user_id, date
+            try await UsersManager.shared.createDbUser(user: user) // sans l'image
+            let image = image ?? UIImage.init(systemName: "person.circle.fill")!
+            try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
+        } else {
+            // metre à jour l'uid
+            guard let userId = dbuser?.userId else { print("SignUp-Pas de userId"); return }
+            try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
+        }
+
+        // lire le user venant d'être créer avec l'email (pour récupérer avatarLink maj plus haut)
+        dbuser = try await UsersManager.shared.searchUser(email: email)
+        let uidforkey = authUser.uid
+
+        // save userdefault
         if let encodedData = try? JSONEncoder().encode(dbuser) {
-            UserDefaults.standard.set(encodedData, forKey: "saveuser")
+            UserDefaults.standard.set(encodedData, forKey: uidforkey)
         }
         // try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
      }
 
+    
+    // TODO l'avatarLink dans la  base est et est differend affiché dant le top de lastMessages
     // Compte qui existe déjà
     func signIn() async throws {
         print("---- Sign In ----")
@@ -67,7 +75,7 @@ final class LoginEmailViewModel: ObservableObject {
         
         try await AuthManager.shared.signInUser(email: email, password: password)
 
-        guard let dbuser = try await UsersManager.shared.searchUser(email: email) else {
+        guard (try await UsersManager.shared.searchUser(email: email)) != nil else {
             print("LoginEmailView-signIn: email \(email) non trouvé dans la base Users")
             return
         }

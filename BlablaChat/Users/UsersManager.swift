@@ -39,6 +39,13 @@ final class UsersManager {
         try await userDocument(user_id: userId).updateData(data)
     }
     
+    func updateId(userId: String, Id: String) async throws {
+        let data: [String:Any] = [
+            DBUser.CodingKeys.id.rawValue : Id,
+        ]
+        try await userDocument(user_id: userId).updateData(data)
+    }
+    
     // Get all users sauf le userSigned
     func getAllUsers() async throws -> [DBUser] {
         let userSigned = try UsersManager.shared.getUserDefault()

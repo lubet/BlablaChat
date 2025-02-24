@@ -42,6 +42,8 @@ final class AuthenticationViewModel: ObservableObject {
     
     func signUpApple() async throws {
         
+            // TODO
+        
 //        // authUser
 //        guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else {
 //            print("**** Erreur signUpApple() - AuthUser = nil")

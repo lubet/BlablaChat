@@ -70,7 +70,7 @@ class LastMessagesViewModel: ObservableObject {
     
     func getUserToolBar() {
         guard let user = try? UsersManager.shared.getUserDefault() else { return }
-        
+        print("getUserToolBar-\(user)")
         userEmail = user.email ?? ""
         userAvatarLink = user.avatarLink ?? ""
         

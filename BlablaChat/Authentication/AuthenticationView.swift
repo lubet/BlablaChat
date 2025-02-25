@@ -20,7 +20,7 @@ final class AuthenticationViewModel: ObservableObject {
     @Published var didSignInWithApple: Bool = false
     let signInAppleHelper = SignInAppleHelper()
     
-    // Apple
+    // Nouveau user Apple
     func signInApple() async throws {
         signInAppleHelper.startSignInWithAppleFlow { result in
             switch result {
@@ -28,6 +28,29 @@ final class AuthenticationViewModel: ObservableObject {
                 Task {
                     do {
                         let _ = try await AuthManager.shared.signInWithApple(tokens: signInAppleResult)
+                        
+                        // -----------------------------------------------------------------------
+                        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else {
+                            print("**** Erreur signUpApple() - AuthUser = nil")
+                            return
+                        }
+                        guard let email = authUser.email else {
+                            print("**** Erreur: SignUpApple() - Pas d'email")
+                            return
+                        }
+
+                        // Chercher dans "users" pour voir si il n'existe pas (cas d'un nouveau contact)
+                        var dbuser = try await UsersManager.shared.searchUser(email: email)
+
+                        // Je sauve le user sur le disque
+                        if let encodedData = try? JSONEncoder().encode(dbuser) {
+                            UserDefaults.standard.set(encodedData, forKey: "saveuser")
+                        }
+                        
+                        // Je lis le user qui vient d'être créer sur le disque
+                        let user = try UsersManager.shared.getUserDefault()
+                        // --------------------------------------------------------------------
+                        
                         self.didSignInWithApple = true
                         
                     } catch {
@@ -42,33 +65,36 @@ final class AuthenticationViewModel: ObservableObject {
     
     func signUpApple() async throws {
         
-            // TODO
+        // Get firebase connection infos
+        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else {
+            print("**** Erreur signUpApple() - AuthUser = nil")
+            return
+        }
+        guard let email = authUser.email else {
+            print("**** Erreur: SignUpApple() - Pas d'email")
+            return
+        }
+        // Chercher dans "users" pour voir si il n'existe pas (cas d'un nouveau contact)
+        var dbuser = try await UsersManager.shared.searchUser(email: email)
+
+        if dbuser == nil {
+            let user = DBUser(auth: authUser) // uid, email, user_id, date
+            try await UsersManager.shared.createDbUser(user: user) // sans l'image
+        } else {
+            // Existe déjà - maj de l'uid
+            guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
+            try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
+        }
+
+        // lire le user venant d'être créer ou existant avec l'email (pour récupérer avatarLink maj plus haut)
+        dbuser = try await UsersManager.shared.searchUser(email: email)
+
+        // Je sauve sur le disque le user de la base
+        if let encodedData = try? JSONEncoder().encode(dbuser) {
+            UserDefaults.standard.set(encodedData, forKey: "saveuser")
+        }
         
-//        // authUser
-//        guard let AuthUser = try? AuthManager.shared.getAuthenticatedUser() else {
-//            print("**** Erreur signUpApple() - AuthUser = nil")
-//            return
-//        }
-//        // email
-//        guard let email = AuthUser.email else {
-//            print("**** Erreur: SignUpApple() - Pas d'email")
-//            return
-//        }
-//
-//        var dbuser0 = DBUser(auth: AuthUser)
-//        
-//        // Save "Storage" et maj
-//        let image: UIImage = UIImage.init(systemName: "person.circle.fill")!
-//        //let avatarLink = try await UsersManager.shared.updateAvatar(mimage: image)
-//        
-//        // Création dans "users"
-//        //var dbuser1 = DBUser(id: dbuser0.id, email: dbuser0.email, avatarLink: avatarLink)
-//        try await UsersManager.shared.createDbUser(user: dbuser1)
-//        
-//        if let encodedData = try? JSONEncoder().encode(dbuser1) {
-//            UserDefaults.standard.set(encodedData, forKey: "saveuser")
-//        }
-//        // try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
+        // try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
 
     }
 }

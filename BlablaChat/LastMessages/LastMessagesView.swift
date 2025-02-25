@@ -57,7 +57,9 @@ class LastMessagesViewModel: ObservableObject {
                 let emailContact = contact.email ?? ""
                 let urlAvatar = user.avatarLink ?? ""
 
-                lastMessages.append(LastMessage(avatarLink: urlAvatar, emailContact: emailContact, texte: lastMessage, date: Timestamp(), salonId: salonId))
+                if emailContact != user.email {
+                    lastMessages.append(LastMessage(avatarLink: urlAvatar, emailContact: emailContact, texte: lastMessage, date: Timestamp(), salonId: salonId))
+                }
                 // print("lastMessages:\(lastMessages)")
             }
             

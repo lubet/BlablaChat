@@ -19,7 +19,7 @@ final class StorageManager {
 
     private let storage = Storage.storage().reference()
 
-    // Users dans "Storage" pour l'avatar du user
+    // Répertoire de Storage pour l'image, avatar ou photos des messages
     private func userReference(userId: String) -> StorageReference {
         return storage.child("users").child(userId)
     }
@@ -57,11 +57,14 @@ final class StorageManager {
         meta.contentType = "image/jpeg"
                 
         let name = "\(UUID().uuidString).jpeg"
+        // print("**** name:\(name)")
         let returnMetaData = try await userReference(userId: userId).child(name).putDataAsync(data, metadata: meta)
                 
+        // print("**** returnMetaData-\(returnMetaData)")
         guard let path = returnMetaData.path, let name = returnMetaData.name else {
             throw URLError(.badServerResponse)
         }
+        // print("**** path:\(path)")
         return(path, name)
     }
     

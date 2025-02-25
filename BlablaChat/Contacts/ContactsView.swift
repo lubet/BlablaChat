@@ -9,6 +9,7 @@
 // Passage du contact à la view Messages
 //
 // ContactsView -> MessagesView
+//
 
 import SwiftUI
 import Contacts
@@ -66,9 +67,9 @@ struct ContactsView: View {
     
     @StateObject var vm = ContactsViewModel()
     
-    let didSelectedNewUser: (String) -> () // -> retour à LastMessagesView -> Bubbles
-    
     @Environment(\.presentationMode) var presentationMode
+    
+    let didSelectedNewUser: (String) -> () // -> retour à LastMessagesView -> Bubbles
     
     var body: some View {
         ZStack {
@@ -86,6 +87,14 @@ struct ContactsView: View {
                     }
                 }
                 .navigationTitle("Contacts")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Image(systemName: "xmark")
+                            .onTapGesture {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    }
+                }
                 .searchable(text: $vm.searchText)
             }
         }

@@ -38,23 +38,31 @@ final class AuthenticationViewModel: ObservableObject {
                             print("**** Erreur: SignUpApple() - Pas d'email")
                             return
                         }
-
-                        // Chercher dans "users" pour voir si il n'existe pas (cas d'un nouveau contact)
-                        var dbuser = try await UsersManager.shared.searchUser(email: email)
-
+                        
+                        let dbuser = try await UsersManager.shared.searchUser(email: email)
+       
+                        if dbuser == nil {
+                            let user = DBUser(auth: authUser) // uid, email, user_id, date
+                            try await UsersManager.shared.createDbUser(user: user) // sans l'image
+                            let image = UIImage.init(systemName: "person.circle.fill")!
+                            try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
+                        } else {
+                            // Existe déjà - maj de l'uid
+                            guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
+                            try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
+                        }
+                        
                         // Je sauve le user sur le disque
                         if let encodedData = try? JSONEncoder().encode(dbuser) {
                             UserDefaults.standard.set(encodedData, forKey: "saveuser")
                         }
-                        
-                        // Je lis le user qui vient d'être créer sur le disque
-                        let user = try UsersManager.shared.getUserDefault()
                         // --------------------------------------------------------------------
                         
                         self.didSignInWithApple = true
                         
-                    } catch {
-                        print("Erreur Sign in with Apple...")
+                    } catch let error {
+                        let erreur = error.localizedDescription
+                        print("Erreur Sign in with Apple...\(erreur)" )
                     }
                 }
             case .failure(let error):

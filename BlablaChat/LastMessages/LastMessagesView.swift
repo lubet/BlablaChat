@@ -23,6 +23,8 @@ class LastMessagesViewModel: ObservableObject {
     
     @Published private(set) var userEmail: String = ""
     @Published private(set) var userAvatarLink: String = ""
+    
+    @AppStorage("currentUserId") var currentUserId: String?
 
     // Liste des derniers messages d'un user par salons
     func getLastMessages() async {
@@ -31,11 +33,22 @@ class LastMessagesViewModel: ObservableObject {
             
             lastMessages = []
             
-            guard let user = try? UsersManager.shared.getUserDefault() else { return }
+            guard let userId = currentUserId else {
+                print("**** getLastMessages()-currentUserId = nil")
+                return
+            }
+            
+            // Recherche du user dans la base
+            guard let dbuser = try await UsersManager.shared.searchUser(userId: userId) else { return }
+            
+            userEmail = dbuser.email ?? "Inconnu"
+            userAvatarLink = dbuser.avatarLink ?? "Inconnu"
+            
+            // guard let user = try? UsersManager.shared.getUserDefault() else { return }
             
             // Renvoie tous les salons dont est membre le user
-            guard let userMembres = try await LastMessagesManager.shared.userMembres(userId: user.userId) else {
-                print("Pas de salons pour le user \(user.userId)")
+            guard let userMembres = try await LastMessagesManager.shared.userMembres(userId: userId) else {
+                print("Pas de salons pour le user \(userId)")
                 return
             }
             
@@ -55,9 +68,9 @@ class LastMessagesViewModel: ObservableObject {
                     return
                 }
                 let emailContact = contact.email ?? ""
-                let urlAvatar = user.avatarLink ?? ""
+                let urlAvatar = dbuser.avatarLink ?? ""
 
-                if emailContact != user.email {
+                if emailContact != dbuser.email {
                     lastMessages.append(LastMessage(avatarLink: urlAvatar, emailContact: emailContact, texte: lastMessage, date: Timestamp(), salonId: salonId))
                 }
                 // print("lastMessages:\(lastMessages)")
@@ -93,7 +106,7 @@ struct LastMessagesView: View {
     
     @State var showChatView = false // -> ChatView avec call back ->
     
-    @AppStorage("currentUserId") var currentUserId: String?
+ 
     
     var body: some View {
         ZStack {
@@ -119,12 +132,7 @@ struct LastMessagesView: View {
                             SDWebImageLoader(url: vm.userAvatarLink, size: 30)
                         }
                         ToolbarItem(placement: .topBarLeading) {
-                            // Text("\(vm.userEmail)")
-                            if let userid = currentUserId {
-                                Text(userid)
-                            } else {
-                                Text("userid = nil")
-                            }
+                            Text("\(vm.userEmail)")
                         }
                         ToolbarItem(placement: .topBarTrailing) {
                             NavigationLink {

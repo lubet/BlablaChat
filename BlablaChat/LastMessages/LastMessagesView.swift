@@ -71,12 +71,11 @@ class LastMessagesViewModel: ObservableObject {
     }
     
     func getUserToolBar() {
-        guard let user = try? UsersManager.shared.getUserDefault() else { return }
-        print("getUserToolBar-\(user)")
-        userEmail = user.email ?? ""
-        userAvatarLink = user.avatarLink ?? ""
         
-        print("**** getUserToolBar()\(userAvatarLink)")
+//        userEmail = user.email ?? ""
+//        userAvatarLink = user.avatarLink ?? ""
+        
+        // print("**** getUserToolBar()")
     }
 }
 
@@ -93,6 +92,8 @@ struct LastMessagesView: View {
     @State var emailPassed: String = "" // email callback de UsersView
     
     @State var showChatView = false // -> ChatView avec call back ->
+    
+    @AppStorage("currentUserId") var currentUserId: String?
     
     var body: some View {
         ZStack {
@@ -118,7 +119,12 @@ struct LastMessagesView: View {
                             SDWebImageLoader(url: vm.userAvatarLink, size: 30)
                         }
                         ToolbarItem(placement: .topBarLeading) {
-                            Text("\(vm.userEmail)")
+                            // Text("\(vm.userEmail)")
+                            if let userid = currentUserId {
+                                Text(userid)
+                            } else {
+                                Text("userid = nil")
+                            }
                         }
                         ToolbarItem(placement: .topBarTrailing) {
                             NavigationLink {

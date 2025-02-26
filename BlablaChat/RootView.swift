@@ -15,13 +15,6 @@ struct RootView: View {
         ZStack {
             if showSignInView == false {
                 LastMessagesView(showSignInView: $showSignInView)
-                // SettingsView(showSignInView: $showSignInView)
-                // LastMessagesView(showSignInView: $showSignInView)
-                // ContactsView()
-                //EssaiView()
-                // ContactBootcamp()
-                // ContactsView()
-                //SearchBarView(searchText: .constant(""))
             }
         }
         .onAppear {

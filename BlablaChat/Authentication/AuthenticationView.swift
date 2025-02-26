@@ -18,6 +18,9 @@ import AuthenticationServices
 final class AuthenticationViewModel: ObservableObject {
     
     @Published var didSignInWithApple: Bool = false
+    
+    @AppStorage("currentUserId") var currentUserId: String?
+    
     let signInAppleHelper = SignInAppleHelper()
     
     // Nouveau user Apple
@@ -28,8 +31,8 @@ final class AuthenticationViewModel: ObservableObject {
                 Task {
                     do {
                         let _ = try await AuthManager.shared.signInWithApple(tokens: signInAppleResult)
-                        
-                        // -----------------------------------------------------------------------
+
+                        // -----
                         guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else {
                             print("**** Erreur signUpApple() - AuthUser = nil")
                             return
@@ -40,23 +43,24 @@ final class AuthenticationViewModel: ObservableObject {
                         }
                         
                         let dbuser = try await UsersManager.shared.searchUser(email: email)
-       
+                        
+                        var userId: String = ""
+                        
                         if dbuser == nil {
                             let user = DBUser(auth: authUser) // uid, email, user_id, date
+                            userId = user.userId
                             try await UsersManager.shared.createDbUser(user: user) // sans l'image
                             let image = UIImage.init(systemName: "person.circle.fill")!
-                            try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
+                            try await UsersManager.shared.updateAvatar(userId: userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
+                            print("**** updateAvatar Apple")
                         } else {
                             // Existe déjà - maj de l'uid
                             guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
                             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
                         }
-                        
-                        // Je sauve le user sur le disque
-                        if let encodedData = try? JSONEncoder().encode(dbuser) {
-                            UserDefaults.standard.set(encodedData, forKey: "saveuser")
-                        }
-                        // --------------------------------------------------------------------
+                        // ---
+                        self.currentUserId = userId
+                        print("**** signInApple - userId : \(userId)")
                         
                         self.didSignInWithApple = true
                         
@@ -69,41 +73,6 @@ final class AuthenticationViewModel: ObservableObject {
                 print(error)
             }
         }
-    }
-    
-    func signUpApple() async throws {
-        
-        // Get firebase connection infos
-        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else {
-            print("**** Erreur signUpApple() - AuthUser = nil")
-            return
-        }
-        guard let email = authUser.email else {
-            print("**** Erreur: SignUpApple() - Pas d'email")
-            return
-        }
-        // Chercher dans "users" pour voir si il n'existe pas (cas d'un nouveau contact)
-        var dbuser = try await UsersManager.shared.searchUser(email: email)
-
-        if dbuser == nil {
-            let user = DBUser(auth: authUser) // uid, email, user_id, date
-            try await UsersManager.shared.createDbUser(user: user) // sans l'image
-        } else {
-            // Existe déjà - maj de l'uid
-            guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
-            try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
-        }
-
-        // lire le user venant d'être créer ou existant avec l'email (pour récupérer avatarLink maj plus haut)
-        dbuser = try await UsersManager.shared.searchUser(email: email)
-
-        // Je sauve sur le disque le user de la base
-        if let encodedData = try? JSONEncoder().encode(dbuser) {
-            UserDefaults.standard.set(encodedData, forKey: "saveuser")
-        }
-        
-        // try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
-
     }
 }
 
@@ -144,11 +113,6 @@ struct AuthenticationView: View {
                 
                 .onChange(of: vm.didSignInWithApple) { oldValue, newValue in
                     if newValue == true {
-                        // Je suis connecté pour la première fois
-                        // Je prépare mon profile et le sauve
-                        Task {
-                            try await vm.signUpApple()
-                        }
                         showSignInView = false
                     }
                 }

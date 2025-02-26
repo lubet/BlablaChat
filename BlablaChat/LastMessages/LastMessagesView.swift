@@ -33,6 +33,7 @@ class LastMessagesViewModel: ObservableObject {
             
             lastMessages = []
             
+            // @AppStorage
             guard let userId = currentUserId else {
                 print("**** getLastMessages()-currentUserId = nil")
                 return

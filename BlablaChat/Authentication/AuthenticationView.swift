@@ -25,6 +25,7 @@ final class AuthenticationViewModel: ObservableObject {
     
     // Nouveau user Apple
     func signInApple() async throws {
+        print("**** signInApple()")
         signInAppleHelper.startSignInWithAppleFlow { result in
             switch result {
             case .success(let signInAppleResult):
@@ -46,22 +47,26 @@ final class AuthenticationViewModel: ObservableObject {
                         
                         var userId: String = ""
                         
+                        // La branche = nil fonctionne
                         if dbuser == nil {
                             let user = DBUser(auth: authUser) // uid, email, user_id, date
                             userId = user.userId
                             try await UsersManager.shared.createDbUser(user: user) // sans l'image
                             let image = UIImage.init(systemName: "person.circle.fill")!
                             try await UsersManager.shared.updateAvatar(userId: userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
-                            print("**** updateAvatar Apple")
+                            print("**** dbuser = nil userId = \(userId)")
+                            self.currentUserId = userId
+                            print("current1:\(userId)")
                         } else {
-                            // Existe déjà - maj de l'uid
+                            // je ne passe pas là car quand passe le login parce que je suis déjaà connecté
+                            // jje ne viens pas dans cette fonction signInApple()
                             guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
                             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
+                            print("**** dbuse != nil userId : \(userId)")
+                            self.currentUserId = userId
+                            print("current2:\(userId)")
                         }
                         // ---
-                        self.currentUserId = userId
-                        print("**** signInApple - userId : \(userId)")
-                        
                         self.didSignInWithApple = true
                         
                     } catch let error {

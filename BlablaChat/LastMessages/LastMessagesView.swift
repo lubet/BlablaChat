@@ -45,6 +45,7 @@ class LastMessagesViewModel: ObservableObject {
             
             userEmail = dbuser.email ?? "Inconnu"
             userAvatarLink = dbuser.avatarLink ?? "Inconnu"
+            print("**** LastMessage-AvatarLink:\(userAvatarLink)")
             
             // guard let user = try? UsersManager.shared.getUserDefault() else { return }
             
@@ -124,11 +125,11 @@ struct LastMessagesView: View {
                             }
                         }
                     }
-                    .onAppear {
-                        Task {
-                            vm.getUserToolBar() // AvatarLink et email du user
-                        }
-                    }
+//                    .onAppear {
+//                        Task {
+//                            vm.getUserToolBar() // AvatarLink et email du user
+//                        }
+//                    }
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
                             SDWebImageLoader(url: vm.userAvatarLink, size: 30)

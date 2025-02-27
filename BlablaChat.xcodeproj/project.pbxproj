@@ -168,7 +168,6 @@
 			children = (
 				C03763892C4128D000A5602B /* Utilities.swift */,
 				C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */,
-				C068E8BE2D36B1AF001964E7 /* SettingsView.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -205,6 +204,7 @@
 				C03763852C411F3700A5602B /* Info.plist */,
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
 				C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */,
+				C0F566FE2D706F040078F188 /* Settings */,
 				C03763882C4128A500A5602B /* Utilities */,
 				C070D6402C53809E006170E3 /* Extensions */,
 				C01077312D1424A1004960F2 /* Models */,
@@ -304,6 +304,14 @@
 				C0EB0C262D3328FB001DB090 /* ContactRowView.swift */,
 			);
 			path = Contacts;
+			sourceTree = "<group>";
+		};
+		C0F566FE2D706F040078F188 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C068E8BE2D36B1AF001964E7 /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

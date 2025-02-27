@@ -57,15 +57,15 @@ final class AuthenticationViewModel: ObservableObject {
                             print("**** dbuser = nil userId = \(userId)")
                             self.currentUserId = userId
                             print("current1:\(userId)")
-                        } else {
-                            // je ne passe pas là car quand passe le login parce que je suis déjaà connecté
-                            // jje ne viens pas dans cette fonction signInApple()
-                            guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
-                            try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
-                            print("**** dbuse != nil userId : \(userId)")
-                            self.currentUserId = userId
-                            print("current2:\(userId)")
                         }
+//                        } else {
+//                            // Je ne passe jamais là car la fonction signInApple() n'est appelé que quand c'est un nouveau compte
+//                            guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
+//                            try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
+//                            print("**** dbuse != nil userId : \(userId)")
+//                            self.currentUserId = userId
+//                            print("current2:\(userId)")
+//                        }
                         // ---
                         self.didSignInWithApple = true
                         

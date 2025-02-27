@@ -13,6 +13,8 @@ import SDWebImageSwiftUI
 @MainActor
 final class SettingsViewModel: ObservableObject {
     
+    @AppStorage("currentUserId") var currentUserId: String?
+    
     @Published var httpAvatar: String = ""
     @Published var newImageAvatar: UIImage? = nil
     @Published var isMaster: Bool = false
@@ -20,15 +22,17 @@ final class SettingsViewModel: ObservableObject {
     @Published var authProviders: [AuthProviderOption] = []
     
     func loadAvatar() async throws {
-        let user = try UsersManager.shared.getUserDefault()
-        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: user.userId)
+        guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
+
+        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: userId)
     }
     
     // TODO
     func updateAvatar() async throws {
-        let user = try UsersManager.shared.getUserDefault()
+        guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
+
         if let newImageAvatar = newImageAvatar {
-           let _ = try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: newImageAvatar)
+           let _ = try await UsersManager.shared.updateAvatar(userId: userId, mimage: newImageAvatar)
         }
         // print("updateAvatar")
     }
@@ -65,19 +69,23 @@ final class SettingsViewModel: ObservableObject {
         try? AuthManager.shared.signOut()
     }
     
-    func resetPassword() async throws {
-        let user = try UsersManager.shared.getUserDefault()
-        guard let email = user.email else {
-            throw URLError(.fileDoesNotExist)
-        }
-        
-        try await UsersManager.shared.resetPassword(email: email)
-    }
-    
-    func updateEmail() async throws {
-        let newEmail = "TODO une view de saisir du nouveau email"
-        try await UsersManager.shared.updateEmail(email: newEmail)
-    }
+    // TODO
+//    func resetPassword() async throws {
+//        guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
+//
+//        
+//        
+//        guard let email = user.email else {
+//            throw URLError(.fileDoesNotExist)
+//        }
+//        
+//        try await UsersManager.shared.resetPassword(email: email)
+//    }
+//    
+//    func updateEmail() async throws {
+//        let newEmail = "TODO une view de saisir du nouveau email"
+//        try await UsersManager.shared.updateEmail(email: newEmail)
+//    }
 }
 
 // -----------------------
@@ -95,7 +103,7 @@ struct SettingsView: View {
             Color.theme.background
             // Je m'autorise le logout
             // if viewModel.isMaster {
-                masterSection
+                //masterSection
             //}
 
             Section {
@@ -127,9 +135,9 @@ struct SettingsView: View {
             }
             
             // Le changement de mot de passe ne concerne que ceux qui se sont logés avec email et password
-            if viewModel.authProviders.contains(.email) {
-                // emailSection TODO pour plus tard
-            }
+//            if viewModel.authProviders.contains(.email) {
+//                // emailSection TODO pour plus tard
+//            }
             
         }
         
@@ -159,53 +167,54 @@ struct SettingsView_Previews: PreviewProvider {
     }
 }
 
-extension SettingsView {
-    private var emailSection: some View {
-        Section {
-            Button("Reset du mot de passe") { // TODO
-                Task {
-                    do {
-                        try await viewModel.resetPassword()
-                        print("Reset password")
-                    } catch {
-                        print(error)
-                    }
-                }
-            }
-            .disabled(true)
-            .padding(.horizontal,40)
-            
-            Button("Mise à jour de l'email") { // TODO
-                Task {
-                    do {
-                        try await viewModel.updateEmail()
-                        print("Reset password")
-                    } catch {
-                        print(error)
-                    }
-                }
-            }
-            .disabled(true)
-            .padding(.horizontal,40)
-        } header: {
-            Text("Email et mot de passe")
-        }
-    }
-}
+// TODO désactiver
+//extension SettingsView {
+//    private var emailSection: some View {
+//        Section {
+//            Button("Reset du mot de passe") { // TODO
+//                Task {
+//                    do {
+//                        try await viewModel.resetPassword()
+//                        print("Reset password")
+//                    } catch {
+//                        print(error)
+//                    }
+//                }
+//            }
+//            .disabled(true)
+//            .padding(.horizontal,40)
+//            
+//            Button("Mise à jour de l'email") { // TODO
+//                Task {
+//                    do {
+//                        try await viewModel.updateEmail()
+//                        print("Reset password")
+//                    } catch {
+//                        print(error)
+//                    }
+//                }
+//            }
+//            .disabled(true)
+//            .padding(.horizontal,40)
+//        } header: {
+//            Text("Email et mot de passe")
+//        }
+//    }
+//}
 
-extension SettingsView {
-    private var masterSection: some View {
-        Section {
-            Button {
-                viewModel.signOut()
-                showSignInView = true
-            } label: {
-                Text("Log out")
-            }
-            .padding(.horizontal,40)
-        } header: {
-            Text("Logout")
-        }
-    }
-}
+//extension SettingsView {
+//    private var masterSection: some View {
+//        Section {
+//            Button {
+//                viewModel.signOut()
+//                showSignInView = true
+//            } label: {
+//                Text("Log out")
+//            }
+//            .padding(.horizontal,40)
+//        } header: {
+//            Text("Logout")
+//        }
+//    }
+
 

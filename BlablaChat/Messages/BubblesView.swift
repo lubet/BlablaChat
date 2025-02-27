@@ -13,10 +13,12 @@ import PhotosUI
 @MainActor
 final class BubblesViewModel: ObservableObject {
     
+    @AppStorage("currentUserId") var currentUserId: String?
+    
     private var salonId: String = ""
     @Published var emailContact: String = ""
     
-    private var didAppear: Bool = false
+    private var didAppear: Bool = false // Listener sur les messages
 
     @Published var allMessages: [Messages] = []
     @Published private(set) var selectedImage: UIImage? = nil // UI image
@@ -29,11 +31,11 @@ final class BubblesViewModel: ObservableObject {
     private func setImage(from selection: PhotosPickerItem?) {
         guard let selection else { return }
         
+        guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
+        
         Task {
             if let data = try? await selection.loadTransferable(type: Data.self) {
                 if let uiImage =  UIImage(data: data) {
-                    // selectedImage = uiImage
-                    let user = try UsersManager.shared.getUserDefault()
                     
                     // Sauvegarde dans Storage. TODO: par salon pour les messages-photos (toujours par user pour l'avatar)
                     let (path, _) = try await StorageManager.shared.saveImage(image: uiImage, salonId: salonId)
@@ -41,7 +43,7 @@ final class BubblesViewModel: ObservableObject {
                     let lurl = try await StorageManager.shared.getUrlForImage(path: path)
                     
                     // Création du message avec le n° de salon et le fromId égal au user
-                    try await MessagesManager.shared.newMessage(salonId: salonId, fromId: user.userId, texte: "Photo", urlPhoto: lurl.absoluteString)
+                    try await MessagesManager.shared.newMessage(salonId: salonId, fromId: userId, texte: "Photo", urlPhoto: lurl.absoluteString)
                     
                     // Mettre à jour last_message dans Salons
                     try await MessagesManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: lurl.absoluteString)
@@ -57,10 +59,9 @@ final class BubblesViewModel: ObservableObject {
     
     // email du user ou du contact <- LastMessagesView ou ContactsView
     func allUserSalonMessages(emailContact: String) async throws {
-        
-        // user
-        let user = try UsersManager.shared.getUserDefault()
 
+        guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
+        
         // Recherche du contact dans "Users" avec email
         var contactId =  try? await UsersManager.shared.searchContact(email: emailContact)
         
@@ -69,16 +70,16 @@ final class BubblesViewModel: ObservableObject {
             contactId = try await UsersManager.shared.createUser(email: emailContact)
         }
 
-        guard let contactId else { print("MessagesViewModel: pas de contactId"); return }
+        guard let contactId else { print("**** MessagesViewModel: pas de contactId"); return }
         
         // Recherche du salon_id du couple contact user
-        salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: user.userId)
+        salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: userId)
         
         // Si pas présent création d'un salon
         if salonId == "" {
             salonId = try await MessagesManager.shared.newSalon(last_message: "", contactId: contactId)
             // Ajout du couple contact user à ce salon
-            try await MessagesManager.shared.newMembres(salonId: salonId, contactId: contactId, userId: user.userId)
+            try await MessagesManager.shared.newMembres(salonId: salonId, contactId: contactId, userId: userId)
         }
         // Tous les messages du salon
         allMessages = try await MessagesManager.shared.getMessages(salonId: salonId)
@@ -93,10 +94,11 @@ final class BubblesViewModel: ObservableObject {
     
     // Création du message
     func newMessages(texteMessage: String) async throws {
-        let user = try UsersManager.shared.getUserDefault()
+
+        guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
         
         // Création du message avec le n° de salon et le fromId égal au user
-        try await MessagesManager.shared.newMessage(salonId: salonId, fromId: user.userId, texte: texteMessage, urlPhoto: "")
+        try await MessagesManager.shared.newMessage(salonId: salonId, fromId: userId, texte: texteMessage, urlPhoto: "")
         
         // Mettre à jour last_message dans Salons
         try await MessagesManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: texteMessage)
@@ -106,7 +108,7 @@ final class BubblesViewModel: ObservableObject {
 
 struct BubblesView: View {
     
-    let emailContact: String
+    let emailContact: String // <- ContactsView
     
     @StateObject var vm = BubblesViewModel()
     

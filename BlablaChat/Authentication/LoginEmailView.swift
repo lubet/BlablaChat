@@ -78,15 +78,9 @@ final class LoginEmailViewModel: ObservableObject {
             print("**** SignIn - Pas de dbuser")
             return
         }
-
-        // Je sauve le user sur le disque
-        if let encodedData = try? JSONEncoder().encode(dbuser) {
-            UserDefaults.standard.set(encodedData, forKey: "saveuser")
-        }
         
         // Je lis le user qui vient d'être créer sur le disque
-        let user = try UsersManager.shared.getUserDefault()
-        httpAvatar = user.avatarLink ?? ""
+        httpAvatar = dbuser.avatarLink ?? ""
         
         return
     }

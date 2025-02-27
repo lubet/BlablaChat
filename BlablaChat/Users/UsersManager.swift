@@ -47,22 +47,20 @@ final class UsersManager {
     }
     
     // Get all users sauf le userSigned
-    func getAllUsers() async throws -> [DBUser] {
-        let userSigned = try UsersManager.shared.getUserDefault()
-        let userId = userSigned.userId
-        
-        let snapshot = try await DBUserCollection.getDocuments()
-        
-        var dbUsers = [DBUser]()
-        
-        for document in snapshot.documents {
-            let user = try document.data(as: DBUser.self)
-            if user.userId != userId {
-                dbUsers.append(user)
-            }
-        }
-        return dbUsers
-    }
+//    func getAllUsers(userId: String) async throws -> [DBUser] {
+//        
+//        let snapshot = try await DBUserCollection.getDocuments()
+//        
+//        var dbUsers = [DBUser]()
+//        
+//        for document in snapshot.documents {
+//            let user = try document.data(as: DBUser.self)
+//            if user.userId != userId {
+//                dbUsers.append(user)
+//            }
+//        }
+//        return dbUsers
+//    }
     
     // Recherche de l'avatar dans "users".
     // Cas des SignUP car leur avatar se trouve dans "users"
@@ -205,13 +203,13 @@ final class UsersManager {
         }
     }
     
-    // Store des infos du user loggé
-    func getUserDefault() throws -> DBUser {
-        enum MyError: Error {
-            case runtimeError(String)
-        }
-        guard let data = UserDefaults.standard.data(forKey: "saveuser") else { throw MyError.runtimeError("getUser - UserDefaults") }
-        guard let savedUser = try? JSONDecoder().decode(DBUser.self, from: data) else { throw MyError.runtimeError("getUser - JSONDecoder") }
-        return savedUser
-    }
+    // OBSOLETE Store des infos du user loggé
+//    func getUserDefault() throws -> DBUser {
+//        enum MyError: Error {
+//            case runtimeError(String)
+//        }
+//        guard let data = UserDefaults.standard.data(forKey: "saveuser") else { throw MyError.runtimeError("getUser - UserDefaults") }
+//        guard let savedUser = try? JSONDecoder().decode(DBUser.self, from: data) else { throw MyError.runtimeError("getUser - JSONDecoder") }
+//        return savedUser
+//    }
 }

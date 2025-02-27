@@ -14,6 +14,8 @@ import SDWebImageSwiftUI
 @MainActor
 final class LoginEmailViewModel: ObservableObject {
     
+    @AppStorage("currentUserId") var currentUserId: String?
+    
     @Published var email: String = ""
     @Published var password: String = ""
     
@@ -40,22 +42,13 @@ final class LoginEmailViewModel: ObservableObject {
             try await UsersManager.shared.createDbUser(user: user) // sans l'image
             let image = image ?? UIImage.init(systemName: "person.circle.fill")!
             try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
+            self.currentUserId = user.userId
         } else {
             // Existe déjà - maj de l'uid
             guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
+            self.currentUserId = userId
         }
-
-        // lire le user venant d'être créer ou existant avec l'email (pour récupérer avatarLink maj plus haut)
-        dbuser = try await UsersManager.shared.searchUser(email: email)
-
-        // Je sauve sur le disque le user de la base
-        if let encodedData = try? JSONEncoder().encode(dbuser) {
-            UserDefaults.standard.set(encodedData, forKey: "saveuser")
-        }
-        
-        print("**** SignUp - dbuser: \(String(describing: dbuser))")
-        
         // try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
      }
 
@@ -78,7 +71,8 @@ final class LoginEmailViewModel: ObservableObject {
             print("**** SignIn - Pas de dbuser")
             return
         }
-        
+        self.currentUserId = dbuser.userId
+
         // Je lis le user qui vient d'être créer sur le disque
         httpAvatar = dbuser.avatarLink ?? ""
         

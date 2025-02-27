@@ -17,6 +17,8 @@ import Contacts
 @MainActor
 final class ContactsViewModel: ObservableObject {
     
+    @AppStorage("currentUserId") var currentUserId: String?
+    
     @Published var contacts: [ContactModel] = []
     @Published var searchText: String = ""
     

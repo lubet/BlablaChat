@@ -170,7 +170,6 @@ final class UsersManager {
         let (path, _) = try await StorageManager.shared.saveImage(image: mimage, userId: userId) // maj storage
         let lurl: URL = try await StorageManager.shared.getUrlForImage(path: path)
         try await UsersManager.shared.updateImagePath(userId: userId, path: lurl.absoluteString) // maj "users"
-        print("***** updateAvatar \(lurl)")
     }
     
     // SettingsView TODO ajouter le champ nom dans "users"

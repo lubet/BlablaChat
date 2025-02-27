@@ -18,13 +18,14 @@ import FirebaseFirestoreSwift
 
 @MainActor
 class LastMessagesViewModel: ObservableObject {
+
+    @AppStorage("currentUserId") var currentUserId: String?
     
     @Published private(set) var lastMessages: [LastMessage] = []
     
     @Published private(set) var userEmail: String = ""
     @Published private(set) var userAvatarLink: String = ""
     
-    @AppStorage("currentUserId") var currentUserId: String?
 
     // Liste des derniers messages d'un user par salons
     func getLastMessages() async {

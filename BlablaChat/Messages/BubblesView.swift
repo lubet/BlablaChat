@@ -106,6 +106,7 @@ final class BubblesViewModel: ObservableObject {
     }
 }
 
+// View ------------------
 struct BubblesView: View {
     
     let emailContact: String // <- ContactsView

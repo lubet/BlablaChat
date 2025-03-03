@@ -21,17 +21,18 @@ final class ContactsViewModel: ObservableObject {
     
     @Published var contacts: [ContactModel] = []
     @Published var searchText: String = ""
+    @Published var sortedContacts: [ContactModel] = []
     
     // Recherche contacts
     var filteredContacts: [ContactModel] {
-        guard !searchText.isEmpty else { return contacts}
+        guard !searchText.isEmpty else { return sortedContacts}
         return contacts.filter { oneContact in
             oneContact.nom.lowercased().contains(searchText.lowercased())
         }
     }
     
     init() {
-        fetchContacts()
+        fetchAllContacts()
     }
     
     func fetchAllContacts() {
@@ -47,22 +48,23 @@ final class ContactsViewModel: ObservableObject {
                 if ((prenom != "" || nom != "") && email != "") {
                     contacts.append(ContactModel(prenom: prenom, nom: nom, email: email))
                 }
-                print(contact.givenName)
-                print(contact.familyName)
-                print(contact.emailAddresses.first?.value.description ?? "")
+//                print(contact.givenName)
+//                print(contact.familyName)
+//                print(contact.emailAddresses.first?.value.description ?? "")
             })
+            sortedContacts = contacts.sorted { $0.nom < $1.nom}
          }
         catch let erreur {
             print(erreur)
         }
     }
     
-    func fetchContacts() {
-        contacts.append(ContactModel(prenom: "Marcel", nom: "Leroy", email: "mleroy@test.com"))
-        contacts.append(ContactModel(prenom: "Robert", nom: "Gured", email: "rgured@test.com"))
-        contacts.append(ContactModel(prenom: "Roger", nom: "Dujou", email: "rdujou@test.com"))
-        contacts.append(ContactModel(prenom: "Albert", nom: "Lafon", email: "alafon@test.com"))
-    }
+//    func fetchContacts() {
+//        contacts.append(ContactModel(prenom: "Marcel", nom: "Leroy", email: "mleroy@test.com"))
+//        contacts.append(ContactModel(prenom: "Robert", nom: "Gured", email: "rgured@test.com"))
+//        contacts.append(ContactModel(prenom: "Roger", nom: "Dujou", email: "rdujou@test.com"))
+//        contacts.append(ContactModel(prenom: "Albert", nom: "Lafon", email: "alafon@test.com"))
+//    }
 }
 
 struct ContactsView: View {

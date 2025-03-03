@@ -30,14 +30,16 @@ final class LoginEmailViewModel: ObservableObject {
             print("Pas d'email ni de password")
             return
         }
+        print("**** SignUp - \(email)")
         
         // Connection Firebase
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
-
+        
         // Chercher dans "users" pour voir si il n'existe pas (cas d'un nouveau contact)
         var dbuser = try await UsersManager.shared.searchUser(email: email)
         
         if dbuser == nil {
+            print("**** SignUp dbuser = nil")
             let user = DBUser(auth: authUser) // uid, email, user_id, date
             try await UsersManager.shared.createDbUser(user: user) // sans l'image
             let image = image ?? UIImage.init(systemName: "person.circle.fill")!
@@ -45,6 +47,7 @@ final class LoginEmailViewModel: ObservableObject {
             self.currentUserId = user.userId
         } else {
             // Existe déjà - maj de l'uid
+            print("**** SignUp dbuser !=n il")
             guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
             self.currentUserId = userId
@@ -56,7 +59,7 @@ final class LoginEmailViewModel: ObservableObject {
     // "user" existant dans la base
     func signIn() async throws {
         
-        print("---- Sign In ----")
+        print("---- Début Sign In ----")
         
         guard !email.isEmpty, !password.isEmpty else {
             print("**** SignIn - Pas d'email ni de password")
@@ -75,6 +78,8 @@ final class LoginEmailViewModel: ObservableObject {
 
         // Je lis le user qui vient d'être créer sur le disque
         httpAvatar = dbuser.avatarLink ?? ""
+        
+        print("---- Fin Sign In ----")
         
         return
     }

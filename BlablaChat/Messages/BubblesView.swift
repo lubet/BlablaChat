@@ -84,12 +84,12 @@ final class BubblesViewModel: ObservableObject {
         // Tous les messages du salon
         allMessages = try await MessagesManager.shared.getMessages(salonId: salonId)
         // Listener sur les messages
-        //        if !didAppear {
-        //            MessagesManager.shared.addlistenerMessages(salonId: salonId) { [weak self] messages in
-        //                self?.allMessages = messages
-        //            }
-        //            didAppear = true
-        //        }
+                if !didAppear {
+                    MessagesManager.shared.addlistenerMessages(salonId: salonId) { [weak self] messages in
+                        self?.allMessages = messages
+                    }
+                    didAppear = true
+                }
     }
     
     // Création du message

@@ -42,30 +42,29 @@ class LastMessagesViewModel: ObservableObject {
             
             // Recherche du user dans la base
             guard let dbuser = try await UsersManager.shared.searchUser(userId: userId) else { return }
-            
             userEmail = dbuser.email ?? "Inconnu"
             userAvatarLink = dbuser.avatarLink ?? "Inconnu"
-            print("**** LastMessage-AvatarLink:\(userAvatarLink)")
-            
-            // guard let user = try? UsersManager.shared.getUserDefault() else { return }
             
             // Renvoie tous les salons dont est membre le user
-            guard let userMembres = try await LastMessagesManager.shared.userMembres(userId: userId) else {
+            guard let userSalonsIds = try await LastMessagesManager.shared.userSalons(userId: userId) else {
                 print("Pas de salons pour le user \(userId)")
                 return
             }
             
-            for membre in userMembres { // Pour chaque salon
-                let salonId = membre.salonId
-                // Charger le salon
-                guard let salon = try await LastMessagesManager.shared.getSalon(salonId: membre.salonId) else {
-                    print("Salon inexistant dans Salons: \(membre.salonId)")
+            print("userSalons.count:\(userSalonsIds.count)")
+            
+            for userSalon in userSalonsIds {
+                // Détail du salon
+                guard let salon = try await LastMessagesManager.shared.getSalon(salonId: userSalon) else {
+                    print("Salon inexistant dans Salons: \(userSalon)")
                     return
                 }
                 let lastMessage = salon.lastMessage
                 let contactId = salon.contactId
                 
-                // avec le contactId du salon récuprer l'email et l'url de l'avatar dans user
+                print("contactId:\(contactId)")
+                
+                // avec le contactId du salon récuperer l'email et l'url de l'avatar dans user
                 guard let contact = try await LastMessagesManager.shared.fetchUser(contactId: contactId) else {
                     print("contactId \(contactId) inexistant dans Users")
                     return
@@ -74,7 +73,7 @@ class LastMessagesViewModel: ObservableObject {
                 let urlAvatar = dbuser.avatarLink ?? ""
 
                 if emailContact != dbuser.email {
-                    lastMessages.append(LastMessage(avatarLink: urlAvatar, emailContact: emailContact, texte: lastMessage, date: Timestamp(), salonId: salonId))
+                    lastMessages.append(LastMessage(avatarLink: urlAvatar, emailContact: emailContact, texte: lastMessage, date: Timestamp(), salonId: userSalon))
                 }
                 // print("lastMessages:\(lastMessages)")
             }

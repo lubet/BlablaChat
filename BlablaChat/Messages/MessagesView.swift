@@ -45,7 +45,7 @@ final class MessagesViewModel: ObservableObject {
                     try await MessagesManager.shared.newMessage(salonId: salonId, fromId: userId, texte: "Photo", urlPhoto: lurl.absoluteString)
                     
                     // Mettre à jour last_message dans Salons
-                    try await MessagesManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: lurl.absoluteString)
+                    try await MessagesManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: lurl.absoluteString, userId: userId)
                     
                     return
                 }
@@ -101,8 +101,8 @@ final class MessagesViewModel: ObservableObject {
         // Création du message avec le n° de salon et le fromId égal au user
         try await MessagesManager.shared.newMessage(salonId: salonId, fromId: userId, texte: texteMessage, urlPhoto: "")
         
-        // Mettre à jour last_message dans Salons
-        try await MessagesManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: texteMessage)
+        // Mettre à jour last_message et le contact_id dans Salons
+        try await MessagesManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: texteMessage, userId: userId)
         
     }
 }

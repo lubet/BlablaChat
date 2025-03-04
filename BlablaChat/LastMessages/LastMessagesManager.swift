@@ -47,24 +47,24 @@ final class LastMessagesManager {
     }
     
     
-    // Renvoie les enregs de "Membres" dont fait partie user - l'enreg de Membres contient le salonID.
-    func userMembres(userId: String) async throws -> [Membres]? {
+    // Renvoie tous les salons dont fait partie le user courant
+    func userSalons(userId: String) async throws -> [String]? {
         do {
             let querySnapshot = try await memberCollection
                 .whereField("user_id", isEqualTo: userId)
                 .getDocuments()
             
-            var membres: [Membres] = []
+            var salonsId: [String] = []
             
             for document in querySnapshot.documents {
                 let membre = try document.data(as: Membres.self)
-                membres.append(membre)
+                salonsId.append(membre.salonId)
             }
-            return membres
+            return salonsId
         } catch {
-            print("userMembres - Error getting documents: \(error)")
+            print("userSalons - Error getting documents: \(error)")
         }
-        print("userMembres: non trouvé pour userId: \(userId)")
+        print("userSalons: non trouvé pour userId: \(userId)")
         return nil
     }
     
@@ -107,6 +107,22 @@ final class LastMessagesManager {
         }
         return nil
     }
+
+//    func getLastMessage(salonId: String) async throws -> String? {
+//        do {
+//            let querySnapshot = try await salonCollection
+//                .whereField("salon_id", isEqualTo: salonId)
+//                .getDocuments()
+//            
+//            for document in querySnapshot.documents {
+//                let salon = try document.data(as: Salons.self)
+//                return salon.lastMessage
+//            }
+//        } catch {
+//            print("getLastMessage - Error getting documents: \(error)")
+//        }
+//        return nil
+//    }
     
     // Renvoie un user pris dans "Users"
     func fetchUser(contactId: String) async throws -> DBUser? {

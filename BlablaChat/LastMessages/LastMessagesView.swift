@@ -4,12 +4,10 @@
 //
 //  Created by Lubet-Moncla Xavier on 23/03/2024.
 //
-// Liste du dernier message des salons du user
-// click sur un salon -> tous les messages de ce salon pour ce user + possibilité d'ajouter un message
-// click sur nouveau message -> Affichage des users ->  LastMessageView -> tous les messages de ce user
+// Le dernier message de chaque salon du user en cours
+// avec le nom du destinataire du dernier message, son email et le dernier message
 //
-// TODO: Cas d'un nouveau contact
-//
+
 
 import SwiftUI
 import Combine
@@ -29,23 +27,20 @@ class LastMessagesViewModel: ObservableObject {
 
     // Liste des derniers messages d'un user par salons
     func getLastMessages() async {
-
+        
         Task {
             
             lastMessages = []
             
             // @AppStorage
-            guard let userId = currentUserId else {
-                print("**** getLastMessages()-currentUserId = nil")
-                return
-            }
+            guard let userId = currentUserId else { print("**** getLastMessages()-currentUserId = nil") ; return }
             
-            // Recherche du user dans la base
+            // Infos du currentUser
             guard let dbuser = try await UsersManager.shared.searchUser(userId: userId) else { return }
-            userEmail = dbuser.email ?? "Inconnu"
-            userAvatarLink = dbuser.avatarLink ?? "Inconnu"
+                userEmail = dbuser.email ?? "Inconnu"
+                userAvatarLink = dbuser.avatarLink ?? "Inconnu"
             
-            // Renvoie tous les salons dont est membre le user
+            // Renvoie tous les salons Ids ddu currentUser
             guard let userSalonsIds = try await LastMessagesManager.shared.userSalons(userId: userId) else {
                 print("Pas de salons pour le user \(userId)")
                 return
@@ -53,31 +48,29 @@ class LastMessagesViewModel: ObservableObject {
             
             print("userSalons.count:\(userSalonsIds.count)")
             
-            for userSalon in userSalonsIds {
-                // Détail du salon
-                guard let salon = try await LastMessagesManager.shared.getSalon(salonId: userSalon) else {
-                    print("Salon inexistant dans Salons: \(userSalon)")
-                    return
-                }
+            for userSalonId in userSalonsIds {
+                
+                // Infos du salon
+                guard let salon = try await LastMessagesManager.shared.getSalon(salonId: userSalonId) else { return }
                 let lastMessage = salon.lastMessage
                 let contactId = salon.contactId
                 
-                print("contactId:\(contactId)")
-                
-                // avec le contactId du salon récuperer l'email et l'url de l'avatar dans user
+                // Infos du contact
                 guard let contact = try await LastMessagesManager.shared.fetchUser(contactId: contactId) else {
                     print("contactId \(contactId) inexistant dans Users")
                     return
                 }
                 let emailContact = contact.email ?? ""
-                let urlAvatar = dbuser.avatarLink ?? ""
+                let urlAvatar = contact.avatarLink ?? "" 
+                
+                print("emailContact \(emailContact)")
+                print("userEmail \(userEmail)")
 
-                if emailContact != dbuser.email {
-                    lastMessages.append(LastMessage(avatarLink: urlAvatar, emailContact: emailContact, texte: lastMessage, date: Timestamp(), salonId: userSalon))
+                if emailContact != userEmail {
+                    lastMessages.append(LastMessage(avatarLink: urlAvatar, emailContact: emailContact, texte: lastMessage, date: Timestamp(), salonId: userSalonId))
                 }
                 // print("lastMessages:\(lastMessages)")
             }
-            
         }
     }
     

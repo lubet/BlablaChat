@@ -176,7 +176,7 @@ final class MessagesManager {
     func majLastMessageSalons(salonId: String, lastMessage: String, userId: String) async throws {
         let data: [String:Any] = [
             Salons.CodingKeys.lastMessage.rawValue : lastMessage,
-            Salons.CodingKeys.contactId.rawValue : userId,
+            // Salons.CodingKeys.contactId.rawValue : userId,
         ]
         try await salonDocument(salonId: salonId).updateData(data)
     }

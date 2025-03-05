@@ -46,8 +46,6 @@ class LastMessagesViewModel: ObservableObject {
                 return
             }
             
-            print("userSalons.count:\(userSalonsIds.count)")
-            
             for userSalonId in userSalonsIds {
                 
                 // Infos du salon
@@ -61,10 +59,7 @@ class LastMessagesViewModel: ObservableObject {
                     return
                 }
                 let emailContact = contact.email ?? ""
-                let urlAvatar = contact.avatarLink ?? "" 
-                
-                print("emailContact \(emailContact)")
-                print("userEmail \(userEmail)")
+                let urlAvatar = contact.avatarLink ?? ""
 
                 if emailContact != userEmail {
                     lastMessages.append(LastMessage(avatarLink: urlAvatar, emailContact: emailContact, texte: lastMessage, date: Timestamp(), salonId: userSalonId))

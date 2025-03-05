@@ -36,7 +36,7 @@ final class LoginEmailViewModel: ObservableObject {
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
         
         // Chercher dans "users" pour voir si il n'existe pas (cas d'un nouveau contact)
-        var dbuser = try await UsersManager.shared.searchUser(email: email)
+        let dbuser = try await UsersManager.shared.searchUser(email: email)
         
         if dbuser == nil {
             print("**** SignUp dbuser = nil")

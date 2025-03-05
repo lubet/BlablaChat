@@ -48,7 +48,6 @@
 		C0C064C22D4B7D0C00D0C29B /* MessageBigImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C064C12D4B7D0C00D0C29B /* MessageBigImage.swift */; };
 		C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C1A9482B62ACC400646851 /* SearchNick.swift */; };
 		C0D565F42B7CAF8E00EE0DA0 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */; };
-		C0DD71552D26B0F000E232E1 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DD71542D26B0F000E232E1 /* MessagesView.swift */; };
 		C0DD71572D26B1D300E232E1 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DD71562D26B1D300E232E1 /* MessagesManager.swift */; };
 		C0E63A762C8EFF6F0041E598 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C0E63A752C8EFF6F0041E598 /* FirebaseAnalytics */; };
 		C0E63A782C8EFF9D0041E598 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C0E63A772C8EFF9D0041E598 /* FirebaseMessaging */; };
@@ -102,7 +101,6 @@
 		C0C064C12D4B7D0C00D0C29B /* MessageBigImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBigImage.swift; sourceTree = "<group>"; };
 		C0C1A9482B62ACC400646851 /* SearchNick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNick.swift; sourceTree = "<group>"; };
 		C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
-		C0DD71542D26B0F000E232E1 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		C0DD71562D26B1D300E232E1 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
 		C0EB0C242D3327FE001DB090 /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		C0EB0C262D3328FB001DB090 /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
@@ -280,7 +278,6 @@
 		C0DD71532D26B09E00E232E1 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
-				C0DD71542D26B0F000E232E1 /* MessagesView.swift */,
 				C0DD71562D26B1D300E232E1 /* MessagesManager.swift */,
 				C0524A0F2D3E695400630778 /* MessageRowView.swift */,
 				C0C064BF2D4B7C1D00D0C29B /* MessageCellPhoto.swift */,
@@ -399,7 +396,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0C1A9492B62ACC400646851 /* SearchNick.swift in Sources */,
-				C0DD71552D26B0F000E232E1 /* MessagesView.swift in Sources */,
 				C0EB0C272D3328FB001DB090 /* ContactRowView.swift in Sources */,
 				C04DE8E82D64949E004ACAD7 /* BubblesView.swift in Sources */,
 				C0B15FBC2D2E92810083135A /* ContactModel.swift in Sources */,

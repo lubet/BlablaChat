@@ -32,41 +32,6 @@ final class AuthenticationViewModel: ObservableObject {
                 Task {
                     do {
                         let _ = try await AuthManager.shared.signInWithApple(tokens: signInAppleResult)
-
-                        // -----
-                        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else {
-                            print("**** Erreur signUpApple() - AuthUser = nil")
-                            return
-                        }
-                        guard let email = authUser.email else {
-                            print("**** Erreur: SignUpApple() - Pas d'email")
-                            return
-                        }
-                        
-                        let dbuser = try await UsersManager.shared.searchUser(email: email)
-                        
-                        var userId: String = ""
-                        
-                        // La branche = nil fonctionne
-                        if dbuser == nil {
-                            let user = DBUser(auth: authUser) // uid, email, user_id, date
-                            userId = user.userId
-                            try await UsersManager.shared.createDbUser(user: user) // sans l'image
-                            let image = UIImage.init(systemName: "person.circle.fill")!
-                            try await UsersManager.shared.updateAvatar(userId: userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
-                            print("**** dbuser = nil userId = \(userId)")
-                            self.currentUserId = userId
-                            print("current1:\(userId)")
-                        }
-//                        } else {
-//                            // Je ne passe jamais là car la fonction signInApple() n'est appelé que quand c'est un nouveau compte
-//                            guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
-//                            try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
-//                            print("**** dbuse != nil userId : \(userId)")
-//                            self.currentUserId = userId
-//                            print("current2:\(userId)")
-//                        }
-                        // ---
                         self.didSignInWithApple = true
                         
                     } catch let error {
@@ -77,6 +42,31 @@ final class AuthenticationViewModel: ObservableObject {
             case .failure(let error):
                 print(error)
             }
+        }
+    }
+    
+    // Traitement aprés le SignUp Apple
+    func appleAfterSignUp() async throws {
+        
+        // Récupérr l'email de l'auth existant
+        guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { print("authUser nil; return "); return }
+        guard let email = authUser.email else { print("appleAfterSignUp() email nil"); return }
+        
+        let dbuser = try await UsersManager.shared.searchUser(email: email)
+
+        if dbuser == nil {
+            print("**** SignUp Apple noueau user")
+            let user = DBUser(auth: authUser) // uid, email, user_id, date
+            try await UsersManager.shared.createDbUser(user: user) // sans l'image
+            let image = UIImage.init(systemName: "person.circle.fill")!
+            try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
+            self.currentUserId = user.userId
+        } else {
+            // Existe déjà - maj de l'uid
+            print("**** SignUp Apple user existant dans users")
+            guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
+            try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
+            self.currentUserId = userId
         }
     }
 }
@@ -118,11 +108,10 @@ struct AuthenticationView: View {
                 
                 .onChange(of: vm.didSignInWithApple) { oldValue, newValue in
                     if newValue == true {
-                        // Nous sommes loggés
-                        // même traitement que login email/password
-                        
-                        // Auhtuser -> email
-                        
+                        // Traitement après le login Apple
+                        Task {
+                            try await vm.appleAfterSignUp()
+                        }
                         showSignInView = false
                     }
                 }

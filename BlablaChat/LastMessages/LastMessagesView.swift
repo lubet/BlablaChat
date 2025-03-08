@@ -135,7 +135,7 @@ struct LastMessagesView: View {
 
                     btnNewMessage // -> ContactsView
 
-                    .navigationTitle("Last messages")
+                    .navigationTitle("Derniers messages")
                 
                     .task {
                         await vm.getLastMessages() // Les derniers messages

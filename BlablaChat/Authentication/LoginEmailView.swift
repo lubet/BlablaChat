@@ -30,16 +30,17 @@ final class LoginEmailViewModel: ObservableObject {
             print("Pas d'email ni de password")
             return
         }
-        print("**** SignUp - \(email)")
         
         // Connection Firebase
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
-        
+
+        print("**** SignUp - \(email) - done")
+
         // Chercher dans "users" pour voir si il n'existe pas (cas d'un nouveau contact)
         let dbuser = try await UsersManager.shared.searchUser(email: email)
         
         if dbuser == nil {
-            print("**** SignUp dbuser = nil")
+            print("**** SignUp noueau user")
             let user = DBUser(auth: authUser) // uid, email, user_id, date
             try await UsersManager.shared.createDbUser(user: user) // sans l'image
             let image = image ?? UIImage.init(systemName: "person.circle.fill")!
@@ -47,7 +48,7 @@ final class LoginEmailViewModel: ObservableObject {
             self.currentUserId = user.userId
         } else {
             // Existe déjà - maj de l'uid
-            print("**** SignUp dbuser !=n il")
+            print("**** SignUp user existant dans users")
             guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
             self.currentUserId = userId
@@ -59,8 +60,6 @@ final class LoginEmailViewModel: ObservableObject {
     // "user" existant dans la base
     func signIn() async throws {
         
-        print("---- Début Sign In ----")
-        
         guard !email.isEmpty, !password.isEmpty else {
             print("**** SignIn - Pas d'email ni de password")
             return
@@ -69,6 +68,8 @@ final class LoginEmailViewModel: ObservableObject {
         // Connection Firebase
         try await AuthManager.shared.signInUser(email: email, password: password)
 
+        print("---- Sign In done ----")
+        
         // Recherche du user
         guard let dbuser = try await UsersManager.shared.searchUser(email: email) else {
             print("**** SignIn - Pas de dbuser")

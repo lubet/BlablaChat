@@ -118,6 +118,11 @@ struct AuthenticationView: View {
                 
                 .onChange(of: vm.didSignInWithApple) { oldValue, newValue in
                     if newValue == true {
+                        // Nous sommes loggés
+                        // même traitement que login email/password
+                        
+                        // Auhtuser -> email
+                        
                         showSignInView = false
                     }
                 }

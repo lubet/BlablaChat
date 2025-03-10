@@ -25,7 +25,6 @@ final class AuthenticationViewModel: ObservableObject {
     
     // Nouveau user Apple
     func signInApple() async throws {
-        print("**** signInApple()")
         signInAppleHelper.startSignInWithAppleFlow { result in
             switch result {
             case .success(let signInAppleResult):
@@ -55,15 +54,13 @@ final class AuthenticationViewModel: ObservableObject {
         let dbuser = try await UsersManager.shared.searchUser(email: email)
 
         if dbuser == nil {
-            print("**** SignUp Apple noueau user")
             let user = DBUser(auth: authUser) // uid, email, user_id, date
             try await UsersManager.shared.createDbUser(user: user) // sans l'image
             let image = UIImage.init(systemName: "person.circle.fill")!
             try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
             self.currentUserId = user.userId
         } else {
-            // Existe déjà - maj de l'uid
-            print("**** SignUp Apple user existant dans users")
+            // Existe déjà - maj de l'id du user + save du userId
             guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
             self.currentUserId = userId
@@ -111,8 +108,8 @@ struct AuthenticationView: View {
                         // Traitement après le login Apple
                         Task {
                             try await vm.appleAfterSignUp()
+                            showSignInView = false
                         }
-                        showSignInView = false
                     }
                 }
                 

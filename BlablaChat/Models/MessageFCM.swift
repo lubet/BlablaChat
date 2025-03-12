@@ -10,7 +10,7 @@ import Foundation
 struct MessageFCM {
     let userId: String
     let nom: String
-    let fcmToken: String
+    let FCMToken: String
     
     var id: String {
         userId
@@ -19,16 +19,16 @@ struct MessageFCM {
     enum CodingKeys: String, CodingKey {
         case userId = "user_id"
         case nom = "nom"
-        case FCMToken = "fcm_tpken"
+        case FCMToken = "fcm_token"
     }
     
     init(
         userId: String,
         nom: String,
-        fcmToken: String
+        FCMtoken: String
     ) {
         self.userId = ""
-        self.fcmToken = ""
         self.nom = ""
+        self.FCMToken = ""
     }
 }

@@ -80,10 +80,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
 
-      // let deviceToken:[String: String] = ["token": fcmToken ?? ""]
-        // print("Device token: ", deviceToken) // This token can be used for testing notifications on FCM
-        
-        fcmTocken = fcmToken ?? ""
+      let deviceToken:[String: String] = ["token": fcmToken ?? ""]
+        print("Device token: ", deviceToken) // This token can be used for testing notifications on FCM
+        MessageFCM(userId: "", nom: "", fcmToken: deviceToken["token"] ?? "")
     }
 }
 
@@ -96,9 +95,9 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
     let userInfo = notification.request.content.userInfo
 
-//    if let messageID = userInfo[gcmMessageIDKey] {
-//        // print("Message ID: \(messageID)")
-//    }
+    if let messageID = userInfo[gcmMessageIDKey] {
+        // print("Message ID: \(messageID)")
+    }
 
     // print(userInfo)
 

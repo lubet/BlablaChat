@@ -65,6 +65,14 @@ final class AuthenticationViewModel: ObservableObject {
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
             self.currentUserId = userId
         }
+        
+        guard let currentUID = self.currentUserId else { print("SignUp-Pas de userId"); return }
+        
+        let tokenFCM = try await UsersManager.shared.searchTokenFCM(userId: currentUID)
+        
+        if tokenFCM == nil {
+            try await UsersManager.shared.addTokenFCM(userId: currentUID, tokenFCM: FCMtoken.FCMtoken)
+        }
     }
 }
 

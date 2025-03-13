@@ -53,7 +53,13 @@ final class LoginEmailViewModel: ObservableObject {
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
             self.currentUserId = userId
         }
-        // try await TokensManager.shared.addToken(auth_id: auth_id, FCMtoken: G.FCMtoken)
+        guard let currentUID = self.currentUserId else { print("SignUp-Pas de userId"); return }
+        
+        // Recherche du token
+        // existe pas le créer
+        // existe le mettre à jour du nom
+        
+        try await UsersManager.shared.addTokensFCM(userId: currentUID, tokenFCM: FCMtoken.FCMtoken)
      }
 
     

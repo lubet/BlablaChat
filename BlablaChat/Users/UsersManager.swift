@@ -210,9 +210,28 @@ final class UsersManager {
         }
     }
 
+    // Search tokenFCM
+    func searchToken(userId: String) async throws -> TokensFCM? {
+        do {
+            let querySnapshot = try await tokensCollection
+                .whereField("user_id", isEqualTo:userId)
+                .getDocuments()
+            
+            for document in querySnapshot.documents {
+                let user = try document.data(as: TokensFCM.self)
+                if (user.userId == userId) {
+                    return user
+                }
+            }
+        } catch {
+            print("searchToken by userId - Error getting documents: \(error)")
+        }
+        return nil
+    }
+    
     // Ajout d'un token identifiant le device (iPhone) pour FCM (Firebase Cloud Messaging)
     // qui sera utilisé dans la fonction sendUnMessage sur le serveur
-    func addTokensFCM(userId: String) async throws {
+    func addTokensFCM(userId: String, tokenFCM: String) async throws {
         do {
             let docRef = tokenDocument(user_id: userId)
             

@@ -11,7 +11,7 @@ struct FCMtoken {
     static var FCMtoken: String = ""
 }
 
-struct TokensFCM {
+struct TokensFCM: Codable, Identifiable {
     let userId: String
     let nom: String
     let tokenFCM: String

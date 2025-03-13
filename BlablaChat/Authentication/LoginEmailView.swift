@@ -55,10 +55,10 @@ final class LoginEmailViewModel: ObservableObject {
         }
         guard let currentUID = self.currentUserId else { print("SignUp-Pas de userId"); return }
         
-        let tokenFCM = try await UsersManager.shared.searchToken(userId: currentUID)
+        let tokenFCM = try await UsersManager.shared.searchTokenFCM(userId: currentUID)
         
         if tokenFCM == nil {
-            try await UsersManager.shared.addTokensFCM(userId: currentUID, tokenFCM: FCMtoken.FCMtoken)
+            try await UsersManager.shared.addTokenFCM(userId: currentUID, tokenFCM: FCMtoken.FCMtoken)
         }
      }
     

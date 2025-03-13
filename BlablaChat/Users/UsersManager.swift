@@ -17,7 +17,7 @@ final class UsersManager {
     static let shared = UsersManager()
     init() { }
     
-    private let DBUserCollection = dbFS.collection("users")
+    private let DBUserCollection = dbFS.collection("Users")
     
     private func userDocument(user_id: String) -> DocumentReference {
         return DBUserCollection.document(user_id)
@@ -26,6 +26,14 @@ final class UsersManager {
     private func userDocument(email:String) -> DocumentReference {
         return DBUserCollection.document(email)
     }
+    
+    private let tokensCollection = dbFS.collection("TokensFCM")
+    
+    private func tokenDocument(user_id: String) -> DocumentReference {
+        return tokensCollection.document(user_id)
+    }
+
+    // -----------------------------------------------------------------------
     
     // Création du user dans la base "users"
     func createDbUser(user: DBUser) async throws {
@@ -201,14 +209,22 @@ final class UsersManager {
             print("**** signOut failed")
         }
     }
-    
-    // OBSOLETE Store des infos du user loggé
-//    func getUserDefault() throws -> DBUser {
-//        enum MyError: Error {
-//            case runtimeError(String)
-//        }
-//        guard let data = UserDefaults.standard.data(forKey: "saveuser") else { throw MyError.runtimeError("getUser - UserDefaults") }
-//        guard let savedUser = try? JSONDecoder().decode(DBUser.self, from: data) else { throw MyError.runtimeError("getUser - JSONDecoder") }
-//        return savedUser
-//    }
+
+    // Ajout d'un token identifiant le device (iPhone) pour FCM (Firebase Cloud Messaging)
+    // qui sera utilisé dans la fonction sendUnMessage sur le serveur
+    func addTokensFCM(userId: String) async throws {
+        do {
+            let docRef = tokenDocument(user_id: userId)
+            
+            let data: [String:Any] = [
+                "user_id" : userId,
+                "token_fcm" : FCMtoken.FCMtoken,
+                "time_stamp" : Timestamp(),
+                "nom": "",
+            ]
+            try await docRef.setData(data, merge: false)
+        } catch {
+            print("addToken Pas de document pour ce user_id: \(error)")
+        }
+    }
 }

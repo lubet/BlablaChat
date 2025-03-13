@@ -55,13 +55,12 @@ final class LoginEmailViewModel: ObservableObject {
         }
         guard let currentUID = self.currentUserId else { print("SignUp-Pas de userId"); return }
         
-        // Recherche du token
-        // existe pas le créer
-        // existe le mettre à jour du nom
+        let tokenFCM = try await UsersManager.shared.searchToken(userId: currentUID)
         
-        try await UsersManager.shared.addTokensFCM(userId: currentUID, tokenFCM: FCMtoken.FCMtoken)
+        if tokenFCM == nil {
+            try await UsersManager.shared.addTokensFCM(userId: currentUID, tokenFCM: FCMtoken.FCMtoken)
+        }
      }
-
     
     // "user" existant dans la base
     func signIn() async throws {

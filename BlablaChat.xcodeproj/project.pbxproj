@@ -26,6 +26,7 @@
 		C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9DF2B45767B00C6D48F /* AuthManager.swift */; };
 		C04DE8E82D64949E004ACAD7 /* BubblesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04DE8E72D64949E004ACAD7 /* BubblesView.swift */; };
 		C0524A102D3E695400630778 /* MessageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0524A0F2D3E695400630778 /* MessageRowView.swift */; };
+		C0568C582D82D4A200931233 /* NotificationsFCM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0568C572D82D4A200931233 /* NotificationsFCM.swift */; };
 		C06018B02D65E71000E63ED2 /* LastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06018AF2D65E71000E63ED2 /* LastMessage.swift */; };
 		C068CD3B2BCD769E0072A797 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */; };
 		C068E8BF2D36B1AF001964E7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C068E8BE2D36B1AF001964E7 /* SettingsView.swift */; };
@@ -80,6 +81,7 @@
 		C04C3A7A2C85C7CD0044B21B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		C04DE8E72D64949E004ACAD7 /* BubblesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesView.swift; sourceTree = "<group>"; };
 		C0524A0F2D3E695400630778 /* MessageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRowView.swift; sourceTree = "<group>"; };
+		C0568C572D82D4A200931233 /* NotificationsFCM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsFCM.swift; sourceTree = "<group>"; };
 		C06018AF2D65E71000E63ED2 /* LastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessage.swift; sourceTree = "<group>"; };
 		C068CD3A2BCD769E0072A797 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		C068E8BE2D36B1AF001964E7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				C06A78CA2D4181430094BAE0 /* Membres.swift */,
 				C06018AF2D65E71000E63ED2 /* LastMessage.swift */,
 				C0C1E9562D81A4C400DB8E4A /* MessageFCM.swift */,
+				C0568C572D82D4A200931233 /* NotificationsFCM.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				C03A722D2D1DB1DD00961705 /* UsersManager.swift in Sources */,
 				C0850DC42D0F2BD7001AD3AA /* LoginEmailView.swift in Sources */,
 				C0C064C02D4B7C1D00D0C29B /* MessageCellPhoto.swift in Sources */,
+				C0568C582D82D4A200931233 /* NotificationsFCM.swift in Sources */,
 				C0F6C9C92D1C8FA300BE471E /* Salons.swift in Sources */,
 				C0C064C22D4B7D0C00D0C29B /* MessageBigImage.swift in Sources */,
 				C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */,

@@ -81,8 +81,8 @@ extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
 
       let deviceToken:[String: String] = ["token": fcmToken ?? ""]
-        print("Device token: ", deviceToken) // This token can be used for testing notifications on FCM
-        MessageFCM(userId: "", nom: "", fcmToken: deviceToken["token"] ?? "")
+        FCMtoken.FCMtoken = deviceToken["token"] ?? "print AppDelegate FCMtoken = nil"
+        print("Device token: ", deviceToken)
     }
 }
 

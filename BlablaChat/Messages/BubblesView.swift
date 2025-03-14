@@ -43,7 +43,7 @@ final class BubblesViewModel: ObservableObject {
                     let lurl = try await StorageManager.shared.getUrlForImage(path: path)
                     
                     // Recherche du contact_id dans Salons
-                    guard let contactID = try await MessagesManager.shared.getSalon(salonId: salonId) else { print("newMessages-Pas de contactId"); return }
+                    guard let contactID = try await MessagesManager.shared.getSalonContactId(salonId: salonId) else { print("newMessages-Pas de contactId"); return }
                     
                     // Création du message avec le n° de salon et le fromId égal au user
                     try await MessagesManager.shared.newMessage(salonId: salonId, fromId: userId, texte: "Photo", urlPhoto: lurl.absoluteString, toId: contactID)
@@ -102,7 +102,7 @@ final class BubblesViewModel: ObservableObject {
         guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
 
         // Recherche du contact_id dans Salons
-        guard let contactID = try await MessagesManager.shared.getSalon(salonId: salonId) else { print("newMessages-Pas de contactId"); return }
+        guard let contactID = try await MessagesManager.shared.getSalonContactId(salonId: salonId) else { print("newMessages-Pas de contactId"); return }
         
         // Création du message avec le n° de salon et le fromId égal au user
         try await MessagesManager.shared.newMessage(salonId: salonId, fromId: userId, texte: texteMessage, urlPhoto: "", toId: contactID)

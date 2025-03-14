@@ -183,7 +183,7 @@ final class MessagesManager {
     }
 
     // Retourne le contactId d'un salon
-    func getSalon(salonId: String) async throws -> String? {
+    func getSalonContactId(salonId: String) async throws -> String? {
         do {
             let querySalons = try await salonsCollection
                 .whereField("salon_id", isEqualTo: salonId)

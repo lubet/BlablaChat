@@ -27,6 +27,8 @@ class LastMessagesViewModel: ObservableObject {
 
     // Liste des derniers messages d'un user par salons
     func getLastMessages() async {
+        
+        print("getLastMessages()")
 
         Task {
             
@@ -37,8 +39,8 @@ class LastMessagesViewModel: ObservableObject {
             
             // Infos du currentUser
             guard let dbuser = try await UsersManager.shared.searchUser(userId: userId) else { return }
-                userEmail = dbuser.email ?? "Inconnu"
-                userAvatarLink = dbuser.avatarLink ?? "Inconnu"
+                userEmail = dbuser.email ?? "**** Inconnu"
+                userAvatarLink = dbuser.avatarLink ?? "**** Inconnu"
             
             // Renvoie tous les salons Ids ddu currentUser
             guard let userSalonsIds = try await LastMessagesManager.shared.userSalons(userId: userId) else {
@@ -48,16 +50,18 @@ class LastMessagesViewModel: ObservableObject {
             for userSalonId in userSalonsIds {
                 
                 // Infos du salon
-                guard let salon = try await LastMessagesManager.shared.getSalon(salonId: userSalonId) else { return }
+                guard let salon = try await LastMessagesManager.shared.getSalon(salonId: userSalonId) else {
+                    print("**** getLastMessages() salon"); return }
+                
                 let lastMessage = salon.lastMessage
                 let contactId = salon.contactId
                 
                 // Infos du contact
                 guard let contact = try await LastMessagesManager.shared.fetchUser(contactId: contactId) else {
-                    return
-                }
-                let emailContact = contact.email ?? ""
-                let urlAvatar = contact.avatarLink ?? ""
+                    print("**** getLastMessages() contact"); return }
+                
+                guard let emailContact = contact.email else { print("**** getLastMessages() emailContact"); return }
+                guard let urlAvatar = contact.avatarLink else { print("**** getLastMessages() urlAvatar"); return }
 
                 if emailContact != userEmail {
                     lastMessages.append(LastMessage(avatarLink: urlAvatar, emailContact: emailContact, texte: lastMessage, date: Timestamp(), salonId: userSalonId))

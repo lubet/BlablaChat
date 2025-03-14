@@ -66,7 +66,7 @@ final class MessagesManager {
         return docId
     }
     
-    func newMessage(salonId: String, fromId: String, texte: String, urlPhoto: String) async throws {
+    func newMessage(salonId: String, fromId: String, texte: String, urlPhoto: String, toId: String) async throws {
         let document = messagesCollection(salonId: salonId).document()
         let documentId = document.documentID
         
@@ -77,7 +77,8 @@ final class MessagesManager {
             "from_id" : fromId,
             "texte" : texte,
             "date_message": Timestamp(),
-            "url_photo" : urlPhoto
+            "url_photo" : urlPhoto,
+            "to_id" : toId
         ]
         do {
             try await document.setData(data, merge: false)
@@ -181,6 +182,23 @@ final class MessagesManager {
         try await salonDocument(salonId: salonId).updateData(data)
     }
 
+    // Retourne le contactId d'un salon
+    func getSalon(salonId: String) async throws -> String? {
+        do {
+            let querySalons = try await salonsCollection
+                .whereField("salon_id", isEqualTo: salonId)
+                .getDocuments()
+            
+            for unSalon in querySalons.documents {
+                let salon = try unSalon.data(as: Salons.self)
+                return salon.contactId
+            }
+        } catch {
+            print("getToId - Error getting documents: \(error)")
+        }
+        return nil
+    }
+    
     
 // Voir si user et contact ont le même salonId
 //    func searchSalonsUsers(contactId: String, userId: String) async throws -> String {

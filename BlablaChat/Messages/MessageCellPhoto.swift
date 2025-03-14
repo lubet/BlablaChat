@@ -55,5 +55,5 @@ struct MessageCellPhoto: View {
 }
 
 #Preview {
-    MessageCellPhoto(message: Messages(id: "123", salonId: "123", send: true, fromId: "123", texte: "Bonjour", dateMessage: Timestamp(), urlPhoto: "https://picsum.photos/400"))
+    MessageCellPhoto(message: Messages(id: "123", salonId: "123", send: true, fromId: "123", texte: "Bonjour", dateMessage: Timestamp(), urlPhoto: "https://picsum.photos/400", toId: "123456"))
 }

@@ -125,19 +125,19 @@ final class LastMessagesManager {
 //    }
     
     // Renvoie un user pris dans "Users"
-    func fetchUser(contactId: String) async throws -> DBUser? {
-        do {
-            let querySnapshot = try await userCollection
-                .whereField("user_id", isEqualTo: contactId)
-                .getDocuments()
-            
-            for document in querySnapshot.documents {
-                let user = try document.data(as: DBUser.self)
-                return user
-            }
-        } catch {
-            print("fetchUser - Error getting documents: \(error)")
-        }
-        return nil
-    }
+//    func fetchUser(contactId: String) async throws -> DBUser? {
+//        do {
+//            let querySnapshot = try await userCollection
+//                .whereField("user_id", isEqualTo: contactId)
+//                .getDocuments()
+//            
+//            for document in querySnapshot.documents {
+//                let user = try document.data(as: DBUser.self)
+//                return user
+//            }
+//        } catch {
+//            print("fetchUser - Error getting documents: \(error)")
+//        }
+//        return nil
+//    }
 }

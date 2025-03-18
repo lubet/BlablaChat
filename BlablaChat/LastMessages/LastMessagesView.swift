@@ -56,8 +56,8 @@ class LastMessagesViewModel: ObservableObject {
                 let lastMessage = salon.lastMessage
                 let contactId = salon.contactId
                 
-                // Infos du contact
-                guard let contact = try await LastMessagesManager.shared.fetchUser(contactId: contactId) else {
+                // Infos du contact TODO renvoie nil
+                guard let contact = try await UsersManager.shared.searchUser(userId: contactId) else {
                     print("**** getLastMessages() contact"); return }
                 
                 guard let emailContact = contact.email else { print("**** getLastMessages() emailContact"); return }

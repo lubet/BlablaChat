@@ -28,10 +28,10 @@ final class MessagesManager {
     }
     
     // Salons/Messages
-    private let messagesCollection = dbFS.collection("Messages")
+    private let messagesCollection = dbFS.collection("messages")
     // Tous les messages d'un salon
     private func messagesCollection(salonId: String) -> CollectionReference {
-        return salonDocument(salonId: salonId).collection("Messages")
+        return salonDocument(salonId: salonId).collection("messages")
     }
     
     // Salons/Users ------------------------------

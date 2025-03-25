@@ -50,7 +50,7 @@ final class LoginEmailViewModel: ObservableObject {
             // Existe déjà - maj de l'uid
             print("**** SignUp user existant dans users")
             guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
-            try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
+            try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid) // maj de l'id dans Users
             self.currentUserId = userId
         }
         guard let currentUID = self.currentUserId else { print("SignUp-Pas de userId"); return }
@@ -85,7 +85,7 @@ final class LoginEmailViewModel: ObservableObject {
         // Je lis le user qui vient d'être créer sur le disque
         httpAvatar = dbuser.avatarLink ?? ""
         
-        print("---- Fin Sign In ----")
+        print("---- Fin Sign In ---- currentUserId: \(String(describing: self.currentUserId))")
         
         return
     }

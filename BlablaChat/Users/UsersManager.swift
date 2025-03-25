@@ -47,6 +47,7 @@ final class UsersManager {
         try await userDocument(user_id: userId).updateData(data)
     }
     
+    // Maj de l'id pour le user contact (n'en à pas à sa créeation dans Users)
     func updateId(userId: String, Id: String) async throws {
         let data: [String:Any] = [
             DBUser.CodingKeys.id.rawValue : Id,
@@ -193,13 +194,6 @@ final class UsersManager {
     func resetPassword(email: String) async throws {
         try await Auth.auth().sendPasswordReset(withEmail: email)
         // print("resetPAssword **********************************")
-    }
-    
-    func updateEmail(email: String) async throws {
-        guard let user = Auth.auth().currentUser else {
-            throw URLError(.badServerResponse)
-        }
-        try await user.updateEmail(to: email)
     }
     
     func signOut() throws {

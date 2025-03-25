@@ -23,13 +23,6 @@ final class LastMessagesManager {
     private func salonDocument(salon_id: String) -> DocumentReference {
         return salonCollection.document(salon_id)
     }
-
-    // Users
-    private let userCollection = db.collection("users")
-    
-    private func userDocument(user_id: String) -> DocumentReference {
-        return userCollection.document(user_id)
-    }
     
     // Membres
     private let memberCollection = db.collection("Membres")

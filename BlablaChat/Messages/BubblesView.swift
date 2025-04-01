@@ -57,8 +57,9 @@ final class BubblesViewModel: ObservableObject {
         }
     }
     
-    // Messages du salon selectionné par le user dans lastMessagesView
-    // ou messages vide pour un nouveau contact
+    // TODO:
+    // Messages: salon = contacId via l'email + le userId
+    // NewMessage: en création si n'existe pas: le contactId via l'email, le userId, le salon, les membres
     
     // email du user ou du contact <- LastMessagesView ou ContactsView
     func allUserSalonMessages(emailContact: String) async throws {

@@ -57,56 +57,56 @@ final class BubblesViewModel: ObservableObject {
         }
     }
     
-    // TODO:
-    // Messages: salon = contacId via l'email + le userId
-    // NewMessage: en création si n'existe pas: le contactId via l'email, le userId, le salon, les membres
-    
-    // email du user ou du contact <- LastMessagesView ou ContactsView
-    func allUserSalonMessages(emailContact: String) async throws {
+    // Display des messages d'un userId envoyé à un contactId
+    func allUserSalonMessages() async throws {
 
+        // userId
         guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
         
-        // Recherche du contact dans "Users" avec email
-        var contactId =  try? await UsersManager.shared.searchContact(email: emailContact)
-        
-        // Création du contact dans "Users" si pas présent
+        // contactId
+        var contactId =  try await UsersManager.shared.searchContact(email: emailContact)
+
+        // Si le contactId existe
+        if contactId != "" {
+            salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: userId)
+            allMessages = try await MessagesManager.shared.getMessages(salonId: salonId)
+        } else {
+            allMessages = []
+        }
+    }
+    
+    // Envoi d'un nouveau message à un nouveau contact ou à contact existant
+    func newMessages(texteMessage: String) async throws {
+
+        // user_id
+        guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
+
+        // contactId
+        var contactId =  try await UsersManager.shared.searchContact(email: emailContact)
         if contactId == "" {
             contactId = try await UsersManager.shared.createUser(email: emailContact)
         }
-
-        guard let contactId else { print("**** MessagesViewModel: pas de contactId"); return }
         
-        // Recherche du salon_id du couple contact user
+        // salon_id
         salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: userId)
-        
-        // Si pas présent création d'un salon
         if salonId == "" {
             salonId = try await MessagesManager.shared.newSalon(last_message: "", contactId: contactId)
             // Ajout du couple contact user à ce salon
             try await MessagesManager.shared.newMembres(salonId: salonId, contactId: contactId, userId: userId)
         }
-        // Tous les messages du salon
-        allMessages = try await MessagesManager.shared.getMessages(salonId: salonId)
-        
+
         // Listener sur les messages
-                if !didAppear {
-                    MessagesManager.shared.addlistenerMessages(salonId: salonId) { [weak self] messages in
-                        self?.allMessages = messages
-                    }
-                    didAppear = true
-                }
-    }
-    
-    // Création du message
-    func newMessages(texteMessage: String) async throws {
+        if !didAppear {
+            MessagesManager.shared.addlistenerMessages(salonId: salonId) { [weak self] messages in
+                self?.allMessages = messages
+            }
+            didAppear = true
+        }
 
-        guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
-
-        // Recherche du contact_id dans Salons
-        guard let contactID = try await MessagesManager.shared.getSalonContactId(salonId: salonId) else { print("newMessages-Pas de contactId"); return }
+//        guard let contactID = try await MessagesManager.shared.getSalonContactId(salonId: salonId) else { print("newMessages-Pas de contactId"); return }
         
         // Création du message avec le n° de salon et le fromId égal au user
-        try await MessagesManager.shared.newMessage(salonId: salonId, fromId: userId, texte: texteMessage, urlPhoto: "", toId: contactID)
+        try await MessagesManager.shared.newMessage(salonId: salonId, fromId: userId, texte: texteMessage, urlPhoto: "", toId: contactId)
         
         // Mettre à jour last_message dans Salons
         try await MessagesManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: texteMessage, userId: userId)
@@ -144,7 +144,7 @@ struct BubblesView: View {
         .onAppear {
             Task {
                 vm.emailContact = emailContact
-                try await vm.allUserSalonMessages(emailContact: emailContact)
+                try await vm.allUserSalonMessages()
                 
             }
         }

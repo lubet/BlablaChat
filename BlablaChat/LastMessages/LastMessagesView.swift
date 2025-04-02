@@ -28,7 +28,7 @@ class LastMessagesViewModel: ObservableObject {
     // Liste des derniers messages d'un user par salons
     func getLastMessages() async {
         
-        print("getLastMessages()")
+        print("**** LastMessagesView-getLastMessages()")
 
         Task {
             
@@ -46,8 +46,6 @@ class LastMessagesViewModel: ObservableObject {
             guard let userSalonsIds = try await LastMessagesManager.shared.userSalons(userId: userId) else {
                 return
             }
-            
-            print("**** userSalonsIds: \(userSalonsIds)")
             
             for userSalonId in userSalonsIds {
                 

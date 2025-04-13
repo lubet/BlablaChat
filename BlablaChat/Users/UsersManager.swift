@@ -233,7 +233,7 @@ final class UsersManager {
                 "user_id" : userId,
                 "token_fcm" : FCMtoken.FCMtoken,
                 "time_stamp" : Timestamp(),
-                "nom": "",
+                "nom": "Bonjour",
             ]
             try await docRef.setData(data, merge: false)
         } catch {

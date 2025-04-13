@@ -52,7 +52,7 @@ final class MessagesManager {
     // ------------------------------------------------------------------------------------
     
     // Création d'un nouveau salon
-    func newSalon(last_message: String, contactId: String) async throws -> String {
+    func newSalon(last_message: String) async throws -> String {
         let salonRef = salonsCollection.document()
         let docId = salonRef.documentID
         
@@ -60,7 +60,8 @@ final class MessagesManager {
             "salon_id" : docId,
             "last_message": last_message,
             "date_created" : Timestamp(),
-            "contact_id": contactId
+            "contact_id": "", // toID
+            "user_id": "" // fromID
         ]
         try await salonRef.setData(data, merge: false)
         return docId
@@ -174,10 +175,11 @@ final class MessagesManager {
         try await doc2.setData(data2, merge: false)
     }
 
-    func majLastMessageSalons(salonId: String, lastMessage: String, userId: String) async throws {
+    func majLastMessageSalons(salonId: String, lastMessage: String, userId: String, contactId: String) async throws {
         let data: [String:Any] = [
             Salons.CodingKeys.lastMessage.rawValue : lastMessage,
-            // Salons.CodingKeys.contactId.rawValue : userId,
+            Salons.CodingKeys.contactId.rawValue : contactId,
+            Salons.CodingKeys.userId.rawValue : userId
         ]
         try await salonDocument(salonId: salonId).updateData(data)
     }

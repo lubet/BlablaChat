@@ -52,22 +52,21 @@ class LastMessagesViewModel: ObservableObject {
                 // Infos du salon
                 guard let salon = try await LastMessagesManager.shared.getSalon(salonId: userSalonId) else {
                     print("**** getLastMessages() salon"); return }
-                
                 let lastMessage = salon.lastMessage
-                let contactId = salon.contactId
                 
-                // Infos du contact TODO renvoie nil
-                guard let contact = try await UsersManager.shared.searchUser(userId: contactId) else {
+                // Current Id
+                guard let sender = try await UsersManager.shared.searchUser(userId: salon.userId) else {
                     print("**** getLastMessages() contact"); return }
+                guard sender.email != nil else { print("**** getLastMessages() emailSender"); return } // Pas utilisé
                 
-                guard let emailContact = contact.email else { print("**** getLastMessages() emailContact"); return }
+                // Contact Id
+                guard let contact = try await UsersManager.shared.searchUser(userId: salon.contactId) else {
+                    print("**** getLastMessages() contact"); return }
                 guard let urlAvatar = contact.avatarLink else { print("**** getLastMessages() urlAvatar"); return }
+                guard let emailContact = contact.email else { print("**** getLastMessages() emailContact"); return }
                 
-//                print("emailContact != userEmail: \(emailContact) - \(userEmail)")
-//                if emailContact != userEmail {
-                    lastMessages.append(LastMessage(avatarLink: urlAvatar, emailContact: emailContact, texte: lastMessage, date: Timestamp(), salonId: userSalonId))
-//               }
-                // print("lastMessages:\(lastMessages)")
+                // TODO c'est l'email de l'envoyeur que l'on devrait trouver ici
+                lastMessages.append(LastMessage(avatarLink: urlAvatar, emailContact: emailContact, texte: lastMessage, date: Timestamp(), salonId: userSalonId))
             }
         }
     }

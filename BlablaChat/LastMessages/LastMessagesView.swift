@@ -48,25 +48,26 @@ class LastMessagesViewModel: ObservableObject {
             }
             
             for userSalonId in userSalonsIds {
-                
                 // Infos du salon
                 guard let salon = try await LastMessagesManager.shared.getSalon(salonId: userSalonId) else {
                     print("**** getLastMessages() salon"); return }
                 let lastMessage = salon.lastMessage
-                
-                // Current Id
-                guard let sender = try await UsersManager.shared.searchUser(userId: salon.userId) else {
-                    print("**** getLastMessages() contact"); return }
-                guard sender.email != nil else { print("**** getLastMessages() emailSender"); return } // Pas utilisé
-                
-                // Contact Id
-                guard let contact = try await UsersManager.shared.searchUser(userId: salon.contactId) else {
-                    print("**** getLastMessages() contact"); return }
-                guard let urlAvatar = contact.avatarLink else { print("**** getLastMessages() urlAvatar"); return }
-                guard let emailContact = contact.email else { print("**** getLastMessages() emailContact"); return }
-                
+
+                var email: String = ""
+                var  avatarLink: String = ""
+                if salon.userId != currentUserId {
+                    guard let userSalon = try await UsersManager.shared.searchUser(userId: salon.userId) else {
+                        print("**** getLastMessages() userSalon"); return }
+                    email = userSalon.email ?? "Inconnu"
+                    avatarLink = userSalon.avatarLink ?? ""
+                    
+                } else {
+                    guard let contacSalon = try await UsersManager.shared.searchUser(userId: salon.contactId) else { print("**** getLastMessages() contactSalon"); return }
+                    email = contacSalon.email ?? "inconnu"
+                    avatarLink = contacSalon.avatarLink ?? ""
+                }
                 // TODO c'est l'email de l'envoyeur que l'on devrait trouver ici
-                lastMessages.append(LastMessage(avatarLink: urlAvatar, emailContact: emailContact, texte: lastMessage, date: Timestamp(), salonId: userSalonId))
+                lastMessages.append(LastMessage(avatarLink: avatarLink, emailContact: email, texte: lastMessage, date: Timestamp(), salonId: userSalonId))
             }
         }
     }

@@ -152,7 +152,7 @@ final class UsersManager {
         return nil
         
     }
-
+    
     // Recherhe du user dans "users" avec l'email de connection
     func searchUser(userId: String) async throws -> DBUser? {
         do {
@@ -173,6 +173,27 @@ final class UsersManager {
         
     }
 
+    // Recherche, avec le contact_id, du contact dans la nase "Users" 
+    func searchUser(contactId: String) async throws -> DBUser? {
+        do {
+            let querySnapshot = try await DBUserCollection
+                .whereField("user_id", isEqualTo:contactId)
+                .getDocuments()
+            
+            for document in querySnapshot.documents {
+                let user = try document.data(as: DBUser.self)
+                if (user.userId == contactId) {
+                    return user
+                }
+            }
+        } catch {
+            print("searchUser by userId - Error getting documents: \(error)")
+        }
+        return nil
+        
+    }
+
+    
     
     // Création de l'avatar dans "Storage" et maj de l'avatar dans "Users"
     func updateAvatar(userId: String, mimage: UIImage) async throws {

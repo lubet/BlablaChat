@@ -118,7 +118,7 @@ final class MessagesManager {
         return messages
     }
     
-    // 2) Switcher à oui si le current user est égal à l'envoyeur (fromId du message)
+    // 2) Switcher à oui si le current user est égal à l'envoyeur (fromId du message).
     func messagesSw(currentUser: String, messages: [Messages]) async throws -> [Messages] {
         
         var messagesSw = [Messages]()

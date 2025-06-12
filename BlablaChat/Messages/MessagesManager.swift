@@ -67,6 +67,7 @@ final class MessagesManager {
         return docId
     }
     
+    // Création d'un nouveau message
     func newMessage(salonId: String, fromId: String, texte: String, urlPhoto: String, toId: String) async throws {
         let document = messagesCollection(salonId: salonId).document()
         let documentId = document.documentID
@@ -101,7 +102,7 @@ final class MessagesManager {
         }
     }
 
-    // Extrait les messages du salon
+    // 1) Charger les messages du salon
     func getMessages(salonId: String) async throws -> [Messages] {
         let snapshot = try await messagesCollection(salonId: salonId)
             .whereField("salon_id", isEqualTo: salonId)
@@ -115,6 +116,15 @@ final class MessagesManager {
 
         }
         return messages
+    }
+    
+    // 2) Switcher à oui si le current user est égal à l'envoyeur (fromId du message)
+    func messagesSw(currentUser: String, messages: [Messages]) async throws -> [Messages] {
+        
+        var messagesSw = [Messages]()
+        
+        
+        return messagesSw
     }
 
     // Retourn le salon_id si il est commun à user et à contact sinon ""
@@ -175,6 +185,7 @@ final class MessagesManager {
         try await doc2.setData(data2, merge: false)
     }
 
+    // Enregistre le dernier message dans "salons
     func majLastMessageSalons(salonId: String, lastMessage: String, userId: String, contactId: String) async throws {
         let data: [String:Any] = [
             Salons.CodingKeys.lastMessage.rawValue : lastMessage,

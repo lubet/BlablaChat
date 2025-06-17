@@ -20,8 +20,7 @@ final class BubblesViewModel: ObservableObject {
     
     private var didAppear: Bool = false // Listener sur les messages
 
-    private var allMessages: [Messages] = []
-    @Published var allMessagesSw: [Messages] = []
+    @Published var allMessages: [Messages] = []
 
     @Published private(set) var selectedImage: UIImage? = nil // UI image
     @Published var imageSelection: PhotosPickerItem? = nil  { // PhotosPicker image
@@ -73,8 +72,8 @@ final class BubblesViewModel: ObservableObject {
             salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: userId)
             allMessages = try await MessagesManager.shared.getMessages(salonId: salonId)
             
-            // Switcher à oui si le current user est égal à l'envoyeur (fromId du message)
-            allMessagesSw = try await MessagesManager.shared.messagesSw(currentUser: userId, messages: allMessages)
+            // Maj du send true/false
+            try await MessagesManager.shared.messagesSw(currentUser: userId, allMessages: allMessages)
             
         } else {
             allMessages = []
@@ -134,7 +133,7 @@ struct BubblesView: View {
         ScrollView {
             ScrollViewReader { proxy in
                 VStack(spacing: 20) {
-                    ForEach(vm.allMessagesSw) { message in
+                    ForEach(vm.allMessages) { message in
                         if message.texte == "Photo" {
                             MessageCellPhoto(message: message)
                         } else {

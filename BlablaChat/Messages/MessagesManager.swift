@@ -23,12 +23,20 @@ final class MessagesManager {
 
     // Salons ----------------------------------------------------
     private let salonsCollection = dbFS.collection("Salons")
+    
+    // Un salon
     private func salonDocument(salonId: String) -> DocumentReference {
         salonsCollection.document(salonId)
     }
     
-    // Salons/Messages
+    // Messages ---------------------------------------------------
     private let messagesCollection = dbFS.collection("messages")
+    
+    // Un message
+    private func messageDocument(id: String) -> DocumentReference {
+        return messagesCollection.document(id)
+    }
+
     // Tous les messages d'un salon
     private func messagesCollection(salonId: String) -> CollectionReference {
         return salonDocument(salonId: salonId).collection("messages")
@@ -118,13 +126,19 @@ final class MessagesManager {
         return messages
     }
     
-    // 2) Switcher à oui si le current user est égal à l'envoyeur (fromId du message).
-    func messagesSw(currentUser: String, messages: [Messages]) async throws -> [Messages] {
+    // 2) Maj du send true/false
+    func messagesSw(currentUser: String, allMessages: [Messages]) async throws {
         
-        var messagesSw = [Messages]()
+        var data: [String:Any] = [:]
         
-        
-        return messagesSw
+        for unMessage in allMessages {
+            if unMessage.fromId == currentUser {
+                data = [ Messages.CodingKeys.send.rawValue : true ]
+            } else {
+                data = [ Messages.CodingKeys.send.rawValue : false ]
+            }
+            try await messageDocument(id: unMessage.id).updateData(data)
+        }
     }
 
     // Retourn le salon_id si il est commun à user et à contact sinon ""

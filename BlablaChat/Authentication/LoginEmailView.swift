@@ -137,16 +137,16 @@ struct LoginEmailView: View {
                     .frame(width: 300, height: 50)
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
-                    .background(Color.theme.backtext)
-                    .foregroundColor(Color.theme.forground)
+                    .background(Color.theme.inputbackground)
+                    .foregroundColor(Color.theme.inputforeground)
                     .cornerRadius(10)
                 
                 SecureField("Mot de passe", text: $viewModel.password)
                     .padding(15)
                     .frame(width: 300, height: 50)
                     .textInputAutocapitalization(.never)
-                    .background(Color.theme.backtext)
-                    .foregroundColor(Color.theme.forground)
+                    .background(Color.theme.inputbackground)
+                    .foregroundColor(Color.theme.inputforeground)
                     .cornerRadius(10)
                     .disableAutocorrection(true)
                 
@@ -176,10 +176,10 @@ struct LoginEmailView: View {
                 } label: {
                     Text("Entrée")
                         .font(.headline)
-                        .foregroundColor(.white)
                         .frame(height: 55)
                         .frame(maxWidth: .infinity)
-                        .background(Color.blue)
+                        .background(Color.theme.buttoncolor)
+                        .foregroundColor(Color.theme.buttontext)
                         .cornerRadius(10)
                 } // Fin bouton signIn
             }
@@ -192,8 +192,9 @@ struct LoginEmailView: View {
     }
 }
 
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LoginEmailView(showSignInView: .constant(false))
-//    }
-//}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginEmailView(showSignInView: .constant(false))
+            .preferredColorScheme(.dark)
+    }
+}

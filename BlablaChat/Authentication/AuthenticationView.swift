@@ -130,7 +130,8 @@ struct AuthenticationView: View {
                         .foregroundColor(.white)
                         .frame(height: 45)
                         .frame(maxWidth: .infinity)
-                        .background(Color.blue)
+                        .background(Color.theme.buttoncolor)
+                        .foregroundStyle(Color.theme.buttontext)
                         .cornerRadius(10)
                         .padding(.bottom, 10)
                 }

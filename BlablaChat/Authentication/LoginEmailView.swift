@@ -122,11 +122,11 @@ struct LoginEmailView: View {
                                 .resizable()
                                 .frame(width: 120, height: 120)
                                 .clipShape(Circle())
-                                .overlay(Circle().stroke(Color.black, lineWidth: 1))
+                                // .overlay(Circle().stroke(Color.black, lineWidth: 1))
                         }
                     }
                     .overlay(RoundedRectangle(cornerRadius: 64)
-                        .stroke(Color.black,lineWidth: 2))
+                        .stroke(Color.theme.circlecolor,lineWidth: 2))
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.bottom,40)

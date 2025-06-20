@@ -18,4 +18,5 @@ struct ColorTheme {
     let backtext = Color("BackTextIinputColor") // TextField
     let forground = Color("ForgroundTextColor") // TextField
     let background = Color("BackgroundColor")   // Fond
+    let circlecolor = Color("CircleColor") // Cercle autour d'une image
 }

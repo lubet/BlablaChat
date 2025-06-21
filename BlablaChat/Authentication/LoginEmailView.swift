@@ -103,8 +103,7 @@ struct LoginEmailView: View {
     
     var body: some View {
         ZStack {
-            Color.theme.background
-                .ignoresSafeArea()
+            Color.theme.background.ignoresSafeArea()
             VStack {
                 // Avatar
                 Button { // Avatar
@@ -194,7 +193,11 @@ struct LoginEmailView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginEmailView(showSignInView: .constant(false))
-            .preferredColorScheme(.dark)
+        Group {
+            LoginEmailView(showSignInView: .constant(false))
+                // .preferredColorScheme(.light)
+            //LoginEmailView(showSignInView: .constant(false))
+                // .preferredColorScheme(.dark)
+        }
     }
 }

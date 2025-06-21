@@ -27,14 +27,12 @@ final class SettingsViewModel: ObservableObject {
         httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: userId)
     }
     
-    // TODO
     func updateAvatar() async throws {
         guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
 
         if let newImageAvatar = newImageAvatar {
            let _ = try await UsersManager.shared.updateAvatar(userId: userId, mimage: newImageAvatar)
         }
-        // print("updateAvatar")
     }
     
     func loadAuthProviders() {
@@ -43,49 +41,9 @@ final class SettingsViewModel: ObservableObject {
         }
     }
     
-    //    func linkGoogleAccount() async throws {
-    //        let helper = SignInGoogleHelper()
-    //        let tokens = try await helper.signIn()
-    //        let authDataResult = try await AuthManager.shared.linkGoogle(tokens: tokens)
-    //        self.AuthUser = authDataResult
-    //    }
-    //
-    //    func linkAppleAccount() async throws {
-    //        let helper = SignInAppleHelper()
-    //        let tokens = try await helper.startSignInWithAppleFlow()
-    //        let authDataResult = try await AuthManager.shared.linkApple(tokens: tokens)
-    //        self.authUser = authDataResult
-    //    }
-    //
-    //    // TODO ecran de login
-    //    func linkEmailAccount() async throws {
-    //        let email = "hello@test.com"
-    //        let password = "azerty"
-    //        let authDataResult = try await AuthManager.shared.linkEmail(email: email, password: password)
-    //        self.authUser = authDataResult
-    //    }
-    
     func signOut() {
         try? AuthManager.shared.signOut()
     }
-    
-    // TODO
-//    func resetPassword() async throws {
-//        guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
-//
-//        
-//        
-//        guard let email = user.email else {
-//            throw URLError(.fileDoesNotExist)
-//        }
-//        
-//        try await UsersManager.shared.resetPassword(email: email)
-//    }
-//    
-//    func updateEmail() async throws {
-//        let newEmail = "TODO une view de saisir du nouveau email"
-//        try await UsersManager.shared.updateEmail(email: newEmail)
-//    }
 }
 
 // -----------------------
@@ -100,13 +58,7 @@ struct SettingsView: View {
     
     var body: some View {
         List {
-            Color.theme.background
-            // Je m'autorise le logout
-            // if viewModel.isMaster {
-                //masterSection
-            //}
-
-            Section {
+            // Color.theme.background.ignoresSafeArea()
                 Button { // Avatar
                     showImagePicker.toggle()
                 } label: {
@@ -115,30 +67,21 @@ struct SettingsView: View {
                             Image(uiImage: image)
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: 100, height: 100)
+                                .frame(width: 100, height: 100, alignment: .center)
                                 .clipShape(Circle())
                         } else {
                             WebImage(url: URL(string: viewModel.httpAvatar))
                                 .resizable()
-                                .frame(width: 120, height: 120)
+                                .frame(width: 120, height: 120, alignment: .center)
                                 .clipShape(Circle())
-                                .overlay(Circle().stroke(Color.black, lineWidth: 1))
                         }
                     }
                     .overlay(RoundedRectangle(cornerRadius: 64)
                         .stroke(Color.black,lineWidth: 2))
                 }
-                .frame(maxWidth: .infinity, alignment: .center)
-            } header: {
-                Text("Avatar")
-                    .font(.headline)
-            }
-            
-            // Le changement de mot de passe ne concerne que ceux qui se sont logés avec email et password
-//            if viewModel.authProviders.contains(.email) {
-//                // emailSection TODO pour plus tard
-//            }
-            
+               .frame(maxWidth: .infinity, alignment: .center)
+               .background(Color.theme.inputbackground)
+                
         }
         
         // Image
@@ -157,7 +100,7 @@ struct SettingsView: View {
                 try await viewModel.updateAvatar()
             }
         }
-        .navigationBarTitle("Paramètres")
+        .navigationTitle("Paramètres")
     }
 }
 
@@ -166,55 +109,3 @@ struct SettingsView_Previews: PreviewProvider {
         SettingsView(showSignInView: .constant(false))
     }
 }
-
-// TODO désactiver
-//extension SettingsView {
-//    private var emailSection: some View {
-//        Section {
-//            Button("Reset du mot de passe") { // TODO
-//                Task {
-//                    do {
-//                        try await viewModel.resetPassword()
-//                        print("Reset password")
-//                    } catch {
-//                        print(error)
-//                    }
-//                }
-//            }
-//            .disabled(true)
-//            .padding(.horizontal,40)
-//            
-//            Button("Mise à jour de l'email") { // TODO
-//                Task {
-//                    do {
-//                        try await viewModel.updateEmail()
-//                        print("Reset password")
-//                    } catch {
-//                        print(error)
-//                    }
-//                }
-//            }
-//            .disabled(true)
-//            .padding(.horizontal,40)
-//        } header: {
-//            Text("Email et mot de passe")
-//        }
-//    }
-//}
-
-//extension SettingsView {
-//    private var masterSection: some View {
-//        Section {
-//            Button {
-//                viewModel.signOut()
-//                showSignInView = true
-//            } label: {
-//                Text("Log out")
-//            }
-//            .padding(.horizontal,40)
-//        } header: {
-//            Text("Logout")
-//        }
-//    }
-
-

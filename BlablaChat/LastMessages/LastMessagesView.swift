@@ -127,6 +127,7 @@ struct LastMessagesView: View {
                             }
                         }
                     }
+                    .background(Color.theme.buttoncolor)
 //                    .onAppear {
 //                        Task {
 //                            vm.getUserToolBar() // AvatarLink et email du user
@@ -186,9 +187,9 @@ extension LastMessagesView {
                     .font(.system(size: 16, weight: .bold))
                 Spacer()
             }
-            .foregroundColor(.white)
+            .foregroundColor(Color.theme.buttontext)
             .padding(.vertical)
-                .background(Color.blue)
+            .background(Color.theme.buttoncolor)
                 .cornerRadius(32)
                 .padding(.horizontal)
                 //.shadow(radius: 15)
@@ -210,8 +211,11 @@ extension LastMessagesView {
 
 struct LastMessages_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationStack {
-            LastMessagesView(showSignInView: .constant(false))
+            Group {
+                LastMessagesView(showSignInView: .constant(false))
+                    .preferredColorScheme(.light)
+                LastMessagesView(showSignInView: .constant(false))
+                    .preferredColorScheme(.dark)
         }
     }
 }

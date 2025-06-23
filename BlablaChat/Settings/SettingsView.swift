@@ -17,21 +17,20 @@ final class SettingsViewModel: ObservableObject {
     
     @Published var httpAvatar: String = ""
     @Published var newImageAvatar: UIImage? = nil
-    @Published var isMaster: Bool = false
     
     @Published var authProviders: [AuthProviderOption] = []
     
     func loadAvatar() async throws {
-        guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
+        guard let currentUserId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
 
-        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: userId)
+        httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: currentUserId)
     }
     
     func updateAvatar() async throws {
-        guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
+        guard let currentUserId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
 
         if let newImageAvatar = newImageAvatar {
-           let _ = try await UsersManager.shared.updateAvatar(userId: userId, mimage: newImageAvatar)
+           let _ = try await UsersManager.shared.updateAvatar(userId: currentUserId, mimage: newImageAvatar)
         }
     }
     
@@ -57,33 +56,35 @@ struct SettingsView: View {
     @State var image: UIImage?
     
     var body: some View {
-        List {
-            // Color.theme.background.ignoresSafeArea()
-                Button { // Avatar
-                    showImagePicker.toggle()
-                } label: {
-                    VStack {
-                        if let image = image {
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 100, height: 100, alignment: .center)
-                                .clipShape(Circle())
-                        } else {
-                            WebImage(url: URL(string: viewModel.httpAvatar))
-                                .resizable()
-                                .frame(width: 120, height: 120, alignment: .center)
-                                .clipShape(Circle())
-                        }
+             // Color.theme.background.ignoresSafeArea()
+        VStack {
+            Button { // Avatar
+                showImagePicker.toggle()
+            } label: {
+                VStack {
+                    if let image = image {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 200, height: 200, alignment: .center)
+                            .clipShape(Circle())
+                            //.background(Color.red)
+                    } else {
+                        WebImage(url: URL(string: viewModel.httpAvatar))
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 200, height: 200, alignment: .center)
+                            .clipShape(Circle())
+                            //.background(Color.red)
                     }
-                    .overlay(RoundedRectangle(cornerRadius: 64)
-                        .stroke(Color.black,lineWidth: 2))
                 }
-               .frame(maxWidth: .infinity, alignment: .center)
-               .background(Color.theme.inputbackground)
-                
+                .overlay(RoundedRectangle(cornerRadius: 100)
+                    .stroke(Color.black,lineWidth: 2))
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            //.background(Color.theme.inputbackground)
         }
-        
+
         // Image
         .fullScreenCover(isPresented: $showImagePicker, onDismiss: nil) {
             ImagePicker(image: $image) // Utilities/ImagePicker
@@ -100,7 +101,6 @@ struct SettingsView: View {
                 try await viewModel.updateAvatar()
             }
         }
-        .navigationTitle("Paramètres")
     }
 }
 

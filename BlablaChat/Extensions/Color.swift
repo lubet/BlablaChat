@@ -23,4 +23,8 @@ struct ColorTheme {
     let buttontext = Color("ButtonText")   // Texte d'aide dans le bouton
     let inputbackground = Color("InputBackground") // Zone de saisie
     let inputforeground = Color("InputForeground")
+    
+    let bubblebacksend = Color("BubbleBackSend")
+    let bubblebackreceived = Color("BubbleBackReceived")
+    let textforeground = Color("TextForeground")
 }

@@ -28,7 +28,7 @@ class LastMessagesViewModel: ObservableObject {
     // Liste des derniers messages d'un user par salons
     func getLastMessages() async {
         
-        print("**** LastMessagesView-getLastMessages()")
+        // print("**** LastMessagesView-getLastMessages()")
 
         Task {
             

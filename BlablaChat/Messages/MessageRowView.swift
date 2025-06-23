@@ -13,15 +13,15 @@ struct MessageRowView: View {
     
     let message: Messages
     @State private var showTime: Bool = false
-    
+
     var body: some View {
         VStack(alignment: message.send ? .leading : .trailing) {
             HStack {
                 Text(message.texte)
                     .padding()
-                    .background(message.send ? Color("Gris") : Color("BleuMauve"))
+                    .background(message.send ? Color.theme.bubblebacksend : Color.theme.bubblebackreceived)
                     .cornerRadius(30)
-                    .foregroundColor(Color.black)
+                    .foregroundColor(Color.theme.textforeground)
             }
             .frame(maxWidth: 300, alignment: message.send ? .leading : .trailing)
             .onTapGesture {
@@ -31,7 +31,7 @@ struct MessageRowView: View {
             if showTime {
                 Text("\(message.dateMessage)")
                     .font(.caption2)
-                    .foregroundColor(.black)
+                    .foregroundColor(Color.theme.textforeground)
                     .padding(message.send ? .leading : .trailing, 25)
             }
         }

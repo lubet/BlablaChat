@@ -167,18 +167,19 @@ extension BubblesView {
             // Selection de la photo
             PhotosPicker(selection: $vm.imageSelection, matching: .images) {
                 Image(systemName: "photo")
-                    //.foregroundColor(Color.black)
+                    .foregroundColor(Color.theme.textforeground)
             }
             
             // Saisie du message
-            TextField("Message", text: $texteMessage, axis: .vertical)
+            TextField("Message", text: $texteMessage, prompt: Text("Taper ici votre message").foregroundColor(.red), axis: .vertical)
+                .foregroundColor(Color.theme.textforeground)
                 .disableAutocorrection(true)
-            
+
             // Envoi du message
             Image(systemName: "paperplane.circle")
                 .padding()
                 .offset(x:10)
-                .foregroundColor(Color.blue)
+                .foregroundColor(Color.theme.textforeground)
                 .opacity(texteMessage.isEmpty ? 0.0 : 1.0)
                 .onTapGesture {
                     sendButton()

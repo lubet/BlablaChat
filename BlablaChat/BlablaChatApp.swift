@@ -82,7 +82,7 @@ extension AppDelegate: MessagingDelegate {
 
       let deviceToken:[String: String] = ["token": fcmToken ?? ""]
         FCMtoken.FCMtoken = deviceToken["token"] ?? "print AppDelegate FCMtoken = nil"
-        print("Device token: ", deviceToken)
+        // print("Device token: ", deviceToken)
     }
 }
 

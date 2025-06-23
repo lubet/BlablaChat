@@ -171,7 +171,7 @@ extension BubblesView {
             }
             
             // Saisie du message
-            TextField("Message", text: $texteMessage, prompt: Text("Taper ici votre message").foregroundColor(.red), axis: .vertical)
+            TextField("Message", text: $texteMessage, prompt: Text("Taper ici votre message").foregroundColor(Color.theme.textforeground), axis: .vertical)
                 .foregroundColor(Color.theme.textforeground)
                 .disableAutocorrection(true)
 

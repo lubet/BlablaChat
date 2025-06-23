@@ -62,19 +62,15 @@ final class BubblesViewModel: ObservableObject {
     func allUserSalonMessages() async throws {
 
         // userId
-        guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
+        guard let currentUserId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
         
         // contactId
         let contactId =  try await UsersManager.shared.searchContact(email: emailContact) // dans la base Users
 
         // Si le contactId existe
         if contactId != "" {
-            salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: userId)
-            allMessages = try await MessagesManager.shared.getMessages(salonId: salonId)
-            
-            // Maj du send true/false
-            try await MessagesManager.shared.messagesSw(currentUser: userId, allMessages: allMessages)
-            
+            salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: currentUserId)
+            allMessages = try await MessagesManager.shared.getMessages(salonId: salonId, currentUserId: currentUserId)
         } else {
             allMessages = []
         }

@@ -110,8 +110,8 @@ final class MessagesManager {
         }
     }
 
-    // 1) Charger les messages du salon
-    func getMessages(salonId: String) async throws -> [Messages] {
+    // Charger les messages du salon
+    func getMessages(salonId: String, currentUserId: String) async throws -> [Messages] {
         let snapshot = try await messagesCollection(salonId: salonId)
             .whereField("salon_id", isEqualTo: salonId)
             .getDocuments()
@@ -119,26 +119,16 @@ final class MessagesManager {
         var messages = [Messages]()
 
         for doc in snapshot.documents {
-            let msg = try doc.data(as: Messages.self)
+            var msg = try doc.data(as: Messages.self)
+            if currentUserId == msg.fromId {
+                msg.send = true
+            } else {
+                msg.send = false
+            }
             messages.append(msg)
 
         }
         return messages
-    }
-    
-    // 2) Maj du send true/false
-    func messagesSw(currentUser: String, allMessages: [Messages]) async throws {
-        
-        var data: [String:Any] = [:]
-        
-        for unMessage in allMessages {
-            if unMessage.fromId == currentUser {
-                data = [ Messages.CodingKeys.send.rawValue : true ]
-            } else {
-                data = [ Messages.CodingKeys.send.rawValue : false ]
-            }
-            try await messageDocument(id: unMessage.id).updateData(data)
-        }
     }
 
     // Retourn le salon_id si il est commun à user et à contact sinon ""

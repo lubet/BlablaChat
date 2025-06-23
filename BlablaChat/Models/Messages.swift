@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 struct Messages: Identifiable, Codable {
     let id: String
     let salonId: String
-    let send: Bool
+    var send: Bool
     let fromId: String
     let texte: String
     let dateMessage: Timestamp

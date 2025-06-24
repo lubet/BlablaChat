@@ -15,9 +15,10 @@ struct Messages: Identifiable, Codable {
     var send: Bool
     let fromId: String
     let texte: String
-    let dateMessage: Timestamp
+    let dateMessage: Timestamp // date Firebase
     let urlPhoto: String
     let toId: String
+    let dateSort: Date // date Swift pour le tri
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -28,5 +29,6 @@ struct Messages: Identifiable, Codable {
         case dateMessage = "date_message"
         case urlPhoto = "url_photo"
         case toId = "to_id"
+        case dateSort = "date_sort"
     }
 }

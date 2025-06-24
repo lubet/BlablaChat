@@ -86,9 +86,10 @@ final class MessagesManager {
             "send" : true,
             "from_id" : fromId,
             "texte" : texte,
-            "date_message": Timestamp(),
+            "date_message": Timestamp(), // Date Firebase
             "url_photo" : urlPhoto,
-            "to_id" : toId
+            "to_id" : toId,
+            "date_sort": Date() // Date Swift utilisé pour le tri dans BubblesView
         ]
         do {
             try await document.setData(data, merge: false)

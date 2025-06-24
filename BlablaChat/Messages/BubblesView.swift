@@ -21,6 +21,8 @@ final class BubblesViewModel: ObservableObject {
     private var didAppear: Bool = false // Listener sur les messages
 
     @Published var allMessages: [Messages] = []
+    @Published var sortedMessages: [Messages] = []
+
 
     @Published private(set) var selectedImage: UIImage? = nil // UI image
     @Published var imageSelection: PhotosPickerItem? = nil  { // PhotosPicker image
@@ -29,6 +31,14 @@ final class BubblesViewModel: ObservableObject {
         }
     }
     
+    // Tri des messages
+    func sortAllMessages() {
+        sortedMessages = allMessages.sorted {( message1, message2 ) -> Bool in
+            return message1.dateSort > message2.dateSort
+        }
+    }
+    
+    // Sauvegarde de l'image
     private func setImage(from selection: PhotosPickerItem?) {
         guard let selection else { return }
         
@@ -72,6 +82,9 @@ final class BubblesViewModel: ObservableObject {
             salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: currentUserId)
             // Message du salon et maj du send
             allMessages = try await MessagesManager.shared.getMessages(salonId: salonId, currentUserId: currentUserId)
+            
+            sortAllMessages()
+            
         } else {
             allMessages = []
         }
@@ -101,6 +114,7 @@ final class BubblesViewModel: ObservableObject {
         if !didAppear {
             MessagesManager.shared.addlistenerMessages(salonId: salonId) { [weak self] messages in
                 self?.allMessages = messages
+                self?.sortAllMessages()
             }
             didAppear = true
         }
@@ -130,7 +144,7 @@ struct BubblesView: View {
         ScrollView {
             ScrollViewReader { proxy in
                 VStack(spacing: 20) {
-                    ForEach(vm.allMessages) { message in
+                    ForEach(vm.sortedMessages) { message in
                         if message.texte == "Photo" {
                             MessageCellPhoto(message: message)
                         } else {

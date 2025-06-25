@@ -121,11 +121,11 @@ final class MessagesManager {
 
         for doc in snapshot.documents {
             var msg = try doc.data(as: Messages.self)
-            if currentUserId == msg.fromId {
-                msg.send = true
-            } else {
-                msg.send = false
-            }
+//            if currentUserId == msg.fromId {
+//                msg.send = true
+//            } else {
+//                msg.send = false
+//            }
             messages.append(msg)
 
         }

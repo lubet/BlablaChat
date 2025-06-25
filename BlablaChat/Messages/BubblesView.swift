@@ -80,7 +80,8 @@ final class BubblesViewModel: ObservableObject {
         // Si le contactId existe
         if contactId != "" {
             salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: currentUserId)
-            // Message du salon et maj du send
+            
+            // Charger les messages du salon
             allMessages = try await MessagesManager.shared.getMessages(salonId: salonId, currentUserId: currentUserId)
             
             sortAllMessages()

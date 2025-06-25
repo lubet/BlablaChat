@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 struct Messages: Identifiable, Codable {
     let id: String
     let salonId: String
-    var send: Bool
+    var send: Bool // Utilisé uniquement pour l'affichage dans BubblesView
     let fromId: String
     let texte: String
     let dateMessage: Timestamp // date Firebase

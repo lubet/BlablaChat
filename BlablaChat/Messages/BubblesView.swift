@@ -133,7 +133,6 @@ final class BubblesViewModel: ObservableObject {
         if !didAppear {
             MessagesManager.shared.addlistenerMessages(salonId: salonId) { [weak self] messages in
                 self?.allMessages = messages
-                self?.sortAllMessages()
                 self?.listenerMessages()
             }
             didAppear = true

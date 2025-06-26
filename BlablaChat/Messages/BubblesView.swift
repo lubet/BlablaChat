@@ -22,6 +22,7 @@ final class BubblesViewModel: ObservableObject {
 
     @Published var allMessages: [Messages] = []
     @Published var sortedMessages: [Messages] = []
+    @Published var tempMessages: [Messages] = []
 
 
     @Published private(set) var selectedImage: UIImage? = nil // UI image
@@ -37,6 +38,23 @@ final class BubblesViewModel: ObservableObject {
             return message1.dateSort > message2.dateSort
         }
     }
+    
+    // Maj Send pour le listener
+    func listenerMessages() {
+        tempMessages = []
+        
+        for var message in allMessages {
+            if message.fromId == currentUserId {
+                message.send = true
+            } else {
+                message.send = false
+            }
+            tempMessages.append(message)
+        }
+        
+        sortedMessages = tempMessages.sorted {( message1, message2 ) -> Bool in
+            return message1.dateSort > message2.dateSort}
+     }
     
     // Sauvegarde de l'image
     private func setImage(from selection: PhotosPickerItem?) {
@@ -81,7 +99,7 @@ final class BubblesViewModel: ObservableObject {
         if contactId != "" {
             salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: currentUserId)
             
-            // Charger les messages du salon
+            // Charger les messages du salon et maj du Send
             allMessages = try await MessagesManager.shared.getMessages(salonId: salonId, currentUserId: currentUserId)
             
             sortAllMessages()
@@ -116,6 +134,7 @@ final class BubblesViewModel: ObservableObject {
             MessagesManager.shared.addlistenerMessages(salonId: salonId) { [weak self] messages in
                 self?.allMessages = messages
                 self?.sortAllMessages()
+                self?.listenerMessages()
             }
             didAppear = true
         }

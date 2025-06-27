@@ -74,6 +74,15 @@ final class BubblesViewModel: ObservableObject {
                     // Recherche du contact_id dans Salons
                     guard let contactID = try await MessagesManager.shared.getSalonContactId(salonId: salonId) else { print("newMessages-Pas de contactId"); return }
                     
+                    // Listener sur les messages
+                    if !didAppear {
+                        MessagesManager.shared.addlistenerMessages(salonId: salonId) { [weak self] messages in
+                            self?.allMessages = messages
+                            self?.listenerMessages()
+                        }
+                        didAppear = true
+                    }
+                    
                     // Création du message avec le n° de salon et le fromId égal au user
                     try await MessagesManager.shared.newMessage(salonId: salonId, fromId: userId, texte: "Photo", urlPhoto: lurl.absoluteString, toId: contactID)
                     

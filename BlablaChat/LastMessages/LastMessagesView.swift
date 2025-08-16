@@ -164,10 +164,10 @@ struct LastMessagesView: View {
 
                 
                     // Pour les tests:
-                    Button("Logout") {
-                        vm.logOut()
-                        showSignInView = true
-                    }
+//                    Button("Logout") {
+//                        vm.logOut()
+//                        showSignInView = true
+//                    }
                 }
             }
         }

@@ -62,12 +62,12 @@ final class AuthenticationViewModel: ObservableObject {
             try await UsersManager.shared.createDbUser(user: user) // sans l'image
             let image = UIImage.init(systemName: "person.circle.fill")!
             try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
-            self.currentUserId = user.userId // userId global à l'appli
+            self.currentUserId = user.userId // global à l'appli
         } else {
             // Existe déjà - maj de l'id du user + save du userId
             guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
-            self.currentUserId = userId // userId global à l'appli
+            self.currentUserId = userId // global à l'appli
         }
         
         // Le userId de DBUser est l'identifiant unique pour toute l'appli
@@ -122,7 +122,7 @@ struct AuthenticationView: View {
                         // Traitement après le login Apple
                         Task {
                             try await vm.appleAfterSignUp()
-                            showSignInView = false
+                            showSignInView = false // -> retour à la RootView pour entrée dans l'appli
                         }
                     }
                 }

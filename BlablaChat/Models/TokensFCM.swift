@@ -4,9 +4,11 @@
 //
 //  Created by Lubet-Moncla Xavier on 13/03/2025.
 //
+// Jeton Firebase FCM identifiant un mobile pour l'envoi des notifications
 
 import Foundation
 
+// Globale
 struct FCMtoken {
     static var FCMtoken: String = ""
 }

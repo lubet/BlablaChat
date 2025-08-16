@@ -47,27 +47,33 @@ final class AuthenticationViewModel: ObservableObject {
     // Traitement aprés le SignUp Apple
     func appleAfterSignUp() async throws {
         
-        // Récupérr l'email de l'auth existant
+        // Récupérer l'auth connecté
         guard let authUser = try? AuthManager.shared.getAuthenticatedUser() else { print("authUser nil; return "); return }
+        
+        // email de l'auth connecté
         guard let email = authUser.email else { print("appleAfterSignUp() email nil"); return }
         
+        // Est-ce que l'auth connecté existe dans la base User ?
         let dbuser = try await UsersManager.shared.searchUser(email: email)
 
         if dbuser == nil {
-            let user = DBUser(auth: authUser) // uid, email, user_id, date
+            // Création du user à partir de l'auth que l'on complète
+            let user = DBUser(auth: authUser) // auth.uid, email, userId
             try await UsersManager.shared.createDbUser(user: user) // sans l'image
             let image = UIImage.init(systemName: "person.circle.fill")!
             try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
-            self.currentUserId = user.userId
+            self.currentUserId = user.userId // userId global à l'appli
         } else {
             // Existe déjà - maj de l'id du user + save du userId
             guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
-            self.currentUserId = userId
+            self.currentUserId = userId // userId global à l'appli
         }
         
+        // Le userId de DBUser est l'identifiant unique pour toute l'appli
         guard let currentUID = self.currentUserId else { print("SignUp-Pas de userId"); return }
         
+        // Recherche du token FCM, servira pour les notifications
         let tokenFCM = try await UsersManager.shared.searchTokenFCM(userId: currentUID)
         
         if tokenFCM == nil {

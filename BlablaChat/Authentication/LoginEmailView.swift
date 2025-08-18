@@ -85,7 +85,7 @@ final class LoginEmailViewModel: ObservableObject {
         // Je lis le user qui vient d'être créer sur le disque
         httpAvatar = dbuser.avatarLink ?? ""
         
-        print("---- Fin Sign In ---- currentUserId: \(String(describing: self.currentUserId))")
+        // print("---- Fin Sign In ---- currentUserId: \(String(describing: self.currentUserId))")
         
         return
     }

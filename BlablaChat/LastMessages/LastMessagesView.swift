@@ -51,12 +51,12 @@ class LastMessagesViewModel: ObservableObject {
                 // Infos du salon
                 guard let salon = try await LastMessagesManager.shared.getSalon(salonId: userSalonId) else {
                     print("**** getLastMessages() salon"); return }
-                print("salon \(userSalonId)")
+                // print("salon \(userSalonId)")
                 
                 let lastMessage = salon.lastMessage
                 
                 let contactId = salon.contactId
-                let userId = salon.userId
+                //let userId = salon.userId
                 
                 var email: String = ""
                 var avatarLink: String = ""
@@ -67,7 +67,7 @@ class LastMessagesViewModel: ObservableObject {
                         print("**** getLastMessages() userSalon"); return }
                     email = user.email ?? "inconnu"
                     avatarLink = user.avatarLink ?? "inconnu"
-                    print("email user: \(email)")
+                    // print("email user: \(email)")
 
                 } else {
                     // prendre le contactId

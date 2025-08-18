@@ -23,7 +23,7 @@ final class BubblesViewModel: ObservableObject {
     @Published var allMessages: [Messages] = []
     @Published var sortedMessages: [Messages] = []
     @Published var tempMessages: [Messages] = []
-
+    @Published var lastMessageId: String = ""
 
     @Published private(set) var selectedImage: UIImage? = nil // UI image
     @Published var imageSelection: PhotosPickerItem? = nil  { // PhotosPicker image
@@ -35,7 +35,10 @@ final class BubblesViewModel: ObservableObject {
     // Tri des messages
     func sortAllMessages() {
         sortedMessages = allMessages.sorted {( message1, message2 ) -> Bool in
-            return message1.dateSort > message2.dateSort
+            return message1.dateSort < message2.dateSort
+        }
+        if let id = sortedMessages.last?.id {
+            lastMessageId = id
         }
     }
     
@@ -179,6 +182,9 @@ struct BubblesView: View {
                             MessageRowView(message: message)
                         }
                     }
+                }
+                .onChange(of: vm.lastMessageId) {
+                    proxy.scrollTo(vm.lastMessageId, anchor: .bottom)
                 }
             }
         }

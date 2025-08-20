@@ -35,7 +35,7 @@ final class BubblesViewModel: ObservableObject {
     // Tri des messages
     func sortAllMessages() {
         sortedMessages = allMessages.sorted {( message1, message2 ) -> Bool in
-            return message1.dateSort < message2.dateSort
+            return message1.dateSort > message2.dateSort
         }
         if let id = sortedMessages.last?.id {
             lastMessageId = id
@@ -56,7 +56,7 @@ final class BubblesViewModel: ObservableObject {
         }
         
         sortedMessages = tempMessages.sorted {( message1, message2 ) -> Bool in
-            return message1.dateSort < message2.dateSort}
+            return message1.dateSort > message2.dateSort}
      }
     
     // Sauvegarde de l'image
@@ -173,18 +173,13 @@ struct BubblesView: View {
 
     var body: some View {
         ScrollView {
-            ScrollViewReader { proxy in
-                VStack(spacing: 20) {
-                    ForEach(vm.sortedMessages) { message in
-                        if message.texte == "Photo" {
-                            MessageCellPhoto(message: message)
-                        } else {
-                            MessageRowView(message: message)
-                        }
+            VStack(spacing: 20) {
+                ForEach(vm.sortedMessages) { message in
+                    if message.texte == "Photo" {
+                        MessageCellPhoto(message: message)
+                    } else {
+                        MessageRowView(message: message)
                     }
-                }
-                .onChange(of: vm.lastMessageId) {
-                    proxy.scrollTo(vm.lastMessageId, anchor: .bottom)
                 }
             }
         }

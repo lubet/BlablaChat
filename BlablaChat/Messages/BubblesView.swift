@@ -56,7 +56,7 @@ final class BubblesViewModel: ObservableObject {
         }
         
         sortedMessages = tempMessages.sorted {( message1, message2 ) -> Bool in
-            return message1.dateSort > message2.dateSort}
+            return message1.dateSort < message2.dateSort}
      }
     
     // Sauvegarde de l'image

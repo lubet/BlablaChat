@@ -111,8 +111,6 @@ struct LastMessagesView: View {
     
     @State var showBubblesView = false // -> ChatView avec call back ->
     
- 
-    
     var body: some View {
         ZStack {
             Color.theme.background.edgesIgnoringSafeArea(.all)

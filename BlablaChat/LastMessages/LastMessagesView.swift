@@ -105,11 +105,11 @@ struct LastMessagesView: View {
     
     @Binding var showSignInView: Bool
     
-    @State var showUsersView = false // fullSreenCover UsersView (contacts)
+    @State var showContactsView = false // fullSreenCover UsersView (contacts)
     
     @State var emailPassed: String = "" // email callback de UsersView
     
-    @State var showChatView = false // -> ChatView avec call back ->
+    @State var showBubblesView = false // -> ChatView avec call back ->
     
  
     
@@ -128,11 +128,7 @@ struct LastMessagesView: View {
                         }
                     }
                     .background(Color.theme.buttoncolor)
-//                    .onAppear {
-//                        Task {
-//                            vm.getUserToolBar() // AvatarLink et email du user
-//                        }
-//                    }
+
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
                             SDWebImageLoader(url: vm.userAvatarLink, size: 30)
@@ -158,16 +154,9 @@ struct LastMessagesView: View {
                     }
                 
                     // -> Bubbles en retour des contacts
-                    .navigationDestination(isPresented: $showChatView) {
+                    .navigationDestination(isPresented: $showBubblesView) {
                         BubblesView(emailContact: emailPassed)
                     }
-
-                
-                    // Pour les tests:
-//                    Button("Logout") {
-//                        vm.logOut()
-//                        showSignInView = true
-//                    }
                 }
             }
         }
@@ -179,42 +168,34 @@ extension LastMessagesView {
     
     private var btnNewMessage: some View {
         Button {
-            showUsersView.toggle()
+            showContactsView.toggle()
         } label: {
-            HStack {
-                Spacer()
-                Text("Nouveau destinataire")
-                    .font(.system(size: 16, weight: .bold))
-                Spacer()
-            }
-            .foregroundColor(Color.theme.buttontext)
-            .padding(.vertical)
-            .background(Color.theme.buttoncolor)
-                .cornerRadius(32)
-                .padding(.horizontal)
-                //.shadow(radius: 15)
+            Text("Nouveau destinataire".uppercased())
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color.theme.buttontext)
+                    .padding()
+                    .padding(.horizontal, 40)
+                    .background(Color.theme.buttoncolor)
+                    .cornerRadius(20)
         }
         
         // -> Contacts
-        .fullScreenCover(isPresented: $showUsersView) {
+        .fullScreenCover(isPresented: $showContactsView) {
             ContactsView(didSelectedNewUser: { emailSelected in // Liste des contacts pour un nouveau messages
                 self.emailPassed = emailSelected
-                self.showChatView.toggle()
+                self.showBubblesView.toggle() // ayant selectionné un contact dans ContactView je reviens dans LastMessagesView et j'affiche BubblesView pour saisie d'un message.
             })
         }
     }
 }
 
-
-
-
-
 struct LastMessages_Previews: PreviewProvider {
     static var previews: some View {
             Group {
-                LastMessagesView(showSignInView: .constant(false))
+                LastMessagesView(showSignInView: .constant(false),emailPassed: "toto@toto.com")
                     .preferredColorScheme(.light)
-                LastMessagesView(showSignInView: .constant(false))
+                LastMessagesView(showSignInView: .constant(false), emailPassed: "toto@toto.com")
                     .preferredColorScheme(.dark)
         }
     }

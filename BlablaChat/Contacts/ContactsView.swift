@@ -83,8 +83,7 @@ struct ContactsView: View {
                     ForEach(vm.filteredContacts, id: \.self) { oneContact in
                         Button {
                             presentationMode.wrappedValue.dismiss() // Fermeture de la vue
-                            // -> LastMessagesView -> BubblesView
-                            didSelectedNewUser(oneContact.email)
+                            didSelectedNewUser(oneContact.email) // retour à LastMessagesView pour affichage de BubllesView
                         } label: {
                             ContactRowView(oneContact: oneContact)
                         }

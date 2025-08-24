@@ -115,7 +115,7 @@ struct LastMessagesView: View {
     
     var body: some View {
         ZStack {
-            Color.theme.background.ignoresSafeArea()
+            Color.theme.background.edgesIgnoringSafeArea(.all)
             
             NavigationStack {
                     List {
@@ -129,21 +129,7 @@ struct LastMessagesView: View {
                     }
                     .background(Color.theme.buttoncolor)
 
-                    .toolbar {
-                        ToolbarItem(placement: .topBarLeading) {
-                            SDWebImageLoader(url: vm.userAvatarLink, size: 30)
-                        }
-                        ToolbarItem(placement: .topBarLeading) {
-                            Text("\(vm.userEmail)")
-                        }
-                        ToolbarItem(placement: .topBarTrailing) {
-                            NavigationLink {
-                                SettingsView(showSignInView: $showSignInView)
-                            } label: {
-                                Image(systemName: "gear")
-                            }
-                        }
-                    }
+                    .toolbar {toolbarContent}
 
                     btnNewMessage // -> ContactsView
 
@@ -160,10 +146,39 @@ struct LastMessagesView: View {
                 }
             }
         }
+    
+        // Toolbar ------------------------------------------------
+        @ToolbarContentBuilder
+        private var toolbarContent: some ToolbarContent {
+            
+            ToolbarItem(placement: .topBarLeading) {
+                SDWebImageLoader(url: vm.userAvatarLink, size: 30)
+            }
+            ToolbarItem(placement: .topBarLeading) {
+                Text("\(vm.userEmail)")
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    SettingsView(showSignInView: $showSignInView)
+                } label: {
+                    Image(systemName: "person.3.sequence.fill")
+                        .foregroundStyle(.primary)
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    SettingsView(showSignInView: $showSignInView)
+                } label: {
+                    Image(systemName: "gear")
+                }
+            }
+
+        }
+    
     }
 
 
-// Bouton Nouveau message ------------------
+// Bouton Nouveau message ------------------------------------
 extension LastMessagesView {
     
     private var btnNewMessage: some View {

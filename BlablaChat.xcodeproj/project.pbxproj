@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -113,6 +113,10 @@
 		C0FCE7962D2FE3400097FFA2 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		C0F1931D2E5CD2680097F438 /* Groups */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Groups; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		C047E9BD2B45625C00C6D48F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -210,6 +214,7 @@
 				C070D6402C53809E006170E3 /* Extensions */,
 				C01077312D1424A1004960F2 /* Models */,
 				C0695AEF2C49151400CEAA17 /* Authentication */,
+				C0F1931D2E5CD2680097F438 /* Groups */,
 				C0EB0C232D3326C6001DB090 /* Contacts */,
 				C03A722B2D1DB1AA00961705 /* Users */,
 				C0DD71532D26B09E00E232E1 /* Messages */,
@@ -328,6 +333,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C0F1931D2E5CD2680097F438 /* Groups */,
 			);
 			name = BlablaChat;
 			packageProductDependencies = (

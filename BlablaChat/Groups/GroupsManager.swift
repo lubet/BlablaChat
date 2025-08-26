@@ -18,10 +18,10 @@ final class GroupsManager {
         
         var contacts: [Contact] = []
         
-        contacts.append(Contact(nom: "Leroy", prenom: "Marcel", email: "mleroy@test.com"))
-        contacts.append(Contact(nom: "Gured", prenom: "Robert", email: "rgured@test.com"))
-        contacts.append(Contact(nom: "Dujou", prenom: "Roger", email: "rdujou@test.com"))
-        contacts.append(Contact(nom: "Lafon", prenom: "Albert", email: "alafon@test.com"))
+//        contacts.append(Contact(nom: "Leroy", prenom: "Marcel", email: "mleroy@test.com"))
+//        contacts.append(Contact(nom: "Gured", prenom: "Robert", email: "rgured@test.com"))
+//        contacts.append(Contact(nom: "Dujou", prenom: "Roger", email: "rdujou@test.com"))
+//        contacts.append(Contact(nom: "Lafon", prenom: "Albert", email: "alafon@test.com"))
         
         return contacts
     }

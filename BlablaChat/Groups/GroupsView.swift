@@ -51,13 +51,17 @@ struct GroupsView: View {
     @StateObject var vm: GroupsViewModel = GroupsViewModel()
     
     var body: some View {
-        ZStack {
-            Color.theme.background
-            List {
-                ForEach(vm.contacts) { item in
-                    Text(item.nom)
+        
+        NavigationStack {
+            ZStack {
+                Color.theme.background.ignoresSafeArea()
+                List {
+                    ForEach(vm.contacts) { item in
+                        Text(item.nom)
+                    }
                 }
             }
+            .navigationTitle("Contacts")
         }
     }
 }

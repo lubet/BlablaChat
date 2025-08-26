@@ -14,16 +14,14 @@ struct Contact: Identifiable, Hashable {
     let nom: String
     let prenom: String
     let email: String
-    let group: String
     var dateCreated: Timestamp = Timestamp()
     var isChecked: Bool = false
 
-    init(id: String = UUID().uuidString, nom: String, prenom: String, email: String = "", group: String = "", dateCreated: Timestamp = Timestamp(), isChecked: Bool = false) {
+    init(id: String = UUID().uuidString, nom: String, prenom: String, email: String = "", dateCreated: Timestamp = Timestamp(), isChecked: Bool = false) {
         self.id = id
         self.nom = nom
         self.prenom = prenom
         self.email = email
-        self.group = group
         self.dateCreated = dateCreated
         self.isChecked = isChecked
     }

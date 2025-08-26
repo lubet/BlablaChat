@@ -13,37 +13,17 @@ final class GroupsManager {
     static let shared = GroupsManager()
     
     init() { }
-
     
-    func loadContacts() -> [ContactModel]? {
+    func fetchContacts() -> [Contact] {
         
-        var contacts: [ContactModel] = []
-        var sortedContacts: [ContactModel] = []
+        var contacts: [Contact] = []
         
-        let store = CNContactStore()
-        let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactEmailAddressesKey] as [CNKeyDescriptor]
-        let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
-        do {
-            try store.enumerateContacts(with: fetchRequest, usingBlock:
-                                            {(contact, stop) in
-                let email = contact.emailAddresses.first?.value.description ?? ""
-                let prenom = contact.givenName
-                let nom = contact.familyName
-                if ((prenom != "" || nom != "") && email != "") {
-                    contacts.append(ContactModel(prenom: prenom, nom: nom, email: email))
-                }
-//                print(contact.givenName)
-//                print(contact.familyName)
-//                print(contact.emailAddresses.first?.value.description ?? "")
-            })
-            sortedContacts = contacts.sorted { $0.nom < $1.nom}
-            return sortedContacts
-         }
-        catch let erreur {
-            print(erreur)
-            return nil
-        }
+        contacts.append(Contact(nom: "Leroy", prenom: "Marcel", email: "mleroy@test.com"))
+        contacts.append(Contact(nom: "Gured", prenom: "Robert", email: "rgured@test.com"))
+        contacts.append(Contact(nom: "Dujou", prenom: "Roger", email: "rdujou@test.com"))
+        contacts.append(Contact(nom: "Lafon", prenom: "Albert", email: "alafon@test.com"))
+        
+        return contacts
     }
-
     
 }

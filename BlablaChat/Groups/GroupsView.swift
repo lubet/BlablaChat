@@ -6,28 +6,39 @@
 //
 
 import SwiftUI
+import Contacts
 
 @MainActor
 class GroupsViewModel: ObservableObject {
-    
-    @Published var contacts: [ContactModel] = []
-    
-    init () {
-        loadContacts()
+    @Published var contacts: [Contact] = []
+
+    init() {
+        loadData()
     }
     
-    func loadContacts() {
-        contacts = GroupsManager.shared.loadContacts()!
+    func loadData() {
+                contacts.append(Contact(nom: "Leroy", prenom: "Marcel", email: "mleroy@test.com"))
+                contacts.append(Contact(nom: "Gured", prenom: "Robert", email: "rgured@test.com"))
+                contacts.append(Contact(nom: "Dujou", prenom: "Roger", email: "rdujou@test.com"))
+                contacts.append(Contact(nom: "Lafon", prenom: "Albert", email: "alafon@test.com"))
     }
-    
+
 }
 
 struct GroupsView: View {
     
-    @StateObject private var viewModel = GroupsViewModel()
+    @StateObject var vm: GroupsViewModel = GroupsViewModel()
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color.theme.background
+            List
+            {
+                ForEach(vm.contacts) { item in
+                    Text(item.nom)
+                }
+            }
+        }
     }
 }
 

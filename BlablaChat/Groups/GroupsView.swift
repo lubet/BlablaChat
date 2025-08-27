@@ -22,6 +22,9 @@ class GroupsViewModel: ObservableObject {
                 contacts.append(Contact(nom: "Gured", prenom: "Robert", email: "rgured@test.com"))
                 contacts.append(Contact(nom: "Dujou", prenom: "Roger", email: "rdujou@test.com"))
                 contacts.append(Contact(nom: "Lafon", prenom: "Albert", email: "alafon@test.com"))
+        
+        sortedContacts = contacts.sorted { $0.nom < $1.nom}
+        
     }
     
     func fetchAllContacts() {
@@ -44,6 +47,12 @@ class GroupsViewModel: ObservableObject {
             print(erreur)
         }
     }
+    
+    func updateContact(contact: Contact) {
+        if let index = sortedContacts.firstIndex(where: { $0.id == contact.id}) {
+            sortedContacts[index] = contact.updateCompletion() // méthode de l'objet
+        }
+    }
 }
 
 struct GroupsView: View {
@@ -57,7 +66,13 @@ struct GroupsView: View {
                 Color.theme.background.ignoresSafeArea()
                 List {
                     ForEach(vm.contacts) { item in
-                        Text(item.nom)
+                        GroupRowView(contact: item)
+                            .onTapGesture {
+                                withAnimation(.linear) {
+                                    vm.updateContact(item)
+                                }
+                            }
+
                     }
                 }
             }

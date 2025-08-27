@@ -64,8 +64,8 @@ struct GroupsView: View {
     
     @State private var searchText: String = ""
     
-    // Mis ici dans la structure cela a permis que onTapGesture fonctionne;
-    // quand c'était dans le ViewModel cela ne marchait pas. Bug iOS 18 ?
+    // filteredContacts mis ici dans la structure cela a permis que onTapGesture fonctionne;
+    // sous la forme @Published dans le ViewModel cela ne fonctionnait pas. Bug iOS 18 ?
     var filteredContacts: [Contact] {
         guard !searchText.isEmpty else { return vm.sortedContacts }
         return vm.sortedContacts.filter { $0.nom.localizedCaseInsensitiveContains(searchText) }

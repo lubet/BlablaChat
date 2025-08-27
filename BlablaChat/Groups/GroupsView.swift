@@ -18,13 +18,12 @@ class GroupsViewModel: ObservableObject {
     }
     
     func loadData() {
-                contacts.append(Contact(nom: "Leroy", prenom: "Marcel", email: "mleroy@test.com"))
-                contacts.append(Contact(nom: "Gured", prenom: "Robert", email: "rgured@test.com"))
-                contacts.append(Contact(nom: "Dujou", prenom: "Roger", email: "rdujou@test.com"))
-                contacts.append(Contact(nom: "Lafon", prenom: "Albert", email: "alafon@test.com"))
+        contacts.append(Contact(nom: "Leroy", prenom: "Marcel", email: "mleroy@test.com"))
+        contacts.append(Contact(nom: "Gured", prenom: "Robert", email: "rgured@test.com"))
+        contacts.append(Contact(nom: "Dujou", prenom: "Roger", email: "rdujou@test.com"))
+        contacts.append(Contact(nom: "Lafon", prenom: "Albert", email: "alafon@test.com"))
         
         sortedContacts = contacts.sorted { $0.nom < $1.nom}
-        
     }
     
     func fetchAllContacts() {
@@ -49,9 +48,14 @@ class GroupsViewModel: ObservableObject {
     }
     
     func updateContact(contact: Contact) {
+        print("**** updateContact")
         if let index = sortedContacts.firstIndex(where: { $0.id == contact.id}) {
             sortedContacts[index] = contact.updateCompletion() // méthode de l'objet
         }
+    }
+    
+    func zut() {
+        print("**** zut")
     }
 }
 
@@ -67,12 +71,6 @@ struct GroupsView: View {
                 List {
                     ForEach(vm.contacts) { item in
                         GroupRowView(contact: item)
-                            .onTapGesture {
-                                withAnimation(.linear) {
-                                    vm.updateContact(item)
-                                }
-                            }
-
                     }
                 }
             }

@@ -16,6 +16,7 @@ struct GroupRowView: View {
             Image(systemName: contact.isChecked ? "checkmark.circle" : "circle")
             Text(contact.nom)
                 .font(.title2)
+            Text(contact.isChecked ? "est sélectionné" : "n'est pas sélectionné")
             Spacer()
         }
     }

@@ -14,8 +14,8 @@ struct Contact: Identifiable, Hashable {
     let nom: String
     let prenom: String
     let email: String
-    var dateCreated: Timestamp = Timestamp()
-    var isChecked: Bool = false
+    let dateCreated: Timestamp
+    let isChecked: Bool
 
     init(id: String = UUID().uuidString, nom: String, prenom: String, email: String = "", dateCreated: Timestamp = Timestamp(), isChecked: Bool = false) {
         self.id = id
@@ -26,4 +26,10 @@ struct Contact: Identifiable, Hashable {
         self.isChecked = isChecked
     }
 
+    func updateCompletion() -> Contact {
+        print("updateCompletion")
+        return Contact(id: id, nom: nom, prenom: prenom, email: email, dateCreated: Timestamp(), isChecked: !isChecked)
+        
+    }
+    
 }

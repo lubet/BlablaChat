@@ -14,10 +14,11 @@ struct GroupRowView: View {
     var body: some View {
         HStack {
             Image(systemName: contact.isChecked ? "checkmark.circle" : "circle")
-            VStack {
+            HStack {
                 Text(contact.nom)
                     .font(.title2)
-                Text(contact.isChecked ? "est sélectionné" : "n'est pas sélectionné")
+                Text(contact.prenom)
+                    .font(.title2)
             }
             Spacer()
         }

@@ -11,7 +11,7 @@ import Contacts
 @MainActor
 class GroupsViewModel: ObservableObject {
     @Published var sortedContacts: [Contact] = []
-    
+     
     init() {
         loadData()
     }
@@ -49,8 +49,7 @@ class GroupsViewModel: ObservableObject {
     
     // Quand on coche un contact
     func checkContact(contact: Contact) {
-        if let index = sortedContacts.firstIndex(where: { $0.id == contact.id}) {
-            sortedContacts[index] = contact.updateCompletion() // méthode de l'objet
+        if let index = sortedContacts.firstIndex(where: { $0.id == contact.id}) { sortedContacts[index] = contact.updateCompletion() // méthode model
         }
     }
 }
@@ -83,6 +82,7 @@ struct GroupsView: View {
                 }
             }
             .navigationTitle("Contacts")
+            .searchable(text: $searchText, prompt: "Quel contact ?")
         }
     }
 }

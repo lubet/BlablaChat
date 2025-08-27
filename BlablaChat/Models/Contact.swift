@@ -27,9 +27,6 @@ struct Contact: Identifiable, Hashable {
     }
 
     func updateCompletion() -> Contact {
-        print("updateCompletion")
         return Contact(id: id, nom: nom, prenom: prenom, email: email, dateCreated: Timestamp(), isChecked: !isChecked)
-        
     }
-    
 }

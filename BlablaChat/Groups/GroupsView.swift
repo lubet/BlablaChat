@@ -10,23 +10,23 @@ import Contacts
 
 @MainActor
 class GroupsViewModel: ObservableObject {
-    @Published var contacts: [Contact] = []
     @Published var sortedContacts: [Contact] = []
-
+    
     init() {
         loadData()
     }
     
     func loadData() {
+        var contacts: [Contact] = []
         contacts.append(Contact(nom: "Leroy", prenom: "Marcel", email: "mleroy@test.com"))
         contacts.append(Contact(nom: "Gured", prenom: "Robert", email: "rgured@test.com"))
         contacts.append(Contact(nom: "Dujou", prenom: "Roger", email: "rdujou@test.com"))
         contacts.append(Contact(nom: "Lafon", prenom: "Albert", email: "alafon@test.com"))
-        
         sortedContacts = contacts.sorted { $0.nom < $1.nom}
     }
     
     func fetchAllContacts() {
+        var contacts: [Contact] = []
         let store = CNContactStore()
         let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactEmailAddressesKey] as [CNKeyDescriptor]
         let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
@@ -41,7 +41,7 @@ class GroupsViewModel: ObservableObject {
                 }
             })
             sortedContacts = contacts.sorted { $0.nom < $1.nom}
-         }
+        }
         catch let erreur {
             print(erreur)
         }
@@ -49,14 +49,9 @@ class GroupsViewModel: ObservableObject {
     
     // Quand on coche un contact
     func checkContact(contact: Contact) {
-        print("**** updateContact")
         if let index = sortedContacts.firstIndex(where: { $0.id == contact.id}) {
             sortedContacts[index] = contact.updateCompletion() // méthode de l'objet
         }
-    }
-    
-    func zut() {
-        print("**** zut")
     }
 }
 

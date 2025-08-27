@@ -3,13 +3,17 @@
 //  BlablaChat
 //
 //  Created by Lubet-Moncla Xavier on 25/08/2025.
-//
+//  View permettant de selectionner un contact ou plusieurs si
+//  on veut créer un groupe
 
 import SwiftUI
 import Contacts
 
 @MainActor
 class GroupsViewModel: ObservableObject {
+    
+    @AppStorage("currentUserId") var currentUserId: String?
+    
     @Published var sortedContacts: [Contact] = []
      
     init() {

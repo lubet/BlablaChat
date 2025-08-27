@@ -47,7 +47,8 @@ class GroupsViewModel: ObservableObject {
         }
     }
     
-    func updateContact(contact: Contact) {
+    // Quand on coche un contact
+    func checkContact(contact: Contact) {
         print("**** updateContact")
         if let index = sortedContacts.firstIndex(where: { $0.id == contact.id}) {
             sortedContacts[index] = contact.updateCompletion() // méthode de l'objet
@@ -63,14 +64,26 @@ struct GroupsView: View {
     
     @StateObject var vm: GroupsViewModel = GroupsViewModel()
     
+    @State private var searchText: String = ""
+    
+    var filteredContacts: [Contact] {
+        guard !searchText.isEmpty else { return vm.sortedContacts }
+        return vm.sortedContacts.filter { $0.nom.localizedCaseInsensitiveContains(searchText) }
+    }
+    
     var body: some View {
         
         NavigationStack {
             ZStack {
                 Color.theme.background.ignoresSafeArea()
                 List {
-                    ForEach(vm.contacts) { item in
+                    ForEach(filteredContacts) { item in
                         GroupRowView(contact: item)
+                            .onTapGesture {
+                                withAnimation(.linear) {
+                                    vm.checkContact(contact: item)
+                                }
+                            }
                     }
                 }
             }

@@ -60,7 +60,11 @@ class GroupsViewModel: ObservableObject {
     
     // Selectionner les contacts qui ont été selectionés
     func chkContacts() {
-        // checkedContacts ...
+        // extraire les contacts checkés dans checkedContacts ...
+        // Si plus d'un contact proposer de créer un groupe,
+        // créer un groupe dans Firebase soit un salon ? n contacts 1 salon
+        // Revenir dans LastMessages -> Bubbles pour saisie du message pour
+        // ce groupe
     }
 }
 

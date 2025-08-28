@@ -52,13 +52,13 @@ class GroupsViewModel: ObservableObject {
         }
     }
     
-    // Quand on coche un contact
+    // Affiche une coche dans le carré quand on click dessus
     func checkContact(contact: Contact) {
         if let index = sortedContacts.firstIndex(where: { $0.id == contact.id}) { sortedContacts[index] = contact.updateCompletion() // méthode model
         }
     }
     
-    // Traiter le ou les contacts qui ont été selectionés
+    // Selectionne et traite le ou les contacts qui ont été checkés
     func chkContacts() {
         // checkedContacts
         // extraire/compter les contacts checkés dans checkedContacts ...

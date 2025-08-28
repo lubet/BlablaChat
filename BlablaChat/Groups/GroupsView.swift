@@ -15,7 +15,8 @@ class GroupsViewModel: ObservableObject {
     @AppStorage("currentUserId") var currentUserId: String?
     
     @Published var sortedContacts: [Contact] = []
-     
+    @Published var checkedContacts: [Contact] = []
+
     init() {
         loadData()
     }
@@ -56,6 +57,11 @@ class GroupsViewModel: ObservableObject {
         if let index = sortedContacts.firstIndex(where: { $0.id == contact.id}) { sortedContacts[index] = contact.updateCompletion() // méthode model
         }
     }
+    
+    // Selectionner les contacts qui ont été selectionés
+    func chkContacts() {
+        // checkedContacts ...
+    }
 }
 
 struct GroupsView: View {
@@ -63,6 +69,8 @@ struct GroupsView: View {
     @StateObject var vm: GroupsViewModel = GroupsViewModel()
     
     @State private var searchText: String = ""
+    
+    @Environment(\.presentationMode) var presentationMode
     
     // filteredContacts mis ici dans la structure cela a permis que onTapGesture fonctionne;
     // sous la forme @Published dans le ViewModel cela ne fonctionnait pas. Bug iOS 18 ?
@@ -88,6 +96,25 @@ struct GroupsView: View {
             }
             .navigationTitle("Contacts")
             .searchable(text: $searchText, prompt: "Quel contact ?")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Image(systemName: "xmark")
+                        .onTapGesture {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        vm.chkContacts()
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text("OK")
+                            .font(.headline)
+                    })
+                }
+            }
+            
+            
         }
     }
 }

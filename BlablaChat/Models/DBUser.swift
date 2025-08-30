@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 
 
 struct DBUser: Codable, Identifiable {
-    let id: String
+    let id: String?
     let email : String?
     var dateCreated: Timestamp = Timestamp()
     let avatarLink: String?
@@ -30,7 +30,7 @@ struct DBUser: Codable, Identifiable {
     
 // Si on ne vaut créer un user dans "users" à partir de l'authentification:
     init(
-        id: String,
+        id: String? = nil,
         email : String? = nil,
         dateCreated: Timestamp = Timestamp(),
         avatarLink: String? = nil,

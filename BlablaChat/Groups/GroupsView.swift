@@ -16,7 +16,7 @@ class GroupsViewModel: ObservableObject {
     
     @Published var sortedContacts: [Contact] = []
     @Published var checkedContacts: [Contact] = []
-
+    
     init() {
         loadData()
     }
@@ -58,28 +58,32 @@ class GroupsViewModel: ObservableObject {
         }
     }
     
-    // Selectionne et traite le ou les contacts qui ont été checkés
-    func chkContacts() {
+    func nbCheckedContacts() -> Int {
         for oneContact in sortedContacts {
             if oneContact.isChecked {
                 print("\(oneContact.nom) \(oneContact.prenom) est checké.")}
-                checkedContacts.append(oneContact)
+            checkedContacts.append(oneContact)
         }
         let nb = checkedContacts.count
-        // Créer autant de user_id dans Users qu'il y a d'email dans checkedContacts
-        // si ilsn'existent pas
-        for checkedContact in checkedContacts {
-            // 
-        }
-        
-        
-        
-        
-        // Si plus d'un contact proposer de créer un groupe,
-        // créer un groupe dans Firebase soit un salon ? n contacts 1 salon
-        // Revenir dans LastMessages -> Bubbles pour saisie du message pour
-        // ce contact ou ce groupe.
+        return nb
     }
+    
+    // Gestion des contacts checkés
+    func chkContacts() async throws {
+        for checkedContact in checkedContacts {
+            let dbuser = try await UsersManager.shared.searchUser(email: checkedContact.email)
+            if dbuser == nil {
+                let user = DBUser(email: checkedContact.email)
+                try await UsersManager.shared.createDbUser(user: user) // sans l'image
+                let image = UIImage.init(systemName: "person.circle.fill")!
+                try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de
+            }
+        }
+    }
+    
+    // Trouver le salon ou en créer un avec les membres
+    // C'est le salon que je dois faire remonter dans lasMessagesView
+    
 }
 
 struct GroupsView: View {
@@ -123,13 +127,10 @@ struct GroupsView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        let nb = vm.chkContacts()
-                        if nb > 1 {
-                            // Dialogue
-                        } else {
-                            
+                        Task {
+                            try await vm.chkContacts()
+                            presentationMode.wrappedValue.dismiss()
                         }
-                        presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("OK")
                             .font(.headline)

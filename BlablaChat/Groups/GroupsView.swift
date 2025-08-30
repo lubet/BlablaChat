@@ -58,6 +58,7 @@ class GroupsViewModel: ObservableObject {
         }
     }
     
+    // Charger les checkedContacts et les compter
     func nbCheckedContacts() -> Int {
         for oneContact in sortedContacts {
             if oneContact.isChecked {
@@ -69,7 +70,7 @@ class GroupsViewModel: ObservableObject {
     }
     
     // Gestion des contacts checkés
-    func chkContacts() async throws {
+    func checkedContacts() async throws {
         for checkedContact in checkedContacts {
             let dbuser = try await UsersManager.shared.searchUser(email: checkedContact.email)
             if dbuser == nil {
@@ -128,7 +129,7 @@ struct GroupsView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         Task {
-                            try await vm.chkContacts()
+                            try await vm.checkedContacts()
                             presentationMode.wrappedValue.dismiss()
                         }
                     }, label: {

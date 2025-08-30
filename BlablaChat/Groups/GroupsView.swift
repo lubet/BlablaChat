@@ -60,8 +60,21 @@ class GroupsViewModel: ObservableObject {
     
     // Selectionne et traite le ou les contacts qui ont été checkés
     func chkContacts() {
-        // checkedContacts
-        // extraire/compter les contacts checkés dans checkedContacts ...
+        for oneContact in sortedContacts {
+            if oneContact.isChecked {
+                print("\(oneContact.nom) \(oneContact.prenom) est checké.")}
+                checkedContacts.append(oneContact)
+        }
+        let nb = checkedContacts.count
+        // Créer autant de user_id dans Users qu'il y a d'email dans checkedContacts
+        // si ilsn'existent pas
+        for checkedContact in checkedContacts {
+            // 
+        }
+        
+        
+        
+        
         // Si plus d'un contact proposer de créer un groupe,
         // créer un groupe dans Firebase soit un salon ? n contacts 1 salon
         // Revenir dans LastMessages -> Bubbles pour saisie du message pour
@@ -110,7 +123,12 @@ struct GroupsView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        vm.chkContacts()
+                        let nb = vm.chkContacts()
+                        if nb > 1 {
+                            // Dialogue
+                        } else {
+                            
+                        }
                         presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("OK")

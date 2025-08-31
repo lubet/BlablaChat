@@ -110,7 +110,7 @@ final class BubblesViewModel: ObservableObject {
 
         // Si le contactId existe
         if contactId != "" {
-            salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: currentUserId)
+            salonId = try await MembresManager.shared.searchMembres(contactId: contactId, userId: currentUserId)
             
             // Charger les messages du salon et maj du Send
             allMessages = try await MessagesManager.shared.getMessages(salonId: salonId, currentUserId: currentUserId)
@@ -135,11 +135,11 @@ final class BubblesViewModel: ObservableObject {
         }
         
         // salon_id
-        salonId = try await MessagesManager.shared.searchMembres(contactId: contactId, userId: currentUserId)
+        salonId = try await MembresManager.shared.searchMembres(contactId: contactId, userId: currentUserId)
         if salonId == "" {
             salonId = try await MessagesManager.shared.newSalon(last_message: "")
             // Ajout du couple contact user à ce salon
-            try await MessagesManager.shared.newMembres(salonId: salonId, contactId: contactId, userId: currentUserId)
+            try await MembresManager.shared.newMembres(salonId: salonId, contactId: contactId, userId: currentUserId)
         }
 
         // Listener sur les messages

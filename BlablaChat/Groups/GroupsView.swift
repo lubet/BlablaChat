@@ -68,8 +68,7 @@ class GroupsViewModel: ObservableObject {
         let nb = checkedContacts.count
         return nb
     }
-    
-    // Gestion des contacts checkés
+        
     func checkedContacts() async throws {
         for checkedContact in checkedContacts {
             let dbuser = try await UsersManager.shared.searchUser(email: checkedContact.email)
@@ -79,12 +78,11 @@ class GroupsViewModel: ObservableObject {
                 let image = UIImage.init(systemName: "person.circle.fill")!
                 try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de
             }
+            let user_id = dbuser!.userId
+            
+            //let salonId 
         }
     }
-    
-    // Trouver le salon ou en créer un avec les membres
-    // C'est le salon que je dois faire remonter dans lasMessagesView
-    
 }
 
 struct GroupsView: View {

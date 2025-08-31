@@ -81,7 +81,7 @@ final class MembresManager {
         try await doc2.setData(data2, merge: false)
     }
     
-    func searChMembre(userId: String) async throws -> Bool {
+    func searchMembre(userId: String) async throws -> Bool {
         
         
         return false

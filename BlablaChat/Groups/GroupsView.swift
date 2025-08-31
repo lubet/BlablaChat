@@ -81,10 +81,7 @@ class GroupsViewModel: ObservableObject {
             // 1) Si l'un des chkContacts n'existe pas dans membre -> créer un salon
             // et créer autant de membres avec le même salonId et sortir du for
             // Existe t'il dans membres
-            let ok = try await MembresManager.shared.searChMembre(userId: userId)
-            
-            
-            
+            let ok = try await MembresManager.shared.searchMembre(userId: userId)
         }
     }
 }

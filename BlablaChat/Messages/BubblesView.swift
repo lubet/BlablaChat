@@ -76,7 +76,7 @@ final class BubblesViewModel: ObservableObject {
                     let lurl = try await StorageManager.shared.getUrlForImage(path: path)
                     
                     // Recherche du contact_id dans Salons
-                    guard let contactID = try await MessagesManager.shared.getSalonContactId(salonId: salonId) else { print("newMessages-Pas de contactId"); return }
+                    guard let contactID = try await SalonsManager.shared.getSalonContactId(salonId: salonId) else { print("newMessages-Pas de contactId"); return }
                     
                     // Listener sur les messages
                     if !didAppear {
@@ -91,7 +91,7 @@ final class BubblesViewModel: ObservableObject {
                     try await MessagesManager.shared.newMessage(salonId: salonId, fromId: userId, texte: "Photo", urlPhoto: lurl.absoluteString, toId: contactID)
                     
                     // Mettre à jour last_message dans Salons
-                    try await MessagesManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: lurl.absoluteString, userId: userId, contactId: contactID)
+                    try await SalonsManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: lurl.absoluteString, userId: userId, contactId: contactID)
                     
                     return
                 }
@@ -137,7 +137,7 @@ final class BubblesViewModel: ObservableObject {
         // salon_id
         salonId = try await MembresManager.shared.searchMembres(contactId: contactId, userId: currentUserId)
         if salonId == "" {
-            salonId = try await MessagesManager.shared.newSalon(last_message: "")
+            salonId = try await SalonsManager.shared.newSalon(last_message: "")
             // Ajout du couple contact user à ce salon
             try await MembresManager.shared.newMembres(salonId: salonId, contactId: contactId, userId: currentUserId)
         }
@@ -155,8 +155,7 @@ final class BubblesViewModel: ObservableObject {
         try await MessagesManager.shared.newMessage(salonId: salonId, fromId: currentUserId, texte: texteMessage, urlPhoto: "", toId: contactId)
         
         // Mise à jour du texte du message dans le salon
-        try await MessagesManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: texteMessage, userId: currentUserId, contactId: contactId)
-        
+        try await SalonsManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: texteMessage, userId: currentUserId, contactId: contactId)
     }
 }
 

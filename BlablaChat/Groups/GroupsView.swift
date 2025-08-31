@@ -58,29 +58,33 @@ class GroupsViewModel: ObservableObject {
         }
     }
     
-    // Charger les checkedContacts et les compter
-    func nbCheckedContacts() -> Int {
-        for oneContact in sortedContacts {
-            if oneContact.isChecked {
-                print("\(oneContact.nom) \(oneContact.prenom) est checké.")}
-            checkedContacts.append(oneContact)
-        }
-        let nb = checkedContacts.count
-        return nb
+    // Charger les checkedContacts
+    func loadCheckedContacts() {
+        checkedContacts = sortedContacts.filter { user in user.isChecked }
     }
         
+    // Gestion des contacts checkés
     func checkedContacts() async throws {
         for checkedContact in checkedContacts {
+            var userId: String = ""
             let dbuser = try await UsersManager.shared.searchUser(email: checkedContact.email)
             if dbuser == nil {
                 let user = DBUser(email: checkedContact.email)
                 try await UsersManager.shared.createDbUser(user: user) // sans l'image
                 let image = UIImage.init(systemName: "person.circle.fill")!
                 try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de
+                userId = user.userId
+            } else {
+                userId = dbuser!.userId
             }
-            let user_id = dbuser!.userId
+ 
+            // 1) Si l'un des chkContacts n'existe pas dans membre -> créer un salon
+            // et créer autant de membres avec le même salonId et sortir du for
+            // Existe t'il dans membres
+            let membreYN = try await MembresManager.shared.searChMembre(userId: userId)
             
-            //let salonId 
+            
+            
         }
     }
 }
@@ -128,6 +132,7 @@ struct GroupsView: View {
                     Button(action: {
                         Task {
                             try await vm.checkedContacts()
+                            vm.loadCheckedContacts()
                             presentationMode.wrappedValue.dismiss()
                         }
                     }, label: {

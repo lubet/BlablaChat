@@ -25,8 +25,7 @@ struct BlablaChatApp: App {
     
     var body: some Scene {
         WindowGroup {
-            // RootView()
-           GroupsView()
+            RootView()
         }
     }
 }

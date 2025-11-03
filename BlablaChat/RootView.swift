@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftfulRouting
 
 struct RootView: View {
 
@@ -23,7 +22,7 @@ struct RootView: View {
             self.showSignInView = authUser == nil
         }
         .fullScreenCover(isPresented: $showSignInView) {
-            RouterView { _ in 
+            NavigationStack {
                 AuthenticationView(showSignInView: $showSignInView)
             }
         }

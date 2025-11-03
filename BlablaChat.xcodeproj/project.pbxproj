@@ -43,6 +43,7 @@
 		C08906B92D1ABC5800277CCD /* LastMessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08906B82D1ABC5800277CCD /* LastMessagesManager.swift */; };
 		C08906C52D1ABE9E00277CCD /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08906C42D1ABE9E00277CCD /* Messages.swift */; };
 		C08A249E2C5243DD00B22A3B /* SDWebImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A249D2C5243DD00B22A3B /* SDWebImageLoader.swift */; };
+		C0A61E5A2EB8C68200527702 /* SwiftfulRouting in Frameworks */ = {isa = PBXBuildFile; productRef = C0A61E592EB8C68200527702 /* SwiftfulRouting */; };
 		C0B15FBC2D2E92810083135A /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B15FBB2D2E92810083135A /* ContactModel.swift */; };
 		C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B8555B2BBBFD5900B3956A /* TextBarView.swift */; };
 		C0B9DC822B5E872B006C2B46 /* HandleSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B9DC812B5E872B006C2B46 /* HandleSendView.swift */; };
@@ -131,6 +132,7 @@
 				C0E63A782C8EFF9D0041E598 /* FirebaseMessaging in Frameworks */,
 				C00CEF102BB55206004C7016 /* SDWebImageSwiftUI in Frameworks */,
 				C047E9D52B45652000C6D48F /* FirebaseAuth in Frameworks */,
+				C0A61E5A2EB8C68200527702 /* SwiftfulRouting in Frameworks */,
 				C0E63A762C8EFF6F0041E598 /* FirebaseAnalytics in Frameworks */,
 				C047E9DB2B45652000C6D48F /* FirebaseStorage in Frameworks */,
 				C047E9D72B45652000C6D48F /* FirebaseFirestore in Frameworks */,
@@ -355,6 +357,7 @@
 				C00CEF0F2BB55206004C7016 /* SDWebImageSwiftUI */,
 				C0E63A752C8EFF6F0041E598 /* FirebaseAnalytics */,
 				C0E63A772C8EFF9D0041E598 /* FirebaseMessaging */,
+				C0A61E592EB8C68200527702 /* SwiftfulRouting */,
 			);
 			productName = BlablaChat;
 			productReference = C047E9C02B45625C00C6D48F /* BlablaChat.app */;
@@ -387,6 +390,7 @@
 			packageReferences = (
 				C047E9D32B45652000C6D48F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C00CEF0E2BB55206004C7016 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				C0A61E582EB8C68200527702 /* XCRemoteSwiftPackageReference "SwiftfulRouting" */,
 			);
 			productRefGroup = C047E9C12B45625C00C6D48F /* Products */;
 			projectDirPath = "";
@@ -698,6 +702,14 @@
 				minimumVersion = 10.19.0;
 			};
 		};
+		C0A61E582EB8C68200527702 /* XCRemoteSwiftPackageReference "SwiftfulRouting" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftfulThinking/SwiftfulRouting";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.3.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -725,6 +737,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C047E9D32B45652000C6D48F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		C0A61E592EB8C68200527702 /* SwiftfulRouting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C0A61E582EB8C68200527702 /* XCRemoteSwiftPackageReference "SwiftfulRouting" */;
+			productName = SwiftfulRouting;
 		};
 		C0E63A752C8EFF6F0041E598 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -105,11 +105,11 @@ struct LastMessagesView: View {
     
     @Binding var showSignInView: Bool
     
-    @State var showContactsView = false // fullSreenCover UsersView (contacts)
+    @State var showContactsView = false // fullSreenCover ContactsView (contacts)
     
-    @State var emailPassed: String = "" // email callback de UsersView
+    @State var emailPassed: String = "" // email callback de ContactsView
     
-    @State var showBubblesView = false // -> ChatView avec call back ->
+    @State var showBubblesView = false // -> BubblesView
     
     var body: some View {
         ZStack {

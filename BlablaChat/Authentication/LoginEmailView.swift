@@ -40,7 +40,11 @@ final class LoginEmailViewModel: ObservableObject {
         let dbuser = try await UsersManager.shared.searchUser(email: email)
         
         if dbuser == nil {
-            print("**** SignUp noueau user")
+            
+            // TODO 1) faire une function qui trouve le nom du nouveau contact avec son email - voir MyChat
+            // 2) dans LastMessagesView revoir la barre d'items pour IOS28
+            
+            print("**** SignUp nouveau user")
             let user = DBUser(auth: authUser) // uid, email, user_id, date
             try await UsersManager.shared.createDbUser(user: user) // sans l'image
             let image = image ?? UIImage.init(systemName: "person.circle.fill")!

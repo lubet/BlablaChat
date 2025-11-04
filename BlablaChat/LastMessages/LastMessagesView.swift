@@ -130,6 +130,8 @@ struct LastMessagesView: View {
                     .toolbar {toolbarContent}
 
                     btnNewMessage // -> ContactsView
+                
+                    btnLogout
 
                     .navigationTitle("Derniers messages")
                 
@@ -201,6 +203,23 @@ extension LastMessagesView {
             })
         }
     }
+    
+    private var btnLogout: some View {
+        Button {
+            vm.logOut()
+        } label: {
+            Text("Se déconnecter".uppercased())
+                .font(.headline)
+                .fontWeight(.semibold)
+                .foregroundColor(.white)
+                .padding()
+                .padding(.horizontal, 40)
+                .background(Color.theme.buttoncolor)
+                .cornerRadius(20)
+        }
+        
+    }
+
 }
 
 struct LastMessages_Previews: PreviewProvider {

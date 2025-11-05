@@ -75,7 +75,6 @@ class LastMessagesViewModel: ObservableObject {
                         print("**** getLastMessages() userSalon"); return }
                     email = contact.email ?? "inconnu"
                     avatarLink = contact.avatarLink  ?? "inconnu"
-                    print("email contact: \(email)")
                 }
                 
                 // TODO c'est l'email de l'envoyeur que l'on devrait trouver ici

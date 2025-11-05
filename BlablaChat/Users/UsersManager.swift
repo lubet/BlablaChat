@@ -116,7 +116,7 @@ final class UsersManager {
     }
     
     // Création du contact dans la base "users"
-    func createUser(email:String) async throws -> String {
+    func createUser(email:String, nom: String, prenom: String) async throws -> String {
         let userRef = DBUserCollection.document()
         let user_id = userRef.documentID
         
@@ -125,7 +125,9 @@ final class UsersManager {
             "date_created" : Timestamp(),
             "email": email,
             "id" : user_id,
-            "user_id" : user_id
+            "user_id" : user_id,
+            "nom" : nom,
+            "prenom" : prenom
         ]
         try await userRef.setData(data, merge: false)
         

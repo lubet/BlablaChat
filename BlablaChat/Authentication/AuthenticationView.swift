@@ -137,9 +137,9 @@ struct AuthenticationView: View {
                 }
                 
                 // ------------- Sign In/Up with email/password
-                NavigationLink {
+                NavigationLink(destination: {
                     LoginEmailView(showSignInView: $showSignInView)
-                } label: {
+                }, label: {
                     Text("S'authentifier avec l'email")
                         .font(.headline)
                         .foregroundColor(.white)
@@ -149,7 +149,7 @@ struct AuthenticationView: View {
                         .foregroundStyle(Color.theme.buttontext)
                         .cornerRadius(10)
                         .padding(.bottom, 10)
-                }
+                })
                 .padding(.top, 20)
                 .padding(.bottom,40)
                 

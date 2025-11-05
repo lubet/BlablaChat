@@ -125,24 +125,24 @@ struct LastMessagesView: View {
                             }
                         }
                     }
-                    .background(Color.theme.buttoncolor)
-
-                    .toolbar {toolbarContent}
-
-                    btnNewMessage // -> ContactsView
-                
-                    btnLogout
-
                     .navigationTitle("Derniers messages")
-                
-                    .task {
-                        await vm.getLastMessages() // Les derniers messages
-                    }
-                
                     // -> Bubbles en retour des contacts
                     .navigationDestination(isPresented: $showBubblesView) {
                         BubblesView(emailContact: emailPassed)
                     }
+
+                    .background(Color.theme.buttoncolor)
+
+                    .toolbar {toolbarContent}
+
+                    btnNewContact // -> ContactsView
+                
+                    btnLogout
+                
+                    .task {
+                        await vm.getLastMessages()
+                    }
+                
                 }
             }
         }
@@ -181,7 +181,7 @@ struct LastMessagesView: View {
 // Bouton Nouveau message ------------------------------------
 extension LastMessagesView {
     
-    private var btnNewMessage: some View {
+    private var btnNewContact: some View {
         Button {
             showContactsView.toggle()
         } label: {

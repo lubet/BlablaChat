@@ -131,7 +131,11 @@ final class BubblesViewModel: ObservableObject {
         // contactId
         var contactId =  try await UsersManager.shared.searchContact(email: emailContact)
         if contactId == "" {
-            contactId = try await UsersManager.shared.createUser(email: emailContact)
+            let nomprenom = LogInManager.shared.getContactName(email: emailContact)
+            let nom = nomprenom.nom
+            let prenom = nomprenom.prenom
+
+            contactId = try await UsersManager.shared.createUser(email: emailContact, nom: nom, prenom: prenom)
         }
         
         // salon_id

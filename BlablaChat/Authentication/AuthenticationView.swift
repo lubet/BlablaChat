@@ -57,12 +57,21 @@ final class AuthenticationViewModel: ObservableObject {
         let dbuser = try await UsersManager.shared.searchUser(email: email)
 
         if dbuser == nil {
+            
+            let nomprenom = LogInManager.shared.getContactName(email: email)
+            let nom = nomprenom.nom
+            let prenom = nomprenom.prenom
+            
             // Création du user à partir de l'auth que l'on complète
-            let user = DBUser(auth: authUser) // auth.uid, email, userId
+            let user = DBUser(auth: authUser, nom: nom, prenom: prenom) // auth.uid, email, userId
+ 
             try await UsersManager.shared.createDbUser(user: user) // sans l'image
+
             let image = UIImage.init(systemName: "person.circle.fill")!
+
             try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
             self.currentUserId = user.userId // global à l'appli
+
         } else {
             // Existe déjà - maj de l'id du user + save du userId
             guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }

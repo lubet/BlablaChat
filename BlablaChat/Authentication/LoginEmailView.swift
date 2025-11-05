@@ -41,20 +41,28 @@ final class LoginEmailViewModel: ObservableObject {
         
         if dbuser == nil {
             
-            // TODO 1) faire une function qui trouve le nom du nouveau contact avec son email - voir MyChat
-            // 2) dans LastMessagesView revoir la barre d'items pour IOS28
+            let nomprenom = LogInManager.shared.getContactName(email: email)
+            let nom = nomprenom.nom
+            let prenom = nomprenom.prenom
             
             print("**** SignUp nouveau user")
-            let user = DBUser(auth: authUser) // uid, email, user_id, date
+            let user = DBUser(auth: authUser, nom: nom, prenom: prenom) // uid, email, user_id, date
+            
             try await UsersManager.shared.createDbUser(user: user) // sans l'image
+            
             let image = image ?? UIImage.init(systemName: "person.circle.fill")!
+            
             try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
+            
             self.currentUserId = user.userId
         } else {
             // Existe déjà - maj de l'uid
             print("**** SignUp user existant dans users")
+            
             guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
+            
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid) // maj de l'id dans Users
+            
             self.currentUserId = userId
         }
         guard let currentUID = self.currentUserId else { print("SignUp-Pas de userId"); return }

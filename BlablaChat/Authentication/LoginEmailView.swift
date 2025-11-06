@@ -4,12 +4,11 @@
 //
 //  Created by Lubet-Moncla Xavier on 03/01/2024.
 //
-// SignUp: nouveau user ou user non authentifié (cad venant de contacts)
-// SignIn: user identifié
 
 import SwiftUI
 import SDWebImage
 import SDWebImageSwiftUI
+import Contacts
 
 @MainActor
 final class LoginEmailViewModel: ObservableObject {
@@ -22,19 +21,11 @@ final class LoginEmailViewModel: ObservableObject {
     @Published var httpAvatar: String = ""
     @Published var newImageAvatar: UIImage? = nil
     
-    
-    // Nouveau compte - Auth, Users, Tokens - Si déjà présent dans "Users" (contact) prendre le userId existant
     func signUp(image: UIImage?) async throws {
 
-        guard !email.isEmpty, !password.isEmpty else {
-            print("Pas d'email ni de password")
-            return
-        }
+        guard !email.isEmpty, !password.isEmpty else { return }
         
-        // Connection Firebase
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
-
-        print("**** SignUp - \(email) - done")
 
         // Chercher dans "users" pour voir si il n'existe pas (cas d'un nouveau contact)
         let dbuser = try await UsersManager.shared.searchUser(email: email)
@@ -45,7 +36,6 @@ final class LoginEmailViewModel: ObservableObject {
             let nom = nomprenom.nom
             let prenom = nomprenom.prenom
             
-            print("**** SignUp nouveau user")
             let user = DBUser(auth: authUser, nom: nom, prenom: prenom) // uid, email, user_id, date
             
             try await UsersManager.shared.createDbUser(user: user) // sans l'image
@@ -55,7 +45,9 @@ final class LoginEmailViewModel: ObservableObject {
             try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
             
             self.currentUserId = user.userId
+            
         } else {
+            
             // Existe déjà - maj de l'uid
             print("**** SignUp user existant dans users")
             

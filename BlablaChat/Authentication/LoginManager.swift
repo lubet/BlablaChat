@@ -22,7 +22,7 @@ final class LogInManager {
         
         let store = CNContactStore()
         do {
-            let predicate = CNContact.predicateForContacts(matchingEmailAddress: "xlubet-moncla@wanadoo.fr")
+            let predicate = CNContact.predicateForContacts(matchingEmailAddress: email)
             let contacts = try store.unifiedContacts(matching: predicate, keysToFetch: keysToFetch)
             nom = contacts.first?.givenName ?? email
             prenom = contacts.first?.familyName ?? ""

@@ -5,6 +5,7 @@
 //
 //  Created by Lubet-Moncla Xavier on 02/01/2025.
 //
+// Gestion des Salons et des ses sous-collections messages et users
 
 import Foundation
 import FirebaseFirestore
@@ -17,18 +18,13 @@ final class SalonsManager {
     static let shared = SalonsManager()
     init() { }
     
-    // --------------------------------------------------------------
-    // private let SalonsUsersCollection = dbFS.collection("Salons_Users")
-    // ---------------------------------------------------------------
-    
-
     // Salons ----------------------------------------------------
     private let salonsCollection = dbFS.collection("Salons")
+        // Un salon
+        private func salonDocument(salonId: String) -> DocumentReference {
+            salonsCollection.document(salonId)
+        }
     
-    // Un salon
-    private func salonDocument(salonId: String) -> DocumentReference {
-        salonsCollection.document(salonId)
-    }
     
     // ------------------------------------------------------------------------------------
     

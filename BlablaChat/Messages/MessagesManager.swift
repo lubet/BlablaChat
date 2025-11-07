@@ -16,39 +16,25 @@ final class MessagesManager {
     static let shared = MessagesManager()
     init() { }
     
-    // --------------------------------------------------------------
-    // private let SalonsUsersCollection = dbFS.collection("Salons_Users")
-    // ---------------------------------------------------------------
-    
-
     // Salons ----------------------------------------------------
     private let salonsCollection = dbFS.collection("Salons")
-    
-    // Un salon
-    private func salonDocument(salonId: String) -> DocumentReference {
-        salonsCollection.document(salonId)
-    }
+        // Un salon
+        private func salonDocument(salonId: String) -> DocumentReference {
+            salonsCollection.document(salonId)
+        }
     
     // Messages ---------------------------------------------------
     private let messagesCollection = dbFS.collection("messages")
+        // Un message
+        private func messageDocument(id: String) -> DocumentReference {
+            return messagesCollection.document(id)
+        }
+        // Tous les messages d'un salon
+        private func messagesCollection(salonId: String) -> CollectionReference {
+            return salonDocument(salonId: salonId).collection("messages")
+        }
     
-    // Un message
-    private func messageDocument(id: String) -> DocumentReference {
-        return messagesCollection.document(id)
-    }
-
-    // Tous les messages d'un salon
-    private func messagesCollection(salonId: String) -> CollectionReference {
-        return salonDocument(salonId: salonId).collection("messages")
-    }
-    
-    // Salons/Users ------------------------------
-    private let usersCollection = dbFS.collection("Users")
-    // Tous les users d'un salon
-    private func usersSalon(salonId: String) -> CollectionReference {
-        return salonDocument(salonId: salonId).collection("Users")
-    }
-    
+    // ---------------------------------------------------------------------------
     
     // Création d'un nouveau message
     func newMessage(salonId: String, fromId: String, texte: String, urlPhoto: String, toId: String) async throws {

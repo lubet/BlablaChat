@@ -121,31 +121,29 @@ struct LastMessagesView: View {
         ZStack {
             Color.theme.background.edgesIgnoringSafeArea(.all)
             
-            NavigationStack {
-                    List {
-                        ForEach(vm.lastMessages) { message in
-                            NavigationLink(value: message.emailContact) {
-                                LastMessagesCellView(lastMessage: message)
-                            }
-                        }
-                    }
-                    .navigationTitle("Messages")
-                    .navigationDestination(for: String.self) { value in
-                        BubblesView(emailContact: value)
-                    }
-                    .toolbar {toolbarContent}
-                    btnLogout
-                    .task {
-                        await vm.getLastMessages()
+            List {
+                ForEach(vm.lastMessages) { message in
+                    NavigationLink(value: message.emailContact) {
+                        LastMessagesCellView(lastMessage: message)
                     }
                 }
             }
+            .navigationTitle("Messages")
+            .navigationDestination(for: String.self) { value in
+                BubblesView(emailContact: value)
+            }
+            .toolbar {toolbarContent}
+            btnLogout
+                .task {
+                    await vm.getLastMessages()
+                }
         }
+    }
     
-        // Toolbar ------------------------------------------------
-        @ToolbarContentBuilder
-        private var toolbarContent: some ToolbarContent {
-
+    // Toolbar ------------------------------------------------
+    @ToolbarContentBuilder
+    private var toolbarContent: some ToolbarContent {
+        
             ToolbarItem(placement: .topBarLeading) {
                     SDWebImageLoader(url: vm.userAvatarLink, size: 30)
             }

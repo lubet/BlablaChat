@@ -234,8 +234,6 @@ struct SearchChildView: View {
 
 struct SearchableBootcamp_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationStack {
             SearchableBootcamp()
-        }
     }
 }

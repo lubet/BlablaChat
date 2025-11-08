@@ -102,7 +102,6 @@ struct GroupsView: View {
     }
     
     var body: some View {
-        NavigationStack {
             ZStack {
                 Color.theme.background.ignoresSafeArea()
                 List {
@@ -138,9 +137,6 @@ struct GroupsView: View {
                     })
                 }
             }
-            
-            
-        }
     }
 }
 

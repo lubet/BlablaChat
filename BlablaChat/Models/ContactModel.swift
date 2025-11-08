@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct ContactModel: Hashable {
+struct ContactModel: Identifiable, Hashable {
+    let id = UUID().uuidString
     let prenom: String
     let nom: String
     let email: String

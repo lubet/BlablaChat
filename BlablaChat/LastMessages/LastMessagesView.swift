@@ -129,7 +129,7 @@ struct LastMessagesView: View {
                             }
                         }
                     }
-                    .navigationTitle("Derniers messages")
+                    .navigationTitle("Messages")
                     .navigationDestination(for: String.self) { value in
                         BubblesView(emailContact: value)
                     }

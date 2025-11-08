@@ -20,16 +20,15 @@ final class ContactsViewModel: ObservableObject {
     @AppStorage("currentUserId") var currentUserId: String?
     
     @Published var contacts: [ContactModel] = []
-    @Published var searchText: String = ""
     @Published var sortedContacts: [ContactModel] = []
     
     // Recherche contacts
-    var filteredContacts: [ContactModel] {
-        guard !searchText.isEmpty else { return sortedContacts}
-        return contacts.filter { oneContact in
-            oneContact.nom.lowercased().contains(searchText.lowercased())
-        }
-    }
+//    var filteredContacts: [ContactModel] {
+//        guard !searchText.isEmpty else { return sortedContacts}
+//        return contacts.filter { oneContact in
+//            oneContact.nom.lowercased().contains(searchText.lowercased())
+//        }
+//    }
     
     init() {
         fetchAllContacts()
@@ -66,31 +65,20 @@ final class ContactsViewModel: ObservableObject {
 
 struct ContactsView: View {
     @StateObject var vm = ContactsViewModel()
-    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         ZStack {
             Color.theme.background
-            NavigationStack {
-                List {
-                    ForEach(vm.filteredContacts, id: \.self) { oneContact in
-                        Button {
-                            presentationMode.wrappedValue.dismiss() // Fermeture de la vue
-                        } label: {
-                            ContactRowView(oneContact: oneContact)
-                        }
+            List {
+                ForEach(vm.sortedContacts) { oneContact in
+                    NavigationLink(value: oneContact.email) {
+                        ContactRowView(oneContact: oneContact)
                     }
                 }
-                .navigationTitle("Contacts")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Image(systemName: "xmark")
-                            .onTapGesture {
-                            presentationMode.wrappedValue.dismiss()
-                        }
-                    }
-                }
-                .searchable(text: $vm.searchText)
+            }
+            .navigationTitle("Contacts")
+            .navigationDestination(for: String.self) { value in
+                    BubblesView(emailContact: value)
             }
         }
     }

@@ -48,8 +48,6 @@ final class SettingsViewModel: ObservableObject {
 // -----------------------
 struct SettingsView: View {
     
-    @Binding var showSignInView: Bool
-    
     @StateObject private var viewModel = SettingsViewModel()
     
     @State var showImagePicker: Bool = false
@@ -106,6 +104,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(showSignInView: .constant(false))
+        SettingsView()
     }
 }

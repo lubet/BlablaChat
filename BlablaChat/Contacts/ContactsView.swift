@@ -48,9 +48,6 @@ final class ContactsViewModel: ObservableObject {
                 if ((prenom != "" || nom != "") && email != "") {
                     contacts.append(ContactModel(prenom: prenom, nom: nom, email: email))
                 }
-//                print(contact.givenName)
-//                print(contact.familyName)
-//                print(contact.emailAddresses.first?.value.description ?? "")
             })
             sortedContacts = contacts.sorted { $0.nom < $1.nom}
          }
@@ -68,12 +65,8 @@ final class ContactsViewModel: ObservableObject {
 }
 
 struct ContactsView: View {
-    
     @StateObject var vm = ContactsViewModel()
-    
     @Environment(\.presentationMode) var presentationMode
-    
-    let didSelectedNewUser: (String) -> () // -> retour à LastMessagesView -> Bubbles
     
     var body: some View {
         ZStack {
@@ -83,7 +76,6 @@ struct ContactsView: View {
                     ForEach(vm.filteredContacts, id: \.self) { oneContact in
                         Button {
                             presentationMode.wrappedValue.dismiss() // Fermeture de la vue
-                            didSelectedNewUser(oneContact.email) // retour à LastMessagesView pour affichage de BubllesView
                         } label: {
                             ContactRowView(oneContact: oneContact)
                         }
@@ -104,7 +96,7 @@ struct ContactsView: View {
     }
 }
 
-//#Preview {
-//    ContactsView(salonId: "E")
-//}
+#Preview {
+    ContactsView()
+}
 

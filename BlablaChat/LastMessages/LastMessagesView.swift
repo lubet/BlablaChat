@@ -23,7 +23,8 @@ class LastMessagesViewModel: ObservableObject {
     
     @Published private(set) var userEmail: String = ""
     @Published private(set) var userAvatarLink: String = ""
-    
+    @Published private(set) var userNom: String = ""
+    @Published private(set) var userPrenom: String = ""
 
     // Liste des derniers messages d'un user par salons
     func getLastMessages() async {
@@ -41,7 +42,9 @@ class LastMessagesViewModel: ObservableObject {
             guard let dbuser = try await UsersManager.shared.searchUser(userId: currentUserId) else { return }
                 userEmail = dbuser.email ?? "**** Inconnu"
                 userAvatarLink = dbuser.avatarLink ?? "**** Inconnu"
-            
+                userNom = dbuser.nom
+                userPrenom = dbuser.prenom
+        
             // Renvoie tous les salons Ids ddu currentUser
             guard let userSalonsIds = try await LastMessagesManager.shared.userSalons(userId: currentUserId) else {
                 return
@@ -60,6 +63,8 @@ class LastMessagesViewModel: ObservableObject {
                 
                 var email: String = ""
                 var avatarLink: String = ""
+                var nom: String = ""
+                var prenom: String = ""
                 
                 if contactId == currentUserId {
                     // prendre le userId
@@ -67,18 +72,20 @@ class LastMessagesViewModel: ObservableObject {
                         print("**** getLastMessages() userSalon"); return }
                     email = user.email ?? "inconnu"
                     avatarLink = user.avatarLink ?? "inconnu"
-                    // print("email user: \(email)")
-
+                    nom = user.nom
+                    prenom = user.prenom
                 } else {
                     // prendre le contactId
                     guard let contact = try await UsersManager.shared.searchUser(userId: salon.contactId) else {
                         print("**** getLastMessages() userSalon"); return }
                     email = contact.email ?? "inconnu"
                     avatarLink = contact.avatarLink  ?? "inconnu"
+                    nom = contact.nom
+                    prenom = contact.prenom
                 }
                 
                 // TODO c'est l'email de l'envoyeur que l'on devrait trouver ici
-                lastMessages.append(LastMessage(avatarLink: avatarLink, emailContact: email, texte: lastMessage, date: Timestamp(), salonId: userSalonId))
+                lastMessages.append(LastMessage(avatarLink: avatarLink, emailContact: email, texte: lastMessage, date: Timestamp(), salonId: userSalonId, nom: nom, prenom: prenom))
             }
         }
     }
@@ -117,31 +124,20 @@ struct LastMessagesView: View {
             NavigationStack {
                     List {
                         ForEach(vm.lastMessages) { message in
-                            NavigationLink {
-                                BubblesView(emailContact: message.emailContact)
-                            } label: {
+                            NavigationLink(value: message.emailContact) {
                                 LastMessagesCellView(lastMessage: message)
                             }
                         }
                     }
                     .navigationTitle("Derniers messages")
-                    // -> Bubbles en retour des contacts
-                    .navigationDestination(isPresented: $showBubblesView) {
-                        BubblesView(emailContact: emailPassed)
+                    .navigationDestination(for: String.self) { value in
+                        BubblesView(emailContact: value)
                     }
-
-                    .background(Color.theme.buttoncolor)
-
                     .toolbar {toolbarContent}
-
-                    btnNewContact // -> ContactsView
-                
                     btnLogout
-                
                     .task {
                         await vm.getLastMessages()
                     }
-                
                 }
             }
         }
@@ -149,60 +145,43 @@ struct LastMessagesView: View {
         // Toolbar ------------------------------------------------
         @ToolbarContentBuilder
         private var toolbarContent: some ToolbarContent {
-            
+
             ToolbarItem(placement: .topBarLeading) {
-                SDWebImageLoader(url: vm.userAvatarLink, size: 30)
+                    SDWebImageLoader(url: vm.userAvatarLink, size: 30)
             }
-            ToolbarItem(placement: .topBarLeading) {
-                Text("\(vm.userEmail)")
-            }
+            .sharedBackgroundVisibility(.hidden)
+
+            ToolbarSpacer(.fixed, placement: .topBarLeading)
+
+            ToolbarItem(placement: .principal) {
+                Text("      \(vm.userNom)") }
+            .sharedBackgroundVisibility(.hidden)
+
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
-                    SettingsView(showSignInView: $showSignInView)
+                    ContactsView()
                 } label: {
-                    Image(systemName: "person.3.sequence.fill")
-                        .foregroundStyle(.primary)
+                    Image(systemName: "person.fill")
                 }
+                .foregroundStyle(.primary)
             }
+            .sharedBackgroundVisibility(.hidden)
+            
+            ToolbarSpacer(.fixed, placement: .topBarTrailing)
+            
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
-                    SettingsView(showSignInView: $showSignInView)
+                    SettingsView()
                 } label: {
                     Image(systemName: "gear")
                 }
             }
-
+            .sharedBackgroundVisibility(.hidden)
         }
-    
     }
-
 
 // Bouton Nouveau message ------------------------------------
 extension LastMessagesView {
-    
-    private var btnNewContact: some View {
-        Button {
-            showContactsView.toggle()
-        } label: {
-            Text("Nouveau destinataire".uppercased())
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color.theme.buttontext)
-                    .padding()
-                    .padding(.horizontal, 40)
-                    .background(Color.theme.buttoncolor)
-                    .cornerRadius(20)
-        }
-        
-        // -> Contacts
-        .fullScreenCover(isPresented: $showContactsView) {
-            ContactsView(didSelectedNewUser: { emailSelected in // Liste des contacts pour un nouveau messages
-                self.emailPassed = emailSelected
-                self.showBubblesView.toggle() // ayant selectionné un contact dans ContactView je reviens dans LastMessagesView et j'affiche BubblesView pour saisie d'un message.
-            })
-        }
-    }
-    
     private var btnLogout: some View {
         Button {
             vm.logOut()
@@ -216,9 +195,7 @@ extension LastMessagesView {
                 .background(Color.theme.buttoncolor)
                 .cornerRadius(20)
         }
-        
     }
-
 }
 
 struct LastMessages_Previews: PreviewProvider {

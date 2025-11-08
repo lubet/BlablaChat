@@ -16,6 +16,8 @@ struct LastMessage: Identifiable, Codable, Hashable {
     let texte: String
     let date: Timestamp
     let salonId: String
+    let nom: String
+    let prenom: String
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -24,5 +26,7 @@ struct LastMessage: Identifiable, Codable, Hashable {
         case texte = "message_texte"
         case date = "message_date"
         case salonId = "salon_id"
+        case nom = "nom"
+        case prenom = "prenom"
     }
 }

@@ -113,10 +113,6 @@ struct LastMessagesView: View {
     
     @State var showContactsView = false // fullSreenCover ContactsView (contacts)
     
-    @State var emailPassed: String = "" // email callback de ContactsView
-    
-    @State var showBubblesView = false // -> BubblesView
-    
     var body: some View {
         ZStack {
             Color.theme.background.edgesIgnoringSafeArea(.all)
@@ -156,6 +152,9 @@ struct LastMessagesView: View {
             .sharedBackgroundVisibility(.hidden)
 
             ToolbarItem(placement: .topBarTrailing) {
+                Image(systemName: "person.fill")
+                
+
                 NavigationLink {
                     ContactsView()
                 } label: {
@@ -199,9 +198,9 @@ extension LastMessagesView {
 struct LastMessages_Previews: PreviewProvider {
     static var previews: some View {
             Group {
-                LastMessagesView(showSignInView: .constant(false),emailPassed: "toto@toto.com")
+                LastMessagesView(showSignInView: .constant(false))
                     .preferredColorScheme(.light)
-                LastMessagesView(showSignInView: .constant(false), emailPassed: "toto@toto.com")
+                LastMessagesView(showSignInView: .constant(false))
                     .preferredColorScheme(.dark)
         }
     }

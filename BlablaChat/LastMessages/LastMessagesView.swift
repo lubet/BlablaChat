@@ -152,13 +152,13 @@ struct LastMessagesView: View {
             .sharedBackgroundVisibility(.hidden)
 
             ToolbarItem(placement: .topBarTrailing) {
-                Image(systemName: "person.fill")
-                
-
-                NavigationLink {
-                    ContactsView()
+                Button {
+                    showContactsView.toggle()
                 } label: {
                     Image(systemName: "person.fill")
+                }
+                .navigationDestination(isPresented: $showContactsView) {
+                    ContactsView()
                 }
                 .foregroundStyle(.primary)
             }

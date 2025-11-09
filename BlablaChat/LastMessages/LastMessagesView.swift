@@ -115,24 +115,26 @@ struct LastMessagesView: View {
         ZStack {
             Color.theme.background.edgesIgnoringSafeArea(.all)
             
-            List {
-                ForEach(vm.lastMessages) { message in
-                    NavigationLink(value: message.emailContact) {
-                        LastMessagesCellView(lastMessage: message)
+            VStack {
+                List {
+                    ForEach(vm.lastMessages) { message in
+                        NavigationLink(value: message.emailContact) {
+                            LastMessagesCellView(lastMessage: message)
+                        }
                     }
                 }
-            }
-            .navigationTitle("Messages")
-            .navigationDestination(for: String.self) { value in
-                BubblesView(emailContact: value)
-            }
-            .toolbar {toolbarContent}
-            
-            Spacer()
-            btnLogout
-                .task {
-                    await vm.getLastMessages()
+                .navigationTitle("Messages")
+                .navigationDestination(for: String.self) { value in
+                    BubblesView(emailContact: value)
                 }
+                .toolbar {toolbarContent}
+                
+                Spacer()
+                btnLogout
+            }
+            .task {
+                await vm.getLastMessages()
+            }
         }
     }
     

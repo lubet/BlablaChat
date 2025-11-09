@@ -15,7 +15,7 @@ struct RootView: View {
         ZStack {
             if showSignInView == false {
                 NavigationStack {
-                    LastMessagesView(showSignInView: $showSignInView)
+                    LastMessagesView()
                 }
             }
         }

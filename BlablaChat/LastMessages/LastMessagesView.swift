@@ -109,8 +109,6 @@ struct LastMessagesView: View {
     
     @ObservedObject var vm: LastMessagesViewModel = LastMessagesViewModel()
     
-    @Binding var showSignInView: Bool
-    
     @State var showContactsView = false // fullSreenCover ContactsView (contacts)
     
     var body: some View {
@@ -129,6 +127,8 @@ struct LastMessagesView: View {
                 BubblesView(emailContact: value)
             }
             .toolbar {toolbarContent}
+            
+            Spacer()
             btnLogout
                 .task {
                     await vm.getLastMessages()
@@ -197,11 +197,12 @@ extension LastMessagesView {
 
 struct LastMessages_Previews: PreviewProvider {
     static var previews: some View {
-            Group {
-                LastMessagesView(showSignInView: .constant(false))
-                    .preferredColorScheme(.light)
-                LastMessagesView(showSignInView: .constant(false))
-                    .preferredColorScheme(.dark)
-        }
+        LastMessagesView()
+//            Group {
+//                LastMessagesView(showSignInView: .constant(false))
+//                    .preferredColorScheme(.light)
+//                LastMessagesView(showSignInView: .constant(false))
+//                    .preferredColorScheme(.dark)
+//        }
     }
 }

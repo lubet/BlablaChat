@@ -14,6 +14,13 @@ import Combine
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+struct emailPath: Hashable {
+    var toView: String
+    var email: String
+    var xpath: [String]
+}
+
+
 @MainActor
 class LastMessagesViewModel: ObservableObject {
 
@@ -101,11 +108,18 @@ class LastMessagesViewModel: ObservableObject {
         
         // print("**** getUserToolBar()")
     }
+    
+    func initEmailPath(email: String, xpath: [String]) {
+        
+        
+    }
 }
 
 // -----------------------------------------------------------------------------
 
 struct LastMessagesView: View {
+    
+    @Binding var path: [String]
     
     @ObservedObject var vm: LastMessagesViewModel = LastMessagesViewModel()
     
@@ -114,18 +128,21 @@ struct LastMessagesView: View {
     var body: some View {
         ZStack {
             Color.theme.background.edgesIgnoringSafeArea(.all)
-            
             VStack {
                 List {
                     ForEach(vm.lastMessages) { message in
-                        NavigationLink(value: message.emailContact) {
+                        var objz: emailPath = emailPath(toView: "View1", email: message.emailContact, xpath: path)
+                        NavigationLink(value: objz ) {
                             LastMessagesCellView(lastMessage: message)
                         }
                     }
                 }
                 .navigationTitle("Messages")
-                .navigationDestination(for: String.self) { value in
-                    BubblesView(emailContact: value)
+                .navigationDestination(for: emailPath.self) { value in
+                    if value.toView == "View1" {
+                        //...
+                    }
+                    // ....
                 }
                 .toolbar {toolbarContent}
                 

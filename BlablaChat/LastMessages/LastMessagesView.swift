@@ -14,13 +14,6 @@ import Combine
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct emailPath: Hashable {
-    var toView: String
-    var email: String
-    var xpath: [String]
-}
-
-
 @MainActor
 class LastMessagesViewModel: ObservableObject {
 
@@ -108,18 +101,17 @@ class LastMessagesViewModel: ObservableObject {
         
         // print("**** getUserToolBar()")
     }
-    
-    func initEmailPath(email: String, xpath: [String]) {
-        
-        
-    }
 }
 
 // -----------------------------------------------------------------------------
 
+//enum pathRoute: Hashable {
+//    case bubble(email: String)
+//}
+
 struct LastMessagesView: View {
     
-    @Binding var path: [String]
+    @EnvironmentObject var routerPath: RouterPath
     
     @ObservedObject var vm: LastMessagesViewModel = LastMessagesViewModel()
     
@@ -131,21 +123,17 @@ struct LastMessagesView: View {
             VStack {
                 List {
                     ForEach(vm.lastMessages) { message in
-                        var objz: emailPath = emailPath(toView: "View1", email: message.emailContact, xpath: path)
-                        NavigationLink(value: objz ) {
+                        //let emaiForBubble = pathRoute.bubble(email: message.emailContact)
+                        NavigationLink(value: message.emailContact) {
                             LastMessagesCellView(lastMessage: message)
                         }
                     }
                 }
                 .navigationTitle("Messages")
-                .navigationDestination(for: emailPath.self) { value in
-                    if value.toView == "View1" {
-                        //...
-                    }
-                    // ....
+                .navigationDestination(for: String.self) { value in
+                    BubblesView(email: value)
                 }
                 .toolbar {toolbarContent}
-                
                 Spacer()
                 btnLogout
             }
@@ -170,6 +158,7 @@ struct LastMessagesView: View {
                 Text("      \(vm.userNom)") }
             .sharedBackgroundVisibility(.hidden)
 
+            // -> ContactsView
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     showContactsView.toggle()

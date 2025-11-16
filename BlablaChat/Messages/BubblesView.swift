@@ -166,7 +166,9 @@ final class BubblesViewModel: ObservableObject {
 // View ------------------
 struct BubblesView: View {
     
-    let emailContact: String // <- ContactsView
+    @EnvironmentObject var routerPath: RouterPath
+    
+    let email: String // <- LastMessageView or ContactsView
     
     @StateObject var vm = BubblesViewModel()
     
@@ -193,9 +195,19 @@ struct BubblesView: View {
             }
         }
         .navigationTitle("Bubbles")
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    routerPath.reset()
+                } label : {
+                    Image.init(systemName: "chevron.left.circle")
+                }
+            }
+        }
         .onAppear {
             Task {
-                vm.emailContact = emailContact
+                vm.emailContact = email
                 try await vm.allUserSalonMessages()
                 
             }

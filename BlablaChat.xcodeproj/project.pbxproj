@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C00CEF102BB55206004C7016 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C00CEF0F2BB55206004C7016 /* SDWebImageSwiftUI */; };
 		C01077332D14251F004960F2 /* DBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01077322D14251F004960F2 /* DBUser.swift */; };
+		C0201EA42EC9D793004662AC /* RouterPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0201EA32EC9D793004662AC /* RouterPath.swift */; };
 		C0268BE42D1431A1005374DD /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0268BE32D1431A1005374DD /* StorageManager.swift */; };
 		C03763872C41210200A5602B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C03763862C41210200A5602B /* GoogleService-Info.plist */; };
 		C037638A2C4128D000A5602B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03763892C4128D000A5602B /* Utilities.swift */; };
@@ -68,6 +69,7 @@
 
 /* Begin PBXFileReference section */
 		C01077322D14251F004960F2 /* DBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUser.swift; sourceTree = "<group>"; };
+		C0201EA32EC9D793004662AC /* RouterPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterPath.swift; sourceTree = "<group>"; };
 		C0268BE32D1431A1005374DD /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		C02F63DB2C8778F10032A0CD /* BlablaChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlablaChat.entitlements; sourceTree = "<group>"; };
 		C03763852C411F3700A5602B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				C02F63DB2C8778F10032A0CD /* BlablaChat.entitlements */,
 				C03763852C411F3700A5602B /* Info.plist */,
 				C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */,
+				C0201EA32EC9D793004662AC /* RouterPath.swift */,
 				C0D565F32B7CAF8E00EE0DA0 /* RootView.swift */,
 				C0695AEF2C49151400CEAA17 /* Authentication */,
 				C0B9EFD72D19AFD600BC06FC /* LastMessages */,
@@ -443,6 +446,7 @@
 				C07F10D12D2FB7B70010650C /* SearchBarView.swift in Sources */,
 				C043008C2D2BF92000AF56E7 /* ContactBootcamp.swift in Sources */,
 				C01077332D14251F004960F2 /* DBUser.swift in Sources */,
+				C0201EA42EC9D793004662AC /* RouterPath.swift in Sources */,
 				C0B8555C2BBBFD5900B3956A /* TextBarView.swift in Sources */,
 				C070D6422C5380C4006170E3 /* Color.swift in Sources */,
 				C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */,

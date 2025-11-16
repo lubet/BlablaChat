@@ -64,6 +64,9 @@ final class ContactsViewModel: ObservableObject {
 }
 
 struct ContactsView: View {
+    
+    @EnvironmentObject var routerPath: RouterPath
+    
     @StateObject var vm = ContactsViewModel()
     
     var body: some View {
@@ -71,15 +74,19 @@ struct ContactsView: View {
             Color.theme.background
             List {
                 ForEach(vm.sortedContacts) { oneContact in
+                    //let emailForBubbles: String = oneContact.email
+                    
                     NavigationLink(value: oneContact.email) {
                         ContactRowView(oneContact: oneContact)
                     }
                 }
             }
             .navigationTitle("Contacts")
-            .navigationDestination(for: String.self) { value in
-                    BubblesView(emailContact: value)
-            }
+
+// Le navigationDestination de LastMessageView est utilisé car du même type, String.
+//            .navigationDestination(for: String.self) { value in
+//                    BubblesView(email: value)
+//            }
         }
     }
 }

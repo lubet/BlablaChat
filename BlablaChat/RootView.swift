@@ -10,13 +10,14 @@ import SwiftUI
 struct RootView: View {
 
     @State private var showSignInView: Bool = true
-    @State private var navPath: [String] = []
+    
+    @State private var routerPath = RouterPath()
     
     var body: some View {
         ZStack {
             if showSignInView == false {
-                NavigationStack(path: $navPath) {
-                    LastMessagesView(path: $navPath)
+                NavigationStack(path: $routerPath.path) {
+                    LastMessagesView()
                 }
             }
         }

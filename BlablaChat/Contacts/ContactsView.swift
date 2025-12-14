@@ -20,15 +20,16 @@ final class ContactsViewModel: ObservableObject {
     @AppStorage("currentUserId") var currentUserId: String?
     
     @Published var contacts: [ContactModel] = []
+    @Published var searchText: String = ""
     @Published var sortedContacts: [ContactModel] = []
     
     // Recherche contacts
-//    var filteredContacts: [ContactModel] {
-//        guard !searchText.isEmpty else { return sortedContacts}
-//        return contacts.filter { oneContact in
-//            oneContact.nom.lowercased().contains(searchText.lowercased())
-//        }
-//    }
+    var filteredContacts: [ContactModel] {
+        guard !searchText.isEmpty else { return sortedContacts}
+        return contacts.filter { oneContact in
+            oneContact.nom.lowercased().contains(searchText.lowercased())
+        }
+    }
     
     init() {
         fetchAllContacts()
@@ -45,7 +46,7 @@ final class ContactsViewModel: ObservableObject {
                 let prenom = contact.givenName
                 let nom = contact.familyName
                 if ((prenom != "" || nom != "") && email != "") {
-                    contacts.append(ContactModel(prenom: prenom, nom: nom, email: email))
+                    contacts.append(ContactModel(nom: nom, prenom: prenom, email: email))
                 }
             })
             sortedContacts = contacts.sorted { $0.nom < $1.nom}
@@ -65,7 +66,7 @@ final class ContactsViewModel: ObservableObject {
 
 struct ContactsView: View {
     
-    @EnvironmentObject var routerPath: RouterPath
+    @Environment(\.router) var router
     
     @StateObject var vm = ContactsViewModel()
     
@@ -73,20 +74,21 @@ struct ContactsView: View {
         ZStack {
             Color.theme.background
             List {
-                ForEach(vm.sortedContacts) { oneContact in
-                    //let emailForBubbles: String = oneContact.email
-                    
-                    NavigationLink(value: oneContact.email) {
+                ForEach(vm.filteredContacts, id: \.self) { oneContact in
+                    Button {
+                        router.showScreen(.push) { _ in
+                            BubblesView(oneContact: oneContact)
+                        }
+                    } label: {
                         ContactRowView(oneContact: oneContact)
                     }
                 }
             }
             .navigationTitle("Contacts")
-
-// Le navigationDestination de LastMessageView est utilisé car du même type, String.
-//            .navigationDestination(for: String.self) { value in
-//                    BubblesView(email: value)
-//            }
+            .searchable(text: $vm.searchText)
+            .onDisappear {
+                router.dismissScreenStack()
+            }
         }
     }
 }

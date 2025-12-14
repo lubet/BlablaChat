@@ -6,6 +6,7 @@
 //
 // Dialogue du /user/salon selectionné dans LastMessageView
 //
+// A l'envoie du message: je crée le salon, les users, les membres, le message
 
 import SwiftUI
 import PhotosUI
@@ -100,19 +101,18 @@ final class BubblesViewModel: ObservableObject {
     }
     
     // Chargement des messages du salon concernant le user et le contact.
-    func allUserSalonMessages() async throws {
-
-        // userId
+    func allUserSalonMessages(oneContact: ContactModel) async throws {
         guard let currentUserId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
         
-        // contactId
-        let contactId =  try await UsersManager.shared.searchContact(email: emailContact) // dans la base Users
+        // Recherche du contact dans la base Users
+        let contactId =  try await UsersManager.shared.searchContact(email: oneContact.email)
 
-        // Si le contactId existe
+        // Si le contact existe
         if contactId != "" {
+            // Retourne le salonId commun au contact et au current user
             salonId = try await MembresManager.shared.searchMembres(contactId: contactId, userId: currentUserId)
             
-            // Charger les messages du salon et maj du Send
+            // Charger les derniers messages du salon et maj du Send
             allMessages = try await MessagesManager.shared.getMessages(salonId: salonId, currentUserId: currentUserId)
             
             sortAllMessages()
@@ -166,9 +166,9 @@ final class BubblesViewModel: ObservableObject {
 // View ------------------
 struct BubblesView: View {
     
-    @EnvironmentObject var routerPath: RouterPath
-    
-    let email: String // <- LastMessageView or ContactsView
+    @Environment(\.router) var router
+
+    let oneContact: ContactModel
     
     @StateObject var vm = BubblesViewModel()
     
@@ -195,22 +195,13 @@ struct BubblesView: View {
             }
         }
         .navigationTitle("Bubbles")
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    routerPath.reset()
-                } label : {
-                    Image.init(systemName: "chevron.left.circle")
-                }
-            }
-        }
         .onAppear {
             Task {
-                vm.emailContact = email
-                try await vm.allUserSalonMessages()
-                
+                try await vm.allUserSalonMessages(oneContact: oneContact)
             }
+        }
+        .onDisappear {
+            router.dismissScreenStack()
         }
         MessageBar
             .alert(isPresented: $showAlert) {

@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import SwiftfulRouting
 
 import AuthenticationServices
 
@@ -92,8 +93,11 @@ final class AuthenticationViewModel: ObservableObject {
 }
 
 struct AuthenticationView: View {
+    
+    @Environment(\.router) var router
 
     @StateObject private var vm = AuthenticationViewModel()
+    
     @Binding var showSignInView: Bool
     
     @Environment(\.colorScheme) private var colorScheme
@@ -137,19 +141,20 @@ struct AuthenticationView: View {
                 }
                 
                 // ------------- Sign In/Up with email/password
-                NavigationLink(destination: {
-                    LoginEmailView(showSignInView: $showSignInView)
-                }, label: {
-                    Text("S'authentifier avec l'email")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(height: 45)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.theme.buttoncolor)
-                        .foregroundStyle(Color.theme.buttontext)
-                        .cornerRadius(10)
-                        .padding(.bottom, 10)
-                })
+                Text("S'authentifier avec l'email")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .frame(height: 45)
+                    .frame(maxWidth: .infinity)
+                    .background(Color("Buttonback"))
+                    .foregroundStyle(Color("buttonfore"))
+                    .cornerRadius(10)
+                    .padding(.bottom, 10)
+                    .onTapGesture {
+                        router.showScreen(.push) { _ in
+                            LoginEmailView(showSignInView: $showSignInView)
+                        }
+                    }
                 .padding(.top, 20)
                 .padding(.bottom,40)
                 
@@ -159,8 +164,7 @@ struct AuthenticationView: View {
     }
 }
 
-struct AuthenticationView_Previews: PreviewProvider {
-    static var previews: some View {
-            AuthenticationView(showSignInView: .constant(false))
-    }
+#Preview {
+    AuthenticationView(showSignInView: .constant(true))
 }
+

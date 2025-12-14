@@ -6,17 +6,16 @@
 //
 
 import SwiftUI
+import SwiftfulRouting
 
 struct RootView: View {
 
     @State private var showSignInView: Bool = true
     
-    @State private var routerPath = RouterPath()
-    
     var body: some View {
         ZStack {
             if showSignInView == false {
-                NavigationStack(path: $routerPath.path) {
+                RouterView { _ in
                     LastMessagesView()
                 }
             }
@@ -26,7 +25,7 @@ struct RootView: View {
             self.showSignInView = authUser == nil
         }
         .fullScreenCover(isPresented: $showSignInView) {
-            NavigationStack {
+            RouterView { _ in
                 AuthenticationView(showSignInView: $showSignInView)
             }
         }

@@ -111,7 +111,7 @@ class LastMessagesViewModel: ObservableObject {
 
 struct LastMessagesView: View {
     
-    @EnvironmentObject var routerPath: RouterPath
+    @Environment(\.router) var router
     
     @ObservedObject var vm: LastMessagesViewModel = LastMessagesViewModel()
     
@@ -123,67 +123,70 @@ struct LastMessagesView: View {
             VStack {
                 List {
                     ForEach(vm.lastMessages) { message in
-                        //let emaiForBubble = pathRoute.bubble(email: message.emailContact)
-                        NavigationLink(value: message.emailContact) {
-                            LastMessagesCellView(lastMessage: message)
-                        }
+                        LastMessagesCellView(lastMessage: message)
+                            .onTapGesture {
+                                Task {
+                                    let contact:ContactModel = ContactModel(nom: message.nom, prenom: message.prenom, email: message.emailContact)
+                                    router.showScreen(.push) { _ in
+                                        BubblesView(oneContact: contact)
+                                    }
+                                }
+                            }
                     }
                 }
                 .navigationTitle("Messages")
-                .navigationDestination(for: String.self) { value in
-                    BubblesView(email: value)
+                
+                .toolbar {
+                    
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button(action: {
+                            //
+                        }, label: {
+                            SDWebImageLoader(url: vm.userAvatarLink, size: 30)
+                        })
+                    }
+                    .sharedBackgroundVisibility(.hidden)
+                    
+                    ToolbarSpacer(.fixed, placement: .topBarLeading)
+                    
+                    ToolbarItem(placement: .principal) {
+                        Text("      \(vm.userNom)") }
+                    .sharedBackgroundVisibility(.hidden)
+                    
+                    // Trailing -----------------------------------------------
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Contacts", systemImage: "person.3.sequence.fill") {
+                            router.showScreen(.push) { _ in
+                                ContactsView()
+                            }
+                        }
+                        .foregroundStyle(.primary)
+                    }
+                    .sharedBackgroundVisibility(.hidden)
+                    
+                    ToolbarSpacer(.fixed, placement: .topBarTrailing)
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Image(systemName: "gear")
+                            .onTapGesture {
+                                router.showScreen(.push) { _ in
+                                    SettingsView()
+                                }
+                            }
+                    }
+                    .sharedBackgroundVisibility(.hidden)
                 }
-                .toolbar {toolbarContent}
+                
                 Spacer()
-                btnLogout
+                
+                // btnLogout
             }
             .task {
                 await vm.getLastMessages()
             }
         }
     }
-    
-    // Toolbar ------------------------------------------------
-    @ToolbarContentBuilder
-    private var toolbarContent: some ToolbarContent {
-        
-            ToolbarItem(placement: .topBarLeading) {
-                    SDWebImageLoader(url: vm.userAvatarLink, size: 30)
-            }
-            .sharedBackgroundVisibility(.hidden)
-
-            ToolbarSpacer(.fixed, placement: .topBarLeading)
-
-            ToolbarItem(placement: .principal) {
-                Text("      \(vm.userNom)") }
-            .sharedBackgroundVisibility(.hidden)
-
-            // -> ContactsView
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    showContactsView.toggle()
-                } label: {
-                    Image(systemName: "person.fill")
-                }
-                .navigationDestination(isPresented: $showContactsView) {
-                    ContactsView()
-                }
-                .foregroundStyle(.primary)
-            }
-            .sharedBackgroundVisibility(.hidden)
-            
-            ToolbarSpacer(.fixed, placement: .topBarTrailing)
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                NavigationLink {
-                    SettingsView()
-                } label: {
-                    Image(systemName: "gear")
-                }
-            }
-            .sharedBackgroundVisibility(.hidden)
-        }
-    }
+}
 
 // Bouton Nouveau message ------------------------------------
 extension LastMessagesView {
@@ -203,14 +206,6 @@ extension LastMessagesView {
     }
 }
 
-struct LastMessages_Previews: PreviewProvider {
-    static var previews: some View {
-        LastMessagesView()
-//            Group {
-//                LastMessagesView(showSignInView: .constant(false))
-//                    .preferredColorScheme(.light)
-//                LastMessagesView(showSignInView: .constant(false))
-//                    .preferredColorScheme(.dark)
-//        }
-    }
+#Preview {
+    LastMessagesView()
 }

@@ -21,5 +21,5 @@ struct ContactRowView: View {
 }
 
 #Preview {
-    ContactRowView(oneContact: ContactModel(prenom: "Marcel", nom: "Leroy", email: "mleroy@test.com"))
+    ContactsView()
 }

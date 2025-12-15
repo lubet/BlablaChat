@@ -125,7 +125,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		C0F1931D2E5CD2680097F438 /* Groups */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Groups; sourceTree = "<group>"; };
+		C0F1931D2E5CD2680097F438 /* Groupes */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Groupes; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,13 +193,6 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		C03A722B2D1DB1AA00961705 /* Users */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Users;
-			sourceTree = "<group>";
-		};
 		C047E9B72B45625C00C6D48F = {
 			isa = PBXGroup;
 			children = (
@@ -233,11 +226,10 @@
 				C01077312D1424A1004960F2 /* Models */,
 				C03763882C4128A500A5602B /* Utilities */,
 				C070D6402C53809E006170E3 /* Extensions */,
-				C03A722B2D1DB1AA00961705 /* Users */,
 				C0F566FE2D706F040078F188 /* Settings */,
 				C0B9DC842B5EB05B006C2B46 /* Components */,
 				C01FE5A72B67F0610049B9EE /* StandBy */,
-				C0F1931D2E5CD2680097F438 /* Groups */,
+				C0F1931D2E5CD2680097F438 /* Groupes */,
 				C047E9C72B45625D00C6D48F /* Assets.xcassets */,
 				C03763862C41210200A5602B /* GoogleService-Info.plist */,
 				C047E9C92B45625D00C6D48F /* Preview Content */,
@@ -352,7 +344,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				C0F1931D2E5CD2680097F438 /* Groups */,
+				C0F1931D2E5CD2680097F438 /* Groupes */,
 			);
 			name = BlablaChat;
 			packageProductDependencies = (

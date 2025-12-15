@@ -12,7 +12,6 @@
 		C0268BE42D1431A1005374DD /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0268BE32D1431A1005374DD /* StorageManager.swift */; };
 		C03763872C41210200A5602B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C03763862C41210200A5602B /* GoogleService-Info.plist */; };
 		C03A722D2D1DB1DD00961705 /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03A722C2D1DB1DD00961705 /* UsersManager.swift */; };
-		C043008C2D2BF92000AF56E7 /* ContactBootcamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C043008B2D2BF92000AF56E7 /* ContactBootcamp.swift */; };
 		C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */; };
 		C047E9C82B45625D00C6D48F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C047E9C72B45625D00C6D48F /* Assets.xcassets */; };
 		C047E9CB2B45625D00C6D48F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C047E9CA2B45625D00C6D48F /* Preview Assets.xcassets */; };
@@ -58,7 +57,6 @@
 		C03763852C411F3700A5602B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C03763862C41210200A5602B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C03A722C2D1DB1DD00961705 /* UsersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
-		C043008B2D2BF92000AF56E7 /* ContactBootcamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactBootcamp.swift; sourceTree = "<group>"; };
 		C047E9C02B45625C00C6D48F /* BlablaChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlablaChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C047E9C32B45625C00C6D48F /* BlablaChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlablaChatApp.swift; sourceTree = "<group>"; };
 		C047E9C72B45625D00C6D48F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -177,7 +175,6 @@
 				C03763862C41210200A5602B /* GoogleService-Info.plist */,
 				C047E9C92B45625D00C6D48F /* Preview Content */,
 				C04C3A7A2C85C7CD0044B21B /* PrivacyInfo.xcprivacy */,
-				C043008B2D2BF92000AF56E7 /* ContactBootcamp.swift */,
 			);
 			path = BlablaChat;
 			sourceTree = "<group>";
@@ -345,7 +342,6 @@
 				C068E8BF2D36B1AF001964E7 /* SettingsView.swift in Sources */,
 				C08906C52D1ABE9E00277CCD /* Messages.swift in Sources */,
 				C047E9E02B45767B00C6D48F /* AuthManager.swift in Sources */,
-				C043008C2D2BF92000AF56E7 /* ContactBootcamp.swift in Sources */,
 				C01077332D14251F004960F2 /* DBUser.swift in Sources */,
 				C0695AF12C4915C800CEAA17 /* SignInAppleHelper.swift in Sources */,
 				C0D565F42B7CAF8E00EE0DA0 /* RootView.swift in Sources */,

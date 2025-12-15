@@ -9,7 +9,6 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import SwiftfulRouting
-
 import AuthenticationServices
 
 // Globales
@@ -104,8 +103,17 @@ struct AuthenticationView: View {
     
     var body: some View {
         ZStack {
-            Color.theme.background
+            Color.theme.background.ignoresSafeArea(.all)
             VStack {
+                
+                Button(action: {
+                    // TODO miaulements...
+                }, label: {
+                    Image(uiImage: UIImage(named: "MonChat") ?? UIImage())
+                        .resizable()
+                        .scaledToFit().frame(width: 200, height: 200)
+                        .padding(.bottom, 60)
+                })
                 
                 // -------------- SignIn with Apple
                 Button(action: {
@@ -140,24 +148,22 @@ struct AuthenticationView: View {
                     }
                 }
                 
-                // ------------- Sign In/Up with email/password
-                Text("S'authentifier avec l'email")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(height: 45)
-                    .frame(maxWidth: .infinity)
-                    .background(Color("Buttonback"))
-                    .foregroundStyle(Color("buttonfore"))
-                    .cornerRadius(10)
-                    .padding(.bottom, 10)
-                    .onTapGesture {
-                        router.showScreen(.push) { _ in
-                            LoginEmailView(showSignInView: $showSignInView)
-                        }
+                Button(action: {
+                    router.showScreen(.push) { _ in
+                        LoginEmailView(showSignInView: $showSignInView)
                     }
-                .padding(.top, 20)
+                }, label: {
+                    Text("S'authentifier avec l'email")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(height: 55)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.theme.buttoncolor)
+                        .foregroundStyle(Color("buttonfore"))
+                        .cornerRadius(10)
+                })
+                .padding(.top, 30)
                 .padding(.bottom,40)
-                
             }
             .padding(.horizontal, 20)
         }

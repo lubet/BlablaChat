@@ -105,7 +105,7 @@ final class MessagesManager {
     }
     
     // Get le salonId du currentUser et du contactId uniquement
-    func getSalonId(currentId: String, contactId: String) async throws -> String? {
+    func getSalonId(currentId: String, contactId: String) async throws -> String {
         
         var allSalons: [Salons] = []
         
@@ -116,7 +116,7 @@ final class MessagesManager {
             allSalons.append(unSalon)
         }
         if allSalons.isEmpty {
-            return(nil)
+            return("")
         }
 
        // Les subUsers d'un salon
@@ -124,7 +124,7 @@ final class MessagesManager {
         
         for salon in allSalons {
             subUsers = []
-            
+            // Les subUsers du salon contenant currentId et contactId
             let query = try await subUsersCollection(salonId: salon.salonId)
                 .whereField("userId", isEqualTo: currentId)
                 .whereField("userId", isEqualTo: contactId)
@@ -140,7 +140,25 @@ final class MessagesManager {
                 }
             }
         }
-        return(nil)
+        return("")
+    }
+    
+    func newTwoSubUsers(salonId: String, currendId: String, contactId: String) async throws {
+        for item in [currendId, contactId] {
+            let document = subUsersCollection(salonId: salonId).document()
+            let documentId = document.documentID
+            
+            let data: [String:Any] = [
+                "id" : documentId,
+                "salon_id" : salonId,
+                "userId": item,
+            ]
+            do {
+                try await document.setData(data, merge: false)
+            } catch {
+                print("newMessage: \(error)")
+            }
+        }
     }
 }
 

@@ -134,12 +134,15 @@ final class BubblesViewModel: ObservableObject {
             contactId = try await UsersManager.shared.createUser(email: emailContact, nom: nom, prenom: prenom)
         }
         
-        // salon_id
-        salonId = try await MembresManager.shared.searchMembres(contactId: contactId, userId: currentUserId)
+        // salonId
+        salonId = try await MessagesManager.shared.getSalonId(currentId: currentUserId, contactId: contactId)
+        
         if salonId == "" {
             salonId = try await SalonsManager.shared.newSalon(last_message: "")
             // Ajout du couple contact user à ce salon
-            try await MembresManager.shared.newMembres(salonId: salonId, contactId: contactId, userId: currentUserId)
+            // try await MembresManager.shared.newMembres(salonId: salonId, contactId: contactId, userId: currentUserId)
+            
+            
         }
 
         // Listener sur les messages

@@ -101,36 +101,10 @@ final class LastMessagesManager {
         return nil
     }
 
-//    func getLastMessage(salonId: String) async throws -> String? {
-//        do {
-//            let querySnapshot = try await salonCollection
-//                .whereField("salon_id", isEqualTo: salonId)
-//                .getDocuments()
-//            
-//            for document in querySnapshot.documents {
-//                let salon = try document.data(as: Salons.self)
-//                return salon.lastMessage
-//            }
-//        } catch {
-//            print("getLastMessage - Error getting documents: \(error)")
-//        }
-//        return nil
-//    }
-    
-    // Renvoie un user pris dans "Users"
-//    func fetchUser(contactId: String) async throws -> DBUser? {
-//        do {
-//            let querySnapshot = try await userCollection
-//                .whereField("user_id", isEqualTo: contactId)
-//                .getDocuments()
-//            
-//            for document in querySnapshot.documents {
-//                let user = try document.data(as: DBUser.self)
-//                return user
-//            }
-//        } catch {
-//            print("fetchUser - Error getting documents: \(error)")
-//        }
-//        return nil
-//    }
+    // Renvoie tous les salons dont fait partie le user courant
+    func getSalons(currentId: String) async throws -> [Salons] {
+        let salons: [Salons] = []
+        // Faire une requete dans Users/subSalons avec le currentUserId
+        return salons
+    }
 }

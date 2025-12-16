@@ -6,7 +6,7 @@
 //
 // Dialogue du /user/salon selectionné dans LastMessageView
 //
-// A l'envoie du message: je crée le salon, les users, les membres, le message
+// A l'envoie du message: je crée le salon, le message, les deux subUsers, le message
 
 import SwiftUI
 import PhotosUI
@@ -110,8 +110,7 @@ final class BubblesViewModel: ObservableObject {
         // Si le contact existe
         if contactId != "" {
             // Retourne le salonId commun au contact et au current user
-            salonId = try await MembresManager.shared.searchMembres(contactId: contactId, userId: currentUserId)
-            
+            salonId = try await MessagesManager.shared.getSalonId(currentId: currentUserId, contactId: contactId)
             // Charger les derniers messages du salon et maj du Send
             allMessages = try await MessagesManager.shared.getMessages(salonId: salonId, currentUserId: currentUserId)
             
@@ -139,10 +138,8 @@ final class BubblesViewModel: ObservableObject {
         
         if salonId == "" {
             salonId = try await SalonsManager.shared.newSalon(last_message: "")
-            // Ajout du couple contact user à ce salon
-            // try await MembresManager.shared.newMembres(salonId: salonId, contactId: contactId, userId: currentUserId)
-            
-            
+            // Ajout du couple contact currentuser à ce salon
+            try await MessagesManager.shared.newTwoSubUsers(salonId: salonId, currendId: currentUserId, contactId: contactId)
         }
 
         // Listener sur les messages

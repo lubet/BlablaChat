@@ -123,7 +123,7 @@ final class BubblesViewModel: ObservableObject {
     }
     
     // Envoi d'un nouveau message à un nouveau contact ou à contact existant
-    func newMessages(texteMessage: String) async throws {
+    func newMessages(texteMessage: String, nom: String, prenom: String, emailContact: String) async throws {
 
         // user_id
         guard let currentUserId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
@@ -131,10 +131,6 @@ final class BubblesViewModel: ObservableObject {
         // contactId
         var contactId =  try await UsersManager.shared.searchContact(email: emailContact)
         if contactId == "" {
-            let nomprenom = LogInManager.shared.getContactName(email: emailContact)
-            let nom = nomprenom.nom
-            let prenom = nomprenom.prenom
-
             contactId = try await UsersManager.shared.createUser(email: emailContact, nom: nom, prenom: prenom)
         }
         
@@ -250,7 +246,7 @@ extension BubblesView {
         if textIsCorrect() {
             // path.removeAll() // back to LastMessagesView
             Task {
-                try? await vm.newMessages(texteMessage: texteMessage)
+                try? await vm.newMessages(texteMessage: texteMessage, nom: oneContact.nom, prenom: oneContact.prenom, emailContact: oneContact.email)
                 texteMessage = ""
             }
         }

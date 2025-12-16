@@ -16,27 +16,38 @@ final class MessagesManager {
     static let shared = MessagesManager()
     init() { }
     
-    // Salons ----------------------------------------------------
+    // Collections -----------------------------------------
     private let salonsCollection = dbFS.collection("Salons")
-        // Un salon
-        private func salonDocument(salonId: String) -> DocumentReference {
-            salonsCollection.document(salonId)
-        }
-    
-    // Messages ---------------------------------------------------
     private let messagesCollection = dbFS.collection("messages")
-        // Un message
-        private func messageDocument(id: String) -> DocumentReference {
-            return messagesCollection.document(id)
-        }
-        // Tous les messages d'un salon
-        private func messagesCollection(salonId: String) -> CollectionReference {
-            return salonDocument(salonId: salonId).collection("messages")
-        }
+    private let subUsersCollection = dbFS.collection("subUsers")
+    
+    // Salons
+    private func allSalonsCollection() -> CollectionReference {
+        salonsCollection
+    }
+    private func salonDocument(salonId: String) -> DocumentReference {
+        salonsCollection.document(salonId)
+    }
+    
+    // Sous-collection Messages ----------------------------------------
+    private func messagesCollection(salonId: String) -> CollectionReference {
+        return salonDocument(salonId: salonId).collection("messages")
+    }
+    private func messageDocument(id: String) -> DocumentReference {
+        return messagesCollection.document(id)
+    }
+
+    // Sous-collection scUsers -----------------------------------
+    private func subUsersCollection(salonId: String) -> CollectionReference {
+        return salonDocument(salonId: salonId).collection("subUsers")
+    }
+    private func subUsersDocument(userId: String) -> DocumentReference {
+        return subUsersCollection.document(userId)
+    }
     
     // ---------------------------------------------------------------------------
     
-    // Création d'un nouveau message
+    // Création d'un nouveau message dans un salon
     func newMessage(salonId: String, fromId: String, texte: String, urlPhoto: String, toId: String) async throws {
         let document = messagesCollection(salonId: salonId).document()
         let documentId = document.documentID
@@ -72,7 +83,7 @@ final class MessagesManager {
         }
     }
 
-    // Charger les messages du salon
+    // Tous les messages d'un salon
     func getMessages(salonId: String, currentUserId: String) async throws -> [Messages] {
         let snapshot = try await messagesCollection(salonId: salonId)
             .whereField("salon_id", isEqualTo: salonId)
@@ -91,6 +102,45 @@ final class MessagesManager {
 
         }
         return messages
+    }
+    
+    // Salon du currentuser et du contact
+    func getSalonId(currentId: String, contactId: String) async throws -> String? {
+        
+        var allSalons: [Salons] = []
+        
+        // Tous les salons
+        let snapshot = try await allSalonsCollection().getDocuments()
+        for doc in snapshot.documents {
+            let unSalon = try doc.data(as: Salons.self)
+            allSalons.append(unSalon)
+        }
+        if allSalons.isEmpty {
+            return(nil)
+        }
+
+       // Les subUsers d'un salon
+        var subUsers: [SubUsers] = []
+        
+        for salon in allSalons {
+            subUsers = []
+            
+            let query = try await subUsersCollection(salonId: salon.salonId)
+                .whereField("userId", isEqualTo: currentId)
+                .whereField("userId", isEqualTo: contactId)
+                .getDocuments()
+            
+            for sub in query.documents {
+                let unSubUser = try sub.data(as: SubUsers.self)
+                subUsers.append(unSubUser)
+            }
+            if subUsers.count == 2 {
+                if subUsers.contains(where: { $0.userId == currentId }) && subUsers.contains(where: { $0.userId == contactId }) {
+                    return salon.salonId
+                }
+            }
+        }
+        return(nil)
     }
 }
 

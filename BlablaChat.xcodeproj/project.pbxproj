@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C00CEF102BB55206004C7016 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C00CEF0F2BB55206004C7016 /* SDWebImageSwiftUI */; };
 		C01077332D14251F004960F2 /* DBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01077322D14251F004960F2 /* DBUser.swift */; };
+		C01D1DD22EF17AD70011E619 /* SubUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D1DD12EF17AD70011E619 /* SubUsers.swift */; };
 		C0268BE42D1431A1005374DD /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0268BE32D1431A1005374DD /* StorageManager.swift */; };
 		C03763872C41210200A5602B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C03763862C41210200A5602B /* GoogleService-Info.plist */; };
 		C03A722D2D1DB1DD00961705 /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03A722C2D1DB1DD00961705 /* UsersManager.swift */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		C01077322D14251F004960F2 /* DBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUser.swift; sourceTree = "<group>"; };
+		C01D1DD12EF17AD70011E619 /* SubUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubUsers.swift; sourceTree = "<group>"; };
 		C0268BE32D1431A1005374DD /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		C02F63DB2C8778F10032A0CD /* BlablaChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlablaChat.entitlements; sourceTree = "<group>"; };
 		C03763852C411F3700A5602B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				C06018AF2D65E71000E63ED2 /* LastMessage.swift */,
 				C0568C592D82DC0700931233 /* TokensFCM.swift */,
 				C0E67F672E5E297B0083ED85 /* Contact.swift */,
+				C01D1DD12EF17AD70011E619 /* SubUsers.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				C0C064C02D4B7C1D00D0C29B /* MessageCellPhoto.swift in Sources */,
 				C0F6C9C92D1C8FA300BE471E /* Salons.swift in Sources */,
 				C08072CF2E645A330034DF52 /* SalonsManager.swift in Sources */,
+				C01D1DD22EF17AD70011E619 /* SubUsers.swift in Sources */,
 				C0C064C22D4B7D0C00D0C29B /* MessageBigImage.swift in Sources */,
 				C047E9C42B45625C00C6D48F /* BlablaChatApp.swift in Sources */,
 				C08906B92D1ABC5800277CCD /* LastMessagesManager.swift in Sources */,

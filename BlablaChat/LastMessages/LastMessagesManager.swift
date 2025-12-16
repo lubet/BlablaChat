@@ -101,7 +101,7 @@ final class LastMessagesManager {
         return nil
     }
 
-    // Renvoie tous les salons dont fait partie le user courant
+    // TODO Les salons dont fait partie le current user
     func getSalons(currentId: String) async throws -> [Salons] {
         let salons: [Salons] = []
         // Faire une requete dans Users/subSalons avec le currentUserId

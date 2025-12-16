@@ -37,7 +37,7 @@ final class MessagesManager {
         return messagesCollection.document(id)
     }
 
-    // Sous-collection scUsers -----------------------------------
+    // Sous-collection subUsers -----------------------------------
     private func subUsersCollection(salonId: String) -> CollectionReference {
         return salonDocument(salonId: salonId).collection("subUsers")
     }
@@ -104,7 +104,7 @@ final class MessagesManager {
         return messages
     }
     
-    // Salon du currentuser et du contact
+    // Get le salonId du currentUser et du contactId uniquement
     func getSalonId(currentId: String, contactId: String) async throws -> String? {
         
         var allSalons: [Salons] = []

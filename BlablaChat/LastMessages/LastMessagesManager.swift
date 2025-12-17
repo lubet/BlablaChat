@@ -24,13 +24,6 @@ final class LastMessagesManager {
         return salonCollection.document(salon_id)
     }
     
-    // Membres
-    private let memberCollection = db.collection("Membres")
-    
-    private func memberDocument(user_id: String) -> DocumentReference {
-        return memberCollection.document(user_id)
-    }
-    
     // Salons/Messages
     private let messagesCollection = db.collection("Messages")
     
@@ -86,7 +79,7 @@ final class LastMessagesManager {
         return nil
     }
 
-    // TODO Les salons dont fait partie le current user
+    //* Les salons dont fait partie le current user
     func userSalons(userId: String) async throws -> [String]? {
         do {
             let querySnapshot = try await subUsersCollection

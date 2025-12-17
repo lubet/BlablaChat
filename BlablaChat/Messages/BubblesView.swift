@@ -127,18 +127,19 @@ final class BubblesViewModel: ObservableObject {
         // user_id
         guard let currentUserId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
 
-        // contactId
+        // Recherche du contactId dans Users
         var contactId =  try await UsersManager.shared.searchContact(email: emailContact)
         if contactId == "" {
             contactId = try await UsersManager.shared.createUser(email: emailContact, nom: nom, prenom: prenom)
         }
         
-        // salonId
+        // Recherche du salonId commun au currentId et au contactId
         salonId = try await MessagesManager.shared.getSalonId(currentId: currentUserId, contactId: contactId)
         
         if salonId == "" {
             salonId = try await SalonsManager.shared.newSalon(last_message: "")
-            // Ajout du couple contact currentuser à ce salon
+            
+            // Ajout du couple contact currentuser à la sous-collection subUsers de ce salon
             try await MessagesManager.shared.newTwoSubUsers(salonId: salonId, currendId: currentUserId, contactId: contactId)
         }
 

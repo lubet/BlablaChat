@@ -28,9 +28,7 @@ class LastMessagesViewModel: ObservableObject {
 
     // Liste des derniers messages d'un user par salons
     func getLastMessages() async {
-        
         // print("**** LastMessagesView-getLastMessages()")
-
         Task {
             
             lastMessages = []
@@ -93,21 +91,7 @@ class LastMessagesViewModel: ObservableObject {
     func logOut() {
         try? UsersManager.shared.signOut()
     }
-    
-    func getUserToolBar() {
-        
-//        userEmail = user.email ?? ""
-//        userAvatarLink = user.avatarLink ?? ""
-        
-        // print("**** getUserToolBar()")
-    }
 }
-
-// -----------------------------------------------------------------------------
-
-//enum pathRoute: Hashable {
-//    case bubble(email: String)
-//}
 
 struct LastMessagesView: View {
     

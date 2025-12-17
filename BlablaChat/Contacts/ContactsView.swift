@@ -78,6 +78,7 @@ struct ContactsView: View {
                     Button {
                         router.showScreen(.push) { _ in
                             BubblesView(oneContact: oneContact)
+                            // TestView(oneContact: oneContact)
                         }
                     } label: {
                         ContactRowView(oneContact: oneContact)
@@ -86,9 +87,6 @@ struct ContactsView: View {
             }
             .navigationTitle("Contacts")
             .searchable(text: $vm.searchText)
-            .onDisappear {
-                router.dismissScreenStack()
-            }
         }
     }
 }

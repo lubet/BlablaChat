@@ -39,28 +39,13 @@ final class LastMessagesManager {
         return salonDocument(salon_id: salonId).collection("Messages")
     }
     
+    // Salons/subUsers
+    private let subUsersCollection = db.collection("Salons/subUsers")
     
-    // Renvoie tous les salons dont fait partie le user courant
-    func userSalons(userId: String) async throws -> [String]? {
-        do {
-            let querySnapshot = try await memberCollection
-                .whereField("user_id", isEqualTo: userId)
-                .getDocuments()
-            
-            var salonsId: [String] = []
-            
-            for document in querySnapshot.documents {
-                let membre = try document.data(as: Membres.self)
-                salonsId.append(membre.salonId)
-            }
-            return salonsId
-        } catch {
-            print("userSalons - Error getting documents: \(error)")
-        }
-        print("userSalons: non trouvé pour userId: \(userId)")
-        return nil
+    // Tous les subUsers d'un salon
+    private func subUsersCollection(salonId: String) -> CollectionReference {
+        return salonDocument(salon_id: salonId).collection("subUsers")
     }
-    
     
     // Renvoie tous les messages d'un salon
     func userMessages(salonId: String) async throws -> [Messages]? {
@@ -102,9 +87,23 @@ final class LastMessagesManager {
     }
 
     // TODO Les salons dont fait partie le current user
-    func getSalons(currentId: String) async throws -> [Salons] {
-        let salons: [Salons] = []
-        // Faire une requete dans Users/subSalons avec le currentUserId
-        return salons
+    func userSalons(userId: String) async throws -> [String]? {
+        do {
+            let querySnapshot = try await subUsersCollection
+                .whereField("userId", isEqualTo: userId)
+                .getDocuments()
+            
+            var salonsId: [String] = []
+            
+            for document in querySnapshot.documents {
+                let membre = try document.data(as: SubUsers.self)
+                salonsId.append(membre.salonId)
+            }
+            return salonsId
+        } catch {
+            print("userSalons - Error getting documents: \(error)")
+        }
+        print("userSalons: non trouvé pour userId: \(userId)")
+        return nil
     }
 }

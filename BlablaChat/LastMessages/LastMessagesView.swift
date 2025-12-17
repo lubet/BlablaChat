@@ -179,7 +179,7 @@ struct LastMessagesView: View {
                 
                 Spacer()
                 
-                // btnLogout
+                btnLogout
             }
             .task {
                 await vm.getLastMessages()

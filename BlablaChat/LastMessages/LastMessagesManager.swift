@@ -33,7 +33,7 @@ final class LastMessagesManager {
     }
     
     // Salons/subUsers
-    private let subUsersCollection = db.collection("Salons/subUsers")
+    private let subUsersCollection = db.collection("subUsers")
     
     // Tous les subUsers d'un salon
     private func subUsersCollection(salonId: String) -> CollectionReference {

@@ -92,7 +92,7 @@ final class BubblesViewModel: ObservableObject {
                     try await MessagesManager.shared.newMessage(salonId: salonId, fromId: userId, texte: "Photo", urlPhoto: lurl.absoluteString, toId: contactID)
                     
                     // Mettre à jour last_message dans Salons
-                    try await SalonsManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: lurl.absoluteString, userId: userId, contactId: contactID)
+                    try await SalonsManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: lurl.absoluteString, sendTo: userId)
                     
                     return
                 }
@@ -104,27 +104,16 @@ final class BubblesViewModel: ObservableObject {
     func allUserSalonMessages(oneContact: ContactModel) async throws {
         guard let currentUserId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
         
-        print("1")
-        
         // Recherche du contact dans la base Users
         let contactId =  try await UsersManager.shared.searchContact(email: oneContact.email)
 
-        print("2")
-        
         // Si le contact existe
         if contactId != "" {
             // Retourne le salonId commun au contact et au current user
             salonId = try await MessagesManager.shared.getSalonId(currentId: currentUserId, contactId: contactId)
             
-            print("3")
-            
-            print("salonId: \(salonId)") // Vide. ? TODO
-            print("currentUserId: \(currentUserId)")
-            
             // Charger les derniers messages du salon et maj du Send
             allMessages = try await MessagesManager.shared.getMessages(salonId: salonId, currentUserId: currentUserId)
-            
-            print("4")
             
             sortAllMessages()
             
@@ -145,7 +134,7 @@ final class BubblesViewModel: ObservableObject {
             contactId = try await UsersManager.shared.createUser(email: emailContact, nom: nom, prenom: prenom)
         }
         
-        // Recherche du salonId commun au currentId et au contactId
+        // Recherche dans subUsers du salonId commun au currentId et au contactId
         salonId = try await MessagesManager.shared.getSalonId(currentId: currentUserId, contactId: contactId)
         
         if salonId == "" {
@@ -168,7 +157,7 @@ final class BubblesViewModel: ObservableObject {
         try await MessagesManager.shared.newMessage(salonId: salonId, fromId: currentUserId, texte: texteMessage, urlPhoto: "", toId: contactId)
         
         // Mise à jour du texte du message dans le salon
-        try await SalonsManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: texteMessage, userId: currentUserId, contactId: contactId)
+        try await SalonsManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: texteMessage, sendTo: currentUserId)
     }
 }
 
@@ -179,7 +168,7 @@ struct BubblesView: View {
 
     let oneContact: ContactModel
     
-    @StateObject var vm = BubblesViewModel()
+    @ObservedObject var vm = BubblesViewModel()
     
     @State private var texteMessage: String = ""
     

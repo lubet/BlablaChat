@@ -92,7 +92,6 @@ final class LastMessagesManager {
 
             for document in querySnapshot.documents {
                 let subUser = try document.data(as: SubUsers.self)
-                print("salonId: \(subUser.salonId)")
                 salonsId.append(subUser.salonId)
             }
             return salonsId

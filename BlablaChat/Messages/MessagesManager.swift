@@ -26,7 +26,7 @@ final class MessagesManager {
         salonsCollection
     }
     private func salonDocument(salonId: String) -> DocumentReference {
-        salonsCollection.document(salonId) // Erreur: "Document path cannot be empty."
+        salonsCollection.document(salonId)
     }
     
     // Sous-collection Messages ----------------------------------------
@@ -37,10 +37,11 @@ final class MessagesManager {
         return messagesCollection.document(id)
     }
 
-    // Sous-collection subUsers -----------------------------------
+    // Tous les subUsers d'un salon
     private func subUsersCollection(salonId: String) -> CollectionReference {
         return salonDocument(salonId: salonId).collection("subUsers")
     }
+    // Un document subUser
     private func subUsersDocument(userId: String) -> DocumentReference {
         return subUsersCollection.document(userId)
     }
@@ -107,13 +108,11 @@ final class MessagesManager {
     //* Get le salonId du currentUser et du contactId uniquement
     func getSalonId(currentId: String, contactId: String) async throws -> String {
         
-        print("currentId: \(currentId)")
-        print("contactId: \(contactId)")
-        
         var allSalons: [Salons] = []
         
         // Tous les salons
         let snapshot = try await allSalonsCollection().getDocuments()
+        
         for doc in snapshot.documents {
             let unSalon = try doc.data(as: Salons.self)
             allSalons.append(unSalon)
@@ -129,8 +128,7 @@ final class MessagesManager {
             subUsers = []
             // Les subUsers du salon contenant currentId et contactId
             let query = try await subUsersCollection(salonId: salon.salonId)
-                .whereField("user_id", isEqualTo: currentId)
-                .whereField("user_id", isEqualTo: contactId)
+                .whereField("user_id", in: [currentId, contactId])
                 .getDocuments()
             
             for sub in query.documents {

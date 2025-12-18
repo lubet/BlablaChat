@@ -45,11 +45,10 @@ final class SalonsManager {
     }
 
     // Enregistre le dernier message dans "salons
-    func majLastMessageSalons(salonId: String, lastMessage: String, userId: String, contactId: String) async throws {
+    func majLastMessageSalons(salonId: String, lastMessage: String, sendTo: String) async throws {
         let data: [String:Any] = [
             Salons.CodingKeys.lastMessage.rawValue : lastMessage,
-            Salons.CodingKeys.contactId.rawValue : contactId,
-            Salons.CodingKeys.userId.rawValue : userId
+            Salons.CodingKeys.sendTo.rawValue : sendTo
         ]
         try await salonDocument(salonId: salonId).updateData(data)
     }
@@ -63,7 +62,7 @@ final class SalonsManager {
             
             for unSalon in querySalons.documents {
                 let salon = try unSalon.data(as: Salons.self)
-                return salon.contactId
+                return salon.sendTo
             }
         } catch {
             print("getToId - Error getting documents: \(error)")

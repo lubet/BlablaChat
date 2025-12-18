@@ -126,8 +126,8 @@ final class MessagesManager {
             subUsers = []
             // Les subUsers du salon contenant currentId et contactId
             let query = try await subUsersCollection(salonId: salon.salonId)
-                .whereField("userId", isEqualTo: currentId)
-                .whereField("userId", isEqualTo: contactId)
+                .whereField("user_id", isEqualTo: currentId)
+                .whereField("user_id", isEqualTo: contactId)
                 .getDocuments()
             
             for sub in query.documents {
@@ -144,6 +144,7 @@ final class MessagesManager {
     }
     
     //* Création de deux documents subUser dans la sous-collection subUsers d'un Salon
+    // TODO mettre le userID comme id du document
     func newTwoSubUsers(salonId: String, currendId: String, contactId: String) async throws {
         for item in [currendId, contactId] {
             let document = subUsersCollection(salonId: salonId).document()
@@ -152,7 +153,7 @@ final class MessagesManager {
             let data: [String:Any] = [
                 "id" : documentId,
                 "salon_id" : salonId,
-                "userId": item,
+                "user_id": item,
             ]
             do {
                 try await document.setData(data, merge: false)

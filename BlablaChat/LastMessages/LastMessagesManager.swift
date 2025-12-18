@@ -17,14 +17,14 @@ final class LastMessagesManager {
     
     init() { }
     
-    // Rooms
+    // Salons
     private let salonCollection = db.collection("Salons")
     
     private func salonDocument(salon_id: String) -> DocumentReference {
         return salonCollection.document(salon_id)
     }
     
-    // Salons/Messages
+    // Messages sous Salons
     private let messagesCollection = db.collection("Messages")
     
     // Tous les messages d'un salon
@@ -32,13 +32,15 @@ final class LastMessagesManager {
         return salonDocument(salon_id: salonId).collection("Messages")
     }
     
-    // Salons/subUsers
+    // subUsers sous Salons
     private let subUsersCollection = db.collection("subUsers")
     
     // Tous les subUsers d'un salon
-    private func subUsersCollection(salonId: String) -> CollectionReference {
+    private func subUsersSalonCollection(salonId: String) -> CollectionReference {
         return salonDocument(salon_id: salonId).collection("subUsers")
     }
+    
+    //----------------------------------------------------------------------------
     
     // Renvoie tous les messages d'un salon
     func userMessages(salonId: String) async throws -> [Messages]? {
@@ -79,18 +81,21 @@ final class LastMessagesManager {
         return nil
     }
 
-    //* Les salons dont fait partie le current user
+    //* Tous les salons dont fait partie un user 
     func userSalons(userId: String) async throws -> [String]? {
+        var salonsId: [String] = []
+        
         do {
-            let querySnapshot = try await subUsersCollection
-                .whereField("userId", isEqualTo: userId)
+            let querySnapshot = try await db.collectionGroup("subUsers")
+                .whereField("user_id", isEqualTo: userId)
                 .getDocuments()
             
-            var salonsId: [String] = []
-            
+            let nb = querySnapshot.count
+            print("nb: \(nb)")
+
             for document in querySnapshot.documents {
-                let membre = try document.data(as: SubUsers.self)
-                salonsId.append(membre.salonId)
+                let subUser = try document.data(as: SubUsers.self)
+                salonsId.append(subUser.salonId)
             }
             return salonsId
         } catch {

@@ -42,11 +42,13 @@ class LastMessagesViewModel: ObservableObject {
                 userAvatarLink = dbuser.avatarLink ?? "**** Inconnu"
                 userNom = dbuser.nom
                 userPrenom = dbuser.prenom
-        
+            
             // Renvoie tous les salons Ids ddu currentUser
             guard let userSalonsIds = try await LastMessagesManager.shared.userSalons(userId: currentUserId) else {
                 return
             }
+            
+            print("userSalonsIds: \(userSalonsIds)")
             
             for userSalonId in userSalonsIds {
                 // Infos du salon

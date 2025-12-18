@@ -144,7 +144,6 @@ final class MessagesManager {
     }
     
     //* Création de deux documents subUser dans la sous-collection subUsers d'un Salon
-    // TODO mettre le userID comme id du document
     func newTwoSubUsers(salonId: String, currendId: String, contactId: String) async throws {
         for item in [currendId, contactId] {
             let document = subUsersCollection(salonId: salonId).document()

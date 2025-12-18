@@ -89,12 +89,10 @@ final class LastMessagesManager {
             let querySnapshot = try await db.collectionGroup("subUsers")
                 .whereField("user_id", isEqualTo: userId)
                 .getDocuments()
-            
-            let nb = querySnapshot.count
-            print("nb: \(nb)")
 
             for document in querySnapshot.documents {
                 let subUser = try document.data(as: SubUsers.self)
+                print("salonId: \(subUser.salonId)")
                 salonsId.append(subUser.salonId)
             }
             return salonsId

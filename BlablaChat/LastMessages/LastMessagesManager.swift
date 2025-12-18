@@ -81,7 +81,7 @@ final class LastMessagesManager {
         return nil
     }
 
-    //* Charger tous les salonsIds du userId dans subUsers
+    //* Charger tous les salonsIds de subUsers pour un userId
     func userSalons(userId: String) async throws -> [String]? {
         var salonsId: [String] = []
         
@@ -102,10 +102,10 @@ final class LastMessagesManager {
         return nil
     }
     
-    // Charge tous les salons fournis par le salonId de subUsers des userId = currentId
+    //* Get les salons du currentUser
     func getSalonsCurrent(currentUserId: String) async throws -> [Salons]? {
-        // 1) Charger tous les salonId de SubUsers pour userId = currentUserId
-        // 2) charger tous les salons de ces salonIds
+        // 1) Charger tous les salonIds de SubUsers pour userId = currentUserId
+        // 2) Charger tous les salons de ces salonIds
         
         guard let salonsIds: [String] = try await userSalons(userId: currentUserId) else {
             print("getSalonsCurrent")

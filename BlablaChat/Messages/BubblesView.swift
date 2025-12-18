@@ -104,15 +104,27 @@ final class BubblesViewModel: ObservableObject {
     func allUserSalonMessages(oneContact: ContactModel) async throws {
         guard let currentUserId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
         
+        print("1")
+        
         // Recherche du contact dans la base Users
         let contactId =  try await UsersManager.shared.searchContact(email: oneContact.email)
 
+        print("2")
+        
         // Si le contact existe
         if contactId != "" {
             // Retourne le salonId commun au contact et au current user
             salonId = try await MessagesManager.shared.getSalonId(currentId: currentUserId, contactId: contactId)
+            
+            print("3")
+            
+            print("salonId: \(salonId)") // Vide. ? TODO
+            print("currentUserId: \(currentUserId)")
+            
             // Charger les derniers messages du salon et maj du Send
             allMessages = try await MessagesManager.shared.getMessages(salonId: salonId, currentUserId: currentUserId)
+            
+            print("4")
             
             sortAllMessages()
             

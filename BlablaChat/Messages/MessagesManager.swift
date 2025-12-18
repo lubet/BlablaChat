@@ -26,7 +26,7 @@ final class MessagesManager {
         salonsCollection
     }
     private func salonDocument(salonId: String) -> DocumentReference {
-        salonsCollection.document(salonId)
+        salonsCollection.document(salonId) // Erreur: "Document path cannot be empty."
     }
     
     // Sous-collection Messages ----------------------------------------
@@ -106,6 +106,9 @@ final class MessagesManager {
     
     //* Get le salonId du currentUser et du contactId uniquement
     func getSalonId(currentId: String, contactId: String) async throws -> String {
+        
+        print("currentId: \(currentId)")
+        print("contactId: \(contactId)")
         
         var allSalons: [Salons] = []
         

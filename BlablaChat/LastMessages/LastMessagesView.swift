@@ -62,14 +62,14 @@ class LastMessagesViewModel: ObservableObject {
                 
                 let lastMessage = salon.lastMessage
                 
-                let contactId = salon.sendTo
+                let senderId = salon.sendTo
                 
                 var email: String = ""
                 var avatarLink: String = ""
                 var nom: String = ""
                 var prenom: String = ""
                 
-                if contactId == currentUserId {
+                if senderId == currentUserId {
                     // prendre le userId
                     guard let user = try await UsersManager.shared.searchUser(userId: salon.sendTo) else {
                         print("**** getLastMessages() userSalon1"); return }
@@ -79,12 +79,13 @@ class LastMessagesViewModel: ObservableObject {
                     prenom = user.prenom
                 } else {
                     // prendre le contactId
-                    guard let contact = try await UsersManager.shared.searchUser(userId: salon.sendTo) else {
+                    guard let sender = try await UsersManager.shared.searchUser(userId: salon.sendTo) else {
                         print("**** getLastMessages() userSalon2"); return }
-                    email = contact.email ?? "inconnu"
-                    avatarLink = contact.avatarLink  ?? "inconnu"
-                    nom = contact.nom
-                    prenom = contact.prenom
+                    
+                    email = sender.email ?? "inconnu"
+                    avatarLink = sender.avatarLink  ?? "inconnu"
+                    nom = sender.nom
+                    prenom = sender.prenom
                 }
                 
                 // TODO c'est l'email de l'envoyeur que l'on devrait trouver ici

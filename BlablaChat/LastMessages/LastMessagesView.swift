@@ -37,16 +37,22 @@ class LastMessagesViewModel: ObservableObject {
             guard let currentUserId = currentUserId else { print("**** getLastMessages()-currentUserId = nil") ; return }
             
             // Infos du currentUser
-            guard let dbuser = try await UsersManager.shared.searchUser(userId: currentUserId) else { return }
-                userEmail = dbuser.email ?? "**** Inconnu"
-                userAvatarLink = dbuser.avatarLink ?? "**** Inconnu"
-                userNom = dbuser.nom
-                userPrenom = dbuser.prenom
+            guard let currentUser = try await UsersManager.shared.searchUser(userId: currentUserId) else { return }
+                userEmail = currentUser.email ?? "**** Inconnu"
+                userAvatarLink = currentUser.avatarLink ?? "**** Inconnu"
+                userNom = currentUser.nom
+                userPrenom = currentUser.prenom
             
-            // Les salons du currentuser
+            // Get all salonIds où se trouve le current
             guard let userSalonsIds = try await LastMessagesManager.shared.userSalons(userId: currentUserId) else {
                 return
             }
+            
+            // Pour chaque salon prendre le dernier message, et le senderId
+            
+            // Charger les infos du senderId
+            
+            // Contruire le message
             
             
             
@@ -61,7 +67,6 @@ class LastMessagesViewModel: ObservableObject {
                 print("userSalonId: \(userSalonId)")
                 
                 let lastMessage = salon.lastMessage
-                
                 let senderId = salon.sendTo
                 
                 var email: String = ""
@@ -70,13 +75,16 @@ class LastMessagesViewModel: ObservableObject {
                 var prenom: String = ""
                 
                 if senderId == currentUserId {
-                    // prendre le userId
+                    // Charger le sender
                     guard let user = try await UsersManager.shared.searchUser(userId: salon.sendTo) else {
-                        print("**** getLastMessages() userSalon1"); return }
+                        print("**** user inexistant")
+                        return
+                    }
                     email = user.email ?? "inconnu"
                     avatarLink = user.avatarLink ?? "inconnu"
                     nom = user.nom
                     prenom = user.prenom
+                    
                 } else {
                     // prendre le contactId
                     guard let sender = try await UsersManager.shared.searchUser(userId: salon.sendTo) else {

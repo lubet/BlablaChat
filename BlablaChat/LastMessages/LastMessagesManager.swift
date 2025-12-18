@@ -81,7 +81,7 @@ final class LastMessagesManager {
         return nil
     }
 
-    //* Tous les salons dont fait partie un user 
+    //* Charger tous les salonsIds du userId dans subUsers
     func userSalons(userId: String) async throws -> [String]? {
         var salonsId: [String] = []
         
@@ -100,5 +100,29 @@ final class LastMessagesManager {
         }
         print("userSalons: non trouvé pour userId: \(userId)")
         return nil
+    }
+    
+    // Charge tous les salons fournis par le salonId de subUsers des userId = currentId
+    func getSalonsCurrent(currentUserId: String) async throws -> [Salons]? {
+        // 1) Charger tous les salonId de SubUsers pour userId = currentUserId
+        // 2) charger tous les salons de ces salonIds
+        
+        guard let salonsIds: [String] = try await userSalons(userId: currentUserId) else {
+            print("getSalonsCurrent")
+            return nil
+        }
+        
+        var salons: [Salons] = []
+        
+        for salonId in salonsIds {
+            do {
+                let document = try await salonDocument(salon_id: salonId).getDocument()
+                let salon = try document.data(as: Salons.self)
+                salons.append(salon)
+            } catch {
+                print("userSalons - Error getting documents: \(error)")
+            }
+        }
+        return salons
     }
 }

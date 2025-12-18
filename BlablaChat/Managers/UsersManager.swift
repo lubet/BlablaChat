@@ -172,7 +172,6 @@ final class UsersManager {
             print("searchUser by userId - Error getting documents: \(error)")
         }
         return nil
-        
     }
 
     // Recherche, avec le contact_id, du contact dans la nase "Users" 

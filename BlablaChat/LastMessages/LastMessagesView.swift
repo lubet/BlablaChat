@@ -28,16 +28,11 @@ class LastMessagesViewModel: ObservableObject {
 
     // Liste des derniers messages du currentuser par salon 
     func getLastMessages() async {
-        
-        print("**** getLastMessages")
-        
         Task {
             lastMessages = []
             
             // @AppStorage
             guard let currentUserId = currentUserId else { print("**** getLastMessages()-currentUserId = nil") ; return }
-            
-            print("**** currentUserId = \(currentUserId)")
             
             // Infos du currentUser
             guard let currentUser = try await UsersManager.shared.searchUser(userId: currentUserId) else { return }
@@ -54,8 +49,6 @@ class LastMessagesViewModel: ObservableObject {
             var nom: String = ""
             var prenom: String = ""
             
-            print("**** salonsCurrent: \(salonsCurrent)")
-            
             // Constructions du dernier message des Salons du currentuser
             for salon in salonsCurrent {
                 let lastMessage = salon.lastMessage
@@ -69,7 +62,6 @@ class LastMessagesViewModel: ObservableObject {
 
                 lastMessages.append(LastMessage(avatarLink: avatarLink, emailContact: email, texte: lastMessage, date: Timestamp(), salonId: salon.salonId, nom: nom, prenom: prenom))
                 
-                print("**** lastMessages: \(lastMessages)")
             }
         }
     }
@@ -83,13 +75,13 @@ struct LastMessagesView: View {
     
     @Environment(\.router) var router
     
-    @ObservedObject var vm: LastMessagesViewModel = LastMessagesViewModel()
+    @StateObject var vm: LastMessagesViewModel = LastMessagesViewModel()
     
     var body: some View {
         ZStack {
             Color.theme.background.edgesIgnoringSafeArea(.all)
             VStack {
-                List(vm.lastMessages, id: \.id) { message in
+                List(vm.lastMessages) { message in
                     LastMessagesCellView(lastMessage: message)
                         .onTapGesture {
                             Task {

@@ -18,7 +18,6 @@ struct LastMessagesCellView: View {
         ZStack {
             Color.theme.background
                 .ignoresSafeArea()
-            Text("**************************************")
             HStack(spacing: 0) {
                 //SDWebImageLoader(url: lastMessage.avatar_link, size: 40)
                 VStack(alignment: .leading) {
@@ -35,7 +34,6 @@ struct LastMessagesCellView: View {
                         .padding(.leading, 20)
                 }
                 Spacer()
-                Text("**************************************")
                 //let myDate = dateManager(dateMessage: lastMessage.message_date)
             }
         }

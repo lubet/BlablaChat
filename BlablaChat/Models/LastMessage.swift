@@ -7,10 +7,10 @@
 
 import Foundation
 import FirebaseFirestore
-import FirebaseFirestoreSwift
+
 
 struct LastMessage: Identifiable, Codable, Hashable {
-    let id = UUID().uuidString
+    let id: String
     let avatarLink: String
     let emailContact: String
     let texte: String
@@ -18,6 +18,17 @@ struct LastMessage: Identifiable, Codable, Hashable {
     let salonId: String
     let nom: String
     let prenom: String
+    
+    init(id: String = UUID().uuidString, avatarLink: String = "", emailContact: String = "", texte: String = "", date: Timestamp = Timestamp(), salonId: String = "", nom: String = "", prenom: String = "") {
+        self.id = id
+        self.avatarLink = avatarLink
+        self.emailContact = emailContact
+        self.texte = texte
+        self.date = date
+        self.salonId = salonId
+        self.nom = nom
+        self.prenom = prenom
+    }
     
     enum CodingKeys: String, CodingKey {
         case id = "id"

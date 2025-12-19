@@ -105,7 +105,7 @@ final class MessagesManager {
         return messages
     }
     
-    //* Get le salonId du currentUser et du contactId uniquement
+    //* Le salonId uniquement du current et du contact sinon nil
     func getSalonId(currentId: String, contactId: String) async throws -> String {
         
         var allSalons: [Salons] = []

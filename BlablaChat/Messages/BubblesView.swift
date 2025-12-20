@@ -92,7 +92,7 @@ final class BubblesViewModel: ObservableObject {
                     try await MessagesManager.shared.newMessage(salonId: salonId, fromId: userId, texte: "Photo", urlPhoto: lurl.absoluteString, toId: contactID)
                     
                     // Mettre à jour last_message dans Salons
-                    try await SalonsManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: lurl.absoluteString, sendTo: userId)
+                    try await SalonsManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: lurl.absoluteString, sender: userId)
                     
                     return
                 }
@@ -154,10 +154,10 @@ final class BubblesViewModel: ObservableObject {
         }
         
         // Création du message avec le n° de salon et le fromId égal au user
-        try await MessagesManager.shared.newMessage(salonId: salonId, fromId: currentUserId, texte: texteMessage, urlPhoto: "", toId: contactId)
+        try await MessagesManager.shared.newMessage(salonId: salonId, fromId: contactId, texte: texteMessage, urlPhoto: "", toId: currentUserId)
         
         // Mise à jour du texte du message dans le salon
-        try await SalonsManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: texteMessage, sendTo: currentUserId)
+        try await SalonsManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: texteMessage, sender: currentUserId)
     }
 }
 

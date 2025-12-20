@@ -49,10 +49,10 @@ class LastMessagesViewModel: ObservableObject {
             var nom: String = ""
             var prenom: String = ""
             
-            // Constructions du dernier message des Salons du currentuser
+            // Dernier messsage de chaque salon
             for salon in salonsCurrent {
                 let lastMessage = salon.lastMessage
-                let senderId = salon.sendTo
+                let senderId = salon.sender
                 
                 guard let sender = try await UsersManager.shared.searchUser(userId: senderId) else { continue }
                 email = sender.email ?? "**** Inconnu"

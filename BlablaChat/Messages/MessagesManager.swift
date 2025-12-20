@@ -49,7 +49,7 @@ final class MessagesManager {
     // ---------------------------------------------------------------------------
     
     // Création d'un nouveau message dans un salon
-    func newMessage(salonId: String, fromId: String, texte: String, urlPhoto: String, toId: String) async throws {
+    func newMessage(salonId: String, receiver: String, texte: String, urlPhoto: String, sender: String) async throws {
         let document = messagesCollection(salonId: salonId).document()
         let documentId = document.documentID
         
@@ -57,11 +57,11 @@ final class MessagesManager {
             "id" : documentId,
             "salon_id" : salonId,
             "send" : true,
-            "from_id" : fromId,
+            "receiver" : receiver,
             "texte" : texte,
             "date_message": Timestamp(), // Date Firebase
             "url_photo" : urlPhoto,
-            "to_id" : toId,
+            "sender" : sender,
             "date_sort": Date() // Date Swift utilisé pour le tri dans BubblesView
         ]
         do {
@@ -94,7 +94,7 @@ final class MessagesManager {
 
         for doc in snapshot.documents {
             var msg = try doc.data(as: Messages.self)
-            if currentUserId == msg.fromId {
+            if currentUserId == msg.receiver {
                 msg.send = true
             } else {
                 msg.send = false

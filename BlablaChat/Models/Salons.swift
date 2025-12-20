@@ -24,6 +24,6 @@ struct Salons: Identifiable, Codable, Hashable {
         case salonId = "salon_id"
         case dateCreated = "date_created"
         case lastMessage = "last_message"
-        case sender = "user_id"
+        case sender = "sender"
     }
 }

@@ -29,7 +29,7 @@ final class SalonsManager {
     // ------------------------------------------------------------------------------------
     
     // Création d'un nouveau salon
-    func newSalon(last_message: String, sendTo: String) async throws -> String {
+    func newSalon(last_message: String, receiver: String) async throws -> String {
         let salonRef = salonsCollection.document()
         let docId = salonRef.documentID
         
@@ -37,17 +37,17 @@ final class SalonsManager {
             "salon_id" : docId,
             "date_created" : Timestamp(),
             "last_message": last_message,
-            "sendTo": sendTo
+            "receiver": receiver
         ]
         try await salonRef.setData(data, merge: false)
         return docId
     }
 
     // Enregistre le dernier message dans "salons
-    func majLastMessageSalons(salonId: String, lastMessage: String, sender: String) async throws {
+    func majLastMessageSalons(salonId: String, lastMessage: String, receiver: String) async throws {
         let data: [String:Any] = [
             Salons.CodingKeys.lastMessage.rawValue : lastMessage,
-            Salons.CodingKeys.sender.rawValue : sender
+            Salons.CodingKeys.sender.rawValue : receiver
         ]
         try await salonDocument(salonId: salonId).updateData(data)
     }

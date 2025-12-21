@@ -52,9 +52,9 @@ class LastMessagesViewModel: ObservableObject {
             // Dernier messsage de chaque salon
             for salon in salonsCurrent {
                 let lastMessage = salon.lastMessage
-                let senderId = salon.sender
+                let receiverId = salon.receiver
                 
-                guard let sender = try await UsersManager.shared.searchUser(userId: senderId) else { continue }
+                guard let sender = try await UsersManager.shared.searchUser(userId: receiverId) else { continue }
                 email = sender.email ?? "**** Inconnu"
                 avatarLink = sender.avatarLink ?? "**** Inconnu"
                 nom = sender.nom

@@ -47,7 +47,7 @@ final class SalonsManager {
     func majLastMessageSalons(salonId: String, lastMessage: String, receiver: String) async throws {
         let data: [String:Any] = [
             Salons.CodingKeys.lastMessage.rawValue : lastMessage,
-            Salons.CodingKeys.sender.rawValue : receiver
+            Salons.CodingKeys.receiver.rawValue : receiver
         ]
         try await salonDocument(salonId: salonId).updateData(data)
     }
@@ -61,7 +61,7 @@ final class SalonsManager {
             
             for unSalon in querySalons.documents {
                 let salon = try unSalon.data(as: Salons.self)
-                return salon.sender
+                return salon.receiver
             }
         } catch {
             print("getToId - Error getting documents: \(error)")

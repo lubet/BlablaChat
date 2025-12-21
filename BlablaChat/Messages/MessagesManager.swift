@@ -95,9 +95,9 @@ final class MessagesManager {
         for doc in snapshot.documents {
             var msg = try doc.data(as: Messages.self)
             if currentUserId == msg.receiver {
-                msg.send = true
-            } else {
                 msg.send = false
+            } else {
+                msg.send = true
             }
             messages.append(msg)
 

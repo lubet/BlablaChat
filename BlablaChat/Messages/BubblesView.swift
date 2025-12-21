@@ -102,17 +102,18 @@ final class BubblesViewModel: ObservableObject {
     
     // Chargement des messages du salon concernant le user et le contact.
     func allUserSalonMessages(oneContact: ContactModel) async throws {
-        guard let currentUserId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
         
+        guard let currentUserId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
+
         // Recherche du contact dans la base Users
         let contactId =  try await UsersManager.shared.searchContact(email: oneContact.email)
-
+        
         // Si le contact existe
         if contactId != "" {
-            // Retourne le salonId commun au contact et au current user
+            // Retourne le salonId commun au contact et au current user seuls
             salonId = try await MessagesManager.shared.getSalonId(currentId: currentUserId, contactId: contactId)
             
-            // Charger les derniers messages du salon et maj du Send
+            // Les derniers messages du salon et maj du Send
             allMessages = try await MessagesManager.shared.getMessages(salonId: salonId, currentUserId: currentUserId)
             
             sortAllMessages()
@@ -168,7 +169,7 @@ struct BubblesView: View {
 
     let oneContact: ContactModel
     
-    @ObservedObject var vm = BubblesViewModel()
+    @StateObject var vm = BubblesViewModel()
     
     @State private var texteMessage: String = ""
     

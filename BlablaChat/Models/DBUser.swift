@@ -32,7 +32,7 @@ struct DBUser: Codable, Identifiable {
         self.prenom = prenom
     }
     
-// Si on ne vaut créer un user dans "users" à partir de l'authentification:
+// Création d'un user autrement que par  l'authentification
     init(
         id: String? = nil,
         email : String? = nil,

@@ -48,9 +48,9 @@ final class BubblesViewModel: ObservableObject {
         
         for var message in allMessages {
             if message.receiver == currentUserId {
-                message.send = true
-            } else {
                 message.send = false
+            } else {
+                message.send = true
             }
             tempMessages.append(message)
         }

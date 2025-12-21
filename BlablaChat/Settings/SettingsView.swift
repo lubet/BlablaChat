@@ -34,12 +34,6 @@ final class SettingsViewModel: ObservableObject {
         }
     }
     
-    func loadAuthProviders() {
-        if let providers = try? AuthManager.shared.getProviders() {
-            authProviders = providers
-        }
-    }
-    
     func signOut() {
         try? AuthManager.shared.signOut()
     }
@@ -91,7 +85,6 @@ struct SettingsView: View {
             Task {
                 try await viewModel.loadAvatar()
             }
-            viewModel.loadAuthProviders()
         }
         .onDisappear {
             viewModel.newImageAvatar = image

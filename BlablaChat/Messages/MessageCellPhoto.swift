@@ -18,7 +18,7 @@ struct MessageCellPhoto: View {
     @State private var showScreenCover: Bool = false
     
     var body: some View {
-        VStack(alignment: message.send ? .leading : .trailing) {
+        VStack(alignment: message.send ? .trailing : .leading) {
             HStack {
                 WebImage(url: URL(string: message.urlPhoto))
                     .resizable()
@@ -27,7 +27,7 @@ struct MessageCellPhoto: View {
                     .cornerRadius(10)
                     //.shadow(radius: 10)
             }
-            .frame(maxWidth: 300, alignment: message.send ? .leading : .trailing)
+            .frame(maxWidth: 300, alignment: message.send ? .trailing : .leading)
 
 //            .onTapGesture {
 //                showTime.toggle()

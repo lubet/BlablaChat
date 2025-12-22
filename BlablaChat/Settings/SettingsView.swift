@@ -6,9 +6,7 @@
 //
 
 import SwiftUI
-//import PhotosUI
-import SDWebImage
-import SDWebImageSwiftUI
+import PhotosUI
 
 @MainActor
 final class SettingsViewModel: ObservableObject {
@@ -62,12 +60,7 @@ struct SettingsView: View {
                             .clipShape(Circle())
                             //.background(Color.red)
                     } else {
-                        WebImage(url: URL(string: viewModel.httpAvatar))
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 200, height: 200, alignment: .center)
-                            .clipShape(Circle())
-                            //.background(Color.red)
+                        SDWebImageLoader(url: viewModel.httpAvatar, size: 200)
                     }
                 }
                 .overlay(RoundedRectangle(cornerRadius: 100)

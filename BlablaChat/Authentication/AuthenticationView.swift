@@ -159,7 +159,7 @@ struct AuthenticationView: View {
                         .frame(height: 55)
                         .frame(maxWidth: .infinity)
                         .background(Color.theme.buttoncolor)
-                        .foregroundStyle(Color("buttonfore"))
+                        .foregroundStyle(Color.theme.buttontext)
                         .cornerRadius(10)
                 })
                 .padding(.top, 30)

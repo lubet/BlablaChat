@@ -7,6 +7,8 @@
 
 import SwiftUI
 import PhotosUI
+import SDWebImage
+import SDWebImageSwiftUI
 
 @MainActor
 final class SettingsViewModel: ObservableObject {
@@ -22,6 +24,7 @@ final class SettingsViewModel: ObservableObject {
         guard let currentUserId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
 
         httpAvatar = try! await UsersManager.shared.getAvatar(contact_id: currentUserId)
+        print("loadAvatar: \(httpAvatar)")
     }
     
     func updateAvatar() async throws {
@@ -29,6 +32,7 @@ final class SettingsViewModel: ObservableObject {
 
         if let newImageAvatar = newImageAvatar {
            let _ = try await UsersManager.shared.updateAvatar(userId: currentUserId, mimage: newImageAvatar)
+            print("updateAvatar")
         }
     }
     
@@ -48,7 +52,7 @@ struct SettingsView: View {
     var body: some View {
              // Color.theme.background.ignoresSafeArea()
         VStack {
-            Button { // Avatar
+            Button {
                 showImagePicker.toggle()
             } label: {
                 VStack {
@@ -58,32 +62,36 @@ struct SettingsView: View {
                             .scaledToFill()
                             .frame(width: 200, height: 200, alignment: .center)
                             .clipShape(Circle())
-                            //.background(Color.red)
                     } else {
-                        SDWebImageLoader(url: viewModel.httpAvatar, size: 200)
+                        WebImage(url: URL(string: viewModel.httpAvatar))
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 200, height: 200, alignment: .center)
+                            .clipShape(Circle())
                     }
                 }
                 .overlay(RoundedRectangle(cornerRadius: 100)
                     .stroke(Color.black,lineWidth: 2))
             }
             .frame(maxWidth: .infinity, alignment: .center)
-            //.background(Color.theme.inputbackground)
         }
 
         // Image
         .fullScreenCover(isPresented: $showImagePicker, onDismiss: nil) {
-            ImagePicker(image: $image) // Utilities/ImagePicker
+            ImagePicker(image: $image)
         }
         .onAppear {
             Task {
                 try await viewModel.loadAvatar()
             }
         }
-        .onDisappear {
+        .onDisappear { 
             viewModel.newImageAvatar = image
+            print("***** Disappear début")
             Task {
                 try await viewModel.updateAvatar()
             }
+            print("***** Disappear fin")
         }
     }
 }

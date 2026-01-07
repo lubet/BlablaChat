@@ -106,14 +106,14 @@ struct AuthenticationView: View {
             Color.theme.background.ignoresSafeArea(.all)
             VStack {
                 
-                Button(action: {
-                    // TODO miaulements...
-                }, label: {
-                    Image(uiImage: UIImage(named: "MonChat") ?? UIImage())
-                        .resizable()
-                        .scaledToFit().frame(width: 200, height: 200)
-                        .padding(.bottom, 60)
-                })
+//                Button(action: {
+//                    // TODO miaulements...
+//                }, label: {
+//                    Image(uiImage: UIImage(named: "MonChat") ?? UIImage())
+//                        .resizable()
+//                        .scaledToFit().frame(width: 200, height: 200)
+//                        .padding(.bottom, 60)
+//                })
                 
                 // -------------- SignIn with Apple
                 Button(action: {

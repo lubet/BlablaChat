@@ -220,6 +220,7 @@ extension BubblesView {
                 Image(systemName: "photo")
                     .foregroundColor(Color.theme.textforeground)
             }
+            .padding(.leading,10)
             
             // Saisie du message
             TextField("Message", text: $texteMessage, prompt: Text("Taper ici votre message").foregroundColor(Color.theme.textforeground), axis: .vertical)
@@ -229,6 +230,7 @@ extension BubblesView {
             // Envoi du message
             Image(systemName: "paperplane.circle")
                 .padding()
+                .padding(.trailing,10)
                 .offset(x:10)
                 .foregroundColor(Color.theme.textforeground)
                 .opacity(texteMessage.isEmpty ? 0.0 : 1.0)

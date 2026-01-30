@@ -21,12 +21,10 @@ class LastMessagesViewModel: ObservableObject {
     
     @Published private(set) var lastMessages: [LastMessage] = []
     
-    @Published private(set) var userEmail: String = ""
     @Published private(set) var userAvatarLink: String = ""
     @Published private(set) var userNom: String = ""
-    @Published private(set) var userPrenom: String = ""
 
-    // Liste des derniers messages du currentuser par salon 
+    // Liste des derniers messages reçu par le currentuser par salon
     func getLastMessages() async {
         Task {
             lastMessages = []
@@ -36,10 +34,8 @@ class LastMessagesViewModel: ObservableObject {
             
             // Infos du currentUser
             guard let currentUser = try await UsersManager.shared.searchUser(userId: currentUserId) else { return }
-            userEmail = currentUser.email ?? "**** Inconnu"
             userAvatarLink = currentUser.avatarLink ?? "**** Inconnu"
             userNom = currentUser.nom
-            userPrenom = currentUser.prenom
 
             // Les salons du currentUser
             guard let salonsCurrent = try await LastMessagesManager.shared.getSalonsCurrent(currentUserId: currentUserId) else { print("getLastMessages-salonsCurrent = nil"); return }

@@ -6,7 +6,7 @@
 //
 // Dialogue du /user/salon selectionné dans LastMessageView
 //
-// A l'envoie du message: je crée le salon, le message, les deux subUsers, le message
+// A l'envoie du message: je crée le salon, ses deux subUsers, le message
 
 import SwiftUI
 import PhotosUI
@@ -107,6 +107,9 @@ final class BubblesViewModel: ObservableObject {
 
         // Recherche du contact dans la base Users
         let contactId =  try await UsersManager.shared.searchContact(email: oneContact.email)
+        
+        // TODO pour la gestion d'un groupe (n membres d'un salon) - remplace le code ci-dessous:
+        // Chercher si un salon existe pour uniquement les membres qui ont été selectionnés dans la View (à faire).
         
         // Si le contact existe
         if contactId != "" {

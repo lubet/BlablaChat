@@ -10,25 +10,36 @@ import SwiftUI
 @MainActor
 class GroupesViewModel: ObservableObject {
     
-    @Published var contacts: [Contact] = []
+    @Published var contacts: [ContactModel] = []
     
     init() {
-        loadContacts()
+        fetchAllContacts()
     }
     
-    func loadContacts() {
-        
+    private func fetchAllContacts() {
+        contacts.append(ContactModel(nom: "Leroy", prenom: "Marcel", email: "mleroy@test.com"))
+        contacts.append(ContactModel(nom: "Gured aaaaaaa", prenom: "Robert", email: "rgured@test.com"))
+        contacts.append(ContactModel(nom: "Dujou",prenom: "Roger", email: "rdujou@test.com"))
+        contacts.append(ContactModel(nom: "Lafon",prenom: "Albert", email: "alafon@test.com"))
     }
     
 }
 
-
 struct GroupesView: View {
     
+    @Environment(\.router) var router
     
+    @StateObject var viewModel: GroupesViewModel = GroupesViewModel()
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color.theme.background.ignoresSafeArea()
+            List {
+                ForEach(viewModel.contacts, id: \.self) { oneContact in
+                    ContactsRowView(oneContact: oneContact)
+                }
+            }
+        }
     }
 }
 

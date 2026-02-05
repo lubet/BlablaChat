@@ -17,10 +17,10 @@ class GroupesViewModel: ObservableObject {
     }
     
     private func fetchAllContacts() {
-        contacts.append(ContactModel(nom: "Leroy", prenom: "Marcel", email: "mleroy@test.com"))
-        contacts.append(ContactModel(nom: "Gured aaaaaaa", prenom: "Robert", email: "rgured@test.com"))
-        contacts.append(ContactModel(nom: "Dujou",prenom: "Roger", email: "rdujou@test.com"))
-        contacts.append(ContactModel(nom: "Lafon",prenom: "Albert", email: "alafon@test.com"))
+        contacts.append(ContactModel(nom: "Leroy", prenom: "Marcel", email: "mleroy@test.com", isChecked: false))
+        contacts.append(ContactModel(nom: "Gured aaaaaaa", prenom: "Robert", email: "rgured@test.com", isChecked: true))
+        contacts.append(ContactModel(nom: "Dujou",prenom: "Roger", email: "rdujou@test.com", isChecked: true))
+        contacts.append(ContactModel(nom: "Lafon",prenom: "Albert", email: "alafon@test.com", isChecked: false))
     }
     
 }
@@ -36,7 +36,7 @@ struct GroupesView: View {
             Color.theme.background.ignoresSafeArea()
             List {
                 ForEach(viewModel.contacts) { oneContact in
-                    ContactsRowView(oneContact: oneContact)
+                    GroupesRowView(oneContact: oneContact)
                 }
             }
         }

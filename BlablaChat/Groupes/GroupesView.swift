@@ -35,7 +35,7 @@ struct GroupesView: View {
         ZStack {
             Color.theme.background.ignoresSafeArea()
             List {
-                ForEach(viewModel.contacts, id: \.self) { oneContact in
+                ForEach(viewModel.contacts) { oneContact in
                     ContactsRowView(oneContact: oneContact)
                 }
             }

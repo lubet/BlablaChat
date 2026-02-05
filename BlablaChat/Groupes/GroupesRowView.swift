@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContactsRowView: View {
+struct GroupesRowView: View {
     
     let oneContact: ContactModel
     
@@ -23,5 +23,5 @@ struct ContactsRowView: View {
 }
 
 #Preview {
-    GroupesView()
+    GroupesRowView(oneContact: ContactModel(nom: "Leroy", prenom: "Marcel", email: "mleroy@test.com"))
 }

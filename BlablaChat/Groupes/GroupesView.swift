@@ -23,6 +23,10 @@ class GroupesViewModel: ObservableObject {
         contacts.append(ContactModel(nom: "Lafon",prenom: "Albert", email: "alafon@test.com", isChecked: false))
     }
     
+    private func updateCheck(oneContact: ContactModel) {
+        let index = contacts.firstIndex { (existingItem) -> Bool in
+            return existingItem.id == oneContact.id}
+    }
 }
 
 struct GroupesView: View {
@@ -37,6 +41,11 @@ struct GroupesView: View {
             List {
                 ForEach(viewModel.contacts) { oneContact in
                     GroupesRowView(oneContact: oneContact)
+                        .onTapGesture {
+                            withAnimation(.linear) {
+
+                            }
+                        }
                 }
             }
         }

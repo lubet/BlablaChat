@@ -118,11 +118,14 @@ final class BubblesViewModel: ObservableObject {
             // TODO retourne "" -> pas de salon ce qui est normal car c'est un nouveau contact
             salonId = try await MessagesManager.shared.getSalonId(currentId: currentUserId, contactId: contactId)
             
-            // Les derniers messages du salon et maj du Send
-            allMessages = try await MessagesManager.shared.getMessages(salonId: salonId, currentUserId: currentUserId)
-            
-            sortAllMessages()
-            
+            if salonId != "" {
+                // Les derniers messages du salon et maj du Send
+                allMessages = try await MessagesManager.shared.getMessages(salonId: salonId, currentUserId: currentUserId)
+                
+                sortAllMessages()
+            } else {
+                    allMessages = []
+            }
         } else {
             allMessages = []
         }

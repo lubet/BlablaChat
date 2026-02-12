@@ -8,7 +8,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "A9704222-3B9A-4D5D-87B7-326B759DB23D"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BlablaChat/Models/LastMessage.swift"
@@ -34,6 +34,160 @@
             endingLineNumber = "24"
             landmarkName = "loadAvatar()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6B4CF9A5-B00E-4A17-86A6-D942D6EB827D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlablaChat/Messages/MessagesManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "salonDocument(salonId:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "87CFCB19-FEF5-4747-803A-31D820E247F8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlablaChat/Messages/MessagesManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "messagesCollection(salonId:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3800CB07-107B-4BB3-BFCD-DF4EAAD9DCC5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlablaChat/Messages/MessagesManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "subUsersCollection(salonId:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6931DC87-1BDD-4234-AB02-D7213CF1EC5F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlablaChat/Messages/MessagesManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "newMessage(salonId:receiver:texte:urlPhoto:sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5A2D052F-8312-454C-9F44-9DF4C90C6007"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlablaChat/Messages/BubblesView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
+            landmarkName = "allUserSalonMessages(oneContact:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C861278C-CC24-4759-9474-26D6137914D1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlablaChat/Messages/BubblesView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "allUserSalonMessages(oneContact:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C861278C-CC24-4759-9474-26D6137914D1 - a884672f195c5861"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for BlablaChat.BubblesViewModel.allUserSalonMessages(oneContact: BlablaChat.ContactModel) async throws -&gt; ()"
+                  moduleName = "BlablaChat.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lubet-monclaxavier/Documents/Xavier/BlablaChat/BlablaChat/Messages/BubblesView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "119"
+                  endingLineNumber = "119">
+               </Location>
+               <Location
+                  uuid = "C861278C-CC24-4759-9474-26D6137914D1 - bac1f5f3f03861b3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) await resume partial function for BlablaChat.BubblesViewModel.allUserSalonMessages(oneContact: BlablaChat.ContactModel) async throws -&gt; ()"
+                  moduleName = "BlablaChat.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lubet-monclaxavier/Documents/Xavier/BlablaChat/BlablaChat/Messages/BubblesView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "119"
+                  endingLineNumber = "119">
+               </Location>
+               <Location
+                  uuid = "C861278C-CC24-4759-9474-26D6137914D1 - 43300ee50f37a467"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for BlablaChat.BubblesViewModel.allUserSalonMessages(oneContact: BlablaChat.ContactModel) async throws -&gt; ()"
+                  moduleName = "BlablaChat.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lubet-monclaxavier/Documents/Xavier/BlablaChat/BlablaChat/Messages/BubblesView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "119"
+                  endingLineNumber = "119">
+               </Location>
+               <Location
+                  uuid = "C861278C-CC24-4759-9474-26D6137914D1 - 1a4b62495be62c1b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for BlablaChat.BubblesViewModel.allUserSalonMessages(oneContact: BlablaChat.ContactModel) async throws -&gt; ()"
+                  moduleName = "BlablaChat.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lubet-monclaxavier/Documents/Xavier/BlablaChat/BlablaChat/Messages/BubblesView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "119"
+                  endingLineNumber = "119">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

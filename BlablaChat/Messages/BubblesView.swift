@@ -114,6 +114,8 @@ final class BubblesViewModel: ObservableObject {
         // Si le contact existe
         if contactId != "" {
             // Retourne le salonId commun au contact et au current user seuls
+            
+            // TODO retourne "" -> pas de salon ce qui est normal car c'est un nouveau contact
             salonId = try await MessagesManager.shared.getSalonId(currentId: currentUserId, contactId: contactId)
             
             // Les derniers messages du salon et maj du Send

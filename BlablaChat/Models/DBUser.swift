@@ -19,10 +19,11 @@ struct DBUser: Codable, Identifiable {
     let userId: String
     let nom: String
     let prenom: String
+    let fcmtoken: String
     
     // Init du document à partir des données de l'authentification auxquelles on ajoute la date de création, le lien de l'image
     // et un userId (servira dans les contacts)
-    init(auth: AuthUser, nom: String, prenom: String) {
+    init(auth: AuthUser, nom: String, prenom: String, fcmtoken: String) {
         self.id = auth.uid
         self.email = auth.email
         self.dateCreated = Timestamp()
@@ -30,6 +31,7 @@ struct DBUser: Codable, Identifiable {
         self.userId = UUID().uuidString
         self.nom = nom
         self.prenom = prenom
+        self.fcmtoken = fcmtoken
     }
     
 // Création d'un user autrement que par  l'authentification
@@ -40,7 +42,8 @@ struct DBUser: Codable, Identifiable {
         avatarLink: String? = nil,
         userId: String = UUID().uuidString,
         nom: String = "",
-        prenom: String = ""
+        prenom: String = "",
+        fcmtoken: String = ""
     ) {
         self.id = id
         self.email = email
@@ -49,6 +52,7 @@ struct DBUser: Codable, Identifiable {
         self.userId = userId
         self.nom = nom
         self.prenom = prenom
+        self.fcmtoken = fcmtoken
     }
     
     enum CodingKeys: String, CodingKey {
@@ -59,5 +63,6 @@ struct DBUser: Codable, Identifiable {
         case userId = "user_id"
         case nom = "nom"
         case prenom = "prenom"
+        case fcmtoken = "fcmtoken"
     }
 }

@@ -47,12 +47,19 @@ final class UsersManager {
         try await userDocument(user_id: userId).updateData(data)
     }
     
-    // Maj de l'id pour le user contact (n'en à pas à sa créeation dans Users)
+    // Maj de l'id pour le user contact (n'en à pas à sa créeation dans Users car cela a été fait à la crétion du message)
     func updateId(userId: String, Id: String) async throws {
         let data: [String:Any] = [
             DBUser.CodingKeys.id.rawValue : Id,
         ]
         try await userDocument(user_id: userId).updateData(data)
+    }
+    
+    func updateFCMToken(userId: String, token: String) async throws {
+        let data: [String:Any] = [
+            "token" : token,
+        ]
+        try await tokenDocument(user_id: userId).setData(data, merge: true)
     }
     
     // Get all users sauf le userSigned
@@ -223,43 +230,6 @@ final class UsersManager {
             try Auth.auth().signOut()
         } catch {
             print("**** signOut failed")
-        }
-    }
-
-    // Search tokenFCM
-    func searchTokenFCM(userId: String) async throws -> TokensFCM? {
-        do {
-            let querySnapshot = try await tokensCollection
-                .whereField("user_id", isEqualTo:userId)
-                .getDocuments()
-            
-            for document in querySnapshot.documents {
-                let user = try document.data(as: TokensFCM.self)
-                if (user.userId == userId) {
-                    return user
-                }
-            }
-        } catch {
-            print("searchToken by userId - Error getting documents: \(error)")
-        }
-        return nil
-    }
-    
-    // Ajout d'un token identifiant le device (iPhone) pour FCM (Firebase Cloud Messaging)
-    // qui sera utilisé dans la fonction sendUnMessage sur le serveur
-    func addTokenFCM(userId: String, tokenFCM: String) async throws {
-        do {
-            let docRef = tokenDocument(user_id: userId)
-            
-            let data: [String:Any] = [
-                "user_id" : userId,
-                "token_fcm" : FCMtoken.FCMtoken,
-                "time_stamp" : Timestamp(),
-                "nom": "Bonjour",
-            ]
-            try await docRef.setData(data, merge: false)
-        } catch {
-            print("addToken Pas de document pour ce user_id: \(error)")
         }
     }
 }

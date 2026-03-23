@@ -61,9 +61,10 @@ final class AuthenticationViewModel: ObservableObject {
             let nomprenom = LogInManager.shared.getContactName(email: email)
             let nom = nomprenom.nom
             let prenom = nomprenom.prenom
+            let fcmtoken = AppDelegate.FCMtoken
             
             // Création du user à partir de l'auth que l'on complète
-            let user = DBUser(auth: authUser, nom: nom, prenom: prenom) // auth.uid, email, userId
+            let user = DBUser(auth: authUser, nom: nom, prenom: prenom, fcmtoken: fcmtoken) // auth.uid, email, userId
  
             try await UsersManager.shared.createDbUser(user: user) // sans l'image
 
@@ -77,16 +78,6 @@ final class AuthenticationViewModel: ObservableObject {
             guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
             self.currentUserId = userId // global à l'appli
-        }
-        
-        // Le userId de DBUser est l'identifiant unique pour toute l'appli
-        guard let currentUID = self.currentUserId else { print("SignUp-Pas de userId"); return }
-        
-        // Recherche du token FCM, servira pour les notifications
-        let tokenFCM = try await UsersManager.shared.searchTokenFCM(userId: currentUID)
-        
-        if tokenFCM == nil {
-            try await UsersManager.shared.addTokenFCM(userId: currentUID, tokenFCM: FCMtoken.FCMtoken)
         }
     }
 }

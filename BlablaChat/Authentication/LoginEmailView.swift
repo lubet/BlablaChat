@@ -28,7 +28,7 @@ final class LoginEmailViewModel: ObservableObject {
         
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
 
-        // Chercher dans "users" pour voir si il n'existe pas (cas d'un nouveau contact)
+        // Chercher dans "users" pour voir si il n'existe pas (cas d'un nouveau contact créer dans message)
         let dbuser = try await UsersManager.shared.searchUser(email: email)
         
         if dbuser == nil {
@@ -36,10 +36,12 @@ final class LoginEmailViewModel: ObservableObject {
             let nomprenom = LogInManager.shared.getContactName(email: email)
             let nom = nomprenom.nom
             let prenom = nomprenom.prenom
+            let fcmtoken = AppDelegate.FCMtoken
             
-            let user = DBUser(auth: authUser, nom: nom, prenom: prenom) // uid, email, user_id, date
+            let user = DBUser(auth: authUser, nom: nom, prenom: prenom, fcmtoken: fcmtoken) // uid, email, user_id, date
             
             try await UsersManager.shared.createDbUser(user: user) // sans l'image
+            print("FCMtoken : \(AppDelegate.FCMtoken)")
             
             let image = image ?? UIImage.init(systemName: "person.circle.fill")!
             
@@ -56,14 +58,11 @@ final class LoginEmailViewModel: ObservableObject {
             
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid) // maj de l'id dans Users
             
+            // TODO mettre à jour le FCMtoken
+            try await UsersManager.shared.updateFCMToken(userId: userId, token: AppDelegate.FCMtoken)
+            print("FCMtoken mis à jour")
+            
             self.currentUserId = userId
-        }
-        guard let currentUID = self.currentUserId else { print("SignUp-Pas de userId"); return }
-        
-        let tokenFCM = try await UsersManager.shared.searchTokenFCM(userId: currentUID)
-        
-        if tokenFCM == nil {
-            try await UsersManager.shared.addTokenFCM(userId: currentUID, tokenFCM: FCMtoken.FCMtoken)
         }
      }
     
@@ -89,6 +88,10 @@ final class LoginEmailViewModel: ObservableObject {
 
         // Je lis le user qui vient d'être créer sur le disque
         httpAvatar = dbuser.avatarLink ?? ""
+        
+        // TODO Mettre à jour le FCMtoken
+        try await UsersManager.shared.updateFCMToken(userId: dbuser.userId, token: AppDelegate.FCMtoken)
+        print("**** FCMtoken mis à jour ****")
         
         // print("---- Fin Sign In ---- currentUserId: \(String(describing: self.currentUserId))")
         

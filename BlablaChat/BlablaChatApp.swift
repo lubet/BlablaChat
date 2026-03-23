@@ -40,6 +40,8 @@ struct BlablaChatApp: App {
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     let gcmMessageIDKey = "gcm.message_id"
+    
+    static var FCMtoken: String = ""
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
@@ -78,11 +80,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 }
 
 extension AppDelegate: MessagingDelegate {
+    
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
 
       let deviceToken:[String: String] = ["token": fcmToken ?? ""]
-        FCMtoken.FCMtoken = deviceToken["token"] ?? "print AppDelegate FCMtoken = nil"
+        // FCMtoken.FCMtoken = deviceToken["token"] ?? "print AppDelegate FCMtoken = nil"
         // print("Device token: ", deviceToken)
+        AppDelegate.FCMtoken = deviceToken["token"] ?? ""
     }
 }
 

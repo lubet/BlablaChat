@@ -55,11 +55,11 @@ final class UsersManager {
         try await userDocument(user_id: userId).updateData(data)
     }
     
-    func updateFCMToken(userId: String, token: String) async throws {
+    func updateFCMToken(userId: String, fcmtoken: String) async throws {
         let data: [String:Any] = [
-            "token" : token,
+            DBUser.CodingKeys.fcmtoken.rawValue : fcmtoken,
         ]
-        try await tokenDocument(user_id: userId).setData(data, merge: true)
+        try await userDocument(user_id: userId).updateData(data)
     }
     
     // Get all users sauf le userSigned

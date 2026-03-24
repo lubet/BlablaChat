@@ -22,17 +22,19 @@ final class LoginEmailViewModel: ObservableObject {
     @Published var httpAvatar: String = ""
     @Published var newImageAvatar: UIImage? = nil
     
+    // Pas de auth
     func signUp(image: UIImage?) async throws {
 
         guard !email.isEmpty, !password.isEmpty else { return }
         
+        // Création de l'auth,  si existe déjà saut au signIn
         let authUser = try await AuthManager.shared.createUser(email: email, password: password)
 
-        // Chercher dans "users" pour voir si il n'existe pas (cas d'un nouveau contact créer dans message)
+        // l'auth vient d'être créer mais existe t'il dans Users
         let dbuser = try await UsersManager.shared.searchUser(email: email)
         
         if dbuser == nil {
-            
+            // C'est un nouveau contact créer à partir du login
             let nomprenom = LogInManager.shared.getContactName(email: email)
             let nom = nomprenom.nom
             let prenom = nomprenom.prenom
@@ -50,6 +52,9 @@ final class LoginEmailViewModel: ObservableObject {
             self.currentUserId = user.userId
             
         } else {
+            // l'auth vient d'être créer mais il a déjà un enreg dans "Users" (cas des nouveaux contacts créer
+            // lors de la création d'un message
+            // -> maj de l'auth et et du fcmtoken
             
             // Existe déjà - maj de l'uid
             print("**** SignUp user existant dans users")
@@ -58,15 +63,15 @@ final class LoginEmailViewModel: ObservableObject {
             
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid) // maj de l'id dans Users
             
-            // TODO mettre à jour le FCMtoken
-            try await UsersManager.shared.updateFCMToken(userId: userId, token: AppDelegate.FCMtoken)
+            // Maj du
+            try await UsersManager.shared.updateFCMToken(userId: userId, fcmtoken: AppDelegate.FCMtoken)
             print("FCMtoken mis à jour")
             
             self.currentUserId = userId
         }
      }
     
-    // "user" existant dans la base
+    // L'auth existe
     func signIn() async throws {
         
         guard !email.isEmpty, !password.isEmpty else {
@@ -79,7 +84,7 @@ final class LoginEmailViewModel: ObservableObject {
 
         print("---- Sign In done ----")
         
-        // Recherche du user
+        // Recherche du user dans "Users"
         guard let dbuser = try await UsersManager.shared.searchUser(email: email) else {
             print("**** SignIn - Pas de dbuser")
             return
@@ -89,8 +94,8 @@ final class LoginEmailViewModel: ObservableObject {
         // Je lis le user qui vient d'être créer sur le disque
         httpAvatar = dbuser.avatarLink ?? ""
         
-        // TODO Mettre à jour le FCMtoken
-        try await UsersManager.shared.updateFCMToken(userId: dbuser.userId, token: AppDelegate.FCMtoken)
+        // Mettre à jour le FCMtoken
+        try await UsersManager.shared.updateFCMToken(userId: dbuser.userId, fcmtoken: AppDelegate.FCMtoken)
         print("**** FCMtoken mis à jour ****")
         
         // print("---- Fin Sign In ---- currentUserId: \(String(describing: self.currentUserId))")

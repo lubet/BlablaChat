@@ -34,6 +34,7 @@ final class LoginEmailViewModel: ObservableObject {
         let dbuser = try await UsersManager.shared.searchUser(email: email)
         
         if dbuser == nil {
+            print("Nouveau dans Users: \(email)")
             // C'est un nouveau contact créer à partir du login
             let nomprenom = LogInManager.shared.getContactName(email: email)
             let nom = nomprenom.nom
@@ -52,6 +53,7 @@ final class LoginEmailViewModel: ObservableObject {
             self.currentUserId = user.userId
             
         } else {
+            print("Déjà présent dans Users: \(email)")
             // l'auth vient d'être créer mais il a déjà un enreg dans "Users" (cas des nouveaux contacts créer
             // lors de la création d'un message
             // -> maj de l'auth et et du fcmtoken

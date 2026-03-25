@@ -55,6 +55,7 @@ final class UsersManager {
         try await userDocument(user_id: userId).updateData(data)
     }
     
+    // Mise à jour du fcmtoken dans "Users"
     func updateFCMToken(userId: String, fcmtoken: String) async throws {
         let data: [String:Any] = [
             DBUser.CodingKeys.fcmtoken.rawValue : fcmtoken,

@@ -9,3 +9,5 @@
 // cela a bien créer un enreg Imbert dans Users
 // 2) LogUp email Imbert, cela me crée un deuxiéme enreg Imbert au lieu de mettre
 // à jour le celui créer précedament.
+
+// Quand je crée un user en créant un message, je devrai créer le champ fcmtoken et le mettre à "".

@@ -135,7 +135,8 @@ final class UsersManager {
             "id" : user_id,
             "user_id" : user_id,
             "nom" : nom,
-            "prenom" : prenom
+            "prenom" : prenom,
+            "fcmtoken": ""
         ]
         try await userRef.setData(data, merge: false)
         

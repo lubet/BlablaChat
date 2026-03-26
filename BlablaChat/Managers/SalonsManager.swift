@@ -29,7 +29,7 @@ final class SalonsManager {
     // ------------------------------------------------------------------------------------
     
     // Création d'un nouveau salon
-    func newSalon(last_message: String, receiver: String) async throws -> String {
+    func newSalon(last_message: String, sender: String, receiver: String) async throws -> String {
         let salonRef = salonsCollection.document()
         let docId = salonRef.documentID
         
@@ -37,6 +37,7 @@ final class SalonsManager {
             "salon_id" : docId,
             "date_created" : Timestamp(),
             "last_message": last_message,
+            "sender": sender,
             "receiver": receiver
         ]
         try await salonRef.setData(data, merge: false)

@@ -147,7 +147,7 @@ final class BubblesViewModel: ObservableObject {
         salonId = try await MessagesManager.shared.getSalonId(currentId: currentUserId, contactId: contactId)
         
         if salonId == "" {
-            salonId = try await SalonsManager.shared.newSalon(last_message: "", receiver: contactId)
+            salonId = try await SalonsManager.shared.newSalon(last_message: "", sender: currentUserId, receiver: contactId)
             
             // Ajout du couple contact currentuser à la sous-collection subUsers de ce salon
             try await MessagesManager.shared.newTwoSubUsers(salonId: salonId, currendId: currentUserId, contactId: contactId)

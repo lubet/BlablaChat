@@ -4,10 +4,8 @@
 //
 //  Created by Lubet-Moncla Xavier on 23/03/2024.
 //
-// Le dernier message de chaque salon du user en cours
-// avec le nom du destinataire du dernier message, son email et le dernier message
-//
-
+// Pour chaque salon dans lequel le user logger est présent
+// Afficher le destinataire du dernier message
 
 import SwiftUI
 import Combine
@@ -48,9 +46,14 @@ class LastMessagesViewModel: ObservableObject {
             // Dernier messsage de chaque salon
             for salon in salonsCurrent {
                 let lastMessage = salon.lastMessage
+                let senderId = salon.sender
                 let receiverId = salon.receiver
                 
+                // TODO: Si le sender = current envoyer le receiverId
+                // sinon Si le sender != current en voyer le senderId
+                
                 guard let sender = try await UsersManager.shared.searchUser(userId: receiverId) else { continue }
+                
                 email = sender.email ?? "**** Inconnu"
                 avatarLink = sender.avatarLink ?? "**** Inconnu"
                 nom = sender.nom

@@ -76,7 +76,13 @@ final class AuthenticationViewModel: ObservableObject {
         } else {
             // Existe déjà - maj de l'id du user + save du userId
             guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
+            
+            // Maj de l'auth id
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
+            
+            // Maj du fcmtoken
+            try await UsersManager.shared.updateFCMToken(userId: userId, fcmtoken: AppDelegate.FCMtoken)
+            
             self.currentUserId = userId // global à l'appli
         }
     }

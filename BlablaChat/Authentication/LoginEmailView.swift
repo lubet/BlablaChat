@@ -55,7 +55,7 @@ final class LoginEmailViewModel: ObservableObject {
         } else {
             print("Déjà présent dans Users: \(email)")
             // l'auth vient d'être créer mais il a déjà un enreg dans "Users" (cas des nouveaux contacts créer
-            // lors de la création d'un message
+            // lors de la création d'un message)
             // -> maj de l'auth et et du fcmtoken
             
             // Existe déjà - maj de l'uid
@@ -63,9 +63,10 @@ final class LoginEmailViewModel: ObservableObject {
             
             guard let userId = dbuser?.userId else { print("**** signUp - userId = nil"); return }
             
+            // Maj de l'auth id
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid) // maj de l'id dans Users
             
-            // Maj du
+            // Maj du fcmtoken
             try await UsersManager.shared.updateFCMToken(userId: userId, fcmtoken: AppDelegate.FCMtoken)
             print("FCMtoken mis à jour")
             

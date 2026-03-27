@@ -166,6 +166,10 @@ final class BubblesViewModel: ObservableObject {
         try await MessagesManager.shared.newMessage(salonId: salonId, receiver: contactId, texte: texteMessage, urlPhoto: "", sender: currentUserId)
         
         // Mise à jour du texte du message dans le salon
+        
+        // TODO le receiverId est écrasé par le senderId ou inversement
+        // Quand le contact se sonnecte par après il devient le sender et non plus le receiver
+        
         try await SalonsManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: texteMessage, receiver: contactId)
     }
 }

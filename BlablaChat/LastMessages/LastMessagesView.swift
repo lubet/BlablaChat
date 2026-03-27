@@ -43,21 +43,34 @@ class LastMessagesViewModel: ObservableObject {
             var nom: String = ""
             var prenom: String = ""
             
-            // Dernier messsage de chaque salon
+            // Dernier messsage qui m'a été envoyé de chaque salon où le currentuser est présent
             for salon in salonsCurrent {
                 let lastMessage = salon.lastMessage
                 let senderId = salon.sender
                 let receiverId = salon.receiver
                 
-                // TODO: Si le sender = current envoyer le receiverId
-                // sinon Si le sender != current en voyer le senderId
+                // Si le sender == current afficher le receiver
+                // si le receiver == current afficher le sender
                 
-                guard let sender = try await UsersManager.shared.searchUser(userId: receiverId) else { continue }
+                var whoId: String = ""
+
+                if senderId == currentUserId {
+                    whoId = receiverId
+                } else if receiverId == currentUserId {
+                    whoId = senderId
+                } else {
+                    print("getLastMessages() - Erreur who différent de currentUserId et de receiverId")
+                }
+
+                guard let whoSend = try await UsersManager.shared.searchUser(userId: whoId) else {
+                    print("**** getLastMessages() - whoSend = nil")
+                    continue
+                }
                 
-                email = sender.email ?? "**** Inconnu"
-                avatarLink = sender.avatarLink ?? "**** Inconnu"
-                nom = sender.nom
-                prenom = sender.prenom
+                email = whoSend.email ?? "**** Inconnu"
+                avatarLink = whoSend.avatarLink ?? "**** Inconnu"
+                nom = whoSend.nom
+                prenom = whoSend.prenom
 
                 lastMessages.append(LastMessage(avatarLink: avatarLink, emailContact: email, texte: lastMessage, date: Timestamp(), salonId: salon.salonId, nom: nom, prenom: prenom))
                 

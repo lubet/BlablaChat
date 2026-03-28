@@ -65,7 +65,7 @@ final class BubblesViewModel: ObservableObject {
     private func setImage(from selection: PhotosPickerItem?) {
         guard let selection else { return }
         
-        guard let userId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
+        guard let currentUserId = currentUserId else { print("**** allUserSalonMessages() - Pas de currentUserId"); return }
         
         Task {
             if let data = try? await selection.loadTransferable(type: Data.self) {
@@ -89,10 +89,10 @@ final class BubblesViewModel: ObservableObject {
                     }
                     
                     // Création du message avec le n° de salon et le fromId égal au user
-                    try await MessagesManager.shared.newMessage(salonId: salonId, receiver: userId, texte: "Photo", urlPhoto: lurl.absoluteString, sender: contactID)
+                    try await MessagesManager.shared.newMessage(salonId: salonId, receiver: contactID, texte: "Photo", urlPhoto: lurl.absoluteString, sender: currentUserId)
                     
                     // Mettre à jour last_message dans Salons
-                    try await SalonsManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: lurl.absoluteString, receiver: contactID)
+                    try await SalonsManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: lurl.absoluteString, sender: currentUserId, receiver: contactID)
                     
                     return
                 }
@@ -165,12 +165,8 @@ final class BubblesViewModel: ObservableObject {
         // Création du message avec le n° de salon et le fromId égal au user
         try await MessagesManager.shared.newMessage(salonId: salonId, receiver: contactId, texte: texteMessage, urlPhoto: "", sender: currentUserId)
         
-        // Mise à jour du texte du message dans le salon
-        
-        // TODO le receiverId est écrasé par le senderId ou inversement
-        // Quand le contact se sonnecte par après il devient le sender et non plus le receiver
-        
-        try await SalonsManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: texteMessage, receiver: contactId)
+        // Mise à jour du message dans le salon
+        try await SalonsManager.shared.majLastMessageSalons(salonId: salonId, lastMessage: texteMessage, sender: currentUserId, receiver: contactId)
     }
 }
 

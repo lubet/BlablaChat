@@ -44,10 +44,11 @@ final class SalonsManager {
         return docId
     }
 
-    // Enregistre le dernier message dans "salons
-    func majLastMessageSalons(salonId: String, lastMessage: String, receiver: String) async throws {
+    // Maj du dernier message dans "Salons"
+    func majLastMessageSalons(salonId: String, lastMessage: String, sender: String, receiver: String) async throws {
         let data: [String:Any] = [
             Salons.CodingKeys.lastMessage.rawValue : lastMessage,
+            Salons.CodingKeys.sender.rawValue : sender,
             Salons.CodingKeys.receiver.rawValue : receiver
         ]
         try await salonDocument(salonId: salonId).updateData(data)

@@ -72,6 +72,9 @@ final class AuthenticationViewModel: ObservableObject {
 
             try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
             self.currentUserId = user.userId // global à l'appli
+            
+            // Ajout d'un token si il n'existe pas
+            try await UsersManager.shared.newToken(userId: self.currentUserId!, fcmToken: AppDelegate.FCMtoken)
 
         } else {
             // Existe déjà - maj de l'id du user + save du userId
@@ -80,8 +83,8 @@ final class AuthenticationViewModel: ObservableObject {
             // Maj de l'auth id
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
             
-            // Maj du fcmtoken
-            try await UsersManager.shared.updateFCMToken(userId: userId, fcmtoken: AppDelegate.FCMtoken)
+            // // Ajout d'un token si il n'existe pas
+            try await UsersManager.shared.newToken(userId: self.currentUserId!, fcmToken: AppDelegate.FCMtoken)
             
             self.currentUserId = userId // global à l'appli
         }

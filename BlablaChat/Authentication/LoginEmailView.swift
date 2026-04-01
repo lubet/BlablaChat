@@ -52,6 +52,9 @@ final class LoginEmailViewModel: ObservableObject {
             
             self.currentUserId = user.userId
             
+            // // Ajout d'un token si il n'existe pas
+            try await UsersManager.shared.newToken(userId: self.currentUserId!, fcmToken: AppDelegate.FCMtoken)
+            
         } else {
             print("Déjà présent dans Users: \(email)")
             // l'auth vient d'être créer mais il a déjà un enreg dans "Users" (cas des nouveaux contacts créer
@@ -65,12 +68,11 @@ final class LoginEmailViewModel: ObservableObject {
             
             // Maj de l'auth id
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid) // maj de l'id dans Users
-            
-            // Maj du fcmtoken
-            try await UsersManager.shared.updateFCMToken(userId: userId, fcmtoken: AppDelegate.FCMtoken)
-            print("FCMtoken mis à jour")
-            
+
             self.currentUserId = userId
+            
+            // Ajout d'un token si il n'existe pas
+            try await UsersManager.shared.newToken(userId: self.currentUserId!, fcmToken: AppDelegate.FCMtoken)
         }
      }
     
@@ -96,12 +98,9 @@ final class LoginEmailViewModel: ObservableObject {
 
         // Je lis le user qui vient d'être créer sur le disque
         httpAvatar = dbuser.avatarLink ?? ""
-        
-        // Mettre à jour le FCMtoken
-        try await UsersManager.shared.updateFCMToken(userId: dbuser.userId, fcmtoken: AppDelegate.FCMtoken)
-        print("**** FCMtoken mis à jour ****")
-        
-        // print("---- Fin Sign In ---- currentUserId: \(String(describing: self.currentUserId))")
+
+        // Création du token si il n'existe pas
+        try await UsersManager.shared.newToken(userId: self.currentUserId!, fcmToken: AppDelegate.FCMtoken)
         
         return
     }

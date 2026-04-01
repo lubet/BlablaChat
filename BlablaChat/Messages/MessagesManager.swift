@@ -33,6 +33,8 @@ final class MessagesManager {
     private func messagesCollection(salonId: String) -> CollectionReference {
         return salonDocument(salonId: salonId).collection("messages")
     }
+    
+    // Un message
     private func messageDocument(id: String) -> DocumentReference {
         return messagesCollection.document(id)
     }
@@ -40,10 +42,6 @@ final class MessagesManager {
     // Tous les subUsers d'un salon
     private func subUsersCollection(salonId: String) -> CollectionReference {
         return salonDocument(salonId: salonId).collection("subUsers")
-    }
-    // Un document subUser
-    private func subUsersDocument(userId: String) -> DocumentReference {
-        return subUsersCollection.document(userId)
     }
     
     // ---------------------------------------------------------------------------

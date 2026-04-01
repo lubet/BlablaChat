@@ -18,7 +18,8 @@ final class UsersManager {
     init() { }
     
     private let DBUserCollection = dbFS.collection("Users")
-    
+    private let tokensCollection = dbFS.collection("Tokens")
+
     private func userDocument(user_id: String) -> DocumentReference {
         return DBUserCollection.document(user_id)
     }
@@ -26,13 +27,17 @@ final class UsersManager {
     private func userDocument(email:String) -> DocumentReference {
         return DBUserCollection.document(email)
     }
-    
-    private let tokensCollection = dbFS.collection("TokensFCM")
-    
-    private func tokenDocument(user_id: String) -> DocumentReference {
-        return tokensCollection.document(user_id)
+
+    // Renvoie la sous-collection "Tokens" pour un user
+    private func UserTokensCollection(user_id: String) -> CollectionReference {
+        return userDocument(user_id: user_id).collection("Tokens")
     }
 
+    // Un document fcmtoken pour un user
+    private func tokenDocument(user_id: String, id: String) -> DocumentReference {
+        return UserTokensCollection(user_id: user_id).document(id)
+    }
+    
     // -----------------------------------------------------------------------
     
     // Création du user dans la base "users"
@@ -56,12 +61,12 @@ final class UsersManager {
     }
     
     // Mise à jour du fcmtoken dans "Users"
-    func updateFCMToken(userId: String, fcmtoken: String) async throws {
-        let data: [String:Any] = [
-            DBUser.CodingKeys.fcmtoken.rawValue : fcmtoken,
-        ]
-        try await userDocument(user_id: userId).updateData(data)
-    }
+//    func updateFCMToken(userId: String, fcmtoken: String) async throws {
+//        let data: [String:Any] = [
+//            DBUser.CodingKeys.fcmtoken.rawValue : fcmtoken,
+//        ]
+//        try await userDocument(user_id: userId).updateData(data)
+//    }
     
     // Get all users sauf le userSigned
 //    func getAllUsers(userId: String) async throws -> [DBUser] {
@@ -234,4 +239,52 @@ final class UsersManager {
             print("**** signOut failed")
         }
     }
+    
+    // Création d'un token
+    func newToken(userId: String, fcmToken: String) async throws {
+        
+        let rep: Bool = try await searchToken(userId: userId, fcmToken: fcmToken)
+        
+        if !rep {
+            let document = UserTokensCollection(user_id: userId).document()
+            let docId = document.documentID
+            
+            let data: [String:Any] = [
+                "id" : docId,
+                "user_id" : userId,
+                "fcm_token" : fcmToken,
+            ]
+            do {
+                try await document.setData(data, merge: false)
+            } catch {
+                print("newFcmToken: \(error)")
+            }
+        }
+    }
+    
+    // Ext-ce que le token existe pour ce user
+    func searchToken(userId: String, fcmToken: String) async throws -> Bool {
+        do {
+            let querySnapshot = try await tokensCollection
+                .whereField("user_id", isEqualTo: userId)
+                .whereField("fcm_token", isEqualTo: fcmToken)
+                .getDocuments()
+            
+            for _ in querySnapshot.documents {
+                return true
+            }
+        } catch {
+            print("searchToken - Error getting documents: \(error)")
+        }
+        return false
+
+    }
+// A Adapter si on doit mettre à jour le token au lieu de le creer
+//    func updateFCMToken(userId: String, fcmtoken: String) async throws {
+//        let data: [String:Any] = [
+//            FcmTokens.CodingKeys.fcmToken.rawValue : fcmtoken,
+//        ]
+//        try await userDocument(user_id: userId).updateData(data)
+//    }
+
 }

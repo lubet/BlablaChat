@@ -18,7 +18,7 @@ final class UsersManager {
     init() { }
     
     private let DBUserCollection = dbFS.collection("Users")
-    private let tokensCollection = dbFS.collection("Tokens")
+    private let tokensCollection = dbFS.collection("notificationTokens")
 
     private func userDocument(user_id: String) -> DocumentReference {
         return DBUserCollection.document(user_id)
@@ -28,9 +28,9 @@ final class UsersManager {
         return DBUserCollection.document(email)
     }
 
-    // Renvoie la sous-collection "Tokens" pour un user
+    // Notifications: Renvoie la sous-collection "Tokens" pour un user
     private func UserTokensCollection(user_id: String) -> CollectionReference {
-        return userDocument(user_id: user_id).collection("Tokens")
+        return userDocument(user_id: user_id).collection("notificationTokens")
     }
 
     // Un document fcmtoken pour un user
@@ -279,6 +279,7 @@ final class UsersManager {
         return false
 
     }
+    
 // A Adapter si on doit mettre à jour le token au lieu de le creer
 //    func updateFCMToken(userId: String, fcmtoken: String) async throws {
 //        let data: [String:Any] = [

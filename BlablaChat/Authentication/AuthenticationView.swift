@@ -61,16 +61,16 @@ final class AuthenticationViewModel: ObservableObject {
             let nomprenom = LogInManager.shared.getContactName(email: email)
             let nom = nomprenom.nom
             let prenom = nomprenom.prenom
-            let fcmtoken = AppDelegate.FCMtoken
             
             // Création du user à partir de l'auth que l'on complète
-            let user = DBUser(auth: authUser, nom: nom, prenom: prenom, fcmtoken: fcmtoken) // auth.uid, email, userId
+            let user = DBUser(auth: authUser, nom: nom, prenom: prenom, fcmtoken: AppDelegate.FCMtoken)
  
             try await UsersManager.shared.createDbUser(user: user) // sans l'image
 
             let image = UIImage.init(systemName: "person.circle.fill")!
 
             try await UsersManager.shared.updateAvatar(userId: user.userId, mimage: image) // Storage + maj de l'avatarLink dans le "user" crée
+            
             self.currentUserId = user.userId // global à l'appli
             
             // Ajout d'un token si il n'existe pas
@@ -83,10 +83,10 @@ final class AuthenticationViewModel: ObservableObject {
             // Maj de l'auth id
             try await UsersManager.shared.updateId(userId: userId, Id: authUser.uid)
             
+            self.currentUserId = userId // global à l'appli
+            
             // // Ajout d'un token si il n'existe pas
             try await UsersManager.shared.newToken(userId: self.currentUserId!, fcmToken: AppDelegate.FCMtoken)
-            
-            self.currentUserId = userId // global à l'appli
         }
     }
 }

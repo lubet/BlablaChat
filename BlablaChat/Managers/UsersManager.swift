@@ -18,7 +18,7 @@ final class UsersManager {
     init() { }
     
     private let DBUserCollection = dbFS.collection("Users")
-    private let tokensCollection = dbFS.collection("notificationTokens")
+    private let tokensCollection = dbFS.collection("fcmTokens")
 
     private func userDocument(user_id: String) -> DocumentReference {
         return DBUserCollection.document(user_id)
@@ -28,12 +28,12 @@ final class UsersManager {
         return DBUserCollection.document(email)
     }
 
-    // Notifications: Renvoie la sous-collection "Tokens" pour un user
+    // Renvoie les "fcmTokens" d'un user
     private func UserTokensCollection(user_id: String) -> CollectionReference {
-        return userDocument(user_id: user_id).collection("notificationTokens")
+        return userDocument(user_id: user_id).collection("fcmTokens")
     }
 
-    // Un document fcmtoken pour un user
+    // Un document notificationToken pour un user
     private func tokenDocument(user_id: String, id: String) -> DocumentReference {
         return UserTokensCollection(user_id: user_id).document(id)
     }
@@ -141,7 +141,6 @@ final class UsersManager {
             "user_id" : user_id,
             "nom" : nom,
             "prenom" : prenom,
-            "fcmtoken": ""
         ]
         try await userRef.setData(data, merge: false)
         

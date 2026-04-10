@@ -18,25 +18,25 @@ final class UsersManager {
     init() { }
     
     private let DBUserCollection = dbFS.collection("Users")
-    private let tokensCollection = dbFS.collection("fcmTokens")
-
+    
     private func userDocument(user_id: String) -> DocumentReference {
         return DBUserCollection.document(user_id)
     }
-    
     private func userDocument(email:String) -> DocumentReference {
         return DBUserCollection.document(email)
     }
 
+    private let tokensCollection = dbFS.collection("fcmTokens")
+    
     // Renvoie les "fcmTokens" d'un user
-    private func UserTokensCollection(user_id: String) -> CollectionReference {
-        return userDocument(user_id: user_id).collection("fcmTokens")
-    }
-
-    // Un document notificationToken pour un user
-    private func tokenDocument(user_id: String, id: String) -> DocumentReference {
-        return UserTokensCollection(user_id: user_id).document(id)
-    }
+//    private func UserTokensCollection(user_id: String) -> CollectionReference {
+//        return userDocument(user_id: user_id).collection("fcmTokens")
+//    }
+//
+//    // Un document notificationToken pour un user
+//    private func tokenDocument(user_id: String, id: String) -> DocumentReference {
+//        return UserTokensCollection(user_id: user_id).document(id)
+//    }
     
     // -----------------------------------------------------------------------
     
@@ -245,7 +245,7 @@ final class UsersManager {
         let rep: Bool = try await searchToken(userId: userId, fcmToken: fcmToken)
         
         if !rep {
-            let document = UserTokensCollection(user_id: userId).document()
+            let document = tokensCollection.document()
             let docId = document.documentID
             
             let data: [String:Any] = [
@@ -256,7 +256,7 @@ final class UsersManager {
             do {
                 try await document.setData(data, merge: false)
             } catch {
-                print("newFcmToken: \(error)")
+                print("**** newFcmToken: \(error)")
             }
         }
     }
@@ -273,11 +273,12 @@ final class UsersManager {
                 return true
             }
         } catch {
-            print("searchToken - Error getting documents: \(error)")
+            print("**** searchToken - Error getting documents: \(error)")
         }
+        print("**** fcmToken pas trouvé")
         return false
-
     }
+   
     
 // A Adapter si on doit mettre à jour le token au lieu de le creer
 //    func updateFCMToken(userId: String, fcmtoken: String) async throws {

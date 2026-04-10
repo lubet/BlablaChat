@@ -20,7 +20,8 @@ final class SalonsManager {
     
     // Salons ----------------------------------------------------
     private let salonsCollection = dbFS.collection("Salons")
-        // Un salon
+        
+    // Un salon
         private func salonDocument(salonId: String) -> DocumentReference {
             salonsCollection.document(salonId)
         }
